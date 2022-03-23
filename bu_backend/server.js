@@ -1,9 +1,10 @@
 const express = require("express");
 //app.use(...);
-const db = require("./models");
+const db = require("./src/models");
 db.sequelize.sync();
 const cors = require("cors");
 const app = express();
+const bu_controller = require("./src/controllers/bu.controller")
 
 var corsOptions = {
   origin: "http://localhost:8081"
@@ -17,6 +18,19 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.json({ message: "Backend Executando" });
 });
+
+app.get("/bu/all", (req, res) => {
+  console.log("/bu/all")
+  const all_bus = bu_controller.findAll()
+  res.json(200);
+});
+
+app.post("/bu", (req, res) => {
+  console.log("posting on /bu")
+  const result = bu_controller.create(req.body)
+  res.json(result)
+})
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
