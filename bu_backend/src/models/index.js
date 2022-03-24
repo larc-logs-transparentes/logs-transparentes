@@ -3,7 +3,8 @@ const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
-  operatorsAliases: false,
+  port: dbConfig.PORT,
+  // operatorsAliases: false,
   pool: {
     max: dbConfig.pool.max,
     min: dbConfig.pool.min,
@@ -11,11 +12,21 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     idle: dbConfig.pool.idle
   }
 });
+
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.tutorials = require("./bu.model.js")(sequelize, Sequelize);
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and re-sync db.");
+db.bu = require("./bu.model.js")(sequelize, Sequelize);
+
+console.log("sequelize.authenticate()")
+sequelize.authenticate().then(() => {
+  console.log("Success!");
+  db.sequelize.sync().then(() => {
+    // console.log("Drop and re-sync db.");
+    console.log("Sync db without droping.");
+  });
+}).catch((err) => {
+  console.log(err);
 });
+
 module.exports = db;

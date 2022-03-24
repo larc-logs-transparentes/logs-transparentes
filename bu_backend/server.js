@@ -21,8 +21,12 @@ app.get("/", (req, res) => {
 
 app.get("/bu/all", (req, res) => {
   console.log("/bu/all")
-  const all_bus = bu_controller.findAll()
-  res.json(200);
+  bu_controller.findAll().then((response) => {
+    res.json(response);
+  }).catch((err) => {
+    console.log(err);
+    res.json(err)
+  })
 });
 
 app.post("/bu", (req, res) => {
