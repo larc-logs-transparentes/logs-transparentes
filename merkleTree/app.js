@@ -34,6 +34,7 @@ app.post('/', (req, res) => {
 })
 
 app.post('/proof', (req, res) => {
+  // returns proof
   const root = tree.getRoot().toString('hex')
   const leaf = SHA256(req.body.leaf)
   const proof = tree.getProof(leaf)
@@ -45,19 +46,46 @@ app.post('/proof', (req, res) => {
   }
 })
 
-
+// TODO: precisa definir se sera esse formato de retorno
+// tree.getLayersAsObject() ou tree.getHexLayersFlat() tambem podem ser uma opçao 
 app.get('/tree', (req, res) => {
   console.log(tree.toString())
-  res.send(tree.toString)
+  res.send(tree.getHexLayers())
 })
 
-app.get('/treeleaves', (req, res) => {
-  const leaves = tree.getLeaves()
+app.get('/tree/root', (req, res) => {
+  const root = tree.getRoot().toString('hex')
+  console.log(root)
+  res.send(root)
+})
+
+app.get('/tree/leaf/:id', (req, res) => {
+  // Return a leaf with id equals to id and its proof.
+  const leaf = tree.getLeaf(req.params.id).toString('hex')
+  const proof = tree.getHexProof(leaf)
+  console.log(leaf)
+  res.send({
+    "id": req.params.id,
+    "leaf": leaf,
+    "proof": proof
+  })
+})
+
+app.get('/leaf/:id', (req, res) => {
+  // Return a leaf with id equals to id without its proof.
+  const leaf = tree.getLeaf(req.params.id).toString('hex')
+  console.log(leaf)
+  res.send({
+    "id": req.params.id,
+    "leaf": leaf,
+  })
+})
+
+app.get('/tree/leaves', (req, res) => {
+  const leaves = tree.getHexLeaves()
   console.log(leaves)
-  res.send(leaves)
+  res.send(leaves.map(leaf => {return {"hash": leaf}}))
 })
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
