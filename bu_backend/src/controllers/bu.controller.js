@@ -1,13 +1,19 @@
 const db = require("../models");
+const merkletree_adapter = require("../adapters/merkletree.adapter")
 
 const BU = db.bu;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new BU
 exports.create = (data) => {
-  console.log("Saving new BU: ")
   console.log({"BU": data})
-  BU.create(data)
+  return merkletree_adapter.addLeaf(data).then((merkletree_data) => {
+    BU.create({
+      merkletree_leaf_id: merkletree_data.leaf_index,
+      merkletree_leaf: merkletree_data.added_leaf,
+      ...data
+    })
+  })
 };
 
 // Retrieve all BUs from the database.

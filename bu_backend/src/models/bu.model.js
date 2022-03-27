@@ -16,7 +16,10 @@ module.exports = (sequelize, Sequelize) => {
     },
     merkletree_leaf_id: {
       type: Sequelize.STRING
-    }
+    },
+    merkletree_leaf: {
+      type: Sequelize.STRING
+    },
   });
   return BU;
 };

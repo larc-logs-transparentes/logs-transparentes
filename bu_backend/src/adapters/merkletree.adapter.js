@@ -2,6 +2,18 @@ const axios = require('axios')
 const merkletreeHostname = "http://localhost"
 const merkletreePort = 3000
 
+exports.addLeaf = (data) => {
+  return axios.post(`${merkletreeHostname}:${merkletreePort}/tree/leaf`, {
+      leaf: data
+    })
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
 
 // return merkletree
 exports.getTree = () => {

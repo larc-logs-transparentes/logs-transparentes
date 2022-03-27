@@ -33,6 +33,21 @@ app.post('/', (req, res) => {
   res.json(req.body);
 })
 
+app.post('/tree/leaf', (req, res) => {
+  console.log(req.body)
+  console.log(req.body.leaf)
+  const leaf = req.body.leaf 
+  tree.addLeaf(SHA256(leaf))
+  const leaf_index = tree.getLeafIndex(SHA256(leaf))
+  const added_leaf = tree.getLeaf(leaf_index).toString('hex')
+  res.json({
+    "leaf_index": leaf_index,
+    "added_leaf": added_leaf,
+    ...req.body
+  });
+})
+
+
 app.post('/proof', (req, res) => {
   // returns proof
   const root = tree.getRoot().toString('hex')
