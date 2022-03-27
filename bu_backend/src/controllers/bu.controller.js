@@ -4,22 +4,25 @@ const BU = db.bu;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new BU
-exports.create = (req, res) => {
-  console.log({BU})
-  console.log({req})
-  BU.create(req)
+exports.create = (data) => {
+  console.log("Saving new BU: ")
+  console.log({"BU": data})
+  BU.create(data)
 };
 
 // Retrieve all BUs from the database.
-exports.findAll = (req, res) => {
+exports.findAll = () => {
   return BU.findAll({}).then((data) => {
     return data
   })
 };
 
 // Find a single BU with an id
-exports.findOne = (req, res) => {
-  
+exports.findById = (id) => {
+  console.log({id})
+  return BU.findByPk(id).then((data) => {
+    return data
+  })
 };
 
 // Update a BU by the id in the request
