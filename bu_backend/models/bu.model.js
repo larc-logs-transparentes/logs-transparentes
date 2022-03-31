@@ -1,5 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
   const BU = sequelize.define("bu", {
+    hash: {
+      type: Sequelize.STRING
+    },
     secao: {
       type: Sequelize.STRING
     },

@@ -14,7 +14,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.tutorials = require("./bu.model.js")(sequelize, Sequelize);
+db.bu = require("./bu.model.js")(sequelize, Sequelize);
 db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
 });
