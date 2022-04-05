@@ -1,132 +1,41 @@
 export default {
   top: [
     {
-      name: 'Home',
+      name: 'Página Inicial',
       url: '/home',
       icon: 'Home',
     },
     {
-      name: 'UI Elements',
-      icon: 'Layers',
-      children: [
-        {
-          name: 'Buttons',
-          url: '/elements/buttons',
-        },
-        {
-          name: 'Grid',
-          url: '/elements/grid',
-        },
-        {
-          name: 'Alerts',
-          url: '/elements/alerts',
-        },
-        {
-          name: 'Typography',
-          url: '/elements/typography',
-        },
-        {
-          name: 'Cards',
-          url: '/elements/cards',
-        },
-        {
-          name: 'Tabs',
-          url: '/elements/tabs',
-        },
-        {
-          name: 'Tables',
-          url: '/elements/tables',
-        },
-        {
-          name: 'Breadcrumbs',
-          url: '/elements/breadcrumbs',
-        },
-        {
-          name: 'Forms',
-          url: '/elements/forms',
-        },
-        {
-          name: 'Modals',
-          url: '/elements/modals',
-        },
-        {
-          name: 'Loaders',
-          url: '/elements/loaders',
-        },
-        {
-          name: 'Avatars',
-          url: '/elements/avatars',
-        },
-        {
-          name: 'Progress Bars',
-          url: '/elements/progressbars',
-        },
-        {
-          name: 'Pagination',
-          url: '/elements/pagination',
-        },
-      ],
+      name: 'Consultar BU',
+      url: '/tse/consulta_bu',
+      icon: 'Package',
+      //badge: {
+      //  text: 'NEW',
+      //},
     },
     {
-      name: 'Pages',
-      icon: 'File',
-      children: [
-        {
-          name: 'Blank',
-          url: '/pages/blank',
-        },
-        {
-          name: 'Sub Navigation',
-          url: '/pages/subnav',
-        },
-        {
-          name: '404',
-          url: '/pages/404',
-        },
-      ],
-    },
-    {
-      name: 'Apps',
-      icon: 'Cloud',
-      children: [
-        {
-          name: 'Analytics',
-          url: '/apps/analytics',
-        },
-        {
-          name: 'Invoice',
-          url: '/apps/invoice',
-        },
-        {
-          name: 'Activity Feed',
-          url: '/apps/feed',
-        },
-        {
-          name: 'CMS',
-          url: '/apps/cms',
-        },
-      ],
+      name: 'Auditar BU',
+      url: '/tse/auditar',
+      icon: 'Package',
+      //badge: {
+      //  text: 'NEW',
+      //},
     },
     {
       divider: true,
     },
     {
-      name: 'Widgets',
-      url: '/widgets',
+      name: 'Inserir BU',
+      url: '/tse/inserir',
       icon: 'Package',
       badge: {
-        text: 'NEW',
+        text: 'RESTRITO',
       },
     },
+
   ],
   bottom: [
-    {
-      name: 'Get Vibe',
-      url: 'https://github.com/NiceDash/Vibe',
-      icon: 'GitHub',
-      external: true,
-      target: '_blank',
-    },
+    
     {
       name: 'Account',
       url: '/dashboard',

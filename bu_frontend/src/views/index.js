@@ -22,6 +22,10 @@ import ProgressBars from './elements/ProgressBars';
 import PaginationPage from './elements/Pagination';
 import ErrorPage from './pages/404';
 
+import Consultar_BU from './elements/consultar_bu';
+import Auditar from './elements/auditar';
+import Inserir from './elements/inserir';
+
 // See React Router documentation for details: https://reacttraining.com/react-router/web/api/Route
 const pageList = [
   {
@@ -29,6 +33,32 @@ const pageList = [
     path: '/home',
     component: Dashboard,
   },
+
+    {
+      name: 'Consultar BU',
+      path: '/elements/consultar_bu',
+      component: 'Consultar_BU',
+      //badge: {
+      //  text: 'NEW',
+      //},
+    },
+    {
+      name: 'Auditar BU',
+      path: '/elements/auditar',
+      component: 'Auditar',
+      //badge: {
+      //  text: 'NEW',
+      //},
+    },
+    {
+      name: 'Inserir BU',
+      path: '/elements/inserir',
+      component: 'Inserir',
+      badge: {
+        text: 'RESTRITO',
+      },
+    },
+
   {
     name: 'Buttons',
     path: '/elements/buttons',
