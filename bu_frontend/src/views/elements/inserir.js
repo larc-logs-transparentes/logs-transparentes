@@ -18,6 +18,7 @@ import {
   FormText
 } from 'reactstrap';
 import laptopImage from '../../assets/images/laptop.jpeg';
+import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext';
 
 class Inserir extends Component {
   constructor() {
@@ -91,6 +92,17 @@ class Inserir extends Component {
                   Carregar Boletim de Urna para o banco de dados
                 </FormText>
             </FormGroup>
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader>Inserir Boletins de Urna - Consulta</CardHeader>
+            <CardBody>
+              <PageLoaderContext.Consumer>
+                {context => (
+                  <Button onClick={context.loadPage}>Inserir</Button>
+                )}
+              </PageLoaderContext.Consumer>
             </CardBody>
           </Card>
         </Col>
