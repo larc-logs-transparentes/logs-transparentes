@@ -3,6 +3,9 @@ const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
 var bodyParser = require('body-parser');
 
+// TODO: throtling
+// TODO: alguma otimizaçao para assinar a raiz (lru cache, ou assinar a cada X minutos)
+// TODO: 2 ataques na lib do merkltreejs (fork) -> prof simplicio vai explicar como corrige
 const app = express()
 app.use(express.json())
 const port = 3000
@@ -69,6 +72,7 @@ app.get('/tree', (req, res) => {
 })
 
 app.get('/tree/root', (req, res) => {
+  // TODO: em vez de hexa usar base64
   const root = tree.getRoot().toString('hex')
   console.log(root)
   res.send(root)
