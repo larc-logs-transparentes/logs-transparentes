@@ -11,7 +11,14 @@ import {
   CardTitle,
   CardSubtitle,
   CardText,
+  Form,
+  FormGroup,
+  Label,
+  Input, 
+  FormText
 } from 'reactstrap';
+import { Loader } from '../../vibe/';
+import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext';
 import laptopImage from '../../assets/images/laptop.jpeg';
 
 class Consultar_BU extends Component {
@@ -23,52 +30,71 @@ class Consultar_BU extends Component {
   render() {
     return (
       <Row>
-        <Col md={4}>
+        <Col md={12}>
           <Card>
-            <CardHeader>Card</CardHeader>
+            <CardHeader>Consultar Boletins de Urna - Turno</CardHeader>
             <CardBody>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam-a-0 m-b-smitudin
-              egestas dui nec, fermentum diam. Vivamus vel tincidunt libero, vitae elementu
+              <FormGroup>
+                <Label for="exampleSelect">Turno</Label>
+                <Input type="select" name="select" id="exampleSelect">
+                  <option>1º</option>
+                  <option>2º</option>
+                </Input>
+            </FormGroup>
             </CardBody>
           </Card>
+
           <Card>
-            <CardImg src={laptopImage} top width="100%" alt="laptop" />
+            <CardHeader>Consultar Boletins de Urna - Estado</CardHeader>
             <CardBody>
-              <CardTitle>Card title</CardTitle>
-              <CardSubtitle>Card subtitle</CardSubtitle>
-              <CardText>
-                Some quick example text to build on the card title and make up the bulk of the card's content.
-              </CardText>
-              <Button>Button</Button>
+              <FormGroup>
+                <Label for="exampleSelect">UF</Label>
+                <Input type="select" name="select" id="exampleSelect">
+                  <option>SP</option>
+                  <option>MG</option>
+                </Input>
+            </FormGroup>
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader>Consultar Boletins de Urna - Zona Eleitoral</CardHeader>
+            <CardBody>
+              <FormGroup>
+                <Label for="exampleSelect">Zona</Label>
+                <Input type="select" name="select" id="exampleSelect">
+                  <option>SP</option>
+                  <option>MG</option>
+                </Input>
+            </FormGroup>
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader>Consultar Boletins de Urna - Seção Eleitoral</CardHeader>
+            <CardBody>
+              <FormGroup>
+                <Label for="exampleSelect">Seção</Label>
+                <Input type="select" name="select" id="exampleSelect">
+                  <option>SP</option>
+                  <option>MG</option>
+                </Input>
+            </FormGroup>
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader>Consultar Boletins de Urna - Consulta</CardHeader>
+            <CardBody>
+              <PageLoaderContext.Consumer>
+                {context => (
+                  <Button onClick={context.loadPage}>Consultar</Button>
+                )}
+              </PageLoaderContext.Consumer>
             </CardBody>
           </Card>
         </Col>
-        <Col md={4}>
-          <Card>
-            <CardHeader>Card with Footer</CardHeader>
-            <CardBody>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam-a-0 m-b-smitudin
-              egestas dui nec, fermentum diam. Vivamus vel tincidunt libero, vitae elementu
-            </CardBody>
-            <CardFooter>
-              <Button color="success">Add</Button> <Button>Cancel</Button>
-            </CardFooter>
-          </Card>
-          <Card body>
-            <CardTitle>Special Title Treatment</CardTitle>
-            <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-            <Button>Go somewhere</Button>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card color="transparent">
-            <CardHeader>Transparent Card</CardHeader>
-            <CardBody>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam-a-0 m-b-smitudin
-              egestas dui nec, fermentum diam. Vivamus vel tincidunt libero, vitae elementu
-            </CardBody>
-          </Card>
-        </Col>
+        
       </Row>
     );
   }
