@@ -5,10 +5,10 @@ db.sequelize.sync();
 const cors = require("cors");
 const app = express();
 const bu_controller = require("./src/controllers/bu.controller")
-const merkletree_adapter = require("./src/adapters/merkletree.adapter")
+const merkletree_adapter = require("./src/adapters/merkletree.adapter");
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:3000"
 };
 app.use(cors(corsOptions));
 // parse requests of content-type - application/json
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 });
 
 // retrieve all BUs
-app.get("/bu/", (req, res) => {
+app.get("/bu/get_all", (req, res) => {
   console.log("/bu/")
   bu_controller.findAll().then((response) => {
     res.json(response);
@@ -43,11 +43,21 @@ app.post("/bu", (req, res) => {
   res.json(result)
 })
 
+app.get("/bu/get_one/", (req, res) => {
+  console.log(req.query)
+  bu_controller.findByInfo(req.query.turno, req.query.uf, req.query.zona, req.query.secao).then((response) => {
+    // console.log(response)
+    res.json(response)
+  }).catch((err) => {
+    res.json(err)
+  })
+})
+
 // retrieve BU by ID
 app.get("/bu/:id", (req, res) => {
   console.log(req.params.id)
   bu_controller.findById(req.params.id).then((response) => {
-    console.log({response})
+    // console.log({response})
     res.json(response);
   }).catch((err) => {
     console.log(err);

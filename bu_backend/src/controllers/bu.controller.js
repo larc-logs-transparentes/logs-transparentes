@@ -2,7 +2,6 @@ const db = require("../models");
 const merkletree_adapter = require("../adapters/merkletree.adapter")
 
 const BU = db.bu;
-const Op = db.Sequelize.Op;
 
 // Create and Save a new BU
 exports.create = (data) => {
@@ -31,22 +30,17 @@ exports.findById = (id) => {
   })
 };
 
-// Update a BU by the id in the request
-exports.update = (req, res) => {
-  
-};
-
-// Delete a BU with the specified id in the request
-exports.delete = (req, res) => {
-  
-};
-
-// Delete all BUs from the database.
-exports.deleteAll = (req, res) => {
-  
-};
-
-// Find all published BUs
-exports.findAllPublished = (req, res) => {
-  
+// Find BU by BU info
+exports.findByInfo = (turno, uf, zona, secao) => {
+  console.log("findByInfo")
+  return BU.findOne({
+    where: {
+      turno: turno,
+      secao: secao,
+      zona: zona,
+      UF: uf
+    }
+  }).then((data) => {
+    return data
+  })
 };
