@@ -1,6 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
   const BU = sequelize.define("bu", {
-    hash: {
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    turno: {
       type: Sequelize.STRING
     },
     secao: {
@@ -11,7 +16,13 @@ module.exports = (sequelize, Sequelize) => {
     },
     UF: {
       type: Sequelize.STRING
-    }
+    },
+    merkletree_leaf_id: {
+      type: Sequelize.STRING
+    },
+    merkletree_leaf: {
+      type: Sequelize.STRING
+    },
   });
   return BU;
 };
