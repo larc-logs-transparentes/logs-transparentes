@@ -5,6 +5,9 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
       primaryKey: true
     },
+    turno: {
+      type: Sequelize.STRING
+    },
     secao: {
       type: Sequelize.STRING
     },
