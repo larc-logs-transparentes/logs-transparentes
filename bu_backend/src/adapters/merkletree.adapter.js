@@ -1,6 +1,6 @@
 const axios = require('axios')
 const merkletreeHostname = "http://localhost"
-const merkletreePort = 3000
+const merkletreePort = 3001
 
 exports.addLeaf = (data) => {
   return axios.post(`${merkletreeHostname}:${merkletreePort}/tree/leaf`, {

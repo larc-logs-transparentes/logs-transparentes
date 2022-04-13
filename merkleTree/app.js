@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 // TODO: 2 ataques na lib do merkltreejs (fork) -> prof simplicio vai explicar como corrige
 const app = express()
 app.use(express.json())
-const port = 3000
+const port = 3001
 //mudar a funcao de hash
 const tree = new MerkleTree([], SHA256)
 
