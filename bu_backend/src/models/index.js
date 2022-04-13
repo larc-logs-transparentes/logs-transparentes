@@ -20,6 +20,7 @@ db.bu = require("./bu.model.js")(sequelize, Sequelize);
 
 console.log("sequelize.authenticate()")
 sequelize.authenticate().then(() => {
+  // DROP DB WHEN THERE ARE CHANGES TO THE MODEL
   console.log("Success!");
   db.sequelize.sync().then(() => {
     console.log("Sync db without droping.");
