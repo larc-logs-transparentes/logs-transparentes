@@ -7,7 +7,7 @@ export default {
     },
     {
       name: 'Consultar BU',
-      url: '/tse/consulta_bu',
+      url: '/elements/consultar_bu',
       icon: 'Package',
       //badge: {
       //  text: 'NEW',
@@ -15,7 +15,7 @@ export default {
     },
     {
       name: 'Auditar BU',
-      url: '/tse/auditar',
+      url: '/elements/auditar',
       icon: 'Package',
       //badge: {
       //  text: 'NEW',
@@ -26,7 +26,7 @@ export default {
     },
     {
       name: 'Inserir BU',
-      url: '/tse/inserir',
+      url: '/elements/inserir',
       icon: 'Package',
       badge: {
         text: 'RESTRITO',

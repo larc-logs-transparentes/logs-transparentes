@@ -37,7 +37,7 @@ const pageList = [
     {
       name: 'Consultar BU',
       path: '/elements/consultar_bu',
-      component: 'Consultar_BU',
+      component: Consultar_BU,
       //badge: {
       //  text: 'NEW',
       //},
@@ -45,7 +45,7 @@ const pageList = [
     {
       name: 'Auditar BU',
       path: '/elements/auditar',
-      component: 'Auditar',
+      component: Auditar,
       //badge: {
       //  text: 'NEW',
       //},
@@ -53,10 +53,7 @@ const pageList = [
     {
       name: 'Inserir BU',
       path: '/elements/inserir',
-      component: 'Inserir',
-      badge: {
-        text: 'RESTRITO',
-      },
+      component: Inserir,
     },
 
   {
