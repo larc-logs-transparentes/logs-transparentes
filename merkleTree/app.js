@@ -38,11 +38,15 @@ app.post('/', (req, res) => {
 
 app.post('/tree/leaf', (req, res) => {
   console.log(req.body)
-  console.log(req.body.leaf)
+  // console.log(req.body.leaf)
   const leaf = req.body.leaf 
-  tree.addLeaf(SHA256(leaf))
-  const leaf_index = tree.getLeafIndex(SHA256(leaf))
+  const leafString = JSON.stringify(req.body.leaf)
+  console.log({leafString})
+  tree.addLeaf(SHA256(leafString))
+  const leaf_index = tree.getLeafIndex(SHA256(leafString))
   const added_leaf = tree.getLeaf(leaf_index).toString('hex')
+  console.log({leaf_index})
+  console.log({added_leaf})
   res.json({
     "leaf_index": leaf_index,
     "added_leaf": added_leaf,
