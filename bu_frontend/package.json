@@ -11,6 +11,7 @@
     "bootstrap": "^4.3.1",
     "chart.js": "^2.9.4",
     "classnames": "^2.2.6",
+    "crypto-js": "^4.1.1",
     "node-sass": "^4.11.0",
     "react": "^16.8.1",
     "react-chartjs-2": "2.6.4",

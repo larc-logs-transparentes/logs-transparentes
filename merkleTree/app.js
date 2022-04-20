@@ -81,12 +81,16 @@ app.get('/tree/root', (req, res) => {
 app.get('/tree/leaf/:id', (req, res) => {
   // Return a leaf with id equals to id and its proof.
   const leaf = tree.getLeaf(req.params.id).toString('hex')
-  const proof = tree.getHexProof(leaf)
-  console.log(leaf)
+  const root = tree.getRoot()
+  const proofHex = tree.getHexProof(leaf)
+  const proof = tree.getProof(leaf)
+  console.log(proof)
+  console.log(tree.verify(proof, leaf, root))
   res.send({
     "id": req.params.id,
     "leaf": leaf,
-    "proof": proof
+    "proof": proof,
+    "proofHex": proofHex
   })
 })
 
