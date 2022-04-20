@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Button, Badge, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Header, SidebarNav, Footer, PageContent, Avatar, Chat, PageAlert, Page } from '../vibe';
-import Logo from '../assets/images/vibe-logo.svg';
+import Logo from '../assets/images/tse-logo.png';
 import avatar1 from '../assets/images/avatar1.png';
 import nav from '../_nav';
 import routes from '../views';
@@ -99,12 +99,7 @@ export default class DashboardLayout extends Component {
                 🌮
               </span>
             </span>
-          </Footer>
-          <Chat.Container>
-            {this.state.showChat1 && (
-              <Chat.ChatBox name="Messages" status="online" image={avatar1} close={this.closeChat} />
-            )}
-          </Chat.Container>
+          </Footer>+
         </div>
       </ContextProviders>
     );
