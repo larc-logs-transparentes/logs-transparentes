@@ -4,72 +4,101 @@ var crypto_js_1 = require("crypto-js");
 const SHA256 = require('crypto-js/sha256')
 
 var hashFn = bufferifyFn(SHA256)
-var rootS
-var proofS 
-var proofLength
-var hashFn = bufferifyFn(SHA256)
-axios.get(`${bu_api_url}/tree/root`)
-      .then(res => {
-        //console.log(res.data)
-        rootS = Buffer.from(res.data, 'hex')
-        //console.log(rootS)
-      })
-      .catch(err => {
-        console.log(err)
-      })
 
 
-var leafid = 2
-var leafS
-
-axios.get(`${bu_api_url}/tree/leaf/${leafid}`)
-    .then(res => {
-    //console.log(res.data)
-    proofS =  res.data.proof
-    var proofHex = res.data.proofHex
-    for(var i = 0; i < proofS.length; i++){
-        if(typeof proofS[i].data.data === 'Array'){
-            proofS[i] = Buffer.from(JSON.stringify(proofS[i]))
-        }
-        proofS[i].data = Buffer.from(JSON.stringify(proofS[i].data.data))
-    }
-    for(var i = 0; i < proofHex.length; i++){
-        if(typeof proofHex[i] === 'string'){
-            proofS[i].data = Buffer.from(proofHex[i].replace('0x', ''), 'hex')
-        }
-    }
-    //console.log(Buffer.from(proofS[0].replace('0x', ''), 'hex'))
-    //console.log(proofS)
-    //console.log(proofS.length)
-    proofLenght= proofS.length
-    leafS = res.data.leaf
-    })
-    .catch(err => {
-        console.log(err)
-    })
-
-function verify(){    
-    axios.get(`${bu_api_url}/tree/leaf/${leafid}`)
-        .then(res => {
-        //console.log(res.data)
-        proofS =  res.data.proof
-        var proofHex = res.data.proofHex
-        for(var i = 0; i < proofS.length; i++){
-            if(typeof proofS[i].data.data === 'Array'){
-                proofS[i] = Buffer.from(JSON.stringify(proofS[i]))
-            }
-            proofS[i].data = Buffer.from(JSON.stringify(proofS[i].data.data))
-        }
-        for(var i = 0; i < proofHex.length; i++){
-            if(typeof proofHex[i] === 'string'){
-                proofS[i].data = Buffer.from(proofHex[i].replace('0x', ''), 'hex')
-            }
-        }
-        //console.log(Buffer.from(proofS[0].replace('0x', ''), 'hex'))
-        proofLenght= proofS.length
-        leafS = res.data.leaf
-
+function getRoot(){
+    return new Promise(function (resolve, reject){
+        axios.get(`${bu_api_url}/tree/root`)
+        .then((res) => {
+            //console.log(res.data)
+            resolve(Buffer.from(res.data, 'hex'));
+            //console.log(rootS)
+        },
+        (err) => {
+            console.log(err)
+            reject(err);
+        })
         
+    })
+   
+}
+async function main(){
+    var leafid = 2
+    var root = await getRoot()
+    var n
+    n = await getProofInfo(leafid)
+    var leaf = n[1]
+    var proof = n[2]
+    var isTrue = await verify(leaf, root, proof)
+
+    console.log("teste com dados certos")
+    console.log(isTrue)
+    console.log("raiz")
+    console.log(root)
+    console.log("prova")
+    console.log(proof)
+
+    var proofWrong = proof
+    proofWrong[1].data = proofWrong[0].data 
+    isTrue = await verify(leaf, root, proofWrong)
+    console.log("teste com prova errada")
+    console.log(isTrue)
+    console.log("raiz")
+    console.log(root)
+    console.log("prova")
+    console.log(proofWrong)
+
+    isTrue = await verify(leaf, leaf, proof)
+    console.log("teste com root errada")
+    console.log(isTrue)
+    console.log("raiz")
+    console.log(leaf)
+    console.log("prova")
+    console.log(proof)
+
+    isTrue = await verify(root, root, proof)
+    console.log("teste com folha errada")
+    console.log(isTrue)
+    console.log("raiz")
+    console.log(root)
+    console.log("prova")
+    console.log(proof)
+}
+
+
+function getProofInfo(leafid){
+    return new Promise(function (resolve, reject){
+        axios.get(`${bu_api_url}/tree/leaf/${leafid}`)
+            .then((res) => {
+            //console.log(res.data)
+            var proofS =  res.data.proof
+            var proofHex = res.data.proofHex
+            for(var i = 0; i < proofS.length; i++){
+                if(typeof proofS[i].data.data === 'Array'){
+                    proofS[i] = Buffer.from(JSON.stringify(proofS[i]))
+                }
+                proofS[i].data = Buffer.from(JSON.stringify(proofS[i].data.data))
+            }
+            for(var i = 0; i < proofHex.length; i++){
+                if(typeof proofHex[i] === 'string'){
+                    proofS[i].data = Buffer.from(proofHex[i].replace('0x', ''), 'hex')
+                }
+            }
+            var proofLenght= proofS.length
+            var Leaf = res.data.leaf
+            var answer = [proofLenght, Leaf, proofS]
+            resolve(answer);
+            },
+            (err) => {
+                console.log(err)
+                reject(err);
+            }
+        );
+    })
+}
+
+function verify(leafS, rootS, proofS){    
+
         var hash = bufferify(leafS);
         rootS = bufferify(rootS);
         if (!Array.isArray(proofS) ||
@@ -110,7 +139,7 @@ function verify(){
         
             
         }
-        console.log(Buffer.compare(hash, rootS) === 0)
+        //console.log(Buffer.compare(hash, rootS) === 0)
         if (Buffer.compare(hash, rootS) === 0){
             return true
         }
@@ -118,11 +147,8 @@ function verify(){
             return false
         }
         
-        })
-        .catch(err => {
-        console.log(err)
-        })
 }
+
 
 function bufferifyFn(f) {
  
@@ -173,5 +199,4 @@ function bufferify(value) {
     return value;
 }
 
-a = verify()
-console.log(toString(a))
+main()
