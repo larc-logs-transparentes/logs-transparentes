@@ -12,8 +12,11 @@ import { Card, CardBody, Row, Col, CardHeader,
   CardText,
   Button
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import laptopImage from '../../assets/images/laptop.jpeg';
-
+import monitoresImage from '../../assets/images/monitores.png';
+import Chart from '../../views/elements/charts';
+import Progress from '../../views/elements/progress';
 class Dashboard extends Component {
   render() {
     const heroStyles = {
@@ -38,30 +41,28 @@ class Dashboard extends Component {
           </Col>
         </Row>
         <Row>
-          
           <Col md={6} style={cardStyles}>
-          <Card>
-                <CardImg src={urna} top width="100%" alt="laptop" />
+              <Card>
+                <Chart/>
                 <CardBody>
-                  <CardTitle>Quantidade de BUs totalizadas até o momento</CardTitle>
-                  <CardText>
-                    76%
-                  </CardText>
-                  <Button>Button</Button>
+                  <CardTitle>Último resultado parcial</CardTitle>
+                  <Link to="elements/chart_detail">
+                  <Button>Detalhes</Button>
+                  </Link>
                 </CardBody>
               </Card>
           </Col>
         </Row>
         <Row>
           <Col md={6} style={cardStyles}>
-              <Card>
+          <Card>
+                
                 <CardBody>
-                  <CardTitle>Último resultado parcial</CardTitle>
-                  <CardText>
-                    Partido X
-                    Partido Y
-                  </CardText>
-                  <Button>Button</Button>
+                  <Progress />
+                  <CardTitle>Quantidade de BUs totalizadas até o momento</CardTitle>
+                  <Link to="elements/chart_detail">
+                  <Button>Detalhes</Button>
+                  </Link>
                 </CardBody>
               </Card>
           </Col>
@@ -72,9 +73,21 @@ class Dashboard extends Component {
                 <CardBody>
                   <CardTitle>Clique aqui para baixar a prova do Último resultado parcial(raiz assinada)</CardTitle>
                   <CardText>
-                    Exemplo card notícia
+                    
                   </CardText>
-                  <Button>Button</Button>
+                  <Button>Ver Mais</Button>
+                </CardBody>
+              </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={6} style={cardStyles}>
+              <Card>
+                <CardBody>
+                  <CardText>
+                  <img src={monitoresImage} style={{ width: 1000 }} className="" alt="profile" />
+                  </CardText>
+                  <Button>Ver Mais</Button>
                 </CardBody>
               </Card>
           </Col>

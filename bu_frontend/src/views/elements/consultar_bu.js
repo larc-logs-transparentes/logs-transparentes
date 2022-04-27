@@ -55,10 +55,6 @@ class Consultar_BU extends Component {
                 </Input>
             </FormGroup>
             </CardBody>
-          </Card>
-
-          <Card>
-            <CardHeader>Consultar Boletins de Urna - Zona Eleitoral</CardHeader>
             <CardBody>
               <FormGroup>
                 <Label for="exampleSelect">Zona</Label>
@@ -68,16 +64,11 @@ class Consultar_BU extends Component {
                 </Input>
             </FormGroup>
             </CardBody>
-          </Card>
-
-          <Card>
-            <CardHeader>Consultar Boletins de Urna - Seção Eleitoral</CardHeader>
             <CardBody>
               <FormGroup>
                 <Label for="exampleSelect">Seção</Label>
-                <Input type="select" name="select" id="exampleSelect">
-                  <option>SP</option>
-                  <option>MG</option>
+                <Input name="" id="exampleSelect">
+
                 </Input>
             </FormGroup>
             </CardBody>

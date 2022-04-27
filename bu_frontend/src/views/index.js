@@ -25,6 +25,7 @@ import ErrorPage from './pages/404';
 import Consultar_BU from './elements/consultar_bu';
 import Auditar from './elements/auditar';
 import Inserir from './elements/inserir';
+import ChartDetail from './elements/chart_detail';
 
 // See React Router documentation for details: https://reacttraining.com/react-router/web/api/Route
 const pageList = [
@@ -32,6 +33,14 @@ const pageList = [
     name: 'Dashboard',
     path: '/home',
     component: Dashboard,
+  },
+  {
+    name: 'Detalhes',
+    path: '/elements/chart_detail',
+    component: ChartDetail,
+    //badge: {
+    //  text: 'NEW',
+    //},
   },
 
     {

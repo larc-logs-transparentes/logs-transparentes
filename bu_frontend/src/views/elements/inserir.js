@@ -19,6 +19,7 @@ import {
 } from 'reactstrap';
 import laptopImage from '../../assets/images/laptop.jpeg';
 import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext';
+import DragAndDrop from '../../views/elements/DragAndDrop';
 
 class Inserir extends Component {
   constructor() {
@@ -28,73 +29,12 @@ class Inserir extends Component {
 
   render() {
     return (
+      <>
+        <DragAndDrop/>
+      
+
       <Row>
-        <Col md={12}>
-          <Card>
-            <CardHeader>Inserir Boletins de Urna - Turno</CardHeader>
-            <CardBody>
-              <FormGroup>
-                <Label for="exampleSelect">Turno</Label>
-                <Input type="select" name="select" id="exampleSelect">
-                  <option>1º</option>
-                  <option>2º</option>
-                </Input>
-            </FormGroup>
-            </CardBody>
-          </Card>
-
-          <Card>
-            <CardHeader>Inserir Boletins de Urna - Estado</CardHeader>
-            <CardBody>
-              <FormGroup>
-                <Label for="exampleSelect">UF</Label>
-                <Input type="select" name="select" id="exampleSelect">
-                  <option>SP</option>
-                  <option>MG</option>
-                </Input>
-            </FormGroup>
-            </CardBody>
-          </Card>
-
-          <Card>
-            <CardHeader>Inserir Boletins de Urna - Zona Eleitoral</CardHeader>
-            <CardBody>
-              <FormGroup>
-                <Label for="exampleSelect">Zona</Label>
-                <Input type="select" name="select" id="exampleSelect">
-                  <option>SP</option>
-                  <option>MG</option>
-                </Input>
-            </FormGroup>
-            </CardBody>
-          </Card>
-
-          <Card>
-            <CardHeader>Inserir Boletins de Urna - Seção Eleitoral</CardHeader>
-            <CardBody>
-              <FormGroup>
-                <Label for="exampleSelect">Seção</Label>
-                <Input type="select" name="select" id="exampleSelect">
-                  <option>SP</option>
-                  <option>MG</option>
-                </Input>
-            </FormGroup>
-            </CardBody>
-          </Card>
-
-          <Card>
-            <CardHeader>Inserir Boletins de Urna - Boletim de Urna</CardHeader>
-            <CardBody>
-            <FormGroup>
-              <Label for="exampleFile">Arquivo Boletim de Urna</Label>
-                <Input type="file" name="file" id="exampleFile" />
-                <FormText color="muted">
-                  Carregar Boletim de Urna para o banco de dados
-                </FormText>
-            </FormGroup>
-            </CardBody>
-          </Card>
-
+        <Col md={6} style={{marginLeft: '20%'}}>
           <Card>
             <CardHeader>Inserir Boletins de Urna - Consulta</CardHeader>
             <CardBody>
@@ -108,6 +48,7 @@ class Inserir extends Component {
         </Col>
         
       </Row>
+      </>
     );
   }
 }
