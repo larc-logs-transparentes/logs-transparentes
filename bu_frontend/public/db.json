@@ -1,0 +1,25 @@
+{
+    "data":[
+        {
+         "turno": 1,
+         "zona": 233,
+         "secao": 44,
+         "uf": "sp"
+            
+        },
+        {
+            "turno": 2,
+            "zona": 243,
+            "secao": 14,
+            "uf": "mg"
+               
+        },
+        {
+            "turno": 1,
+            "zona": 333,
+            "secao": 22,
+            "uf": "rj"
+               
+        }
+    ]
+}

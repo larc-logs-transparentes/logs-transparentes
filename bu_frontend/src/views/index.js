@@ -26,6 +26,7 @@ import Consultar_BU from './elements/consultar_bu';
 import Auditar from './elements/auditar';
 import Inserir from './elements/inserir';
 import ChartDetail from './elements/chart_detail';
+import MostrarBU from './elements/MostrarBU';
 
 // See React Router documentation for details: https://reacttraining.com/react-router/web/api/Route
 const pageList = [
@@ -41,6 +42,11 @@ const pageList = [
     //badge: {
     //  text: 'NEW',
     //},
+  },
+  {
+    name:'Boletim de Urna - Resultado da Consulta',
+    path:'/elements/mostrarbu/id',
+    component: MostrarBU,
   },
 
     {

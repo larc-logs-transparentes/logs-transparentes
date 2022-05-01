@@ -32,6 +32,14 @@ export default {
         text: 'RESTRITO',
       },
     },
+    {
+      name: 'Todas BUs',
+      url: '/elements/consultar_todos',
+      icon: 'Package',
+      badge: {
+        text: 'RESTRITO',
+      },
+    },
 
   ],
   bottom: [

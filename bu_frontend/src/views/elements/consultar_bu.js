@@ -17,6 +17,7 @@ import {
   Input, 
   FormText
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import { Loader } from '../../vibe/';
 import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext';
 import laptopImage from '../../assets/images/laptop.jpeg';
@@ -79,7 +80,9 @@ class Consultar_BU extends Component {
             <CardBody>
               <PageLoaderContext.Consumer>
                 {context => (
+                  <Link to="/elements/mostrarbu/id">
                   <Button onClick={context.loadPage}>Consultar</Button>
+                  </Link>
                 )}
               </PageLoaderContext.Consumer>
             </CardBody>
