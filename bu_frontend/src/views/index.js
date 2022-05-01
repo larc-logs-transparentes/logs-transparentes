@@ -27,6 +27,7 @@ import Auditar from './elements/auditar';
 import Inserir from './elements/inserir';
 import ChartDetail from './elements/chart_detail';
 import MostrarBU from './elements/MostrarBU';
+import Consultar_Todos from './elements/consultar_todos';
 
 // See React Router documentation for details: https://reacttraining.com/react-router/web/api/Route
 const pageList = [
@@ -39,6 +40,14 @@ const pageList = [
     name: 'Detalhes',
     path: '/elements/chart_detail',
     component: ChartDetail,
+    //badge: {
+    //  text: 'NEW',
+    //},
+  },
+  {
+    name: 'Consultar Todos BUs',
+    path: '/elements/consultar_todos',
+    component: Consultar_Todos,
     //badge: {
     //  text: 'NEW',
     //},
