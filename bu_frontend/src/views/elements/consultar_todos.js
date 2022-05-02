@@ -17,47 +17,50 @@ import {
   Input, 
   FormText
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, Route, Switch, useHistory } from 'react-router-dom';
 import { Loader } from '../../vibe/';
 import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext';
 import laptopImage from '../../assets/images/laptop.jpeg';
+import PostPage from './PostPage';
 
 import api from '../../vibe/services/api';
 
-class Consultar_Todos extends Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
-  const [bu, setbu] = useState([]);
+export default function Consultar_Todos() {
+    const [posts, setPosts] = useState([]);
+    //const [search, setse] = useState([]);
 
-  useEffect(() => {
-    api.get("bu").then(({data}) => {
+        useEffect(() => {
+            const fetchPosts = async () => {
+              try{
+                const response = await api.get('/posts');
+                setPosts(response.data)
+                console.log(response)
+              } catch (err) {
+                if (err.response){
+                  console.log(err.response.data);
+                  console.log(err.response.status);
+                  console.log(err.response.headers);
+                } else {
+                  console.log(`Error: ${err.message}`)
+                }
+              }
+            }
+            fetchPosts()
+            //eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
     
-    })
-  },[]);
+    return(
+      <div >
+        <Switch>
+        <Route path="/posts">
+          <PostPage posts={posts.hash} />
+        </Route>
+          {/*<Route path="/post/:id">
+            <PostPage posts={posts} handleDelete={handleDelete} />
+            </Route>*/}
+        </Switch>
 
-  render() {
-    return (
-      <Row>
-        <Col md={12}>
-          <Card>
-            <CardHeader>Todos Boletins de Urna Apurados</CardHeader>
-            <CardBody>
-              <FormGroup>
-                <Label for="exampleSelect">Turno</Label>
-                <Input type="select" name="select" id="exampleSelect">
-                  <option>1º</option>
-                  <option>2º</option>
-                </Input>
-            </FormGroup>
-            </CardBody>
-          </Card>
-        </Col>
-        
-      </Row>
+    </div>
     );
-  }
 }
 
-export default Consultar_Todos;
