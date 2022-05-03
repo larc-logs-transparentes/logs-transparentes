@@ -21,11 +21,21 @@ import { Link } from 'react-router-dom';
 import { Loader } from '../../vibe/';
 import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext';
 import laptopImage from '../../assets/images/laptop.jpeg';
+import { getBu } from '../../api/bu.api'
 
 class Consultar_BU extends Component {
   constructor() {
     super();
     this.state = {};
+
+    // EXEMPLO DE COMO USAR A FUNÇÃO QUE CHAMA A API
+    // turno, uf, zona, secao
+    getBu("1", "SP", 32, 123).then((bu) => {
+      console.log(bu)
+    })
+    getBu("1", "SP", 123, 123).then((bu) => {
+      console.log(bu)
+    })
   }
 
   render() {
