@@ -38,11 +38,15 @@ app.post('/', (req, res) => {
 
 app.post('/tree/leaf', (req, res) => {
   console.log(req.body)
-  console.log(req.body.leaf)
+  // console.log(req.body.leaf)
   const leaf = req.body.leaf 
-  tree.addLeaf(SHA256(leaf))
-  const leaf_index = tree.getLeafIndex(SHA256(leaf))
+  const leafString = JSON.stringify(req.body.leaf)
+  console.log({leafString})
+  tree.addLeaf(SHA256(leafString))
+  const leaf_index = tree.getLeafIndex(SHA256(leafString))
   const added_leaf = tree.getLeaf(leaf_index).toString('hex')
+  console.log({leaf_index})
+  console.log({added_leaf})
   res.json({
     "leaf_index": leaf_index,
     "added_leaf": added_leaf,
@@ -81,12 +85,16 @@ app.get('/tree/root', (req, res) => {
 app.get('/tree/leaf/:id', (req, res) => {
   // Return a leaf with id equals to id and its proof.
   const leaf = tree.getLeaf(req.params.id).toString('hex')
-  const proof = tree.getHexProof(leaf)
-  console.log(leaf)
+  const root = tree.getRoot()
+  const proofHex = tree.getHexProof(leaf)
+  const proof = tree.getProof(leaf)
+  console.log(proof)
+  console.log(tree.verify(proof, leaf, root))
   res.send({
     "id": req.params.id,
     "leaf": leaf,
-    "proof": proof
+    "proof": proof,
+    "proofHex": proofHex
   })
 })
 

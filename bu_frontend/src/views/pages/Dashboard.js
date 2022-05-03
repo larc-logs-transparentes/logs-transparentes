@@ -20,6 +20,11 @@ class Dashboard extends Component {
       padding: '50px 0 70px'
     };
 
+    const cardStyles = {
+      //padding: '50px 0 70px',
+      marginLeft: '25%'
+    };
+
     return (
       <div>
         <Row>
@@ -33,27 +38,14 @@ class Dashboard extends Component {
           </Col>
         </Row>
         <Row>
-          <Col md={6}>
-              <Card>
-                <CardImg src={urna} top width="100%" alt="laptop" />
-                <CardBody>
-                  <CardTitle>TSE - Notícia 1</CardTitle>
-                  <CardSubtitle>Card subtitle</CardSubtitle>
-                  <CardText>
-                    Exemplo card notícia
-                  </CardText>
-                  <Button>Button</Button>
-                </CardBody>
-              </Card>
-          </Col>
-          <Col md={6}>
+          
+          <Col md={6} style={cardStyles}>
           <Card>
                 <CardImg src={urna} top width="100%" alt="laptop" />
                 <CardBody>
-                  <CardTitle>TSE - Notícia 1</CardTitle>
-                  <CardSubtitle>Card subtitle</CardSubtitle>
+                  <CardTitle>Quantidade de BUs totalizadas até o momento</CardTitle>
                   <CardText>
-                    Exemplo card notícia
+                    76%
                   </CardText>
                   <Button>Button</Button>
                 </CardBody>
@@ -61,25 +53,24 @@ class Dashboard extends Component {
           </Col>
         </Row>
         <Row>
-          <Col md={6}>
+          <Col md={6} style={cardStyles}>
               <Card>
-                <CardImg src={urna} top width="100%" alt="laptop" />
                 <CardBody>
-                  <CardTitle>TSE - Notícia 1</CardTitle>
-                  <CardSubtitle>Card subtitle</CardSubtitle>
+                  <CardTitle>Último resultado parcial</CardTitle>
                   <CardText>
-                    Exemplo card notícia
+                    Partido X
+                    Partido Y
                   </CardText>
                   <Button>Button</Button>
                 </CardBody>
               </Card>
           </Col>
-          <Col md={6}>
+        </Row>
+        <Row>
+          <Col md={6} style={cardStyles}>
               <Card>
-                <CardImg src={urna} top width="100%" alt="laptop" />
                 <CardBody>
-                  <CardTitle>TSE - Notícia 1</CardTitle>
-                  <CardSubtitle>Card subtitle</CardSubtitle>
+                  <CardTitle>Clique aqui para baixar a prova do Último resultado parcial(raiz assinada)</CardTitle>
                   <CardText>
                     Exemplo card notícia
                   </CardText>
