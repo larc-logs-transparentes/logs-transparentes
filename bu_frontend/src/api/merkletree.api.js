@@ -2,9 +2,31 @@ const axios = require('axios')
 const bu_api_url = "http://localhost:8080"
 var crypto_js_1 = require("crypto-js");
 const SHA256 = require('crypto-js/sha256')
-
 var hashFn = bufferifyFn(SHA256)
 
+
+function getBuById(bu_id) {
+    return axios.get(`${bu_api_url}/bu/${bu_id}`)
+      .then(res => {
+        console.log(res.data)
+        buString = data.turno + data.secao + data.zona + data.UF
+        return buString
+      })
+      .catch(err => {
+        console.log(err)
+      })
+}
+
+function getBuByIdString(bu_id) {
+    return axios.get(`${bu_api_url}/bu/${bu_id}`)
+      .then(res => {
+        console.log(res.data)
+        return res.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+}
 
 function getRoot(){
     return new Promise(function (resolve, reject){
@@ -22,6 +44,11 @@ function getRoot(){
     })
    
 }
+
+
+
+
+
 async function main(){
     var leafid = 2
     var root = await getRoot()
@@ -29,7 +56,16 @@ async function main(){
     n = await getProofInfo(leafid)
     var leaf = n[1]
     var proof = n[2]
-    var isTrue = await verify(leaf, root, proof)
+
+    var isTrue =  verifyProof(leaf, root, proof)
+
+    var BU = await getBuByIdString(leafid)
+    console.log(BU)
+    var isBUTrue = verifyLeaf(leaf, BU )
+    console.log("Teste do BU")
+    console.log(BU)
+    console.log(leafS)
+    console.log(isBUTrue)
 
     console.log("teste com dados certos")
     console.log(isTrue)
@@ -40,7 +76,7 @@ async function main(){
 
     var proofWrong = proof
     proofWrong[1].data = proofWrong[0].data 
-    isTrue = await verify(leaf, root, proofWrong)
+    isTrue = await verifyProof(leaf, root, proofWrong)
     console.log("teste com prova errada")
     console.log(isTrue)
     console.log("raiz")
@@ -48,7 +84,7 @@ async function main(){
     console.log("prova")
     console.log(proofWrong)
 
-    isTrue = await verify(leaf, leaf, proof)
+    isTrue = await verifyProof(leaf, leaf, proof)
     console.log("teste com root errada")
     console.log(isTrue)
     console.log("raiz")
@@ -56,7 +92,7 @@ async function main(){
     console.log("prova")
     console.log(proof)
 
-    isTrue = await verify(root, root, proof)
+    isTrue = await verifyProof(root, root, proof)
     console.log("teste com folha errada")
     console.log(isTrue)
     console.log("raiz")
@@ -97,7 +133,24 @@ function getProofInfo(leafid){
     })
 }
 
-function verify(leafS, rootS, proofS){    
+
+function verifyLeaf(leafS, BU){    
+
+    var hash = bufferify(leafS);
+    rootS = bufferify(rootS);
+    var BUHash = SHA256(BU)
+    //console.log(Buffer.compare(hash, rootS) === 0)
+    if (Buffer.compare(BUHash, hash) === 0){
+        return true
+    }
+    else{
+        return false
+    }
+    
+}
+
+
+function verifyProof(leafS, rootS, proofS){    
 
         var hash = bufferify(leafS);
         rootS = bufferify(rootS);
@@ -197,6 +250,35 @@ function bufferify(value) {
     }
     
     return value;
+}
+
+
+async function verify(leafid){
+    //var leafid = 2
+    var root = await getRoot()
+    var n
+    n = await getProofInfo(leafid)
+    var leaf = n[1]
+    var proof = n[2]
+
+    var isTrue =  verifyProof(leaf, root, proof)
+
+    var BU = await getBuByIdString(leafid)
+    console.log(BU)
+    var isBUTrue = verifyLeaf(leaf, BU )
+    console.log("Teste do BU")
+    console.log(BU)
+    console.log(leafS)
+    console.log(isBUTrue)
+
+    console.log("teste com dados certos")
+    console.log(isTrue)
+    console.log("raiz")
+    console.log(root)
+    console.log("prova")
+    console.log(proof)
+
+    return (isTrue && isBUTrue)
 }
 
 main()

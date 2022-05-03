@@ -15,6 +15,21 @@ exports.create = (data) => {
   })
 };
 
+// Create and Save a new BU
+exports.createString = (data) => {
+  buString = data.turno + data.secao + data.zona + data.UF
+  console.log(buString)
+  console.log({"BU": data})
+  return merkletree_adapter.addLeaf(buString).then((merkletree_data) => {
+    BU.create({
+      merkletree_leaf_id: merkletree_data.leaf_index,
+      merkletree_leaf: merkletree_data.added_leaf,
+      ...data
+    })
+  })
+};
+
+
 // Retrieve all BUs from the database.
 exports.findAll = () => {
   return BU.findAll({}).then((data) => {
