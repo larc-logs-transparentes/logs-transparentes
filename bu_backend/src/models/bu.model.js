@@ -23,6 +23,10 @@ module.exports = (sequelize, Sequelize) => {
     merkletree_leaf: {
       type: Sequelize.STRING
     },
+    votos: {
+      // type: Sequelize.DataTypes.JSON
+      type: Sequelize.DataTypes.ARRAY(Sequelize.DataTypes.JSON)
+    }
   });
   return BU;
 };

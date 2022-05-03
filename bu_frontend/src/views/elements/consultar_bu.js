@@ -32,6 +32,9 @@ class Consultar_BU extends Component {
     getBu("1", "SP", 32, 123).then((bu) => {
       console.log(bu)
     })
+    getBu("1", "SP", 123, 123).then((bu) => {
+      console.log(bu)
+    })
   }
 
   render() {
