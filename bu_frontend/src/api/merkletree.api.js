@@ -45,12 +45,19 @@ function getRoot(){
    
 }
 
-
+function getLeafDataFromBu(BU) {
+    return {
+        turno: BU.turno,
+        secao: BU.secao,
+        zona: BU.zona,
+        UF: BU.UF
+    }
+}
 
 
 
 async function main(){
-    var leafid = 2
+    var leafid = 1
     var root = await getRoot()
     var n
     n = await getProofInfo(leafid)
@@ -59,13 +66,13 @@ async function main(){
 
     var isTrue =  verifyProof(leaf, root, proof)
 
-    var BU = await getBuByIdString(leafid)
-    console.log(BU)
-    var isBUTrue = verifyLeaf(leaf, BU )
+    var BU = await getBuByIdString(1)
+    const BuLeafData = getLeafDataFromBu(BU)
+    //var isBUTrue = verifyLeaf(leaf, BuLeafData, root )
     console.log("Teste do BU")
     console.log(BU)
-    console.log(leafS)
-    console.log(isBUTrue)
+    console.log(leaf)
+    //console.log(isBUTrue)
 
     console.log("teste com dados certos")
     console.log(isTrue)
@@ -106,7 +113,7 @@ function getProofInfo(leafid){
     return new Promise(function (resolve, reject){
         axios.get(`${bu_api_url}/tree/leaf/${leafid}`)
             .then((res) => {
-            //console.log(res.data)
+            console.log(res.data.proof[0].data)
             var proofS =  res.data.proof
             var proofHex = res.data.proofHex
             for(var i = 0; i < proofS.length; i++){
@@ -134,19 +141,23 @@ function getProofInfo(leafid){
 }
 
 
-function verifyLeaf(leafS, BU){    
+function verifyLeaf(leafS, BU, rootS){    
 
     var hash = bufferify(leafS);
     rootS = bufferify(rootS);
-    var BUHash = SHA256(BU)
-    //console.log(Buffer.compare(hash, rootS) === 0)
+    var BUHash = SHA256(JSON.stringify(BU))
+    BUHash = bufferify(BUHash)
+    console.log("leaf")
+    console.log("leaf", leafS)
+    console.log("BU hash", BUHash)
+    console.log(hash)
+    console.log(Buffer.compare(BUHash, hash) === 0)
     if (Buffer.compare(BUHash, hash) === 0){
         return true
     }
     else{
         return false
     }
-    
 }
 
 
