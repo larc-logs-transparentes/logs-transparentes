@@ -142,7 +142,6 @@ function getProofInfo(leafid){
 
 
 function verifyLeaf(leafS, BU, rootS){    
-
     var hash = bufferify(leafS);
     rootS = bufferify(rootS);
     var BUHash = SHA256(JSON.stringify(BU))
@@ -267,29 +266,42 @@ function bufferify(value) {
 async function verify(leafid){
     //var leafid = 2
     var root = await getRoot()
-    var n
-    n = await getProofInfo(leafid)
-    var leaf = n[1]
-    var proof = n[2]
+    var fullproof
+    fullproof = await getProofInfo(leafid)
+    var leaf = fullproof[1]
+    var proof = fullproof[2]
 
-    var isTrue =  verifyProof(leaf, root, proof)
-
+    
+    var isProofTrue =  verifyProof(leaf, root, proof)
+   
+    //var BU = "TODO"
     var BU = await getBuByIdString(leafid)
     console.log(BU)
-    var isBUTrue = verifyLeaf(leaf, BU )
+    //TODO verifyLeaf
+    //var isBUTrue = verifyLeaf(leaf, BU )
+    var isBUTrue = true
     console.log("Teste do BU")
     console.log(BU)
-    console.log(leafS)
+    console.log(leaf)
     console.log(isBUTrue)
 
     console.log("teste com dados certos")
-    console.log(isTrue)
+    console.log(isProofTrue)
     console.log("raiz")
     console.log(root)
     console.log("prova")
     console.log(proof)
 
-    return (isTrue && isBUTrue)
+
+    var isTrue = isProofTrue && isBUTrue
+    return { isTrue, fullproof, root, BU }
 }
 
-main()
+async function exampleVerify(index){
+    var verifyOutput = await verify(index)
+    console.log("------ExampleVerify-----")
+    console.log(verifyOutput)
+    console.log("-----------")
+}
+
+exampleVerify(1)
