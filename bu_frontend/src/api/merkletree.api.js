@@ -1,3 +1,4 @@
+import { Buffer } from "buffer"
 const axios = require('axios')
 const bu_api_url = "http://localhost:8080"
 var crypto_js_1 = require("crypto-js");
@@ -9,7 +10,7 @@ function getBuById(bu_id) {
     return axios.get(`${bu_api_url}/bu/${bu_id}`)
       .then(res => {
         console.log(res.data)
-        buString = data.turno + data.secao + data.zona + data.UF
+        var buString = res.data.turno + res.data.secao + res.data.zona + res.data.UF
         return buString
       })
       .catch(err => {
@@ -32,7 +33,7 @@ function getRoot(){
     return new Promise(function (resolve, reject){
         axios.get(`${bu_api_url}/tree/root`)
         .then((res) => {
-            //console.log(res.data)
+            console.log(res.data)
             resolve(Buffer.from(res.data, 'hex'));
             //console.log(rootS)
         },
@@ -113,7 +114,7 @@ function getProofInfo(leafid){
     return new Promise(function (resolve, reject){
         axios.get(`${bu_api_url}/tree/leaf/${leafid}`)
             .then((res) => {
-            console.log(res.data.proof[0].data)
+//            console.log(res.data.proof[0].data)
             var proofS =  res.data.proof
             var proofHex = res.data.proofHex
             for(var i = 0; i < proofS.length; i++){
@@ -263,7 +264,7 @@ function bufferify(value) {
 }
 
 
-async function verify(leafid){
+export async function verify(leafid){
     //var leafid = 2
     var root = await getRoot()
     var fullproof
@@ -304,4 +305,4 @@ async function exampleVerify(index){
     console.log("-----------")
 }
 
-exampleVerify(1)
+//exampleVerify(1)

@@ -84,7 +84,7 @@ class MostrarBU extends Component {
       <Row>
       <Col md={8}>
         <Card>
-          <CardHeader>Consultar Boletins de Urna - Turno<button class="btn float-right" onClick={() => mostraProva()}><img src={(prova.isTrue===true)? cadVerde : cadVermelho} alt="estado" /></button></CardHeader>
+          <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => mostraProva()}><img src={(prova.isTrue===true)? cadVerde : cadVermelho} alt="estado" /></button></CardHeader>
           <CardBody>
               <Label>Detalhes</Label>
               <CardBody>
