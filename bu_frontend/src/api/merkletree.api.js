@@ -263,8 +263,15 @@ function bufferify(value) {
 }
 
 
-async function verify(leafid){
-    //var leafid = 2
+async function verify(buId){
+    //var BU = "TODO"
+    var BU = await getBuByIdString(buId)
+    console.log(BU)
+    //TODO verifyLeaf
+    //var isBUTrue = verifyLeaf(leaf, BU )
+    var isBUTrue = true
+
+    var leafid = BU.merkletree_leaf_id
     var root = await getRoot()
     var fullproof
     fullproof = await getProofInfo(leafid)
@@ -274,12 +281,7 @@ async function verify(leafid){
     
     var isProofTrue =  verifyProof(leaf, root, proof)
    
-    //var BU = "TODO"
-    var BU = await getBuByIdString(leafid)
-    console.log(BU)
-    //TODO verifyLeaf
-    //var isBUTrue = verifyLeaf(leaf, BU )
-    var isBUTrue = true
+    
     console.log("Teste do BU")
     console.log(BU)
     console.log(leaf)
@@ -297,8 +299,8 @@ async function verify(leafid){
     return { isTrue, fullproof, root, BU }
 }
 
-async function exampleVerify(index){
-    var verifyOutput = await verify(index)
+async function exampleVerify(buId){
+    var verifyOutput = await verify(buId)
     console.log("------ExampleVerify-----")
     console.log(verifyOutput)
     console.log("-----------")
