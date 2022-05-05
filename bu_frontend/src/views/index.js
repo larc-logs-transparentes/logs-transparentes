@@ -54,7 +54,7 @@ const pageList = [
   },
   {
     name:'Boletim de Urna - Resultado da Consulta',
-    path:'/elements/mostrarbu/id',
+    path:'/elements/mostrarbu/:id',
     component: MostrarBU,
   },
 
