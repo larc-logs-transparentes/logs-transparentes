@@ -1,6 +1,7 @@
 import { Buffer } from "buffer"
 const axios = require('axios')
-const bu_api_url = "http://localhost:8080"
+const bu_api_url = require('../config.json').bu_api_url
+//const bu_api_url = "http://172.20.11.11:8080"
 var crypto_js_1 = require("crypto-js");
 const SHA256 = require('crypto-js/sha256')
 var hashFn = bufferifyFn(SHA256)
@@ -152,7 +153,7 @@ function verifyLeaf(leafS, BU){
 
    //tem q usar o stringify
    // var BUHash = SHA256(JSON.stringify(buString))
-    BUHash = SHA256(buString)
+    var BUHash = SHA256(buString)
     BUHash = bufferify(BUHash)
    // console.log("leaf")
    // console.log("leaf", leafS)
@@ -323,4 +324,4 @@ async function exampleVerify(buId){
     console.log("-----------")
 }
 
-//exampleVerify(1)
+// exampleVerify(1)
