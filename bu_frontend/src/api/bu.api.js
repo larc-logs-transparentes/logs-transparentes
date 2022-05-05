@@ -12,10 +12,23 @@ export const addBu = (data) => {
     })
 }
 
+export function getBuAll() {
+  axios.get(`${bu_api_url}/bu/get_all`)
+    .then(response => {
+//      console.log(response.data)
+     return response.data
+//      console.log(ret)
+    })
+    .catch(err => {
+      console.log(err)
+      return []
+    })
+}
+
 export const getBuById = (bu_id) => {
   return axios.get(`${bu_api_url}/bu/${bu_id}`)
     .then(res => {
-      console.log(res.data)
+//      console.log(res.data)
       return res.data
     })
     .catch(err => {
@@ -24,10 +37,16 @@ export const getBuById = (bu_id) => {
 }
 
 export const getBu = async (turno, estado, zona, secao) => {
+  console.log("getBu")
+  console.log("turno=" + turno)
+  console.log("uf=" + estado)
+  console.log("zona=" + zona)
+  console.log("secao=" + secao)
+  
   return axios.get(`${bu_api_url}/bu/get_one/?turno=${turno}&uf=${estado}&zona=${zona}&secao=${secao}`)
     .then(res => {
-      // console.log("res.data")
-      // console.log(res.data)
+
+      console.log(res.data)
       return res.data
     })
     .catch(err => {
