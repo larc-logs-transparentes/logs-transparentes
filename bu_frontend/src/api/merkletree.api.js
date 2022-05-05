@@ -5,7 +5,7 @@ const SHA256 = require('crypto-js/sha256')
 var hashFn = bufferifyFn(SHA256)
 
 
-function getBuById(bu_id) {
+function getBuByIdString(bu_id) {
     return axios.get(`${bu_api_url}/bu/${bu_id}`)
       .then(res => {
         console.log(res.data)
@@ -17,10 +17,10 @@ function getBuById(bu_id) {
       })
 }
 
-function getBuByIdString(bu_id) {
+function getBuById(bu_id) {
     return axios.get(`${bu_api_url}/bu/${bu_id}`)
       .then(res => {
-        console.log(res.data)
+      //  console.log(res.data)
         return res.data
       })
       .catch(err => {
@@ -113,7 +113,7 @@ function getProofInfo(leafid){
     return new Promise(function (resolve, reject){
         axios.get(`${bu_api_url}/tree/leaf/${leafid}`)
             .then((res) => {
-            console.log(res.data.proof[0].data)
+           // console.log(res.data.proof[0].data)
             var proofS =  res.data.proof
             var proofHex = res.data.proofHex
             for(var i = 0; i < proofS.length; i++){
@@ -129,7 +129,8 @@ function getProofInfo(leafid){
             }
             var proofLenght= proofS.length
             var Leaf = res.data.leaf
-            var answer = [proofLenght, Leaf, proofS]
+            var proofString = res.data.proof
+            var answer = [proofLenght, Leaf, proofS, proofString]
             resolve(answer);
             },
             (err) => {
@@ -141,21 +142,27 @@ function getProofInfo(leafid){
 }
 
 
-function verifyLeaf(leafS, BU, rootS){    
-    var hash = bufferify(leafS);
-    rootS = bufferify(rootS);
-    var BUHash = SHA256(JSON.stringify(BU))
+function verifyLeaf(leafS, BU){    
+    var hash = bufferify(leafS);  
+    var buString =  BU.turno + BU.secao + BU.zona + BU.UF + JSON.stringify(BU.votos)
+    buString = JSON.stringify(buString)
+   // console.log("BuString:")
+   // console.log(buString)
+
+   //tem q usar o stringify
+   // var BUHash = SHA256(JSON.stringify(buString))
+    BUHash = SHA256(buString)
     BUHash = bufferify(BUHash)
-    console.log("leaf")
-    console.log("leaf", leafS)
-    console.log("BU hash", BUHash)
-    console.log(hash)
-    console.log(Buffer.compare(BUHash, hash) === 0)
+   // console.log("leaf")
+   // console.log("leaf", leafS)
+   // console.log("BU hash", BUHash)
+   // console.log(hash)
+   // console.log(Buffer.compare(BUHash, hash) === 0)
     if (Buffer.compare(BUHash, hash) === 0){
-        return true
+        return [ true, BUHash ]
     }
     else{
-        return false
+        return [false , BUHash]
     }
 }
 
@@ -262,41 +269,50 @@ function bufferify(value) {
     return value;
 }
 
-
 async function verify(buId){
-    //var BU = "TODO"
-    var BU = await getBuByIdString(buId)
-    console.log(BU)
-    //TODO verifyLeaf
-    //var isBUTrue = verifyLeaf(leaf, BU )
-    var isBUTrue = true
-
+   
+    var BU = await getBuById(buId)
+   // console.log(BU)
     var leafid = BU.merkletree_leaf_id
     var root = await getRoot()
+    var rootString = root.toString('hex')
     var fullproof
     fullproof = await getProofInfo(leafid)
     var leaf = fullproof[1]
     var proof = fullproof[2]
-
+    var proofString = fullproof[3]
     
+    for(var i = 0; i < proofString.length; i++){
+       //  if(typeof proofString[i] === 'buffer'){
+             proofString[i].data = proofString[i].data.toString('hex')
+         // }
+     }
+    fullproof[3] = proofString
+
+    var verifyLeafOut = verifyLeaf(leaf, BU )
+    var isBUTrue = verifyLeafOut[0]
+    var newBUHash = verifyLeafOut[1].toString('hex')
+
     var isProofTrue =  verifyProof(leaf, root, proof)
    
     
     console.log("Teste do BU")
-    console.log(BU)
-    console.log(leaf)
+    //console.log(BU)
+    //console.log(leaf)
     console.log(isBUTrue)
+
+   
 
     console.log("teste com dados certos")
     console.log(isProofTrue)
     console.log("raiz")
-    console.log(root)
+    console.log(root.toString('hex'))
     console.log("prova")
-    console.log(proof)
+    console.log(fullproof[3])
 
 
     var isTrue = isProofTrue && isBUTrue
-    return { isTrue, fullproof, root, BU }
+    return { isTrue, fullproof, rootString, BU, newBUHash }
 }
 
 async function exampleVerify(buId){
