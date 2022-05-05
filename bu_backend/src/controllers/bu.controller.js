@@ -5,7 +5,8 @@ const BU = db.bu;
 
 // Create and Save a new BU
 exports.create = (data) => {
-  buString = data.turno + data.secao + data.zona + data.UF
+  buString = data.turno + data.secao + data.zona + data.UF + JSON.stringify(data.votos)
+  console.log("Debug BU")
   console.log(buString)
   console.log({"BU": data})
   return merkletree_adapter.addLeaf(buString).then((merkletree_data) => {
