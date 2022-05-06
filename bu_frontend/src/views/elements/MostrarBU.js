@@ -39,11 +39,14 @@ class MostrarBU extends Component {
   bu_api_url = require('../../config.json').bu_api_url
   // bu_api_url = "http://172.20.11.11:8080"
 
+
   constructor(props) {
     super(props)
     this.state = {bu: [],
                   prova: [],
                   votos: [],
+                  root: [],
+                  fullproof: [],
                   mostrarProva: false}
     
     this.mostraProva = this.mostraProva.bind(this);
@@ -57,35 +60,42 @@ class MostrarBU extends Component {
       .then(response => this.setState({ bu: response.data, votos: response.data.votos }))
 
     var retVerify = verify(id)
-    retVerify.then( value => this.setState({ prova: value }))
+    retVerify.then( value => {
+      this.setState({ prova: value })
+      this.setState({ root: this.state.prova.root })
+      this.setState({ fullproof: this.state.prova.fullproof })
+    })
   }
 
   mostraProva() {
     this.setState({mostrarProva: !this.state.mostrarProva})
-    console.log(this.state.mostrarProva)
+//      (this.state.mostrarProva)
   }
   
   render() {
     var bu = this.state.bu
     var prova = this.state.prova
-    console.log(prova.isTrue)
-    console.log(prova.fullproof)
-    console.log(prova.root)
-    console.log(prova.BU)
+//    console.log(prova.isTrue)
+//    console.log("fullProof")
+//    console.log(prova.fullproof)
+//    console.log("root")
+//    console.log(prova.root)
   
-    var mostrar = false
-  
-    const mostraProva = () => {mostrar = !mostrar
-      console.log(mostrar)
-    }
+    var mostrar = this.state.mostrarProva
+    var raizArr = Array.from(this.state.root)
+    var fullproofArr = Array.from(this.state.fullproof)
+
+    console.log(fullproofArr)
+
+   
   //    var votos = Array.from(bu.votos)
   //    console.log(bu.votos)
   
     return (
       <Row>
-      <Col md={8}>
+      <Col md={6}>
         <Card>
-          <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => mostraProva()}><img src={(prova.isTrue===true)? cadVerde : cadVermelho} alt="estado" /></button></CardHeader>
+          <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => this.mostraProva()}><img src={(prova.isTrue===true)? cadVerde : cadVermelho} alt="estado" /></button></CardHeader>
           <CardBody>
               <Label>Detalhes</Label>
               <CardBody>
@@ -112,7 +122,44 @@ class MostrarBU extends Component {
           </CardBody>
         </Card>
       </Col>
-  
+      {mostrar === true && prova.isTrue === true && (<Col md={5}>
+      <Card>
+        <CardHeader >Este BU foi devidamente verificado nos sistemas do TSE</CardHeader>
+        <CardBody>
+            <CardBody>
+            <Label>Raiz</Label>
+            <CardText>{raizArr.map(item => {return item.toString(16)})}</CardText>
+            </CardBody>
+            <CardBody>
+            <Label>Prova completa 1</Label>
+            <CardText>{fullproofArr[0]}</CardText>
+            </CardBody>
+            <CardBody>
+            <Label>Prova completa 2</Label>
+            <CardText>{fullproofArr[1]}</CardText>
+            </CardBody>
+        </CardBody>
+      </Card>
+    </Col>)}
+    {mostrar === true && prova.isTrue === false && (<Col md={4}>
+      <Card>
+        <CardHeader>ATENÇÃO: Este BU não pode ser verificado ou foi ALTERADO</CardHeader>
+        <CardBody>
+            <CardBody>
+            <Label>Raiz</Label>
+            <CardText>{raizArr.map(item => {return item.toString(16)})}</CardText>
+            </CardBody>
+            <CardBody>
+            <Label>Prova completa 1</Label>
+            <CardText>{fullproofArr[0]}</CardText>
+            </CardBody>
+            <CardBody>
+            <Label>Prova completa 2</Label>
+            <CardText>{fullproofArr[1]}</CardText>
+            </CardBody>
+        </CardBody>
+      </Card>
+    </Col>)}
       </Row>
     );
   }
