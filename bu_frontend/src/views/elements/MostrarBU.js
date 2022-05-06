@@ -40,6 +40,7 @@ class MostrarBU extends Component {
   // bu_api_url = "http://172.20.11.11:8080"
 
 
+
   constructor(props) {
     super(props)
     this.state = {bu: [],
@@ -75,17 +76,21 @@ class MostrarBU extends Component {
   render() {
     var bu = this.state.bu
     var prova = this.state.prova
-//    console.log(prova.isTrue)
+//    console.log(this.state.prova)
 //    console.log("fullProof")
 //    console.log(prova.fullproof)
 //    console.log("root")
 //    console.log(prova.root)
   
-    var mostrar = this.state.mostrarProva
-    var raizArr = Array.from(this.state.root)
-    var fullproofArr = Array.from(this.state.fullproof)
 
-    console.log(fullproofArr)
+    console.log(JSON.stringify(this.state.prova))
+    var mostrar = this.state.mostrarProva
+    var raizArr = (this.state.root===undefined)? [] : Array.from(this.state.root)
+    var fullproofArr = (this.state.fullproof===undefined)? [] : Array.from(this.state.fullproof)
+
+    var votosArr = (this.state.votos===undefined)? [] : Array.from(this.state.votos)
+
+    //console.log(votosArr)
 
    
   //    var votos = Array.from(bu.votos)
@@ -93,7 +98,7 @@ class MostrarBU extends Component {
   
     return (
       <Row>
-      <Col md={6}>
+      <Col md={5}>
         <Card>
           <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => this.mostraProva()}><img src={(prova.isTrue===true)? cadVerde : cadVermelho} alt="estado" /></button></CardHeader>
           <CardBody>
@@ -116,27 +121,22 @@ class MostrarBU extends Component {
               </CardBody>
               <CardBody>
               <Label>Votos</Label>
-              <CardText>
+              <CardText><ul>
+                {votosArr.map(item => {
+                  return <li>{item.nome + "; " + item.votos  + "; " + item.partido}</li>
+                })}</ul>
               </CardText>
               </CardBody>
           </CardBody>
         </Card>
       </Col>
-      {mostrar === true && prova.isTrue === true && (<Col md={5}>
+      {mostrar === true && prova.isTrue === true && (<Col md={4}>
       <Card>
         <CardHeader >Este BU foi devidamente verificado nos sistemas do TSE</CardHeader>
         <CardBody>
             <CardBody>
-            <Label>Raiz</Label>
-            <CardText>{raizArr.map(item => {return item.toString(16)})}</CardText>
-            </CardBody>
-            <CardBody>
-            <Label>Prova completa 1</Label>
-            <CardText>{fullproofArr[0]}</CardText>
-            </CardBody>
-            <CardBody>
-            <Label>Prova completa 2</Label>
-            <CardText>{fullproofArr[1]}</CardText>
+            <Label>Prova</Label>
+            <CardText>{JSON.stringify(this.state.prova)}</CardText>
             </CardBody>
         </CardBody>
       </Card>
@@ -146,16 +146,8 @@ class MostrarBU extends Component {
         <CardHeader>ATENÇÃO: Este BU não pode ser verificado ou foi ALTERADO</CardHeader>
         <CardBody>
             <CardBody>
-            <Label>Raiz</Label>
-            <CardText>{raizArr.map(item => {return item.toString(16)})}</CardText>
-            </CardBody>
-            <CardBody>
-            <Label>Prova completa 1</Label>
-            <CardText>{fullproofArr[0]}</CardText>
-            </CardBody>
-            <CardBody>
-            <Label>Prova completa 2</Label>
-            <CardText>{fullproofArr[1]}</CardText>
+            <Label>Prova</Label>
+            <CardText>{JSON.stringify(this.state.prova)}</CardText>
             </CardBody>
         </CardBody>
       </Card>
