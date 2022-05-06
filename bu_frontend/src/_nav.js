@@ -13,31 +13,39 @@ export default {
       //  text: 'NEW',
       //},
     },
-    {
-      name: 'Auditar BU',
-      url: '/elements/auditar',
-      icon: 'Package',
-      //badge: {
-      //  text: 'NEW',
-      //},
-    },
+    // {
+    //   name: 'Auditar BU',
+    //   url: '/elements/auditar',
+    //   icon: 'Package',
+    //   //badge: {
+    //   //  text: 'NEW',
+    //   //},
+    // },
     {
       divider: true,
     },
+    // {
+    //   name: 'Inserir BU',
+    //   url: '/elements/inserir',
+    //   icon: 'Package',
+    //   badge: {
+    //     text: 'RESTRITO',
+    //   },
+    // },
     {
-      name: 'Inserir BU',
+      name: 'Monitorar',
       url: '/elements/inserir',
       icon: 'Package',
       badge: {
-        text: 'RESTRITO',
+        text: 'Monitores',
       },
     },
     {
-      name: 'Todas BUs',
-      url: '/elements/consultar_todos',
+      name: 'Retotalizar',
+      url: '/elements/auditar',
       icon: 'Package',
       badge: {
-        text: 'RESTRITO',
+        text: 'Monitores',
       },
     },
 

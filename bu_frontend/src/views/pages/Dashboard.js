@@ -55,20 +55,6 @@ class Dashboard extends Component {
         </Row>
         <Row>
           <Col md={6} style={cardStyles}>
-          <Card>
-                
-                <CardBody>
-                  <Progress />
-                  <CardTitle>Quantidade de BUs totalizadas até o momento</CardTitle>
-                  <Link to="elements/chart_detail">
-                  <Button>Detalhes</Button>
-                  </Link>
-                </CardBody>
-              </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6} style={cardStyles}>
               <Card>
                 <CardBody>
                   <CardTitle>Clique aqui para baixar a prova do Último resultado parcial(raiz assinada)</CardTitle>
