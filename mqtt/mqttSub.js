@@ -95,7 +95,7 @@ function provaDeConsistencia(merklePrincipal, merkleParcial, folhasInseridas, ra
     merklePrincipal.addLeaf(merkleParcial.getHexRoot())
     console.log("Raiz da árvore parcial adicionada a principal")
 
-    raiz = merklePrincipal.getHexRoot()
+    raiz = merklePrincipal.getRoot().toString('hex')
 
     merkleParcial.resetTree()
     console.log("Árvore parcial resetada")
@@ -114,40 +114,7 @@ function provaDeConsistencia(merklePrincipal, merkleParcial, folhasInseridas, ra
 
 /* Retorna a raiz da Merkle Tree principal caso fosse adicionado a raiz da parcial*/
 function obterRaizMerklePrincipal(merklePrincipal, raizMerkleParcial){
-  return new MerkleTree(merklePrincipal.getLeaves().concat(raizMerkleParcial), SHA256).getHexRoot()
-  /* new MerkleTree(merklePrincipal.getLeaves().concat(raizMerkleParcial), SHA256).print();
-
-  nivel = -1, i = 0
-  noImparEncontrado = false
-  hash = raizMerkleParcial
-  console.log(hash)
-
-  const layers = merklePrincipal.getLayers()
-  console.log(layers)
-  while(nivel < merklePrincipal.getDepth()){
-    nivel++
-    i = layers[nivel].length - 1
-    if(!noImparEncontrado && layers[nivel].length % 2 == 0){
-      console.log(i)
-    }
-    else{
-      noImparEncontrado = true
-      console.log(nivel)
-      console.log(i)
-      
-      combined = [layers[nivel][i], hash].map(x => MerkleTree.bufferify(x))
-      console.log(combined)
-      
-      data = MerkleTree.bufferToHex(Buffer.concat(combined).toString('hex'))
-      console.log(data)
-
-      hash = MerkleTree.bufferify(SHA256(data))
-
-      console.log(MerkleTree.bufferToHex(hash))
-      i = Math.floor(i/2)
-    }
-  }
-  return hash; */
+  return new MerkleTree(merklePrincipal.getLeaves().concat(raizMerkleParcial), SHA256).getRoot().toString('hex')
 }
 
 function printTrees(){

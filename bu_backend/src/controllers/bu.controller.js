@@ -37,12 +37,11 @@ exports.create = (data) => {
   if(consistencyProofData.BUsAdicionados.length >= TAM_MTREE_PARCIAL){
     merkletree_adapter.getTreeRoot().then((treeRoot) => {
       consistencyProofData.raizAssinada = treeRoot
-    })
-
-    publish("guilherme/teste", JSON.stringify(consistencyProofData))
-    console.log("Publicado teste de consistência")
-    consistencyProofData.BUsAdicionados = []
-    consistencyProofData.cont ++
+      publish("guilherme/teste", JSON.stringify(consistencyProofData))
+      console.log("Publicado teste de consistência")
+      consistencyProofData.BUsAdicionados = []
+      consistencyProofData.cont ++
+    }) 
   }
 
   return
