@@ -1,3 +1,6 @@
+### Versão node
+12.18.2 (use-a se der problema com alguma lib)
+
 
 ### Quick Start
 
