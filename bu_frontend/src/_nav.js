@@ -48,6 +48,14 @@ export default {
         text: 'Monitores',
       },
     },
+    {
+      name: 'Monitorar2',
+      url: '/elements/monitorar',
+      icon: 'Package',
+      badge: {
+        text: 'Monitores',
+      },
+    },
 
   ],
   bottom: [
