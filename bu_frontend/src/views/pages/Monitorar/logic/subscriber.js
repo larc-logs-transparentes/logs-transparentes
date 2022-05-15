@@ -1,14 +1,10 @@
 import client from "./client"
+import ProofData from "./ProofData"
 const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
 const TAM_MAX_MTREE_PARCIAL = 4
 
-let consistencyProofData = {
-    raizAssinada: null,
-    BUsAdicionados: [],
-    cont: 0,
-    ultimo: false,
-}
+export let consistencyProofData = new ProofData()
 
 let ultimoCont  = -1 //Armazena o dado referente ao último envio do publisher processado
 const bufferJSONs = [] //Buffer dos dados publicados  
@@ -20,20 +16,20 @@ export function subscriber(){
 
     /* -------------------Recebe e armazena os dados-------------------- */
     console.log(`Topic: ${topic}, Message: ${payload}, Qos: ${packet.qos}`)
-    consistencyProofData = JSON.parse(payload)
-    inserirNoBuffer(consistencyProofData) //insere no buffer ordenado pelo dado "cont"
+    consistencyProofData.setProofData(JSON.parse(payload))
+    inserirNoBuffer(consistencyProofData.getProofData()) //insere no buffer ordenado pelo dado "cont"
     /* ----------------------------------------------------------------- */
 
     /* ------------------Processa os dados do buffer-------------------- */
     while(bufferJSONs.length > 0){ //Enquanto conter dados no buffer
       if(bufferJSONs[bufferJSONs.length - 1].cont == ultimoCont + 1){ //se o dado mais recente no buffer for o próximo em relação aos processados
-        consistencyProofData = bufferJSONs.pop() //remove do buffer
+        consistencyProofData.setProofData(bufferJSONs.pop()) //remove do buffer
 
         // TODO: aqui acho q precisa retornar as infos para a pagina conseguir renderizar
         // O problema disso é q se dermos um return ele sai da funcao
-        console.log(provaDeConsistencia(arvorePrincipal, arvoreParcial, consistencyProofData.BUsAdicionados, consistencyProofData.raizAssinada)) //processa  
+        console.log(provaDeConsistencia(arvorePrincipal, arvoreParcial, consistencyProofData.getProofData().BUsAdicionados, consistencyProofData.getProofData().raizAssinada)) //processa  
         
-        if(consistencyProofData.ultimo == true) //se este dado estiver marcado como último, encerra o programa
+        if(consistencyProofData.getProofData().ultimo == true) //se este dado estiver marcado como último, encerra o programa
           console.log("---------------------FIM---------------------")
           console.log("---------------------FIM---------------------")
           console.log("---------------------FIM---------------------")

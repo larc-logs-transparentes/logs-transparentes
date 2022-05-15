@@ -3,7 +3,7 @@ import { Card, CardBody, Col, Row, Button } from 'reactstrap';
 import { Loader } from '../../../vibe';
 import PageLoaderContext from '../../../vibe/components/PageLoader/PageLoaderContext';
 import Colunavalidacao from './Colunavalidacao';
-import { provaDeConsistencia, subscriber } from './logic/subscriber';
+import { provaDeConsistencia, subscriber, consistencyProofData } from './logic/subscriber';
 
 export default function Monitorar() {
   React.useEffect(() => {
