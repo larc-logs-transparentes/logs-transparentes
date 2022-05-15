@@ -22,7 +22,7 @@ import ProgressBars from './elements/ProgressBars';
 import PaginationPage from './elements/Pagination';
 import ErrorPage from './pages/404';
 
-import Monitorar from './elements/monitorar';
+import Monitorar from './pages/Monitorar/Monitorar';
 import Consultar_BU from './elements/consultar_bu';
 import Auditar from './elements/auditar';
 import Inserir from './elements/inserir';
@@ -46,8 +46,8 @@ const pageList = [
     //},
   },
   {
-    name: 'Monitorar2',
-    path: '/elements/monitorar',
+    name: 'Monitorar',
+    path: '/monitorar',
     component: Monitorar
     //badge: {
     //  text: 'NEW',

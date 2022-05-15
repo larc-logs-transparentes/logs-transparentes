@@ -1,8 +1,7 @@
-import "./style_chart.css";
 import React, { Component,useState } from 'react';
 import { Col } from 'reactstrap';
 import "react-circular-progressbar/dist/styles.css";
-import { Loader } from '../../vibe/';
+import { Loader } from '../../../vibe';
 
 //      Ok, essa função vai precisar receber aquela array do bu la, e se está validado ou não
 //  caso esteja validado, 

@@ -33,7 +33,7 @@ export default {
     //   },
     // },
     {
-      name: 'Monitorar',
+      name: 'Inserir BU',
       url: '/elements/inserir',
       icon: 'Package',
       badge: {
@@ -41,7 +41,7 @@ export default {
       },
     },
     {
-      name: 'Retotalizar',
+      name: 'Auditar BU',
       url: '/elements/auditar',
       icon: 'Package',
       badge: {
@@ -49,8 +49,8 @@ export default {
       },
     },
     {
-      name: 'Monitorar2',
-      url: '/elements/monitorar',
+      name: 'Monitorar',
+      url: '/monitorar',
       icon: 'Package',
       badge: {
         text: 'Monitores',
