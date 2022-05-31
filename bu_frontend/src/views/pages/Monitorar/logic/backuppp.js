@@ -3,7 +3,7 @@ import client from "./client";
 const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
 const TAM_MAX_MTREE_PARCIAL = 4
-
+  
 
 
 let consistencyProofData = {
@@ -12,55 +12,28 @@ let consistencyProofData = {
     cont: 0,
     ultimo: false,
 }
-/// Variáveis para atualizar o Setter do front.
-let RA=[]
-let CTDR=[]
-let PDC = []
-let BUA=[]
-let Busave=[]
+
 
 let ultimoCont  = -1 //Armazena o dado referente ao último envio do publisher processado
 const bufferJSONs = [] //Buffer dos dados publicados  
 const arvorePrincipal = new MerkleTree([], SHA256)
 const arvoreParcial = new MerkleTree([], SHA256)
 
-export function subscriber(setProofData,setRaiz,setContador,setCor,setBU){
+export function subscriber(setProofData){
   client.on('message', function (topic, payload, packet) {
 
     /* -------------------Recebe e armazena os dados-------------------- */
     console.log(`Topic: ${topic}, Message: ${payload}, Qos: ${packet.qos}`)
     consistencyProofData = JSON.parse(payload)
     inserirNoBuffer(consistencyProofData) //insere no buffer ordenado pelo dado "cont"
-    
     /* ----------------------------------------------------------------- */
 
     /* ------------------Processa os dados do buffer-------------------- */
-    if (bufferJSONs.length == 0){
-      setRaiz(raiz => RA)
-      setContador(contador => CTDR)
-      setBU(buadd => BUA)
-      setCor(cor => PDC)
-      }
     while(bufferJSONs.length > 0){ //Enquanto conter dados no buffer
       if(bufferJSONs[bufferJSONs.length - 1].cont == ultimoCont + 1){ //se o dado mais recente no buffer for o próximo em relação aos processados
         consistencyProofData = bufferJSONs.pop() //remove do buffer
-        //pra coletar no front //
-        
-        RA.push(consistencyProofData.raizAssinada)
-        setRaiz(raiz => RA)
-        CTDR.push(consistencyProofData.cont)
-        setContador(contador => CTDR)
-        BUA.push(consistencyProofData.BUsAdicionados.length)
-        setBU(buadd => BUA)
         setProofData(proofData => consistencyProofData)
-        //console.log(consistencyProofData)
-        Busave=consistencyProofData.BUsAdicionados
-
-        // ISSO AQUI TAVA DANDO BO, ele faz com que o BUsAdicionados[] vire zero, por isso botei o busave
-        PDC.push(provaDeConsistencia(arvorePrincipal, arvoreParcial, Busave, consistencyProofData.raizAssinada))
-        setCor(cor => PDC)
-        ///////////////////////////////////////
-
+        
         // TODO: aqui acho q precisa retornar as infos para a pagina conseguir renderizar
         // O problema disso é q se dermos um return ele sai da funcao
         
@@ -72,15 +45,12 @@ export function subscriber(setProofData,setRaiz,setContador,setCor,setBU){
           console.log("---------------------FIM---------------------")
           console.log("---------------------FIM---------------------")
           console.log("---------------------FIM---------------------")
-
           ultimoCont ++
           
         }
         ultimoCont ++ //senão, incrementa o contador de processados
       }
       else //se o dado mais recente no buffer não for o próximo na ordem dos que foram processados
-      
-
         break //quebra o laço para esperar mais dados
     }
     /* ----------------------------------------------------------------- */
@@ -162,4 +132,3 @@ function printTrees(){
   arvoreParcial.print()
   console.log()
 }
-

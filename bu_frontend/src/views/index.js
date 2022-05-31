@@ -29,6 +29,7 @@ import Inserir from './elements/inserir';
 import ChartDetail from './elements/chart_detail';
 import MostrarBU from './elements/MostrarBU';
 import Consultar_Todos from './elements/consultar_todos';
+import Retotalizar from './pages/Monitorar/Retotalizar.js';
 
 // See React Router documentation for details: https://reacttraining.com/react-router/web/api/Route
 const pageList = [
@@ -49,6 +50,14 @@ const pageList = [
     name: 'Monitorar',
     path: '/monitorar',
     component: Monitorar
+    //badge: {
+    //  text: 'NEW',
+    //},
+  },
+  {
+    name: 'Retotalizar',
+    path: '/retotalizar',
+    component: Retotalizar
     //badge: {
     //  text: 'NEW',
     //},

@@ -76,7 +76,6 @@ consistencyProofData.cont = 5
 consistencyProofData.ultimo = true
 
 publish('guilherme/teste', JSON.stringify(consistencyProofData))
- 
 /* -------------------------------------------------------------- */
 
 console.log(TSEMerkleTree.toString())

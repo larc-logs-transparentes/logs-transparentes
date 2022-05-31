@@ -56,6 +56,14 @@ export default {
         text: 'Monitores',
       },
     },
+    {
+      name: 'Retotalizar',
+      url: '/retotalizar',
+      icon: 'Package',
+      badge: {
+        text: 'Monitores',
+      },
+    }
 
   ],
   bottom: [

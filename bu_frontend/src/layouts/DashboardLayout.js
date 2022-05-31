@@ -89,7 +89,7 @@ export default class DashboardLayout extends Component {
             </Page>
           </div>
           <Footer>
-            <span>Copyright © 2021. All rights reserved.</span>
+            {/* <span>Copyright © 2021. All rights reserved.</span>
             <span>
               <a href="#!">Terms</a> | <a href="#!">Privacy Policy</a>
             </span>
@@ -98,7 +98,7 @@ export default class DashboardLayout extends Component {
               <span role="img" aria-label="taco">
                 🌮
               </span>
-            </span>
+            </span> */}
           </Footer>+
         </div>
       </ContextProviders>
