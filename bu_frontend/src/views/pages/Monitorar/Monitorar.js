@@ -14,11 +14,20 @@ export default function Monitorar() {
   const [cor,setCor] =  useState([]);
   subscriber(setProofData,setRaiz,setContador,setCor,setBU)
   const [show, setShow] = useState(false);
+  const [validate, setValidate] = useState(false);
   const i=0
+  const x='none'
+  validar0(i)
+  function validar0(i){
+    while(i <= cor.length){
+      if (cor[i]==true)
+        cor[i]='Validado.'
+      if (cor[i]==false)
+        cor[i]='#ERRO#'
+      i++}
+  }
+  console.log(cor)
 
-
-  
-  
   function mostrargap(raiz){
       if (raiz.length===0)
     return '20vw'
@@ -37,28 +46,14 @@ function mostrarloader(raiz){
   else
     return 'none'
 }
-function validar0(i){
-  while(i < cor.length){
-    if (cor[i])
-      cor[i]='Validado.'
-    else
-      cor[i]='#ERRO#'
-    i++
-}}
-console.log(cor)
-validar0(i)
-  // Para caso eu pense em alguma solução
-  // function validar (cor,i,vetorcores){
-  //   while(i<cor.length){
-  //     if (cor[i]===true){
-  //       vetorcores.push('#81bf73')
-  //       i++}
-  //     else {
-  //       vetorcores.push('#bd7373')
-  //       i++}
-  // }}
-  // validar(cor,i,vetorcores)
-  
+
+function status(raiz,validate){
+  if (raiz.length===cor.length){
+    setTimeout(() => {setValidate(!validate)}, 10);}
+    return}
+
+
+
   return (
     <React.Fragment>
       <Card>
@@ -80,26 +75,28 @@ validar0(i)
               <div style={{display:'flex',gap:mostrargap(raiz),textAlign:'center',fontSize:'30px',padding:'.3vw',marginTop:'8vh',marginLeft:'auto',marginRight:'auto'}}>
                 <div>
                     <h4>N° </h4>
-                    {contador.map(contador => <h5 style={{color:'black',backgroundColor:'#81bf73',padding:'.4vw',borderRadius:'2px'}}>{contador}</h5>)}
+                    {contador.map(contador => <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px'}}>{contador}</h5>)}
                 </div>
                 <div>
                     <h4>Raíz Assinada</h4>
-                    {raiz.map(raiz => <h5 style={{color:'black',backgroundColor:'#81bf73',padding:'.4vw',borderRadius:'2px',textAlign:'justify'}}>
+                    {raiz.map(raiz => <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px',textAlign:'justify'}}>
                      {raiz}
                      </h5>)}
                 </div>
                 <div>
                   <h4>BUs</h4>
                   {buadd.map(buadd => 
-                    <h5 style={{color:'black',backgroundColor:'#81bf73',padding:'.4vw'}}>
+                    <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw'}}>
                       {buadd}
                     </h5>)}
                 </div> 
                 <div>
+                    {status(raiz,validate)}
                     <h4>Status</h4>
-                    {cor.map(cor => <h5 style={{color:'black',backgroundColor:'#81bf73',padding:'.4vw',borderRadius:'2px',textAlign:'justify'}}>
+                    {cor.map(cor => <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px',textAlign:'justify'}}>
                      {cor}
                      </h5>)}
+                     
                 </div>
               </div>
             </div>
