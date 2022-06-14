@@ -1,11 +1,10 @@
 const express = require("express");
-//app.use(...);
-const db = require("./src/models");
-db.sequelize.sync();
+
 const cors = require("cors");
 const app = express();
 const bu_controller = require("./src/controllers/bu.controller")
 const merkletree_adapter = require("./src/adapters/merkletree.adapter");
+const mongoose = require("mongoose");
 
 var corsOptions = {
   origin: "http://localhost:3000"
@@ -15,6 +14,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+// Connect URL
+const url = 'mongodb://127.0.0.1:27017/bu_db';
+mongoose.connect(url)
 
 // ##############################################################
 // ########################## ROUTES ############################
@@ -104,6 +106,15 @@ app.get("/tree/leaves", (req, res) => {
     res.json(err)
   })
 })
+
+app.get("/home",(req,res) => {   //Atualiza o grafico da tela principal 
+  bu_controller.Sum().then((response) => {
+    res.json(response)
+  }).catch((err) => {
+    res.json(err)
+  })
+})
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
