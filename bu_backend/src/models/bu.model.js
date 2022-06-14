@@ -1,32 +1,28 @@
-module.exports = (sequelize, Sequelize) => {
-  const BU = sequelize.define("bu", {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
-    turno: {
-      type: Sequelize.STRING
-    },
-    secao: {
-      type: Sequelize.STRING
-    },
-    zona: {
-      type: Sequelize.STRING
-    },
-    UF: {
-      type: Sequelize.STRING
-    },
-    merkletree_leaf_id: {
-      type: Sequelize.STRING
-    },
-    merkletree_leaf: {
-      type: Sequelize.STRING
-    },
-    votos: {
-      // type: Sequelize.DataTypes.JSON
-      type: Sequelize.DataTypes.ARRAY(Sequelize.DataTypes.JSON)
-    }
-  });
-  return BU;
-};
+const mongoose = require("mongoose");
+const url = 'mongodb://127.0.0.1:27017/bu_db';
+mongoose.connect(url)
+
+const candidatos = new mongoose.Schema({  //subSchema para os candidatos 
+    partido: {type: String,},
+    nome: {type: String,},
+    votos: {type: Number,},
+    _id: { type: String, required: true }
+})
+
+const boletimSchema = new mongoose.Schema({  ///aaa
+    _id: { type: Number, required: true }  ,
+    id: { type: Number, required: true }  ,
+    secao: String,
+    zona: String,
+    UF: String,
+    turno: String,
+    votos: [candidatos],
+    merkletree_leaf_id: String,
+    merkletree_leaf: String,
+    __v: Number
+});
+
+const modeloBoletim1 = mongoose.model("bu",boletimSchema) //"bu" = collection of database
+
+
+module.exports = {modeloBoletim1}
