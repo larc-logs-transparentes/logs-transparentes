@@ -64,3 +64,14 @@ export const getLeafAndProof = (leaf_id) => {
       console.log(err)
     })
 }
+
+export const Sum = () => {
+    return axios.get(`${bu_api_url}/home`) //partial
+      .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+} 
