@@ -51,7 +51,7 @@ class Consultar_BU extends Component {
   }
 
   componentDidMount() {
-    this.axios.get(`${this.bu_api_url}/bu/get_all`)
+    this.axios.get(`${this.bu_api_url}/bu/get_all`) //Aqui faz a chamada pra o backend
       .then(response => this.setState({ lista: response.data }))
 //    this.setState({ lista: getBuAll()} )
 
