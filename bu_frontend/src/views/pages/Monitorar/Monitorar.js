@@ -27,7 +27,7 @@ export default function Monitorar() {
         cor[i]='#ERRO#'
       i++}
   }
-  console.log(cor)
+  //console.log(cor)
 
   function mostrargap(raiz){
       if (raiz.length===0)
