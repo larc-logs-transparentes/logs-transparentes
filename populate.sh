@@ -91,7 +91,7 @@ DATAS=(
     ]}'
 )
 
-for i in {0..3}
+for i in {0..9}
 do
     curl -X POST -H "Content-Type: application/json" --data "${DATAS[i]}" localhost:8080/bu
 done
