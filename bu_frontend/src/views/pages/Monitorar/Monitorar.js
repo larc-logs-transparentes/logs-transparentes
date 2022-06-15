@@ -14,9 +14,10 @@ export default function Monitorar() {
   const [cor,setCor] =  useState([]);
   subscriber(setProofData,setRaiz,setContador,setCor,setBU)
   const [show, setShow] = useState(false);
+  const [state,setState] = useState(false);
   const [validate, setValidate] = useState(false);
   const i=0
-  const x='none'
+  const x=2000
   validar0(i)
   function validar0(i){
     while(i <= cor.length){
@@ -47,9 +48,9 @@ function mostrarloader(raiz){
     return 'none'
 }
 
-function status(raiz,validate){
-  if (raiz.length===cor.length){
-    setTimeout(() => {setValidate(!validate)}, 10);}
+function status(){
+  if (raiz.length!=0){
+    setTimeout(() => {setState(true)}, 0);} /// O timeout funcionou com 0 segundos para esse caso, talvez deva aumentar para outros.
     return}
 
 
@@ -60,7 +61,7 @@ function status(raiz,validate){
         <CardBody>
           <h4>Monitorar alteração de raiz</h4>
           <div style={{textAlign:'center'}}>
-            <button onClick={()=> setShow(!show)} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
+            <button onClick={()=> setShow(true)} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
                 Capturar transações
             </button>
           </div>
@@ -91,7 +92,7 @@ function status(raiz,validate){
                     </h5>)}
                 </div> 
                 <div>
-                    {status(raiz,validate)}
+                  {status()}
                     <h4>Status</h4>
                     {cor.map(cor => <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px',textAlign:'justify'}}>
                      {cor}

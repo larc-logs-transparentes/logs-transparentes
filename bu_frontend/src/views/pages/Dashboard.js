@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import reactFeature from '../../assets/images/react-feature.svg';
-import sassFeature from '../../assets/images/sass-feature.svg';
-import bootstrapFeature from '../../assets/images/bootstrap-feature.svg';
-import responsiveFeature from '../../assets/images/responsive-feature.svg';
-import urna from '../../assets/images/urna.jpg';
+
 import { Card, CardBody, Row, Col, CardHeader,
   CardFooter,
   CardImg,
@@ -13,10 +9,8 @@ import { Card, CardBody, Row, Col, CardHeader,
   Button
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import laptopImage from '../../assets/images/laptop.jpeg';
 import monitoresImage from '../../assets/images/monitores.png';
 import Chart from '../../views/elements/charts';
-import Progress from '../../views/elements/progress';
 class Dashboard extends Component {
   render() {
     const heroStyles = {

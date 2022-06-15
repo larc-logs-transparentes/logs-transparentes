@@ -1,4 +1,5 @@
-import { Buffer } from "buffer"
+//import { Buffer } from "buffer"
+const buffer = require('buffer')
 const axios = require('axios')
 const bu_api_url = require('../config.json').bu_api_url
 //const bu_api_url = "http://172.20.11.11:8080"
@@ -10,7 +11,7 @@ var hashFn = bufferifyFn(SHA256)
 function getBuByIdString(bu_id) {
     return axios.get(`${bu_api_url}/bu/${bu_id}`)
       .then(res => {
-        console.log(res.data)
+        //console.log(res.data)
         var buString = res.data.turno + res.data.secao + res.data.zona + res.data.UF
         return buString
       })
@@ -34,7 +35,7 @@ function getRoot(){
     return new Promise(function (resolve, reject){
         axios.get(`${bu_api_url}/tree/root`)
         .then((res) => {
-            console.log(res.data)
+            //console.log(res.data)
             resolve(Buffer.from(res.data, 'hex'));
             //console.log(rootS)
         },
@@ -271,8 +272,7 @@ function bufferify(value) {
     return value;
 }
 
-export async function verify(buId){
-   
+async function verify(buId){
     var BU = await getBuById(buId)
    // console.log(BU)
     var leafid = BU.merkletree_leaf_id
@@ -298,19 +298,19 @@ export async function verify(buId){
     var isProofTrue =  verifyProof(leaf, root, proof)
    
     
-    console.log("Teste do BU")
+    //console.log("Teste do BU")
     //console.log(BU)
     //console.log(leaf)
-    console.log(isBUTrue)
+    //console.log(isBUTrue)
 
    
 
-    console.log("teste com dados certos")
-    console.log(isProofTrue)
-    console.log("raiz")
-    console.log(root.toString('hex'))
-    console.log("prova")
-    console.log(fullproof[3])
+    //console.log("teste com dados certos")
+    //console.log(isProofTrue)
+    //console.log("raiz")
+    //console.log(root.toString('hex'))
+    //console.log("prova")
+    //console.log(fullproof[3])
 
 
     var isTrue = isProofTrue && isBUTrue
@@ -323,5 +323,6 @@ async function exampleVerify(buId){
     console.log(verifyOutput)
     console.log("-----------")
 }
-//module.exports = { verify }
-//exampleVerify(1)
+
+// exampleVerify(1)
+module.exports = { verify }
