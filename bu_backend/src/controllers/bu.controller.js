@@ -32,18 +32,17 @@ exports.create = (data) => {
 
     consistencyProofData.BUsAdicionados.push(merkletree_data.added_leaf)
     console.log(merkletree_data.added_leaf + " " + consistencyProofData.BUsAdicionados.length +" adicionado ao buffer de BUs")
+    
+    if(consistencyProofData.BUsAdicionados.length >= TAM_MTREE_PARCIAL){
+      merkletree_adapter.getTreeRoot().then((treeRoot) => {
+        consistencyProofData.raizAssinada = treeRoot
+        publish("guilherme/teste", JSON.stringify(consistencyProofData))
+        console.log("Publicado teste de consistência")
+        consistencyProofData.BUsAdicionados = []
+        consistencyProofData.cont ++
+      }) 
+    }
   })
-
-  if(consistencyProofData.BUsAdicionados.length >= TAM_MTREE_PARCIAL){
-    merkletree_adapter.getTreeRoot().then((treeRoot) => {
-      consistencyProofData.raizAssinada = treeRoot
-      publish("guilherme/teste", JSON.stringify(consistencyProofData))
-      console.log("Publicado teste de consistência")
-      consistencyProofData.BUsAdicionados = []
-      consistencyProofData.cont ++
-    }) 
-  }
-
   return
 };
 
