@@ -105,6 +105,14 @@ app.get("/tree/leaves", (req, res) => {
   })
 })
 
+app.get("/tree/leaves/qtd", (req, res) => {
+  merkletree_adapter.getAllLeaves().then(leaves => {
+    res.json(leaves.length)
+  }).catch((err) => {
+    res.json(err)
+  })
+})
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

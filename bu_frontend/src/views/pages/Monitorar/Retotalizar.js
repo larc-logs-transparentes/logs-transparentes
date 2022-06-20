@@ -17,12 +17,16 @@ export default function Retotalizar() {
   const [showret, setRet] = useState(false);
   const [showret2, setRet2] = useState(false);
   const [busbaixados,setBUsBaixados] = useState(0);
-  
+  let busbaixadosobj = {
+    numerobus:busbaixados[0],
+    verificaqtd:busbaixados[1],
+    votos:busbaixados[2],
+    verificainclusao:busbaixados[3]
+  }
   useEffect(() => {
     const nome=RetotalizacaoDeBus().then((z)=>setBUsBaixados(z))
     
   },[]);
-
 
 /////////// FUNÇÕES DE TEMPO PARA IR MOSTRANDO A TELA ////////////////
   function BaixarBus(){
@@ -44,6 +48,8 @@ export default function Retotalizar() {
       setTimeout(() => {setRet2(true)}, 2500);
       return}
 /////////////////////////////////////////////////////////////////////
+
+
     function stop1(){
       if (busbaixados[0]==0){
         return 'none'
@@ -55,8 +61,6 @@ export default function Retotalizar() {
       else return 'block'
     }
 
-    
-/////////////////////////////Nao entendi isso direito.///////////////////////////////////////
     function imagem(imagemaux){
       if (imagemaux==0){
         return error
@@ -64,14 +68,22 @@ export default function Retotalizar() {
       if(imagemaux==1){
         return approval
       }
-      
+/////////////////////////Funções de verificação/////////////////////////////////
+
     }
     function verificacaodebus(){
-      if (busbaixados[1]==false){
-        return ('Ocorreram problemas')
+      if (busbaixadosobj.verificainclusao==false){
+        return ('-A prova de inclusão de um dos BUs falhou na verificação')
       }
-      else return ('Todos os BUs estao na árvore.')
+      else return ('-Todos os BUs estao na árvore.')
     } 
+    function verificacaoquantidade(){
+      if (busbaixadosobj.verificaqtd==false){
+        return ('- A quantidade de BUs não coincide com o número de sessões')
+      }
+      else return ('- A quantidade de Bus corresponde ao número de sessões.')
+    } 
+
     function selo1(){
       if (busbaixados[0]==0){
         return (error)
@@ -79,7 +91,7 @@ export default function Retotalizar() {
       else return (approval)
     } 
     function selo2(){
-      if (busbaixados[1]==false){
+      if (busbaixadosobj.verificaqtd==false || busbaixadosobj.verificainclusao==false){
         return (error)
       }
       else return (approval)
@@ -137,7 +149,7 @@ export default function Retotalizar() {
                   {VerificarBus2()}
                   {showvbus2?<div>
                     <h5>{verificacaodebus()}</h5>
-                    <h5></h5>
+                    <h5>{verificacaoquantidade()}</h5>
                     {RetotalizarBus()}
                   </div>:null}
                 </div>:null}
