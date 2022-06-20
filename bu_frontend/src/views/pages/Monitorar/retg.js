@@ -4,7 +4,7 @@ const merkletree_api = require("../../../api/merkletree.api")
 
 const backendHostname = "http://localhost"
 const backendPort = 8080
-
+const bu_api_url = require('../../../config.json').bu_api_url
 
 export async function RetotalizacaoDeBus(){
     console.log("Download de BUs iniciado")
@@ -26,7 +26,7 @@ const a = RetotalizacaoDeBus()
 console.log(a)
 
 async function baixarBUs(){
-    return await axios.get(`${backendHostname}:${backendPort}/bu/get_all`)
+    return await axios.get(`${bu_api_url}/bu/get_all`)
     .then(res => {
         return res.data
     })
@@ -44,7 +44,7 @@ async function verificarBUs(BUs){
 
 ///////ESSA FUNÇÃO NAO RODA NO FRONT
 async function verificarQtdBUS(BUs){
-    return await axios.get(`${backendHostname}:${backendPort}/tree/leaves/qtd`)
+    return await axios.get(`${bu_api_url}/tree/leaves/qtd`)
     .then(res => {
         return res.data == BUs.length
     })
@@ -56,10 +56,16 @@ async function verificarQtdBUS(BUs){
 async function verificarInclusao(BUs){
     for (let i = 0; i < BUs.length; i++) { //percorre BUs
         const res = await merkletree_api.verify(BUs[i].id)
-        if(!res.isTrue)
-            return false
+        if(!res.isTrue){
+            return {
+                isTrue: false,
+                res: res
+            }
+        }
     }
-    return true
+    return {
+        isTrue: true
+    }
 }
 
 function retotalizar(BUs){

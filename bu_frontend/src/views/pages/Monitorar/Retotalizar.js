@@ -72,8 +72,8 @@ export default function Retotalizar() {
 
     }
     function verificacaodebus(){
-      if (busbaixadosobj.verificainclusao==false){
-        return ('-A prova de inclusão de um dos BUs falhou na verificação')
+      if (busbaixadosobj.verificainclusao.isTrue==false){
+        return (`-A prova de inclusão de um dos BUs falhou na verificação\n\n ID do BU com problemas: ${busbaixadosobj.verificainclusao.res.BU.id}`)
       }
       else return ('-Todos os BUs estao na árvore.')
     } 
@@ -91,7 +91,7 @@ export default function Retotalizar() {
       else return (approval)
     } 
     function selo2(){
-      if (busbaixadosobj.verificaqtd==false || busbaixadosobj.verificainclusao==false){
+      if (busbaixadosobj.verificaqtd==false || busbaixadosobj.verificainclusao.isTrue==false){
         return (error)
       }
       else return (approval)
