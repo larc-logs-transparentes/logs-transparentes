@@ -1,6 +1,8 @@
 const db = require("../models");
 const modeloBoletim = require("../models/bu.model")
 const merkletree_adapter = require("../adapters/merkletree.adapter")
+const mongoose = require("mongoose");
+
 
 /* ----------------------------------- */
 const mqtt = require('mqtt');
@@ -17,8 +19,6 @@ const TAM_MTREE_PARCIAL = 4
 
 const BU = db.bu;
 
-const merkletree_adapter = require("../adapters/merkletree.adapter")
-const mongoose = require("mongoose");
 //const BU = db.bu;
 // Create and Save a new BU
 exports.create = (data) => {
