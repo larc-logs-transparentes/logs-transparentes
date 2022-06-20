@@ -17,14 +17,14 @@ export default function Monitorar() {
   const [state,setState] = useState(false);
   const [validate, setValidate] = useState(false);
   const i=0
-  const x=2000
+
   validar0(i)
   function validar0(i){
     while(i <= cor.length){
-      if (cor[i]==true)
-        cor[i]='Validado.'
-      if (cor[i]==false)
-        cor[i]='#ERRO#'
+      if (cor[i]==true){
+        cor[i]='Validado.'}
+      if (cor[i]==false){
+        cor[i]='#ERRO#'}
       i++}
   }
   //console.log(cor)
@@ -50,10 +50,8 @@ function mostrarloader(raiz){
 
 function status(){
   if (raiz.length!=0){
-    setTimeout(() => {setState(true)}, 0);} /// O timeout funcionou com 0 segundos para esse caso, talvez deva aumentar para outros.
+    setTimeout(() => {setState(!state)}, 2500);} /// O timeout funcionou com 0 segundos para esse caso, talvez deva aumentar para outros.
     return}
-
-
 
   return (
     <React.Fragment>

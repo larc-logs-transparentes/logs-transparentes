@@ -73,10 +73,15 @@ export default function Retotalizar() {
     }
     function verificacaodebus(){
       if (busbaixadosobj.verificainclusao.isTrue==false){
-        return (`-A prova de inclusão de um dos BUs falhou na verificação\n\n ID do BU com problemas: ${busbaixadosobj.verificainclusao.res.BU.id}`)
+        return ('- A prova de inclusão de um dos BUs falhou.')
       }
-      else return ('-Todos os BUs estao na árvore.')
+      else return ('- Todos os BUs estao na árvore.')
     } 
+    function auxiliarverificacao(){
+      if (busbaixadosobj.verificainclusao.isTrue==false){
+        return (`ID do BU com problemas: ${busbaixadosobj.verificainclusao.res.BU.id}`)
+      }
+    }
     function verificacaoquantidade(){
       if (busbaixadosobj.verificaqtd==false){
         return ('- A quantidade de BUs não coincide com o número de sessões')
@@ -129,7 +134,7 @@ export default function Retotalizar() {
                       </div>
                       {BaixarBus2()}
                       {showbbus2?<div style={{display:'flex', alignItems:'center',gap:'1vw'}}>
-                      <h5>- {busbaixados[0]} BUs Baixados</h5>
+                      <h5>- {busbaixadosobj.numerobus} BUs Baixados</h5>
                       {VerificarBus()}
                     </div>:null}
                   </div>
@@ -149,6 +154,7 @@ export default function Retotalizar() {
                   {VerificarBus2()}
                   {showvbus2?<div>
                     <h5>{verificacaodebus()}</h5>
+                    <h5>{auxiliarverificacao()}</h5>
                     <h5>{verificacaoquantidade()}</h5>
                     {RetotalizarBus()}
                   </div>:null}
@@ -169,7 +175,7 @@ export default function Retotalizar() {
                   {RetotalizarBus2()}
                   {showret2?<div>
                     <h5>- Resultado final:</h5>
-                    <h5>{busbaixados[2].map(({nome, votos, partido}) => (
+                    <h5>{busbaixadosobj.votos.map(({nome, votos, partido}) => (
                       <p key={nome}>{nome}: {votos} votos</p>
                     ))}
                       </h5>
