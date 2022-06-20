@@ -72,6 +72,8 @@ app.post('/proof', (req, res) => {
 // tree.getLayersAsObject() ou tree.getHexLayersFlat() tambem podem ser uma opçao 
 app.get('/tree', (req, res) => {
   console.log(tree.toString())
+  console.log("tree leaves: ", tree.getLeafCount())
+  console.log(tree.getHexLayersFlat())
   res.send(tree.getHexLayers())
 })
 

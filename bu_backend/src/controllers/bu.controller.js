@@ -1,5 +1,21 @@
-//const db = require("../models");
+const db = require("../models");
 const modeloBoletim = require("../models/bu.model")
+const merkletree_adapter = require("../adapters/merkletree.adapter")
+
+/* ----------------------------------- */
+const mqtt = require('mqtt');
+
+const consistencyProofData = {
+  raizAssinada: null,
+  BUsAdicionados: [],
+  cont: 0,
+  ultimo: false,
+}
+
+const TAM_MTREE_PARCIAL = 4
+/* ----------------------------------- */
+
+const BU = db.bu;
 
 const merkletree_adapter = require("../adapters/merkletree.adapter")
 const mongoose = require("mongoose");
@@ -10,24 +26,29 @@ exports.create = (data) => {
   console.log("Debug BU")
   console.log(buString)
   console.log({"BU": data})
-  if(data.turno == 1){
-    return merkletree_adapter.addLeaf(buString).then((merkletree_data) => {
-      modeloBoletim.modeloBoletim1.create({
-        _id: data._id,
-        id: data.id, //aa
-        secao:data.secao,
-        zona:data.zona,
-        UF: data.UF,
-        turno:data.turno,
-        votos: data.votos,
-        merkletree_leaf_id: merkletree_data.leaf_index,
-        merkletree_leaf: merkletree_data.added_leaf,
-        __v: data.__v
-      },function(err,res){
-        if (err) throw err;
-    })})     
-  } 
-  };
+
+  merkletree_adapter.addLeaf(buString).then((merkletree_data) => {
+    BU.create({
+      merkletree_leaf_id: merkletree_data.leaf_index,
+      merkletree_leaf: merkletree_data.added_leaf,
+      ...data
+    })
+
+    consistencyProofData.BUsAdicionados.push(merkletree_data.added_leaf)
+    console.log(merkletree_data.added_leaf + " " + consistencyProofData.BUsAdicionados.length +" adicionado ao buffer de BUs")
+    
+    if(consistencyProofData.BUsAdicionados.length >= TAM_MTREE_PARCIAL){
+      merkletree_adapter.getTreeRoot().then((treeRoot) => {
+        consistencyProofData.raizAssinada = treeRoot
+        publish("guilherme/teste", JSON.stringify(consistencyProofData))
+        console.log("Publicado teste de consistência")
+        consistencyProofData.BUsAdicionados = []
+        consistencyProofData.cont ++
+      }) 
+    }
+  })
+  return
+};
 
 
 // Retrieve all BUs from the database.
@@ -65,5 +86,12 @@ exports.findById = (id) => {
         return data;
       })
 };
- 
-    
+
+function publish(topic, payload){
+  const client  = mqtt.connect('mqtt://test.mosquitto.org')
+
+  client.on('connect', function () {
+      client.publish(topic, payload, {qos: 2})
+      client.end()
+  })
+}

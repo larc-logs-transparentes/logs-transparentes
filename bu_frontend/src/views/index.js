@@ -22,12 +22,14 @@ import ProgressBars from './elements/ProgressBars';
 import PaginationPage from './elements/Pagination';
 import ErrorPage from './pages/404';
 
+import Monitorar from './pages/Monitorar/Monitorar';
 import Consultar_BU from './elements/consultar_bu';
 import Auditar from './elements/auditar';
 import Inserir from './elements/inserir';
 import ChartDetail from './elements/chart_detail';
 import MostrarBU from './elements/MostrarBU';
 import Consultar_Todos from './elements/consultar_todos';
+import Retotalizar from './pages/Monitorar/Retotalizar.js';
 
 import Atualizacao from './elements/charts';
 
@@ -42,6 +44,22 @@ const pageList = [
     name: 'Detalhes',
     path: '/elements/chart_detail',
     component: ChartDetail,
+    //badge: {
+    //  text: 'NEW',
+    //},
+  },
+  {
+    name: 'Monitorar',
+    path: '/monitorar',
+    component: Monitorar
+    //badge: {
+    //  text: 'NEW',
+    //},
+  },
+  {
+    name: 'Retotalizar',
+    path: '/retotalizar',
+    component: Retotalizar
     //badge: {
     //  text: 'NEW',
     //},

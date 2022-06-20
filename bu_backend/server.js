@@ -114,6 +114,13 @@ app.get("/home",(req,res) => {   //Atualiza o grafico da tela principal
     res.json(err)
   })
 })
+app.get("/tree/leaves/qtd", (req, res) => {
+  merkletree_adapter.getAllLeaves().then(leaves => {
+    res.json(leaves.length)
+  }).catch((err) => {
+    res.json(err)
+  })
+})
 
 
 // set port, listen for requests

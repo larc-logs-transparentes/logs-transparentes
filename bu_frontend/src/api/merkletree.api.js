@@ -323,5 +323,5 @@ async function exampleVerify(buId){
     console.log(verifyOutput)
     console.log("-----------")
 }
-
-// exampleVerify(1)
+//module.exports = { verify }
+//exampleVerify(1)

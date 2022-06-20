@@ -1,0 +1,16 @@
+{
+  "name": "retotalizacaobus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "retotalizacao.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "buffer": "^6.0.3",
+    "crypto-js": "^4.1.1"
+  }
+}

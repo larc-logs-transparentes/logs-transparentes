@@ -1,0 +1,8 @@
+.ButtonStyle {
+    background-color : '#81bf73';
+    border-width:'.2px';
+    height:'7vh';
+    border-radius:'.2rem';
+    text-align:'center';
+    align-items:'center';
+  }
