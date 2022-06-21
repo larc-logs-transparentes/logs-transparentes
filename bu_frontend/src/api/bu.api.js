@@ -64,3 +64,13 @@ export const getLeafAndProof = (leaf_id) => {
       console.log(err)
     })
 }
+export const getRoot = (root_id) => {
+  return axios.get(`${bu_api_url}/tree/root/${root_id}`)
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}

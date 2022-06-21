@@ -21,7 +21,8 @@ export default function Retotalizar() {
     numerobus:busbaixados[0],
     verificaqtd:busbaixados[1],
     votos:busbaixados[2],
-    verificainclusao:busbaixados[3]
+    verificainclusao:busbaixados[3],
+    root:busbaixados[4]
   }
   useEffect(() => {
     const nome=RetotalizacaoDeBus().then((z)=>setBUsBaixados(z))
@@ -54,12 +55,6 @@ export default function Retotalizar() {
       if (busbaixados[0]==0){
         return 'none'
       } else return 'block'}
-    function stop2(imagem){
-      if (busbaixados[1]==false){
-        return 'none'
-      }
-      else return 'block'
-    }
 
     function imagem(imagemaux){
       if (imagemaux==0){
@@ -72,7 +67,7 @@ export default function Retotalizar() {
 
     }
     function verificacaodebus(){
-      if (busbaixadosobj.verificainclusao.isTrue==false){
+      if (busbaixadosobj.verificainclusao==false){
         return ('- A prova de inclusão de um dos BUs falhou.')
       }
       else return ('- Todos os BUs estao na árvore.')
@@ -82,11 +77,21 @@ export default function Retotalizar() {
         return (`ID do BU com problemas: ${busbaixadosobj.verificainclusao.res.BU.id}`)
       }
     }
+    function verificacaoinclusaocor(){
+      if (busbaixadosobj.verificainclusao.isTrue==false){
+        return ('red')}else return ('black')
+    } 
     function verificacaoquantidade(){
       if (busbaixadosobj.verificaqtd==false){
         return ('- A quantidade de BUs não coincide com o número de sessões')
       }
       else return ('- A quantidade de Bus corresponde ao número de sessões.')
+    } 
+    function verificacaoquantidadecor(){
+      if (busbaixadosobj.verificaqtd==false){
+        return ('red')
+      }
+      else return ('black')
     } 
 
     function selo1(){
@@ -124,8 +129,9 @@ export default function Retotalizar() {
                 {showbbus?
                   
                   <div style={{display:'block',textAlign:'justify'}}>
-                    
+                    <h5>Raiz: {busbaixadosobj.root}</h5>
                     <div style={{display:'flex',alignItems:'center'}}>
+                      
                       <h5>1) Baixando BUs</h5>
                       <Row md={4} style={{padding:'2vw'}}>
                       {!showbbus2?<Loader small type="spin"/>:null}
@@ -153,9 +159,9 @@ export default function Retotalizar() {
                   </div>
                   {VerificarBus2()}
                   {showvbus2?<div>
-                    <h5>{verificacaodebus()}</h5>
-                    <h5>{auxiliarverificacao()}</h5>
-                    <h5>{verificacaoquantidade()}</h5>
+                    <h5 style={{color:verificacaoinclusaocor()}}>{verificacaodebus()}</h5>
+                    <h5 style={{color:verificacaoinclusaocor()}}>{auxiliarverificacao()}</h5>
+                    <h5 style={{color:verificacaoquantidadecor()}}>{verificacaoquantidade()}</h5>
                     {RetotalizarBus()}
                   </div>:null}
                 </div>:null}
