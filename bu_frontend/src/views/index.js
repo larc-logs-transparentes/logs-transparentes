@@ -66,9 +66,12 @@ const pageList = [
   },
   {
     name: 'Ver mais',   //Raiz assinada
+    path: '/tree/root',
     component: Root,
   },
   {
+    name: 'Consultar Todos BUs',
+    
     path: '/elements/consultar_todos',
     component: Consultar_Todos,
     //badge: {
