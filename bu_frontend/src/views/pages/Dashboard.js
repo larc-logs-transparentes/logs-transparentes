@@ -61,7 +61,9 @@ class Dashboard extends Component {
                   <CardText>
                     
                   </CardText>
+                  <Link to="tree/root">
                   <Button>Ver Mais</Button>
+                  </Link>
                 </CardBody>
               </Card>
           </Col>
