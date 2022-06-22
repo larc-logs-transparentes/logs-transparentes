@@ -19,7 +19,8 @@ export async function RetotalizacaoDeBus(){
     const verificarbusquantidade = verificarbus.verificacao_qtd
     const verificarbusinclusao = verificarbus.verificacao_inclusao
     const votosretotalizacao = retotalizar(BUs)
-    return [numerodebusadicionados,verificarbusquantidade,votosretotalizacao,verificarbusinclusao]
+    const teste = await PegarRoot(BUs)
+    return [numerodebusadicionados,verificarbusquantidade,votosretotalizacao,verificarbusinclusao,teste]
 }
 
 const a = RetotalizacaoDeBus()
@@ -42,11 +43,19 @@ async function verificarBUs(BUs){
     }
 }
 
-///////ESSA FUNÇÃO NAO RODA NO FRONT
 async function verificarQtdBUS(BUs){
     return await axios.get(`${bu_api_url}/tree/leaves/qtd`)
     .then(res => {
         return res.data == BUs.length
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+}
+async function PegarRoot(BUs){
+    return await axios.get(`${bu_api_url}/tree/root`)
+    .then(res => {
+        return res.data
     })
     .catch((err) => {
         console.log(err)
