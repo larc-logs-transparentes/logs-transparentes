@@ -14,9 +14,17 @@ app.use(cors(corsOptions));
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
 // Connect URL
-const url = 'mongodb://127.0.0.1:27017/bu_db';
+const url = 'mongodb://127.0.0.1:5432/bu_db';
 mongoose.connect(url)
+  .then(() => {
+    mongoose.connection.db.dropCollection("bus", ()=>{
+      console.log("bus collection droped")
+      // mongoose.connection.close()
+    })
+  })
+
 
 // ##############################################################
 // ########################## ROUTES ############################

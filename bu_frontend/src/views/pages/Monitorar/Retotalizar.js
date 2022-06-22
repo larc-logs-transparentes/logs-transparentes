@@ -67,7 +67,7 @@ export default function Retotalizar() {
 
     }
     function verificacaodebus(){
-      if (busbaixadosobj.verificainclusao==false){
+      if (busbaixadosobj.verificainclusao.isTrue==false){
         return ('- A prova de inclusão de um dos BUs falhou.')
       }
       else return ('- Todos os BUs estao na árvore.')

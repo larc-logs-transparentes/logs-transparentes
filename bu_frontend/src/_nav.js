@@ -33,22 +33,6 @@ export default {
     //   },
     // },
     {
-      name: 'Inserir BU',
-      url: '/elements/inserir',
-      icon: 'Package',
-      badge: {
-        text: 'Monitores',
-      },
-    },
-    {
-      name: 'Auditar BU',
-      url: '/elements/auditar',
-      icon: 'Package',
-      badge: {
-        text: 'Monitores',
-      },
-    },
-    {
       name: 'Monitorar',
       url: '/monitorar',
       icon: 'Package',

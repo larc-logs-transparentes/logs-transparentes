@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const url = 'mongodb://127.0.0.1:5432/bu_db';
-mongoose.connect(url)
+// const url = 'mongodb://127.0.0.1:5432/bu_db';
+// mongoose.connect(url)
 
 const candidatos = new mongoose.Schema({  //subSchema para os candidatos 
     partido: {type: String,},

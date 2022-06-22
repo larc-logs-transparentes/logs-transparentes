@@ -1,20 +1,8 @@
 DATAS=(
     '{
-        "_id":"0",
-        "id": "0",
-        "secao": "001", 
-        "zona": "123", 
-        "UF": "SP", 
-        "turno": "1",
-        "__v": "0",
-        "votos":[
-            {"partido": "XX", "nome": "Candidado A", "votos": 198, "_id": "2"},
-            {"partido": "YY", "nome": "Candidado B", "votos": 36,  "_id": "1"}
-    ]}'
-    '{
         "_id":"1",
         "id": "1",
-        "secao": "002", 
+        "secao": "001", 
         "zona": "123", 
         "UF": "SP", 
         "turno": "1",
@@ -26,7 +14,7 @@ DATAS=(
     '{
         "_id":"2",
         "id": "2",
-        "secao": "003", 
+        "secao": "002", 
         "zona": "123", 
         "UF": "SP", 
         "turno": "1",
@@ -38,7 +26,7 @@ DATAS=(
     '{
         "_id":"3",
         "id": "3",
-        "secao": "004", 
+        "secao": "003", 
         "zona": "123", 
         "UF": "SP", 
         "turno": "1",
@@ -50,7 +38,7 @@ DATAS=(
     '{
         "_id":"4",
         "id": "4",
-        "secao": "005", 
+        "secao": "004", 
         "zona": "123", 
         "UF": "SP", 
         "turno": "1",
@@ -62,7 +50,7 @@ DATAS=(
     '{
         "_id":"5",
         "id": "5",
-        "secao": "006", 
+        "secao": "005", 
         "zona": "123", 
         "UF": "SP", 
         "turno": "1",
@@ -74,7 +62,7 @@ DATAS=(
     '{
         "_id":"6",
         "id": "6",
-        "secao": "007", 
+        "secao": "006", 
         "zona": "123", 
         "UF": "SP", 
         "turno": "1",
@@ -86,7 +74,7 @@ DATAS=(
     '{
         "_id":"7",
         "id": "7",
-        "secao": "008", 
+        "secao": "007", 
         "zona": "123", 
         "UF": "SP", 
         "turno": "1",
@@ -98,7 +86,7 @@ DATAS=(
     '{
         "_id":"8",
         "id": "8",
-        "secao": "009", 
+        "secao": "008", 
         "zona": "123", 
         "UF": "SP", 
         "turno": "1",
@@ -110,7 +98,7 @@ DATAS=(
     '{
         "_id":"9",
         "id": "9",
-        "secao": "010", 
+        "secao": "009", 
         "zona": "123", 
         "UF": "SP", 
         "turno": "1",
@@ -119,9 +107,64 @@ DATAS=(
             {"partido": "XX", "nome": "Candidado A", "votos": 41,"_id": "20"},
             {"partido": "YY", "nome": "Candidado B", "votos": 109,"_id": "19"}
     ]}'
+    '{
+        "_id":"10",
+        "id": "10",
+        "secao": "010", 
+        "zona": "123", 
+        "UF": "SP", 
+        "turno": "1",
+        "__v": "0",
+        "votos":[
+            {"partido": "XX", "nome": "Candidado A", "votos": 198, "_id": "2"},
+            {"partido": "YY", "nome": "Candidado B", "votos": 36,  "_id": "1"}
+    ]}'
+    '{
+        "_id":"11",
+        "id": "11",
+        "secao": "011", 
+        "zona": "123", 
+        "UF": "SP", 
+        "turno": "1",
+        "__v": "0",
+        "votos":[
+            {"partido": "XX", "nome": "Candidado A", "votos": 41,"_id": "22"},
+            {"partido": "YY", "nome": "Candidado B", "votos": 109,"_id": "21"}
+    ]}'
+    '{
+        "_id":"12",
+        "id": "12",
+        "secao": "012", 
+        "zona": "123", 
+        "UF": "SP", 
+        "turno": "1",
+        "__v": "0",
+        "votos":[
+            {"partido": "XX", "nome": "Candidado A", "votos": 54,"_id": "24"},
+            {"partido": "YY", "nome": "Candidado B", "votos": 12,"_id": "23"}
+    ]}'
+    
 )
 
-for i in {0..9}
+for i in {0..3}
 do
     curl -X POST -H "Content-Type: application/json" --data "${DATAS[i]}" localhost:8080/bu
 done
+
+curl localhost:3001/tree
+read -r -p "Press any key to continue..." key
+
+for i in {4..7}
+do
+    curl -X POST -H "Content-Type: application/json" --data "${DATAS[i]}" localhost:8080/bu
+done
+
+curl localhost:3001/tree
+read -r -p "Press any key to continue..." key
+
+for i in {8..11}
+do
+    curl -X POST -H "Content-Type: application/json" --data "${DATAS[i]}" localhost:8080/bu
+done
+
+curl localhost:3001/tree

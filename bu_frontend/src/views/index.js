@@ -30,6 +30,7 @@ import ChartDetail from './elements/chart_detail';
 import MostrarBU from './elements/MostrarBU';
 import Consultar_Todos from './elements/consultar_todos';
 import Retotalizar from './pages/Monitorar/Retotalizar.js';
+import Root from './elements/Root';
 
 import Atualizacao from './elements/charts';
 
@@ -49,7 +50,6 @@ const pageList = [
     //},
   },
   {
-    name: 'Monitorar',
     path: '/monitorar',
     component: Monitorar
     //badge: {
@@ -65,7 +65,10 @@ const pageList = [
     //},
   },
   {
-    name: 'Consultar Todos BUs',
+    name: 'Ver mais',   //Raiz assinada
+    component: Root,
+  },
+  {
     path: '/elements/consultar_todos',
     component: Consultar_Todos,
     //badge: {

@@ -17,7 +17,7 @@ const consistencyProofData = {
 const TAM_MTREE_PARCIAL = 4
 /* ----------------------------------- */
 
-const BU = db.bu;
+// const BU = db.bu;
 
 //const BU = db.bu;
 // Create and Save a new BU
@@ -28,7 +28,7 @@ exports.create = (data) => {
   console.log({"BU": data})
 
   merkletree_adapter.addLeaf(buString).then((merkletree_data) => {
-    BU.create({
+    modeloBoletim.modeloBoletim1.create({
       merkletree_leaf_id: merkletree_data.leaf_index,
       merkletree_leaf: merkletree_data.added_leaf,
       ...data
@@ -41,7 +41,8 @@ exports.create = (data) => {
       merkletree_adapter.getTreeRoot().then((treeRoot) => {
         consistencyProofData.raizAssinada = treeRoot
         publish("guilherme/teste", JSON.stringify(consistencyProofData))
-        console.log("Publicado teste de consistência")
+        console.log("\n\nPublicado teste de consistência")
+        console.log(JSON.stringify(consistencyProofData))
         consistencyProofData.BUsAdicionados = []
         consistencyProofData.cont ++
       }) 
