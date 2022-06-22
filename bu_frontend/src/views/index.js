@@ -28,6 +28,7 @@ import Inserir from './elements/inserir';
 import ChartDetail from './elements/chart_detail';
 import MostrarBU from './elements/MostrarBU';
 import Consultar_Todos from './elements/consultar_todos';
+import Root from './elements/Root';
 
 import Atualizacao from './elements/charts';
 
@@ -45,6 +46,11 @@ const pageList = [
     //badge: {
     //  text: 'NEW',
     //},
+  },
+  {
+    name: 'Ver mais',   //Raiz assinada
+    path: '/tree/root',
+    component: Root,
   },
   {
     name: 'Consultar Todos BUs',
