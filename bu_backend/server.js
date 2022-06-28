@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Connect URL
-const url = 'mongodb://127.0.0.1:5432/bu_db';
+const url = 'mongodb://127.0.0.1:27017/bu_db';
 mongoose.connect(url)
   .then(() => {
     mongoose.connection.db.dropCollection("bus", ()=>{

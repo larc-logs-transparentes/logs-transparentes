@@ -82,7 +82,7 @@ console.log(TSEMerkleTree.toString())
 console.log("Dados publicados")
 
 function publish(topic, payload){
-    const client  = mqtt.connect('mqtt://test.mosquitto.org')
+    const client  = mqtt.connect('ws://localhost:3030')
 
     client.on('connect', function () {
         client.publish(topic, payload, {qos: 2})

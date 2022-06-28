@@ -1,7 +1,7 @@
 const mqtt = require('mqtt')
 
 /* ---------------------- Configuração mqtt ------------------------- */
-const client  = mqtt.connect('ws://test.mosquitto.org:8080/')
+const client  = mqtt.connect('ws://localhost:3030')
 
 client.on('connect', function () {
   client.subscribe('guilherme/teste', {qos: 2}, function (err) {
