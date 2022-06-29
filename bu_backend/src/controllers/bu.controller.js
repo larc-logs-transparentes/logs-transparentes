@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 /* ----------------------------------- */
 const mqtt = require('mqtt');
+const mosquitto_url = require('../config/mosquitto.config').mosquitto_url
 
 const consistencyProofData = {
   raizAssinada: null,
@@ -89,7 +90,7 @@ exports.findById = (id) => {
 };
 
 function publish(topic, payload){
-  const client  = mqtt.connect('ws://localhost:3030')
+  const client  = mqtt.connect(mosquitto_url)
 
   client.on('connect', function () {
       client.publish(topic, payload, {qos: 2})
