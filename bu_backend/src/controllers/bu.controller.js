@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 
 /* ----------------------------------- */
 const mqtt = require('mqtt');
-const mosquitto_url = require('../config/mosquitto.config').mosquitto_url
+const mosquitto_url = require('../config/config').mosquitto_url
 
 const consistencyProofData = {
   raizAssinada: null,
