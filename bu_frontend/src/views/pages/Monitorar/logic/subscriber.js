@@ -2,7 +2,7 @@ import client from "./client";
 
 const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
-const TAM_MAX_MTREE_PARCIAL = 4
+const TAM_MAX_MTREE_PARCIAL = 64
 
 
 

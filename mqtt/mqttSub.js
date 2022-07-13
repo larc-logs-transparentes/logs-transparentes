@@ -1,6 +1,6 @@
 const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
-const TAM_MAX_MTREE_PARCIAL = 4
+const TAM_MAX_MTREE_PARCIAL = 64
 
 consistencyProofData = {
   raizAssinada: null,
@@ -11,7 +11,7 @@ consistencyProofData = {
 
 /* ---------------------- Configuração mqtt ------------------------- */
 const mqtt = require('mqtt')
-const client  = mqtt.connect('mqtt://test.mosquitto.org')
+const client  = mqtt.connect('ws://localhost:3031')
 
 client.on('connect', function () {
   client.subscribe('guilherme/teste', {qos: 2}, function (err) {
