@@ -5,7 +5,7 @@ Integridade de dados eleitorais, com transparência e auditabilidade
 Instruções para instalação e inicialização da ferramenta
 
 ## Algumas operações possíveis
-Exemplos de operações possíveis, com imagens de tela se possível
+Exemplos de operações possíveis, com imagens de tela
 
 ### Popular árvore e BD
 
