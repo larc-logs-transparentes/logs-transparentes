@@ -1,8 +1,6 @@
-# logs-transparentes
-Estrutura de dados eleitorais que garante integridade, transparência e auditabilidade.
-
 ## Visão geral do sistema
-A aplicação foi desenvolvida como um conceito sob um novo sistema eleitoral brasileiro que aplica os conceitos da estrutura Merkle Tree. Para isso, os dados contidos nas folhas da árvore são boletins de urnas(comumente chamado de BU), que é um documento emitido pelas própria urna para externalizar alguns dados, que inclui principalmente os votos contabilizados nela.
+Sistema baseado em árvores de Merkle para promover maior transparência e auditabilidade dos dados. Sendo aplicado à eleição brasileira, esse protótipo armazena os boletins de urna (BUs), que contém o resultado dos votos registrados na urna. 
+Desse modo, o protótipo permite verificar a integridade dos BUs através da prova de inclusão. Além disso, o protótipo permite recontabilizar o resultado da eleição a partir de cada BU registrado na árvore.
 
 ## Instalação
 Instruções para instalação e inicialização da ferramenta nas distribuições linux Ubuntu:
@@ -43,8 +41,7 @@ git clone https://github.com/larc-tse/logs-transparentes.git
 ```
 
 ### Inicialização
-Para todo sistema é funcionar, são necessários inicializar 4 diferentes partes que atuam em conjunto. 
-Abrindo um terminal no diretório do projeto para cada módulo, execute:
+O sistema é composto por 4 diferentes partes que atuam em conjunto. Abrindo um terminal no diretório do projeto para cada módulo, execute:
 
 #### 1. Back-end
 ```
@@ -86,14 +83,14 @@ npm start
 ```
 
 ## Algumas operações possíveis
-Com a aplicação inicializada, a tela inicial é renderizada. Nela, podemos visualizar um gráfico que mostra o resultado parcial da eleição. Em conjunto, também temos um botão que dá acesso a última raiz, que chamamos de raiz assinada, que prova essa apuração parcial mostrada.
+Na tela inicial, é possível visualizar o resultado parcial da eleição. É possível também visualizar a raiz atual da árvore de Merkle, utilizada nas provas de inclusão e consistência.
 
-Na barra lateral esquerda temos as outras funcionalidades da aplicação:
+Outras funcionalidades podem ser acessadas no menu lateral
 * Consultar BU
 * Monitorar
 * Retotalizar
 
-Mas antes de executa-las, é necessário inserir os dados na aplicação.
+Entretanto, antes de utiliza-las, é preciso inserir alguns dados na aplicação
 
 ### Popular árvore e BD
 
@@ -107,11 +104,11 @@ Esse script insere 12 BUs fictícios no DB.
 
 
 ### Consultar e Verificar BU
-![bu_verificar](https://user-images.githubusercontent.com/77642873/180626063-a08bd380-e018-45d3-a546-0b98d841dca4.png)
 
-Essa funcionalidade permite o usuário encontrar o BU desejado, selecioná-lo, e acessar informações adicionais sobre ele, que contém:
-* Votos armazenados nessa urna;
-* Resultado da prova de inclusão desse BU na Merkle Tree, junto com os dados usados pelo algoritmo de verificação. Indicado pelas imagens:
+
+Essa funcionalidade permite ao usuário encontrar o BU desejado, selecioná-lo, e acessar informações adicionais sobre ele (e.g., votos registrados na urna).
+
+Também é possível fazer a sua prova de inclusão, verificando a sua integridade. O resultado é evidenciado pelas imagens abaixo:
 
 <center>
 
@@ -121,23 +118,26 @@ Essa funcionalidade permite o usuário encontrar o BU desejado, selecioná-lo, e
 
 </center>   
 
+![bu_verificar](https://user-images.githubusercontent.com/77642873/180626063-a08bd380-e018-45d3-a546-0b98d841dca4.png)
+
+
 ### Monitoração da árvore
 
-Acessando o terceiro item do menu lateral, temos acesso a visão dos monitores da eleição, que recebem os dados e recalculam a Merkle Tree, validando provas de consistência sob a árvore no instante.
+Essa funcionalidade permite aos monitores que realizem as provas de consistência na Merkle Tree, desse modo monitorando as alterações na raiz da árvore. 
 
-Ao clicar em "Capturar transações", a aplicação ficará aguardando por publicações vindas do backend. A cada publicação recebida, será validado a consistência dos dados e o resultado será renderizado na tela:
+Ao clicar em "Capturar transações", a aplicação ficará aguardando por novas provas de consistência publicadas pelo backend. A cada publicação recebida, a consistência dos dados será validada e o seu resultado será renderizado na tela.
 
 ![monitorar](https://user-images.githubusercontent.com/77642873/180626174-33faa6ba-c29a-4a3d-a649-d1dc299aaab6.png)
 
-<sub>No conceito do projeto, os monitores devem estar capturando os dados desde o início da eleição, portanto, começar a monitorar com o BD populado resulta em dados incosistentes.</sub>
+<sub>Note que, no protótipo apresentado, os monitores devem estar capturando os dados desde o início da eleição. Portanto, começar a monitorar após a inicialização da árvore resulta em dados incosistentes.</sub>
 
 ### Reapuração
 
+Essa funcionalidade permite recalcular os votos da eleição. Ao se iniciar a retotalização, todos os BUs serão baixados do banco de dados. Então, as seguintes verificações serão realizadas:
+
+* Prova de inclusão do BU;
+* Comparação entre a quantidade de BUs recebidas com a quantidade de folhas na Merkle Tree.
+
+Se não houver erros, o resultado final será exibido.
+
 ![retotalizacao](https://user-images.githubusercontent.com/77642873/180626176-fb3a4a61-d90c-499e-a8bc-923e44a44a85.png)
-
-Essa tela permite recalcular os votos da eleição. Ao disparar a retotalização, todos os BUs serão baixados do banco de dados, e será realizado as verificações de:
-
-* Inclusão para todos os BUs;
-* Quantidade de BUs recebidos com a quantidade de folhas na Merkle Tree.
-
-Se não houver erros, o resultado será exibido com o nome do candidato seguido da quantidade total de votos dele. Ordenado por quantidade de votos.
