@@ -115,7 +115,7 @@ class Consultar_BU extends Component {
 
     let turnoArr = Array.from(turno.keys())
     let zonaArr = Array.from(zona.keys()).sort()
-    let secaoArr = Array.from(secao.keys()).sort()  
+    let secaoArr = Array.from(secao.keys()).sort(function(a,b) {return a - b}) 
     let ufArr = Array.from(uf.keys())
 
 
