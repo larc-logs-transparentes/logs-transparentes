@@ -15,7 +15,7 @@ const consistencyProofData = {
   ultimo: false,
 }
 
-const TAM_MTREE_PARCIAL = 64
+const TAM_MTREE_PARCIAL = 4
 /* ----------------------------------- */
 
 // const BU = db.bu;
