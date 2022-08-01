@@ -117,8 +117,7 @@ Também é possível fazer a sua prova de inclusão, verificando a sua integrida
 |![cad-verde](https://user-images.githubusercontent.com/77642873/180626237-60dc5438-43f3-436a-8374-c0d685b5d4a6.png)|![cad-vermelho](https://user-images.githubusercontent.com/77642873/180626247-1b7bfdee-68e1-4130-84de-d566fe12fafe.png)|
 
 </center>   
-
-![bu_verificar](https://user-images.githubusercontent.com/77642873/180626063-a08bd380-e018-45d3-a546-0b98d841dca4.png)
+![bu_verificar](https://user-images.githubusercontent.com/28439483/182241248-24b9a1b2-d851-40cb-b070-96d86ef78cd4.png)
 
 
 ### Monitoração da árvore
@@ -127,7 +126,8 @@ Essa funcionalidade permite aos monitores que realizem as provas de consistênci
 
 Ao clicar em "Capturar transações", a aplicação ficará aguardando por novas provas de consistência publicadas pelo backend. A cada publicação recebida, a consistência dos dados será validada e o seu resultado será renderizado na tela.
 
-![monitorar](https://user-images.githubusercontent.com/77642873/180626174-33faa6ba-c29a-4a3d-a649-d1dc299aaab6.png)
+![monitorar](https://user-images.githubusercontent.com/28439483/182241946-667c374f-6dc7-4207-a9fc-a0d2d97cb7ab.png)
+
 
 <sub>Note que, no protótipo apresentado, os monitores devem estar capturando os dados desde o início da eleição. Portanto, começar a monitorar após a inicialização da árvore resulta em dados incosistentes.</sub>
 
@@ -140,4 +140,5 @@ Essa funcionalidade permite recalcular os votos da eleição. Ao se iniciar a re
 
 Se não houver erros, o resultado final será exibido.
 
-![retotalizacao](https://user-images.githubusercontent.com/77642873/180626176-fb3a4a61-d90c-499e-a8bc-923e44a44a85.png)
+![retotalizacao](https://user-images.githubusercontent.com/28439483/182241971-d1850ecb-62df-4b38-b32c-a08cb40a7e4d.png)
+
