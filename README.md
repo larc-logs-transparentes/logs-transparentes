@@ -117,7 +117,9 @@ Também é possível fazer a sua prova de inclusão, verificando a sua integrida
 |![cad-verde](https://user-images.githubusercontent.com/77642873/180626237-60dc5438-43f3-436a-8374-c0d685b5d4a6.png)|![cad-vermelho](https://user-images.githubusercontent.com/77642873/180626247-1b7bfdee-68e1-4130-84de-d566fe12fafe.png)|
 
 </center>   
-![bu_verificar](https://user-images.githubusercontent.com/28439483/182241248-24b9a1b2-d851-40cb-b070-96d86ef78cd4.png)
+
+![bu_verificar](https://user-images.githubusercontent.com/28439483/182242126-3c9efccb-c449-413d-8b38-ccbb552bec15.png)
+
 
 
 ### Monitoração da árvore
