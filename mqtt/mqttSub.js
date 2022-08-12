@@ -1,11 +1,13 @@
-const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
-const TAM_MAX_MTREE_PARCIAL = 64
+const { MerkleTree } = require('merkletreejs')
 
-consistencyProofData = {
-  raizAssinada: null,
-  BUsAdicionados: [],
-  cont: 0,
+let consistencyProofData = {
+  tree_size_1: null,
+  tree_size_2: null,
+  first_hash: null,
+  second_hash: null,
+  consistency_path: [],
+  log_id: 0,
   ultimo: false,
 }
 
@@ -21,10 +23,8 @@ client.on('connect', function () {
 })
 /* ----------------------------------------------------------------- */
 
-ultimoCont  = -1 //Armazena o dado referente ao último envio do publisher processado
+ultimoID  = -1 //Armazena o dado referente ao último envio do publisher processado
 const bufferJSONs = [] //Buffer dos dados publicados  
-const arvorePrincipal = new MerkleTree([], SHA256)
-const arvoreParcial = new MerkleTree([], SHA256)
 
 main()
 
@@ -39,12 +39,12 @@ function main(){
 
     /* ------------------Processa os dados do buffer-------------------- */
     while(bufferJSONs.length > 0){ //Enquanto conter dados no buffer
-      if(bufferJSONs[bufferJSONs.length - 1].cont == ultimoCont + 1){ //se o dado mais recente no buffer for o próximo em relação aos processados
+      if(bufferJSONs[bufferJSONs.length - 1].log_id == ultimoID + 1){ //se o dado mais recente no buffer for o próximo em relação aos processados
         consistencyProofData = bufferJSONs.pop() //remove do buffer
-        console.log(provaDeConsistencia(arvorePrincipal, arvoreParcial, consistencyProofData.BUsAdicionados, consistencyProofData.raizAssinada)) //processa  
+        console.log(provaDeConsistencia(consistencyProofData)) //processa  
         if(consistencyProofData.ultimo == true) //se este dado estiver marcado como último, encerra o programa
           process.exit(1)
-        ultimoCont ++ //senão, incrementa o contador de processados
+        ultimoID ++ //senão, incrementa o contador de processados
       }
       else //se o dado mais recente no buffer não for o próximo na ordem dos que foram processados
         break //quebra o laço para esperar mais dados
@@ -59,68 +59,84 @@ function inserirNoBuffer(data) {
   bufferJSONs.sort((a, b) => b.cont - a.cont)
 }
 
-/* Recalcula a raiz com base nas folhas inseridas e compara com a raiz assinada */
-function provaDeConsistencia(merklePrincipal, merkleParcial, folhasInseridas, raizAssinada){
-  folhasInseridas.reverse()
+function provaDeConsistencia(consistencyProofData){
+  /* 1. If consistency_path is an empty array, stop and fail the proof verification. */
+  if(consistencyProofData.tree_size_1 == 0)
+    return new MerkleTree(consistencyProofData.consistency_path, SHA256).getRoot().toString('hex') == consistencyProofData.second_hash; 
 
-  /* enquanto existirem folhas para serem adicionadas */
-  while(folhasInseridas.length > 0){
-    /* Se a árvore parcial ainda não estiver completa */
-    if(merkleParcial.getLeafCount() < TAM_MAX_MTREE_PARCIAL){
-      folha = folhasInseridas.pop()
-      console.log(folha + " adicionado a árvore parcial")
-      merkleParcial.addLeaf(folha)
-      printTrees()
-    } else { 
-      /* Se a árvore parcial estiver completa */
-      merklePrincipal.addLeaf(merkleParcial.getRoot())
-      console.log("Raiz da árvore parcial adicionada a principal")
-      merkleParcial.resetTree()
-      console.log("Árvore parcial resetada")
-      printTrees()
-    }
-  }
-
-  /* TODOS BUs INSERIDOS */
-
-  /* Se a árvore parcial não estiver completa(envio por intervalo de tempo) */
-  /* Árvore parcial continua armazenada */
-  if(merkleParcial.getLeafCount() != TAM_MAX_MTREE_PARCIAL){
-    //raiz = obterRaizMerklePrincipal(merklePrincipal.getLeaves().concat(merkleParcial.getRoot()))
-    raiz = obterRaizMerklePrincipal(merklePrincipal, merkleParcial.getRoot())
-  }
-
-  /* Se a árvore parcial estiver completa(envio por quantidade) */
-  if(merkleParcial.getLeafCount() == TAM_MAX_MTREE_PARCIAL){
-    merklePrincipal.addLeaf(merkleParcial.getHexRoot())
-    console.log("Raiz da árvore parcial adicionada a principal")
-
-    raiz = merklePrincipal.getRoot().toString('hex')
-
-    merkleParcial.resetTree()
-    console.log("Árvore parcial resetada")
-  }
-
-  printTrees()
-
-  console.log(raiz)
-  console.log(raizAssinada)
-
-  if(raiz == raizAssinada)
-    return true
-  else
+  if(consistencyProofData.consistency_path == null)
     return false
+  
+  /* 2. If first is an exact power of 2, then prepend first_hash to the consistency_path array. */
+  if(isPowOf2(consistencyProofData.tree_size_1))
+    consistencyProofData.consistency_path.unshift(consistencyProofData.first_hash)
+  
+  
+  /* 3. Set fn to first - 1 and sn to second - 1. */
+  /* arruma */
+  let fn = consistencyProofData.first_hash - 1;
+  let sn = consistencyProofData.second_hash - 1;
+  
+  /* 4. If LSB(fn) is set, then right-shift both fn and sn equally until LSB(fn) is not set. */
+  while(lsb(fn)){
+    fn >>= 1
+    sn >>= 1    
+  }
+
+  /* 5. Set both fr and sr to the first value in the consistency_path array. */
+  fr = consistencyProofData.consistency_path[0];
+  sr = consistencyProofData.consistency_path[0];
+
+  /* 6. For each subsequent value c in the consistency_path array */
+  for (let index = 0; index < consistencyProofData.consistency_path.length; index++) {
+    c = consistencyProofData.consistency_path[index]
+
+    /* If sn is 0, stop the iteration and fail the proof verification. */
+    if(sn == 0)
+      return false
+    
+    /* If LSB(fn) is set, or if fn is equal to sn, then: */
+    if(lsb(fn) || fn == sn){
+      /* 1. Set fr to HASH(0x01 || c || fr) */
+      fr = createHash(c, fr)
+      /* Set sr to HASH(0x01 || c || sr) */
+      sr = createHash(c, sr)
+
+      /* 2. If LSB(fn) is not set, then right-shift both fn and sn equally until either LSB(fn) is set or fn is 0. */
+      while(!lsb(fn) && fn != 0){
+        fn >>= 1
+        sn >>= 1
+      }
+    } else { /* Otherwise */
+      /* 1. Set sr to HASH(0x01 || sr || c) */
+      sr = createHash(sr,c)
+    }
+    
+    /* Finally, right-shift both fn and sn one time. */
+    fn >>= 1
+    sn >>= 1
+  }
+
+  /* 7. After completing iterating through the consistency_path array as described above, verify that the fr calculated is equal to the first_hash supplied, that the sr calculated is equal to the second_hash supplied and that sn is 0. */
+  return fr == first_hash && sr == second_hash && sn == 0;
 }
 
-/* Retorna a raiz da Merkle Tree principal caso fosse adicionado a raiz da parcial*/
-function obterRaizMerklePrincipal(merklePrincipal, raizMerkleParcial){
-  return new MerkleTree(merklePrincipal.getLeaves().concat(raizMerkleParcial), SHA256).getRoot().toString('hex')
+function isPowOf2(v){
+  return v && !(v & (v - 1));
 }
 
-function printTrees(){
-  console.log("PRINCIPAL")
-  arvorePrincipal.print()
-  console.log("PARCIAL")
-  arvoreParcial.print()
-  console.log()
+function lsb(v){
+  return (v & 1) === 1;
+}
+
+function createHash(left, right){
+  if(!Buffer.isBuffer(left))
+    left = Buffer.from(left)
+  if(!Buffer.isBuffer(right))
+    right = Buffer.from(right)
+
+  let aux = null
+  let combined = [left, right]
+  aux = Buffer.concat(combined)
+  return SHA256(aux)
 }
