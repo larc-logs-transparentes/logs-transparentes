@@ -22,6 +22,11 @@ console.log("------")
 const MT = new MerkleTree(leaves.map(x => SHA256(x)), SHA256)
 aux = MT.getLeaves()
 MT.print()
+console.log("-- m = 3 --")
+console.log(proof(3, aux))
+console.log("-- m = 4 --")
+console.log(proof(4, aux))
+console.log("-- m = 6 --")
 console.log(proof(6, aux))
 
 function publish(topic, payload){
@@ -54,13 +59,11 @@ function proof(m, D){
 function subProof(m, D, subTree){
     const path = []
     const n = D.length
-    
     if (m == n) {
         if (!subTree)
             path.push(MTH(D))
         return path
     }
-
     if(m < n){
         k = maiorPot2MenorQue(n)
         if (m <= k){
@@ -77,7 +80,7 @@ function subProof(m, D, subTree){
             path.push(MTH(D.slice(0,k)))
         }
     }
-    return path
+    return path.flat()
 }
 
 function MTH(D){
@@ -85,5 +88,15 @@ function MTH(D){
 }
 
 function maiorPot2MenorQue(n){
-    return Math.pow(2,parseInt(Math.log2(n)));
+   if (n < 2)
+        return 0
+    t = 0
+    for (let i = 0; i < 64; i++) {
+        c = 1 << i;
+        if (c > n-1)
+            return t
+        t = c
+    }
+    return 0 
+    //return Math.pow(2,parseInt(Math.log2(n-1)));
 }
