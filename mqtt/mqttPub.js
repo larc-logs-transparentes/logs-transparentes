@@ -4,13 +4,11 @@ const mqtt = require('mqtt')
 
 
 let consistencyProofData = {
-    tree_size_1: null,
-    tree_size_2: null,
-    first_hash: null,
-    second_hash: null,
+    tree_size: null,
+    tree_hash: null,
     consistency_path: [],
     log_id: 0,
-    ultimo: false,
+    last: false,
 }
 
 /* ------------------------- 1º envio ------------------------------ */
@@ -24,10 +22,16 @@ aux = MT.getLeaves()
 MT.print()
 console.log("-- m = 3 --")
 console.log(proof(3, aux))
+consistencyProofData.tree_size = MT.getLeafCount()
+consistencyProofData.tree_hash = MT.getRoot()
+consistencyProofData.consistency_path = proof(3, aux)
+
 console.log("-- m = 4 --")
 console.log(proof(4, aux))
 console.log("-- m = 6 --")
 console.log(proof(6, aux))
+
+
 
 function publish(topic, payload){
     const client  = mqtt.connect('ws://localhost:3031')
@@ -52,11 +56,11 @@ function publish(topic, payload){
 function proof(m, D){
     n = D.length
     if(0 < m && m < n)
-        return subProof(m, D, true)
+        return __subProof(m, D, true)
     return null
 }
 
-function subProof(m, D, subTree){
+function __subProof(m, D, subTree){
     const path = []
     const n = D.length
     if (m == n) {
@@ -69,13 +73,13 @@ function subProof(m, D, subTree){
         if (m <= k){
             //a subárvore da direita D[k:n] só existe na árvore atual
             //então, temos que provar que a subárvore da esquerda D[0:k]  
-            path.push(subProof(m, D.slice(0, k), subTree))
+            path.push(__subProof(m, D.slice(0, k), subTree))
             //e adicionar ao pacote a ser enviado D[k:n]
             path.push(MTH(D.slice(k,n)))
         } else {
             //a subárvore da esquerda são idênticas em ambas as árvores 
             //Vamos provar que a subárvore da direita D[k:n] são consistentes
-            path.push(subProof(m - k, D.slice(k, n), false))
+            path.push(__subProof(m - k, D.slice(k, n), false))
             //e adicionar ao pacote a ser enviado D[0:k]
             path.push(MTH(D.slice(0,k)))
         }
@@ -84,11 +88,27 @@ function subProof(m, D, subTree){
 }
 
 function MTH(D){
-    return new MerkleTree(D, SHA256).getRoot()
+    n = D.length
+    if (n == 0)
+        return SHA256(null).toString()
+    if (n == 1){
+        var h = [0x00, D[0]]
+        return SHA256(Buffer.concat(h)).toString()
+    }
+
+    k = maiorPot2MenorQue(n)
+
+    var c = []
+    c[0] =  0x01
+    x = MTH(D.slice(0, k))
+    c.concat(x)
+    x = MTH(D.slice(k, n))
+    c.concat(x)
+    return SHA256(c).toString()
 }
 
 function maiorPot2MenorQue(n){
-   if (n < 2)
+    /* if (n < 2)
         return 0
     t = 0
     for (let i = 0; i < 64; i++) {
@@ -98,5 +118,6 @@ function maiorPot2MenorQue(n){
         t = c
     }
     return 0 
-    //return Math.pow(2,parseInt(Math.log2(n-1)));
+     */
+    return Math.pow(2,parseInt(Math.log2(n-1)));
 }
