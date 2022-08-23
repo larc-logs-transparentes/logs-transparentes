@@ -71,9 +71,7 @@ function provaDeConsistencia(consistencyProofData){
   if(isPowOf2(consistencyProofData.tree_size_1))
     consistencyProofData.consistency_path.unshift(consistencyProofData.first_hash)
   
-  
   /* 3. Set fn to first - 1 and sn to second - 1. */
-  /* arruma */
   let fn = consistencyProofData.first_hash - 1;
   let sn = consistencyProofData.second_hash - 1;
   
@@ -84,19 +82,19 @@ function provaDeConsistencia(consistencyProofData){
   }
 
   /* 5. Set both fr and sr to the first value in the consistency_path array. */
-  fr = consistencyProofData.consistency_path[0];
-  sr = consistencyProofData.consistency_path[0];
+  let fr = consistencyProofData.consistency_path[0];
+  let sr = consistencyProofData.consistency_path[0];
 
   /* 6. For each subsequent value c in the consistency_path array */
   for (let index = 0; index < consistencyProofData.consistency_path.length; index++) {
     c = consistencyProofData.consistency_path[index]
 
     /* If sn is 0, stop the iteration and fail the proof verification. */
-    if(sn == 0)
+    if(sn === 0)
       return false
     
     /* If LSB(fn) is set, or if fn is equal to sn, then: */
-    if(lsb(fn) || fn == sn){
+    if(lsb(fn) || fn === sn){
       /* 1. Set fr to HASH(0x01 || c || fr) */
       fr = createHash(c, fr)
       /* Set sr to HASH(0x01 || c || sr) */
@@ -130,13 +128,9 @@ function lsb(v){
 }
 
 function createHash(left, right){
-  if(!Buffer.isBuffer(left))
-    left = Buffer.from(left)
-  if(!Buffer.isBuffer(right))
-    right = Buffer.from(right)
-
   let aux = null
   let combined = [left, right]
   aux = Buffer.concat(combined)
   return SHA256(aux)
 }
+
