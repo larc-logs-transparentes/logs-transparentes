@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 
 /* ----------------------------------- */
 const mqtt = require('mqtt');
-const { mode } = require("crypto-js");
 const mosquitto_url = require('../config/config').mosquitto_url
 
 const consistencyProofData = {
@@ -31,7 +30,7 @@ exports.create = (data) => {
 
   merkletree_adapter.addLeaf(buString).then((merkletree_data) => {
     modeloBoletim.modeloBoletim1.create({
-      merkletree_leaf_id: merkletree_data.leaf_id,
+      merkletree_leaf_id: merkletree_data.leaf_index,
       merkletree_leaf: merkletree_data.added_leaf,
       ...data
     })
