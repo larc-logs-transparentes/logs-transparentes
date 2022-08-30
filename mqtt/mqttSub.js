@@ -13,7 +13,7 @@ let consistencyProofData = {
 
 /* ---------------------- Configuração mqtt ------------------------- */
 const mqtt = require('mqtt')
-const client  = mqtt.connect('ws://localhost:3031')
+const client  = mqtt.connect('ws://localhost:3030')
 
 client.on('connect', function () {
   client.subscribe('guilherme/teste', {qos: 2}, function (err) {
@@ -60,10 +60,10 @@ function inserirNoBuffer(data) {
 }
 
 function provaDeConsistencia(consistencyProofData){
-  /* 1. If consistency_path is an empty array, stop and fail the proof verification. */
   if(consistencyProofData.tree_size_1 == 0)
-    return new MerkleTree(consistencyProofData.consistency_path, SHA256).getRoot().toString('hex') == consistencyProofData.second_hash; 
+    return new MerkleTree(consistencyProofData.consistency_path, SHA256).getHexRoot() == consistencyProofData.second_hash; 
 
+  /* 1. If consistency_path is an empty array, stop and fail the proof verification. */
   if(consistencyProofData.consistency_path == null)
     return false
   
@@ -72,8 +72,8 @@ function provaDeConsistencia(consistencyProofData){
     consistencyProofData.consistency_path.unshift(consistencyProofData.first_hash)
   
   /* 3. Set fn to first - 1 and sn to second - 1. */
-  let fn = consistencyProofData.first_hash - 1;
-  let sn = consistencyProofData.second_hash - 1;
+  let fn = consistencyProofData.tree_size_1 - 1;
+  let sn = consistencyProofData.tree_size_2 - 1;
   
   /* 4. If LSB(fn) is set, then right-shift both fn and sn equally until LSB(fn) is not set. */
   while(lsb(fn)){
@@ -86,7 +86,7 @@ function provaDeConsistencia(consistencyProofData){
   let sr = consistencyProofData.consistency_path[0];
 
   /* 6. For each subsequent value c in the consistency_path array */
-  for (let index = 0; index < consistencyProofData.consistency_path.length; index++) {
+  for (let index = 1; index < consistencyProofData.consistency_path.length; index++) {
     c = consistencyProofData.consistency_path[index]
 
     /* If sn is 0, stop the iteration and fail the proof verification. */
@@ -116,7 +116,7 @@ function provaDeConsistencia(consistencyProofData){
   }
 
   /* 7. After completing iterating through the consistency_path array as described above, verify that the fr calculated is equal to the first_hash supplied, that the sr calculated is equal to the second_hash supplied and that sn is 0. */
-  return fr == first_hash && sr == second_hash && sn == 0;
+  return fr == consistencyProofData.first_hash && sr == consistencyProofData.second_hash && sn == 0;
 }
 
 function isPowOf2(v){
@@ -128,9 +128,10 @@ function lsb(v){
 }
 
 function createHash(left, right){
-  let aux = null
+  return new MerkleTree([left, right], SHA256).getHexRoot()
+  /* let aux = null
   let combined = [left, right]
   aux = Buffer.concat(combined)
-  return SHA256(aux)
+  return SHA256(aux) */
 }
 
