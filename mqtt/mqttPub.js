@@ -12,6 +12,25 @@ let consistencyProofData = {
     ultimo: false,
 }
 /* ------------------------- 1º envio ------------------------------ */
+const leaves = ['c0', 'c1', 'c2', 'c3', 'c4', 'c5']
+for (const key in leaves) 
+    console.log(`${leaves[key]} ${SHA256(leaves[key])}`)
+console.log("------") 
+const Merkle = new MerkleTree(leaves.map(x => SHA256(x)), SHA256)
+Merkle.print()
+console.log(proof(3, Merkle.getHexLeaves()))
+
+consistencyProofData.tree_size_1 = 3;
+consistencyProofData.tree_size_2 = Merkle.getLeafCount();
+consistencyProofData.first_hash = new MerkleTree(['c0', 'c1', 'c2'].map(x => SHA256(x)), SHA256).getHexRoot()
+consistencyProofData.second_hash = Merkle.getHexRoot()
+consistencyProofData.consistency_path = proof(3, Merkle.getHexLeaves())
+consistencyProofData.log_id = 0 
+consistencyProofData.ultimo = true
+publish("guilherme/teste", JSON.stringify(consistencyProofData))
+
+
+/* 
 console.log("-- m = 3 --")
 leaves = ['d0', 'd1', 'd2']
 const MT = new MerkleTree(leaves.map(x => SHA256(x)), SHA256)
@@ -46,7 +65,7 @@ consistencyProofData.consistency_path = proof(7, MT.getHexLeaves())
 consistencyProofData.log_id = 2
 consistencyProofData.ultimo = true
 publish("guilherme/teste", JSON.stringify(consistencyProofData))
-
+ */
 return
 
 /**
