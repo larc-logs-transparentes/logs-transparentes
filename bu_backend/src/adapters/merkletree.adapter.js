@@ -70,3 +70,13 @@ exports.getAllLeaves = () => {
       console.log(err)
     })
 }
+
+exports.getProof = (m) => {
+  return axios.get(`${merkletreeHostname}:${merkletreePort}/tree/proof?m=${m}`)
+  .then(res => {
+    return res.data
+  })
+  .catch(err => {
+    console.log(err)
+  }) 
+}

@@ -1,3 +1,6 @@
+const { MerkleTree } = require('merkletreejs')
+const SHA256 = require('crypto-js/sha256')
+
 /**
 * proof
 * @desc - retorna a lista de nós da Merkle Tree necessários para verificar que as m primeiras entradas D[0:m] são iguais em ambas as árvores.
