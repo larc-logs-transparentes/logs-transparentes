@@ -34,8 +34,13 @@ function main(){
     /* -------------------Recebe e armazena os dados-------------------- */
     console.log(`Topic: ${topic}, Message: ${payload}, Qos: ${packet.qos}`)
     consistencyProofData = JSON.parse(payload)
-    inserirNoBuffer(consistencyProofData) //insere no buffer ordenado pelo dado "cont"
-    /* ----------------------------------------------------------------- */
+    if(ultimoID == -1) 
+      ultimoID = consistencyProofData.log_id - 1
+    if(consistencyProofData.log_id > ultimoID)
+      inserirNoBuffer(consistencyProofData) //insere no buffer ordenado pelo "log_id"
+    else
+      console.log("Descartado")
+      /* ----------------------------------------------------------------- */
 
     /* ------------------Processa os dados do buffer-------------------- */
     while(bufferJSONs.length > 0){ //Enquanto conter dados no buffer
@@ -56,7 +61,7 @@ function main(){
 /* Insere "data" no buffer e o ordena em ordem decrescente de "cont" */
 function inserirNoBuffer(data) {
   bufferJSONs.push(data)
-  bufferJSONs.sort((a, b) => b.cont - a.cont)
+  bufferJSONs.sort((a, b) => b.log_id - a.log_id)
 }
 
 function provaDeConsistencia(consistencyProofData){
