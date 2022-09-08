@@ -76,6 +76,8 @@ E altere a configuração de portas do projeto nos arquivos:
 * bu_frontend/src/config.json
 
 #### 4. Front-end
+Requisitos: node versão 10.19.0
+
 ```
 cd bu_frontend/
 npm install
