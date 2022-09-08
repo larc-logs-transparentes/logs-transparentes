@@ -8,14 +8,26 @@ const mongoose = require("mongoose");
 const mqtt = require('mqtt');
 const mosquitto_url = require('../config/config').mosquitto_url
 
-const consistencyProofData = {
+const consistencyCheckData = {
   raizAssinada: null,
   BUsAdicionados: [],
   cont: 0,
   ultimo: false,
 }
 
-const TAM_MTREE_PARCIAL = 64
+/* Dados necessários para os monitores verificarem a prova de consistência */
+const consistencyProofData = {
+  tree_size_1: 0, /* Tamanho da última árvore com consistência provada */
+  tree_size_2: 0, /* Tamanho da árvore com consistência a ser provada */
+  first_hash: null, /* Última raiz consistente */
+  second_hash: null, /* Raiz atual */
+  consistency_path: [], /* Dados necessários para se realizar a prova */
+  log_id: 0,
+  ultimo: false,
+}
+
+const TAM_MTREE_PARCIAL = 4
+const QTD_BUs_CONSISTENCY_PROOF = TAM_MTREE_PARCIAL //Frequência de envio da prova de consistência
 /* ----------------------------------- */
 
 // const BU = db.bu;
@@ -35,18 +47,37 @@ exports.create = (data) => {
       ...data
     })
 
-    consistencyProofData.BUsAdicionados.push(merkletree_data.added_leaf)
-    console.log(merkletree_data.added_leaf + " " + consistencyProofData.BUsAdicionados.length +" adicionado ao buffer de BUs")
-    
-    if(consistencyProofData.BUsAdicionados.length >= TAM_MTREE_PARCIAL){
+    consistencyCheckData.BUsAdicionados.push(merkletree_data.added_leaf)
+    console.log(merkletree_data.added_leaf + " " + consistencyCheckData.BUsAdicionados.length +" adicionado ao buffer de BUs")
+
+    if(consistencyCheckData.BUsAdicionados.length >= TAM_MTREE_PARCIAL){
       merkletree_adapter.getTreeRoot().then((treeRoot) => {
-        consistencyProofData.raizAssinada = treeRoot
-        publish("guilherme/teste", JSON.stringify(consistencyProofData))
+        consistencyCheckData.raizAssinada = treeRoot
+        publish("guilherme/teste", JSON.stringify(consistencyCheckData))
         console.log("\n\nPublicado teste de consistência")
-        console.log(JSON.stringify(consistencyProofData))
-        consistencyProofData.BUsAdicionados = []
-        consistencyProofData.cont ++
+        console.log(JSON.stringify(consistencyCheckData))
+        consistencyCheckData.BUsAdicionados = []
+        consistencyCheckData.cont ++
       }) 
+    }
+
+    consistencyProofData.tree_size_2++ //A cada BU inserido, o tamanho da árvore a ser provada aumenta
+    if(consistencyProofData.tree_size_2 % QTD_BUs_CONSISTENCY_PROOF == 0){ 
+      //Enviar prova de consistência
+      merkletree_adapter.getProof(consistencyProofData.tree_size_1).then((proof) => {
+        //Obtendo os dados necessários para realizar a prova
+        consistencyProofData.consistency_path = proof
+        merkletree_adapter.getTreeRoot().then((treeRoot => {
+          //Obtendo raiz atual
+          consistencyProofData.second_hash = treeRoot
+          publish('guilherme/consistencyProof', JSON.stringify(consistencyProofData))
+          console.log("\n\nPublicado prova de consistência")
+          console.log(JSON.stringify(consistencyProofData))
+          consistencyProofData.first_hash = consistencyProofData.second_hash
+          consistencyProofData.tree_size_1 = consistencyProofData.tree_size_2
+          consistencyProofData.log_id ++
+        }))
+      })
     }
   })
   return
@@ -97,9 +128,14 @@ exports.findById = (id) => {
       })
 };
 
+/**
+* publish
+* @desc - publica os dados contidos no payload no tópico correspondente
+* @param {String} topic
+* @param {any} payload - lista ordenada das n entradas da árvore
+*/
 function publish(topic, payload){
   const client  = mqtt.connect(mosquitto_url)
-
   client.on('connect', function () {
       client.publish(topic, payload, {qos: 2})
       client.end()

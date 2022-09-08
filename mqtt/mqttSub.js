@@ -13,10 +13,10 @@ let consistencyProofData = {
 
 /* ---------------------- Configuração mqtt ------------------------- */
 const mqtt = require('mqtt')
-const client  = mqtt.connect('ws://localhost:3030')
+const client  = mqtt.connect('ws://localhost:3031')
 
 client.on('connect', function () {
-  client.subscribe('guilherme/teste', {qos: 2}, function (err) {
+  client.subscribe('guilherme/consistencyProof', {qos: 2}, function (err) {
     if (!err) 
       console.log("Conectado")
   })
@@ -61,7 +61,7 @@ function inserirNoBuffer(data) {
 
 function provaDeConsistencia(consistencyProofData){
   if(consistencyProofData.tree_size_1 == 0)
-    return new MerkleTree(consistencyProofData.consistency_path, SHA256).getHexRoot() == consistencyProofData.second_hash; 
+    return new MerkleTree(consistencyProofData.consistency_path, SHA256).getHexRoot() === consistencyProofData.second_hash; 
 
   /* 1. If consistency_path is an empty array, stop and fail the proof verification. */
   if(consistencyProofData.consistency_path == null)
@@ -116,7 +116,7 @@ function provaDeConsistencia(consistencyProofData){
   }
 
   /* 7. After completing iterating through the consistency_path array as described above, verify that the fr calculated is equal to the first_hash supplied, that the sr calculated is equal to the second_hash supplied and that sn is 0. */
-  return fr == consistencyProofData.first_hash && sr == consistencyProofData.second_hash && sn == 0;
+  return fr === consistencyProofData.first_hash && sr === consistencyProofData.second_hash && sn == 0;
 }
 
 function isPowOf2(v){
@@ -129,9 +129,5 @@ function lsb(v){
 
 function createHash(left, right){
   return new MerkleTree([left, right], SHA256).getHexRoot()
-  /* let aux = null
-  let combined = [left, right]
-  aux = Buffer.concat(combined)
-  return SHA256(aux) */
 }
 
