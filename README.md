@@ -90,7 +90,7 @@ Na tela inicial, é possível visualizar o resultado parcial da eleição. É po
 Outras funcionalidades podem ser acessadas no menu lateral
 * Consultar BU
 * Monitorar
-* Retotalizar
+* Recontabilizar
 
 Entretanto, antes de utiliza-las, é preciso inserir alguns dados na aplicação
 
@@ -137,12 +137,12 @@ Ao clicar em "Capturar transações", a aplicação ficará aguardando por novas
 
 ### Reapuração
 
-Essa funcionalidade permite recalcular os votos da eleição. Ao se iniciar a retotalização, todos os BUs serão baixados do banco de dados. Então, as seguintes verificações serão realizadas:
+Essa funcionalidade permite recalcular os votos da eleição. Ao se iniciar a recontabilização, todos os BUs serão baixados do banco de dados. Então, as seguintes verificações serão realizadas:
 
 * Prova de inclusão do BU;
 * Comparação entre a quantidade de BUs recebidas com a quantidade de folhas na Merkle Tree.
 
 Se não houver erros, o resultado final será exibido.
 
-![retotalizacao](https://user-images.githubusercontent.com/28439483/182241971-d1850ecb-62df-4b38-b32c-a08cb40a7e4d.png)
+![recontabilizacao](https://user-images.githubusercontent.com/28439483/182241971-d1850ecb-62df-4b38-b32c-a08cb40a7e4d.png)
 

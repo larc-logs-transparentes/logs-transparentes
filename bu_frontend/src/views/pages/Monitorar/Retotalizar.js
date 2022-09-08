@@ -114,10 +114,10 @@ export default function Retotalizar() {
         <Col md={12}>
             <Card>
               <CardBody >
-              <h4> Retotalização dos votos</h4>
+              <h4> Recontabilização dos votos</h4>
                 <div style={{textAlign:'center'}} >
                   <button onClick={()=> {BaixarBus(true)}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
-                    Solicitar Retotalização
+                    Solicitar Recontabilização
                   </button>
                 </div>
                 </CardBody>
@@ -171,7 +171,7 @@ export default function Retotalizar() {
 
                 {showret?<div style={{display:stop1(),textAlign:'justify'}}>
                   <div style={{display:'flex',alignItems:'center'}}>
-                    <h5>3) Retotalizando BUS</h5>
+                    <h5>3) Recontabilizando BUS</h5>
                     <Row md={4} style={{padding:'2vw'}}>
                       {!showret2?<Loader small type="spin"/>:null}
                       {showret2?<img src={approval} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />

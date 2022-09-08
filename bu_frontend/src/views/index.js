@@ -57,8 +57,8 @@ const pageList = [
     //},
   },
   {
-    name: 'Retotalizar',
-    path: '/retotalizar',
+    name: 'Recontabilizar',
+    path: '/recontabilizar',
     component: Retotalizar
     //badge: {
     //  text: 'NEW',

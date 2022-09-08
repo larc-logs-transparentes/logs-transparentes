@@ -37,15 +37,15 @@ export default {
       url: '/monitorar',
       icon: 'Package',
       badge: {
-        text: 'Monitores',
+        text: 'Monitor',
       },
     },
     {
-      name: 'Retotalizar',
-      url: '/retotalizar',
+      name: 'Recontabilizar',
+      url: '/recontabilizar',
       icon: 'Package',
       badge: {
-        text: 'Monitores',
+        text: 'Monitor',
       },
     }
 
