@@ -29,7 +29,7 @@ function proof(m, D_n){
     if (n == 1)
         return D[0]
   
-    return new MerkleTree(D, SHA256).getHexRoot()
+    return new MerkleTree(D, SHA256).getRoot().toString('hex')
   }
   
   function __subProof(m, D, subTree){

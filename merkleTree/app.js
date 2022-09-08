@@ -80,7 +80,7 @@ app.get('/tree', (req, res) => {
 
 app.get('/tree/root', (req, res) => {
   // TODO: em vez de hexa usar base64
-  const root = tree.getHexRoot()
+  const root = tree.getRoot().toString('hex')
   console.log(root)
   res.send(root)
 })
