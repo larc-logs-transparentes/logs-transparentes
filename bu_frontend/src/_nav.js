@@ -47,6 +47,14 @@ export default {
       badge: {
         text: 'Monitor',
       },
+    },
+    {
+      name: 'Mapa',
+      url: '/mapa',
+      icon: 'Package',
+      badge: {
+        text: 'Monitor',
+      },
     }
 
   ],

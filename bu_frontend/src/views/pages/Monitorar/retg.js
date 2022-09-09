@@ -17,6 +17,7 @@ export async function RetotalizacaoDeBus(){
     }
     const verificarbus = await verificarBUs(BUs) // variavel para verificar os bus (true ou false)
     const verificarbusquantidade = verificarbus.verificacao_qtd
+    console.log(verificarbusquantidade)
     const verificarbusinclusao = verificarbus.verificacao_inclusao
     const votosretotalizacao = retotalizar(BUs)
     const teste = await PegarRoot(BUs)
@@ -95,3 +96,4 @@ function retotalizar(BUs){
     ret.sort((a, b) => b.votos - a.votos) //ordena por qtd de votos
     return ret
 }
+
