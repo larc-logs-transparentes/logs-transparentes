@@ -12,36 +12,17 @@ let consistencyProofData = {
     ultimo: false,
 }
 /* ------------------------- 1º envio ------------------------------ */
-const leaves = ['c0', 'c1', 'c2', 'c3', 'c4', 'c5']
-for (const key in leaves) 
-    console.log(`${leaves[key]} ${SHA256(leaves[key])}`)
-console.log("------") 
-const Merkle = new MerkleTree(leaves.map(x => SHA256(x)), SHA256)
-Merkle.print()
-console.log(proof(3, Merkle.getHexLeaves()))
-
-consistencyProofData.tree_size_1 = 3;
-consistencyProofData.tree_size_2 = Merkle.getLeafCount();
-consistencyProofData.first_hash = new MerkleTree(['c0', 'c1', 'c2'].map(x => SHA256(x)), SHA256).getHexRoot()
-consistencyProofData.second_hash = Merkle.getHexRoot()
-consistencyProofData.consistency_path = proof(3, Merkle.getHexLeaves())
-consistencyProofData.log_id = 0 
-consistencyProofData.ultimo = true
-publish("guilherme/teste", JSON.stringify(consistencyProofData))
-
-
-/* 
 console.log("-- m = 3 --")
 leaves = ['d0', 'd1', 'd2']
 const MT = new MerkleTree(leaves.map(x => SHA256(x)), SHA256)
-leaves = MT.getHexLeaves() 
+leaves = MT.getLeaves().toString('hex')
 consistencyProofData.tree_size_1 = 0;
 consistencyProofData.tree_size_2 = 3;
 consistencyProofData.first_hash = null
-consistencyProofData.second_hash = MT.getHexRoot()
+consistencyProofData.second_hash = MT.getRoot().toString('hex')
 consistencyProofData.consistency_path = proof(0, MT.getHexLeaves())
 consistencyProofData.log_id = 0 
-publish("guilherme/teste", JSON.stringify(consistencyProofData))  
+publish("guilherme/consistencyProof", JSON.stringify(consistencyProofData))  
 
 console.log("-- m = 7 --")
 leaves = ['d3', 'd4', 'd5', 'd6']
@@ -49,10 +30,10 @@ MT.addLeaves(leaves.map(x => SHA256(x)))
 consistencyProofData.tree_size_1 = 3
 consistencyProofData.tree_size_2 = 7
 consistencyProofData.first_hash = consistencyProofData.second_hash
-consistencyProofData.second_hash = MT.getHexRoot()
+consistencyProofData.second_hash = MT.getRoot().toString('hex')
 consistencyProofData.consistency_path = proof(3, MT.getHexLeaves())
 consistencyProofData.log_id = 1
-publish("guilherme/teste", JSON.stringify(consistencyProofData))
+publish("guilherme/consistencyProof", JSON.stringify(consistencyProofData))
 
 console.log("-- m = 10 --")
 leaves = ['d7', 'd8', 'd9']
@@ -60,12 +41,11 @@ MT.addLeaves(leaves.map(x => SHA256(x)))
 consistencyProofData.tree_size_1 = 7
 consistencyProofData.tree_size_2 = 10
 consistencyProofData.first_hash = consistencyProofData.second_hash
-consistencyProofData.second_hash = MT.getHexRoot()
+consistencyProofData.second_hash = MT.getRoot().toString('hex')
 consistencyProofData.consistency_path = proof(7, MT.getHexLeaves())
 consistencyProofData.log_id = 2
 consistencyProofData.ultimo = true
-publish("guilherme/teste", JSON.stringify(consistencyProofData))
- */
+publish("guilherme/consistencyProof", JSON.stringify(consistencyProofData))
 return
 
 /**
@@ -75,7 +55,7 @@ return
 * @param {any} payload - lista ordenada das n entradas da árvore
 */
 function publish(topic, payload){
-    const client  = mqtt.connect('ws://localhost:3030')
+    const client  = mqtt.connect('ws://localhost:3031')
     client.on('connect', function () {
         client.publish(topic, payload, {qos: 2})
         client.end()
@@ -99,18 +79,18 @@ function proof(m, D_n){
 }
 
 /**
-* MTH
-* @desc - calcula a raiz da Merkle Tree com as entradas D
-* @param {String[]} D - lista ordenada de entradas
-* @return {String}
-*/
+ * MTH
+ * @desc - calcula a raiz da Merkle Tree com as entradas D
+ * @param {String[]} D - lista ordenada de entradas
+ * @return {String}
+ */
 function MTH(D){
     n = D.length
 
     if (n == 1)
         return D[0]
 
-    return new MerkleTree(D, SHA256).getHexRoot()
+    return new MerkleTree(D, SHA256).getRoot().toString('hex')
 }
 
 function __subProof(m, D, subTree){
@@ -139,7 +119,7 @@ function __subProof(m, D, subTree){
     }
     return path.flat()
 }
-
+  
 function __maiorPot2MenorQue(n){
     return Math.pow(2,parseInt(Math.log2(n-1)));
 }

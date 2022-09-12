@@ -15,24 +15,24 @@ function proof(m, D_n){
     if(m < n)
         return __subProof(m, D_n, true)
     return null
-  }
-  
-  /**
-  * MTH
-  * @desc - calcula a raiz da Merkle Tree com as entradas D
-  * @param {String[]} D - lista ordenada de entradas
-  * @return {String}
-  */
-  function MTH(D){
+}
+
+/**
+ * MTH
+ * @desc - calcula a raiz da Merkle Tree com as entradas D
+ * @param {String[]} D - lista ordenada de entradas
+ * @return {String}
+ */
+function MTH(D){
     n = D.length
-  
+
     if (n == 1)
         return D[0]
-  
+
     return new MerkleTree(D, SHA256).getRoot().toString('hex')
-  }
-  
-  function __subProof(m, D, subTree){
+}
+
+function __subProof(m, D, subTree){
     const path = []
     const n = D.length
     if (m == n) {
@@ -57,10 +57,10 @@ function proof(m, D_n){
         }
     }
     return path.flat()
-  }
+}
   
-  function __maiorPot2MenorQue(n){
+function __maiorPot2MenorQue(n){
     return Math.pow(2,parseInt(Math.log2(n-1)));
-  }
+}
 
 module.exports = { proof }
