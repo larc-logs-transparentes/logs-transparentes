@@ -41,6 +41,14 @@ export default {
       },
     },
     {
+      name: 'Monitorar2',
+      url: '/monitorar2',
+      icon: 'Package',
+      badge: {
+        text: 'Monitores',
+      },
+    },
+    {
       name: 'Retotalizar',
       url: '/retotalizar',
       icon: 'Package',
