@@ -13,17 +13,15 @@ let consistencyProofData = {
 }
 
 /// Variáveis para atualizar o Setter do front.
-let tsize1=[]
-let tsize2=[]
-let busAdicionados=[]
+let qtd_busAdicionados=[]
 let secondhash = []
 let logid=[]
-let Busave=[]
+let consistency_proof=[]
 
 var ultimoID  = -1 //Armazena o dado referente ao último envio do publisher processado
 const bufferJSONs = [] //Buffer dos dados publicados  
 
-export function subscriber(setSecondHash,setLogId,setBusAdicionados){
+export function subscriber(setSecondHash,setLogId,setBusAdicionados, setProof){
   clientConsistency.on('message', function (topic, payload, packet) {
 
     /* -------------------Recebe e armazena os dados-------------------- */
@@ -39,13 +37,6 @@ export function subscriber(setSecondHash,setLogId,setBusAdicionados){
     /* ----------------------------------------------------------------- */
 
     /* ------------------Processa os dados do buffer-------------------- */
-    /* if (bufferJSONs.length == 0){
-      setSecondHash(secondHash => secondhash)
-      setLogId(logId => logid)
-      setTreeSizeOne(treeSize1 => tsize1)
-      setTreeSizeTwo(treeSize2 => tsize2)
-      setBusAdicionados(busAdicionados => tsize2-tsize1)
-    } */
     while(bufferJSONs.length > 0){ //Enquanto conter dados no buffer
       if(bufferJSONs[bufferJSONs.length - 1].log_id == ultimoID + 1){ //se o dado mais recente no buffer for o próximo em relação aos processados
         consistencyProofData = bufferJSONs.pop() //remove do buffer
@@ -56,8 +47,12 @@ export function subscriber(setSecondHash,setLogId,setBusAdicionados){
         logid.push(consistencyProofData.log_id)
         setLogId(logId => logid)
        
-        busAdicionados.push(consistencyProofData.tree_size_2-consistencyProofData.tree_size_1)
-        setBusAdicionados(busAdicionados => busAdicionados)
+        qtd_busAdicionados.push(consistencyProofData.tree_size_2-consistencyProofData.tree_size_1)
+        setBusAdicionados(busAdicionados => qtd_busAdicionados)
+
+        consistency_proof.push(provaDeConsistencia(consistencyProofData))
+        setProof(proof => consistency_proof)
+        
        
        /*  PDC.push(provaDeConsistencia(consistencyProofData))
         setCor(cor => PDC) */

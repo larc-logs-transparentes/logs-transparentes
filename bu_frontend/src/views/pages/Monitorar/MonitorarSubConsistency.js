@@ -9,7 +9,8 @@ export default function Monitorar() {
   const [secondHash,setSecondHash] =  useState([]);
   const [logId,setLogId] =  useState([]);
   const [busAdicionados, setBusAdicionados] = useState([]);
-  subscriber(setSecondHash,setLogId,setBusAdicionados)
+  const [proof, setProof] = useState([]);
+  subscriber(setSecondHash,setLogId,setBusAdicionados, setProof)
   const [show, setShow] = useState(false);
   const [state,setState] = useState(false);
   const i=0
@@ -17,10 +18,10 @@ export default function Monitorar() {
   validar0(i)
   function validar0(i){
     while(i <= busAdicionados.length){
-      if (busAdicionados[i]==true){
-        busAdicionados[i]='Validado.'}
-      if (busAdicionados[i]==false){
-        busAdicionados[i]='#ERRO#'}
+      if (proof[i]==true){
+        proof[i]='Validado'}
+      if (proof[i]==false){
+        proof[i]='#ERRO#'}
       i++}
   }
   //console.log(busAdicionados)
@@ -88,8 +89,8 @@ function status(){
                 <div>
                   {status()}
                     <h4>Status</h4>
-                    {busAdicionados.map(busAdicionados => <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px',textAlign:'justify'}}>
-                     {busAdicionados}
+                    {proof.map(proof => <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px',textAlign:'justify'}}>
+                     {proof}
                      </h5>)}
                      
                 </div>
