@@ -55,7 +55,7 @@ return
 * @param {any} payload - lista ordenada das n entradas da árvore
 */
 function publish(topic, payload){
-    const client  = mqtt.connect('ws://localhost:3031')
+    const client  = mqtt.connect('http://test.mosquitto.org')
     client.on('connect', function () {
         client.publish(topic, payload, {qos: 2})
         client.end()

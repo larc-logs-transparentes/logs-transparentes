@@ -1,5 +1,6 @@
-const SHA256 = require('crypto-js/sha256')
+import clientConsistency from "./client";
 const { MerkleTree } = require('merkletreejs')
+const SHA256 = require('crypto-js/sha256')
 
 let consistencyProofData = {
   tree_size_1: null,
@@ -11,25 +12,19 @@ let consistencyProofData = {
   ultimo: false,
 }
 
-/* ---------------------- Configuração mqtt ------------------------- */
-const mqtt = require('mqtt')
-const client  = mqtt.connect('ws://localhost:3031')
+/// Variáveis para atualizar o Setter do front.
+let tsize1=[]
+let tsize2=[]
+let busAdicionados=[]
+let secondhash = []
+let logid=[]
+let Busave=[]
 
-client.on('connect', function () {
-  client.subscribe('guilherme/consistencyProof', {qos: 2}, function (err) {
-    if (!err) 
-      console.log("Conectado")
-  })
-})
-/* ----------------------------------------------------------------- */
-
-ultimoID  = -1 //Armazena o dado referente ao último envio do publisher processado
+var ultimoID  = -1 //Armazena o dado referente ao último envio do publisher processado
 const bufferJSONs = [] //Buffer dos dados publicados  
 
-main()
-
-function main(){
-  client.on('message', function (topic, payload, packet) {
+export function subscriber(setSecondHash,setLogId,setBusAdicionados){
+  clientConsistency.on('message', function (topic, payload, packet) {
 
     /* -------------------Recebe e armazena os dados-------------------- */
     console.log(`Topic: ${topic}, Message: ${payload}, Qos: ${packet.qos}`)
@@ -40,15 +35,40 @@ function main(){
       inserirNoBuffer(consistencyProofData) //insere no buffer ordenado pelo "log_id"
     else
       console.log("Descartado")
+    
     /* ----------------------------------------------------------------- */
 
     /* ------------------Processa os dados do buffer-------------------- */
+    /* if (bufferJSONs.length == 0){
+      setSecondHash(secondHash => secondhash)
+      setLogId(logId => logid)
+      setTreeSizeOne(treeSize1 => tsize1)
+      setTreeSizeTwo(treeSize2 => tsize2)
+      setBusAdicionados(busAdicionados => tsize2-tsize1)
+    } */
     while(bufferJSONs.length > 0){ //Enquanto conter dados no buffer
       if(bufferJSONs[bufferJSONs.length - 1].log_id == ultimoID + 1){ //se o dado mais recente no buffer for o próximo em relação aos processados
         consistencyProofData = bufferJSONs.pop() //remove do buffer
-        console.log(provaDeConsistencia(consistencyProofData)) //processa  
-        if(consistencyProofData.ultimo == true) //se este dado estiver marcado como último, encerra o programa
-          process.exit(1)
+
+        secondhash.push(consistencyProofData.second_hash)
+        setSecondHash(secondHash => secondhash)
+
+        logid.push(consistencyProofData.log_id)
+        setLogId(logId => logid)
+       
+        busAdicionados.push(consistencyProofData.tree_size_2-consistencyProofData.tree_size_1)
+        setBusAdicionados(busAdicionados => busAdicionados)
+       
+       /*  PDC.push(provaDeConsistencia(consistencyProofData))
+        setCor(cor => PDC) */
+
+        if(consistencyProofData.ultimo == true){ //se este dado estiver marcado como último, encerra o programa
+          console.log("---------------------FIM---------------------")
+          console.log("---------------------FIM---------------------")
+          console.log("---------------------FIM---------------------")
+          console.log("---------------------FIM---------------------")
+          ultimoID ++
+        }
         ultimoID ++ //senão, incrementa o contador de processados
       }
       else //se o dado mais recente no buffer não for o próximo na ordem dos que foram processados
@@ -64,7 +84,7 @@ function inserirNoBuffer(data) {
   bufferJSONs.sort((a, b) => b.log_id - a.log_id)
 }
 
-function provaDeConsistencia(consistencyProofData){
+export function provaDeConsistencia(consistencyProofData){
   if(consistencyProofData.tree_size_1 == 0)
     return new MerkleTree(consistencyProofData.consistency_path, SHA256).getRoot().toString('hex') === consistencyProofData.second_hash; 
 
@@ -92,7 +112,7 @@ function provaDeConsistencia(consistencyProofData){
 
   /* 6. For each subsequent value c in the consistency_path array */
   for (let index = 1; index < consistencyProofData.consistency_path.length; index++) {
-    c = consistencyProofData.consistency_path[index]
+    var c = consistencyProofData.consistency_path[index]
 
     /* If sn is 0, stop the iteration and fail the proof verification. */
     if(sn === 0)
@@ -135,4 +155,3 @@ function lsb(v){
 function createHash(left, right){
   return new MerkleTree([left, right], SHA256).getRoot().toString('hex')
 }
-

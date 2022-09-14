@@ -4,8 +4,6 @@ const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
 const TAM_MAX_MTREE_PARCIAL = 64
 
-
-
 let consistencyProofData = {
     raizAssinada: null,
     BUsAdicionados: [],

@@ -1,19 +1,15 @@
 import React, { useEffect,useState } from 'react';
 import { Card, CardBody, Col, Row, Button,Table } from 'reactstrap'
-import { subscriber } from './logic/subscriber';
+import { subscriber } from './logic/subscriberConsistency';
 import { Loader } from '../../../vibe';
 
 //Crio um state, passo pro subscriber, usar um useeffect com o proofdata, toda vez que o proofdata mudar
 // o useffect vai executar oq ta dentro, toda vez q mudar, vai atualizar o que ta sendo exibido.
 export default function Monitorar() {
-  
-  const [proofData,setProofData] =  useState([]);
   const [secondHash,setSecondHash] =  useState([]);
   const [logId,setLogId] =  useState([]);
-  const [treeSize1,setTreeSizeOne] =  useState([]);
-  const [treeSize2,setTreeSizeTwo] =  useState([]);
   const [busAdicionados, setBusAdicionados] = useState([]);
-  subscriber(setProofData,setSecondHash,setLogId,setTreeSizeOne,setTreeSizeTwo,setBusAdicionados)
+  subscriber(setSecondHash,setLogId,setBusAdicionados)
   const [show, setShow] = useState(false);
   const [state,setState] = useState(false);
   const i=0
