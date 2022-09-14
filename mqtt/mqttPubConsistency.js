@@ -11,43 +11,53 @@ let consistencyProofData = {
     log_id: 0,
     ultimo: false,
 }
+
+const DELAY_MS = 2500
+
 /* ------------------------- 1º envio ------------------------------ */
-console.log("-- m = 3 --")
-leaves = ['d0', 'd1', 'd2']
-const MT = new MerkleTree(leaves.map(x => SHA256(x)), SHA256)
-leaves = MT.getLeaves().toString('hex')
-consistencyProofData.tree_size_1 = 0;
-consistencyProofData.tree_size_2 = 3;
-consistencyProofData.first_hash = null
-consistencyProofData.second_hash = MT.getRoot().toString('hex')
-consistencyProofData.consistency_path = proof(0, MT.getHexLeaves())
-consistencyProofData.log_id = 0 
-publish("guilherme/consistencyProof", JSON.stringify(consistencyProofData))  
+async function main(){
+    console.log("-- m = 3 --")
+    leaves = ['d0', 'd1', 'd2']
+    const MT = new MerkleTree(leaves.map(x => SHA256(x)), SHA256)
+    leaves = MT.getLeaves().toString('hex')
+    consistencyProofData.tree_size_1 = 0;
+    consistencyProofData.tree_size_2 = 3;
+    consistencyProofData.first_hash = null
+    consistencyProofData.second_hash = MT.getRoot().toString('hex')
+    consistencyProofData.consistency_path = proof(0, MT.getHexLeaves())
+    consistencyProofData.log_id = 0 
+    publish("guilherme/consistencyProof", JSON.stringify(consistencyProofData))  
+    await new Promise(resolve => setTimeout(resolve, DELAY_MS));
 
-console.log("-- m = 7 --")
-leaves = ['d3', 'd4', 'd5', 'd6']
-MT.addLeaves(leaves.map(x => SHA256(x)))
-consistencyProofData.tree_size_1 = 3
-consistencyProofData.tree_size_2 = 7
-consistencyProofData.first_hash = consistencyProofData.second_hash
-consistencyProofData.second_hash = MT.getRoot().toString('hex')
-consistencyProofData.consistency_path = proof(3, MT.getHexLeaves())
-consistencyProofData.log_id = 1
-publish("guilherme/consistencyProof", JSON.stringify(consistencyProofData))
+    console.log("-- m = 7 --")
+    leaves = ['d3', 'd4', 'd5', 'd6']
+    MT.addLeaves(leaves.map(x => SHA256(x)))
+    consistencyProofData.tree_size_1 = 3
+    consistencyProofData.tree_size_2 = 7
+    consistencyProofData.first_hash = consistencyProofData.second_hash
+    consistencyProofData.second_hash = MT.getRoot().toString('hex')
+    consistencyProofData.consistency_path = proof(3, MT.getHexLeaves())
+    consistencyProofData.log_id = 1
+    publish("guilherme/consistencyProof", JSON.stringify(consistencyProofData))
+    await new Promise(resolve => setTimeout(resolve, DELAY_MS));
 
-console.log("-- m = 10 --")
-leaves = ['d7', 'd8', 'd9']
-MT.addLeaves(leaves.map(x => SHA256(x)))
-consistencyProofData.tree_size_1 = 7
-consistencyProofData.tree_size_2 = 10
-consistencyProofData.first_hash = consistencyProofData.second_hash
-consistencyProofData.second_hash = MT.getRoot().toString('hex')
-consistencyProofData.consistency_path = proof(7, MT.getHexLeaves())
-consistencyProofData.log_id = 2
-consistencyProofData.ultimo = true
-publish("guilherme/consistencyProof", JSON.stringify(consistencyProofData))
-return
+    console.log("-- m = 10 --")
+    leaves = ['d7', 'd8', 'd9']
+    MT.addLeaves(leaves.map(x => SHA256(x)))
+    consistencyProofData.tree_size_1 = 7
+    consistencyProofData.tree_size_2 = 10
+    consistencyProofData.first_hash = consistencyProofData.second_hash
+    consistencyProofData.second_hash = MT.getRoot().toString('hex')
+    consistencyProofData.consistency_path = proof(7, MT.getHexLeaves())
+    consistencyProofData.log_id = 2
+    consistencyProofData.ultimo = true
+    publish("guilherme/consistencyProof", JSON.stringify(consistencyProofData))
+    await new Promise(resolve => setTimeout(resolve, DELAY_MS));
 
+    return
+}
+
+main()
 /**
 * publish
 * @desc - publica os dados contidos no payload no tópico correspondente
