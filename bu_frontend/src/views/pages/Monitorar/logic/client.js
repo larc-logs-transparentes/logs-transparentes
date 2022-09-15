@@ -10,5 +10,14 @@ client.on('connect', function () {
       console.log("Conectado")
   })
 })
+/* ----------------------------------------------------------------- */
+const clientConsistency = mqtt.connect(mosquitto_url)
 
-export default client
+clientConsistency.on('connect', function () {
+  clientConsistency.subscribe('guilherme/consistencyProof', {qos: 2}, function (err) {
+    if (!err) 
+      console.log("Conectado")
+  })
+})
+
+export default (client,clientConsistency)
