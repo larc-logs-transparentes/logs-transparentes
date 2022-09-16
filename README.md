@@ -1,6 +1,9 @@
 ## Visão geral do sistema
-Sistema baseado em árvores de Merkle para promover maior transparência e auditabilidade dos dados. Sendo aplicado à eleição brasileira, esse protótipo armazena os boletins de urna (BUs), que contém o resultado dos votos registrados na urna. 
-Desse modo, o protótipo permite verificar a integridade dos BUs através da prova de inclusão. Além disso, o protótipo permite recontabilizar o resultado da eleição a partir de cada BU registrado na árvore.
+Sistema baseado em árvores de Merkle para promover maior transparência e auditabilidade dos dados. 
+
+Esse protótipo é aplicado à eleição brasileira. Assim, armazena de forma transparente os Boletins de Urna (resultado dos votos registrados na urna), e permite verificar a sua integridade. Também permite recontabilizar o resultado da eleição.
+
+Demonstração em vídeo disponível em: https://youtu.be/gRLXQXpbc5s
 
 ## Instalação
 Instruções para instalação e inicialização da ferramenta nas distribuições linux Ubuntu:
