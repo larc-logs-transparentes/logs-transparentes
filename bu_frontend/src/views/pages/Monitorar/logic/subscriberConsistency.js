@@ -1,4 +1,6 @@
-import clientConsistency from "./client";
+import client from './client'
+const MQTT_TOPIC = 'guilherme/consistencyProof'
+
 const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
 
@@ -22,54 +24,55 @@ var ultimoID  = -1 //Armazena o dado referente ao último envio do publisher pro
 const bufferJSONs = [] //Buffer dos dados publicados  
 
 export function subscriber(setSecondHash,setLogId,setBusAdicionados, setProof){
-  clientConsistency.on('message', function (topic, payload, packet) {
+  client.on('message',function (topic, payload, packet) {
+    if(topic == MQTT_TOPIC){
+      /* -------------------Recebe e armazena os dados-------------------- */
+      console.log(`Topic: ${topic}, Message: ${payload}, Qos: ${packet.qos}`)
+      consistencyProofData = JSON.parse(payload)
+      if(ultimoID == -1) 
+        ultimoID = consistencyProofData.log_id - 1
+      if(consistencyProofData.log_id > ultimoID)
+        inserirNoBuffer(consistencyProofData) //insere no buffer ordenado pelo "log_id"
+      else
+        console.log("Descartado")
+      
+      /* ----------------------------------------------------------------- */
 
-    /* -------------------Recebe e armazena os dados-------------------- */
-    console.log(`Topic: ${topic}, Message: ${payload}, Qos: ${packet.qos}`)
-    consistencyProofData = JSON.parse(payload)
-    if(ultimoID == -1) 
-      ultimoID = consistencyProofData.log_id - 1
-    if(consistencyProofData.log_id > ultimoID)
-      inserirNoBuffer(consistencyProofData) //insere no buffer ordenado pelo "log_id"
-    else
-      console.log("Descartado")
-    
-    /* ----------------------------------------------------------------- */
+      /* ------------------Processa os dados do buffer-------------------- */
+      while(bufferJSONs.length > 0){ //Enquanto conter dados no buffer
+        if(bufferJSONs[bufferJSONs.length - 1].log_id == ultimoID + 1){ //se o dado mais recente no buffer for o próximo em relação aos processados
+          consistencyProofData = bufferJSONs.pop() //remove do buffer
 
-    /* ------------------Processa os dados do buffer-------------------- */
-    while(bufferJSONs.length > 0){ //Enquanto conter dados no buffer
-      if(bufferJSONs[bufferJSONs.length - 1].log_id == ultimoID + 1){ //se o dado mais recente no buffer for o próximo em relação aos processados
-        consistencyProofData = bufferJSONs.pop() //remove do buffer
+          secondhash.push(consistencyProofData.second_hash)
+          setSecondHash(secondHash => secondhash)
 
-        secondhash.push(consistencyProofData.second_hash)
-        setSecondHash(secondHash => secondhash)
-
-        logid.push(consistencyProofData.log_id)
-        setLogId(logId => logid)
-       
-        qtd_busAdicionados.push(consistencyProofData.tree_size_2-consistencyProofData.tree_size_1)
-        setBusAdicionados(busAdicionados => qtd_busAdicionados)
-
-        consistency_proof.push(provaDeConsistencia(consistencyProofData))
-        setProof(proof => consistency_proof)
+          logid.push(consistencyProofData.log_id)
+          setLogId(logId => logid)
         
-       
-       /*  PDC.push(provaDeConsistencia(consistencyProofData))
-        setCor(cor => PDC) */
+          qtd_busAdicionados.push(consistencyProofData.tree_size_2-consistencyProofData.tree_size_1)
+          setBusAdicionados(busAdicionados => qtd_busAdicionados)
 
-        if(consistencyProofData.ultimo == true){ //se este dado estiver marcado como último, encerra o programa
-          console.log("---------------------FIM---------------------")
-          console.log("---------------------FIM---------------------")
-          console.log("---------------------FIM---------------------")
-          console.log("---------------------FIM---------------------")
-          ultimoID ++
+          consistency_proof.push(provaDeConsistencia(consistencyProofData))
+          setProof(proof => consistency_proof)
+          
+        
+        /*  PDC.push(provaDeConsistencia(consistencyProofData))
+          setCor(cor => PDC) */
+
+          if(consistencyProofData.ultimo == true){ //se este dado estiver marcado como último, encerra o programa
+            console.log("---------------------FIM---------------------")
+            console.log("---------------------FIM---------------------")
+            console.log("---------------------FIM---------------------")
+            console.log("---------------------FIM---------------------")
+            ultimoID ++
+          }
+          ultimoID ++ //senão, incrementa o contador de processados
         }
-        ultimoID ++ //senão, incrementa o contador de processados
+        else //se o dado mais recente no buffer não for o próximo na ordem dos que foram processados
+          break //quebra o laço para esperar mais dados
       }
-      else //se o dado mais recente no buffer não for o próximo na ordem dos que foram processados
-        break //quebra o laço para esperar mais dados
     }
-    /* ----------------------------------------------------------------- */
+      /* ----------------------------------------------------------------- */
   })
 }
 

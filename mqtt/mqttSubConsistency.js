@@ -13,7 +13,8 @@ let consistencyProofData = {
 
 /* ---------------------- Configuração mqtt ------------------------- */
 const mqtt = require('mqtt')
-const client  = mqtt.connect('ws://localhost:3031')
+const mosquitto_url = require('./config.json').mosquitto_url
+const client  = mqtt.connect(mosquitto_url)
 
 client.on('connect', function () {
   client.subscribe('guilherme/consistencyProof', {qos: 2}, function (err) {

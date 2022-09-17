@@ -7,17 +7,13 @@ const client  = mqtt.connect(mosquitto_url)
 client.on('connect', function () {
   client.subscribe('guilherme/teste', {qos: 2}, function (err) {
     if (!err) 
-      console.log("Conectado")
+      console.log("Conectado ao tópico teste")
+  })
+  client.subscribe('guilherme/consistencyProof', {qos: 2}, function (err) {
+    if (!err) 
+      console.log("Conectado ao tópico consistencyProof")
   })
 })
 /* ----------------------------------------------------------------- */
-const clientConsistency = mqtt.connect(mosquitto_url)
 
-clientConsistency.on('connect', function () {
-  clientConsistency.subscribe('guilherme/consistencyProof', {qos: 2}, function (err) {
-    if (!err) 
-      console.log("Conectado")
-  })
-})
-
-export default (client,clientConsistency)
+export default (client)

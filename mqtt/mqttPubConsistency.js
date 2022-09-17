@@ -1,6 +1,7 @@
 const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
 const mqtt = require('mqtt')
+const mosquitto_url = require('./config.json').mosquitto_url
 
 let consistencyProofData = {
     tree_size_1: null,
@@ -65,7 +66,7 @@ main()
 * @param {any} payload - lista ordenada das n entradas da árvore
 */
 function publish(topic, payload){
-    const client  = mqtt.connect('http://test.mosquitto.org')
+    const client  = mqtt.connect(mosquitto_url)
     client.on('connect', function () {
         client.publish(topic, payload, {qos: 2})
         client.end()
