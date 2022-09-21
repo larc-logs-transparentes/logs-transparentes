@@ -27,7 +27,7 @@ class Dashboard extends Component {
         <Row>
           <Col md={6}>
             <div className="home-hero" style={heroStyles}>
-              <h1>Site oficial do TSE</h1>
+              <h1>Site oficial do Logs Transparentes</h1>
               <p className="text-muted">
                 Seja Bem Vindo
               </p>

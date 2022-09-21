@@ -8,7 +8,6 @@ import {RetotalizacaoDeBus} from './retg.js';
 
 
 export default function Retotalizar() {
-  const imagemaux=1
   const [show, setShow] = useState(false);
   const [showbbus, setBbus] = useState(false);
   const [showbbus2, setBbus2] = useState(false);
@@ -17,6 +16,7 @@ export default function Retotalizar() {
   const [showret, setRet] = useState(false);
   const [showret2, setRet2] = useState(false);
   const [busbaixados,setBUsBaixados] = useState(0);
+  
   let busbaixadosobj = {
     numerobus:busbaixados[0],
     verificaqtd:busbaixados[1],
@@ -62,10 +62,8 @@ export default function Retotalizar() {
       }
       if(imagemaux==1){
         return approval
-      }
+      }   }
 /////////////////////////Funções de verificação/////////////////////////////////
-
-    }
     function verificacaodebus(){
       if (busbaixadosobj.verificainclusao.isTrue==false){
         return ('- A prova de inclusão de um dos BUs falhou.')

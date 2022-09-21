@@ -132,7 +132,7 @@ class MostrarBU extends Component {
       </Col>
       {mostrar === true && prova.isTrue === true && (<Col md={4}>
       <Card>
-        <CardHeader >Este BU foi devidamente verificado nos sistemas do TSE</CardHeader>
+        <CardHeader >Este BU foi devidamente verificado nos sistemas da Justiça Federal</CardHeader>
         <CardBody>
             <CardBody>
             <Label>Prova</Label>

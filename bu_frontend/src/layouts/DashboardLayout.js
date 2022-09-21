@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Button, Badge, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Header, SidebarNav, Footer, PageContent, Avatar, Chat, PageAlert, Page } from '../vibe';
-import Logo from '../assets/images/tse-logo.png';
+import Logo from '../assets/images/favicon.png';
 import avatar1 from '../assets/images/avatar1.png';
 import nav from '../_nav';
 import routes from '../views';
@@ -64,7 +64,7 @@ export default class DashboardLayout extends Component {
             <SidebarNav
               nav={nav}
               logo={Logo}
-              logoText="TSE"
+              logoText="L.Transparentes"
               isSidebarCollapsed={sidebarCollapsed}
               toggleSidebar={this.toggleSideCollapse}
               {...this.props}

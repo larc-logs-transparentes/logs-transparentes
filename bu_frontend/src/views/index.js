@@ -31,6 +31,7 @@ import ChartDetail from './elements/chart_detail';
 import MostrarBU from './elements/MostrarBU';
 import Consultar_Todos from './elements/consultar_todos';
 import Retotalizar from './pages/Monitorar/Retotalizar.js';
+import Mapa from './pages/Monitorar/Mapa.js';
 import Root from './elements/Root';
 
 import Atualizacao from './elements/charts';
@@ -65,9 +66,17 @@ const pageList = [
     //},
   },
   {
-    name: 'Retotalizar',
-    path: '/retotalizar',
+    name: 'Recontabilizar',
+    path: '/recontabilizar',
     component: Retotalizar
+    //badge: {
+    //  text: 'NEW',
+    //},
+  },
+  {
+    name: 'Mapa',
+    path: '/mapa',
+    component: Mapa
     //badge: {
     //  text: 'NEW',
     //},

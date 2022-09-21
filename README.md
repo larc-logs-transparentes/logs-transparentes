@@ -76,6 +76,8 @@ E altere a configuração de portas do projeto nos arquivos:
 * bu_frontend/src/config.json
 
 #### 4. Front-end
+Requisitos: node versão 10.19.0
+
 ```
 cd bu_frontend/
 npm install
@@ -88,7 +90,7 @@ Na tela inicial, é possível visualizar o resultado parcial da eleição. É po
 Outras funcionalidades podem ser acessadas no menu lateral
 * Consultar BU
 * Monitorar
-* Retotalizar
+* Recontabilizar
 
 Entretanto, antes de utiliza-las, é preciso inserir alguns dados na aplicação
 
@@ -118,7 +120,8 @@ Também é possível fazer a sua prova de inclusão, verificando a sua integrida
 
 </center>   
 
-![bu_verificar](https://user-images.githubusercontent.com/77642873/180626063-a08bd380-e018-45d3-a546-0b98d841dca4.png)
+![bu_verificar](https://user-images.githubusercontent.com/28439483/182242126-3c9efccb-c449-413d-8b38-ccbb552bec15.png)
+
 
 
 ### Monitoração da árvore
@@ -127,17 +130,19 @@ Essa funcionalidade permite aos monitores que realizem as provas de consistênci
 
 Ao clicar em "Capturar transações", a aplicação ficará aguardando por novas provas de consistência publicadas pelo backend. A cada publicação recebida, a consistência dos dados será validada e o seu resultado será renderizado na tela.
 
-![monitorar](https://user-images.githubusercontent.com/77642873/180626174-33faa6ba-c29a-4a3d-a649-d1dc299aaab6.png)
+![monitorar](https://user-images.githubusercontent.com/28439483/182241946-667c374f-6dc7-4207-a9fc-a0d2d97cb7ab.png)
+
 
 <sub>Note que, no protótipo apresentado, os monitores devem estar capturando os dados desde o início da eleição. Portanto, começar a monitorar após a inicialização da árvore resulta em dados incosistentes.</sub>
 
 ### Reapuração
 
-Essa funcionalidade permite recalcular os votos da eleição. Ao se iniciar a retotalização, todos os BUs serão baixados do banco de dados. Então, as seguintes verificações serão realizadas:
+Essa funcionalidade permite recalcular os votos da eleição. Ao se iniciar a recontabilização, todos os BUs serão baixados do banco de dados. Então, as seguintes verificações serão realizadas:
 
 * Prova de inclusão do BU;
 * Comparação entre a quantidade de BUs recebidas com a quantidade de folhas na Merkle Tree.
 
 Se não houver erros, o resultado final será exibido.
 
-![retotalizacao](https://user-images.githubusercontent.com/77642873/180626176-fb3a4a61-d90c-499e-a8bc-923e44a44a85.png)
+![recontabilizacao](https://user-images.githubusercontent.com/28439483/182241971-d1850ecb-62df-4b38-b32c-a08cb40a7e4d.png)
+

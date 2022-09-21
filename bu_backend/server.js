@@ -1,5 +1,5 @@
 const express = require("express");
-
+const axios = require('axios');
 const cors = require("cors");
 const app = express();
 const bu_controller = require("./src/controllers/bu.controller")
@@ -46,11 +46,22 @@ app.get("/bu/get_all", (req, res) => {
   })
 });
 
-
 // retrieve all BUs
 app.get("/bu/:id_inicial/:id_final/", (req, res) => {
   console.log(`/bu/${req.params.id_inicial}/${req.params.id_final}/`)
   bu_controller.findByIdRange(req.params.id_inicial, req.params.id_final)
+  .then((response) => {
+    res.json(response)
+  })
+  
+});
+
+// retrieve list of BUs with GET parameters.
+app.get("/bu", (req, res) => {
+  req.query.id_inicial===req.params.id_inicial
+  req.query.id_final===req.params.id_final
+  //console.log(`/bu/${req.params.id_inicial}/${req.params.id_final}/`)
+  bu_controller.findByIdRange(req.query.id_inicial, req.query.id_final)
   .then((response) => {
     res.json(response)
   })

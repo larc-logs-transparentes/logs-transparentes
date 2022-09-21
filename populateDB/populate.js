@@ -13,7 +13,7 @@ const DATA = {
         {partido: "YY", nome: "Candidado B", votos: 109, _id: "3"}]
 } 
 
-for (let index = 0; index <= 2048; index++) {
+for (let index = 0; index < 64; index++) {
     shell.env["DATA"] = JSON.stringify(DATA)
     shell.exec('curl -X POST -H "Content-Type: application/json" --data "${DATA}" localhost:8080/bu')  
     DATA._id++;

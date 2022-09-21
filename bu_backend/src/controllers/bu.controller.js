@@ -2,6 +2,7 @@ const db = require("../models");
 const modeloBoletim = require("../models/bu.model")
 const merkletree_adapter = require("../adapters/merkletree.adapter")
 const mongoose = require("mongoose");
+const axios = require('axios');
 
 
 /* ----------------------------------- */
@@ -83,6 +84,36 @@ exports.create = (data) => {
   return
 };
 
+function getVotesByIdRange(data) {
+  console.log(' o Vetor que entra na função')
+  let votesum=totalizarvotos(data)
+  delete votesum._id //Tentei remover o elemento do objeto mas não ta funcionando.
+  console.log(votesum)
+
+  return votesum
+}
+
+function totalizarvotos(data) {
+  const totaldevotos = []
+  console.log(data)
+    for (let i = 0; i < data.length; i++) { //percorre BUs
+        const candidatos = data[i].votos;
+        for (let j = 0; j < candidatos.length; j++) { //percorre registros dos candidatos em um BU
+            const element = candidatos[j];
+            let aux = totaldevotos.findIndex(candidato => candidato.nome == element.nome)
+            
+            if(aux != -1) //se encontrado candidato no array
+                totaldevotos[aux].votos += element.votos //soma os votos
+            else
+                totaldevotos.push(element) //insere no array
+        } 
+    }
+
+  totaldevotos.sort((a, b) => b.votos - a.votos) //ordena por qtd de votos
+  console.log('Resultado Final')
+  console.log(totaldevotos)
+  return totaldevotos
+}
 
 // Retrieve all BUs from the database.
 exports.findAll = () => {
@@ -93,12 +124,13 @@ exports.findAll = () => {
 
 /* let teste = await (this.findByIdRange(1, 3)) */
 exports.findByIdRange = (id_inicial, id_final) => {
+  //console.log(getVotesByIdRange(modeloBoletim.modeloBoletim1.find({id:{ $gte:id_inicial, $lte:id_final}})))
   return modeloBoletim.modeloBoletim1.find({id:{ $gte:id_inicial, $lte:id_final}})
   .then((data) => {
-    return data.sort((a, b) => {b.id - a.id})
+    //console.log(getVotesByIdRange(data))
+    return getVotesByIdRange(data)
   })
 };
-
 // Find a single BU with an id
 exports.findById = (id) => {
   console.log({id})
