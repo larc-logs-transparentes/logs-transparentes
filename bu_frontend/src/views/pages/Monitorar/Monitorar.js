@@ -57,7 +57,7 @@ function status(){
     <React.Fragment>
       <Card>
         <CardBody>
-          <h4>Monitorar alteração de raiz</h4>
+          <h4>Monitorar construção da árvore</h4>
           <div style={{textAlign:'center'}}>
             <button onClick={()=> setShow(true)} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
                 Capturar transações
