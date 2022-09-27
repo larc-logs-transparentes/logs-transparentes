@@ -32,40 +32,6 @@ function getBuById(bu_id) {
       })
 }
 
-
-
-// function getVotesByIdRange(bu_id_inicial,bu_id_final) {
-//     const aux=bu_id_inicial
-//     votesum=axios.get(`${bu_api_url}/bu/${bu_id_inicial}/${bu_id_final}`)
-//     return votesum=(totalizarvotos(votesum))
-//       .then(res => {
-//             console.log(res.data)
-//         return res.data.votos
-//       })
-//       .catch(err => {
-//         console.log(err)
-//       })
-// }
-
-// function totalizarvotos(votosporcidade){
-//     const tot = []
-//       for (let i = 0; i < lista.length; i) { //percorre BUs
-//           const candidatos = lista[i].votos;
-//           for (let j = 0; j < candidatos.length; j++) { //percorre registros dos candidatos em um BU
-//               const element = candidatos[j];
-//               let aux = tot.findIndex(candidato => candidato.nome == element.nome)
-              
-//               if(aux != -1) //se encontrado candidato no array
-//                   tot[aux].votos += element.votos //soma os votos
-//               else
-//                   tot.push(element) //insere no array
-//           } 
-//       }
-
-//     tot.sort((a, b) => b.votos - a.votos) //ordena por qtd de votos
-//     return tot
-// }
-
 function getRoot(){
     return new Promise(function (resolve, reject){
         axios.get(`${bu_api_url}/tree/root`)

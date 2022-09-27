@@ -56,8 +56,7 @@ exports.create = (data) => {
 function getVotesByIdRange(data) {
   console.log(' o Vetor que entra na função')
   let votesum=totalizarvotos(data)
-  delete votesum._id //Tentei remover o elemento do objeto mas não ta funcionando.
-  console.log(votesum)
+  let formattedVotesum = delete votesum._id
 
   return votesum
 }
@@ -90,13 +89,10 @@ exports.findAll = () => {
     return data
   })
 };
-
-/* let teste = await (this.findByIdRange(1, 3)) */
+// Find BUs inside a ID range.
 exports.findByIdRange = (id_inicial, id_final) => {
-  //console.log(getVotesByIdRange(modeloBoletim.modeloBoletim1.find({id:{ $gte:id_inicial, $lte:id_final}})))
   return modeloBoletim.modeloBoletim1.find({id:{ $gte:id_inicial, $lte:id_final}})
   .then((data) => {
-    //console.log(getVotesByIdRange(data))
     return getVotesByIdRange(data)
   })
 };

@@ -51,20 +51,11 @@ export function subscriber(setProofData,setRaiz,setContador,setCor,setBU){
         BUA.push(consistencyProofData.BUsAdicionados.length)
         setBU(buadd => BUA)
         setProofData(proofData => consistencyProofData)
-        //console.log(consistencyProofData)
+        
         Busave=consistencyProofData.BUsAdicionados
 
-        // ISSO AQUI TAVA DANDO BO, ele faz com que o BUsAdicionados[] vire zero, por isso botei o busave
         PDC.push(provaDeConsistencia(arvorePrincipal, arvoreParcial, Busave, consistencyProofData.raizAssinada))
         setCor(cor => PDC)
-        ///////////////////////////////////////
-
-        // TODO: aqui acho q precisa retornar as infos para a pagina conseguir renderizar
-        // O problema disso é q se dermos um return ele sai da funcao
-        
-        //console.log(provaDeConsistencia(arvorePrincipal, arvoreParcial, consistencyProofData.BUsAdicionados, consistencyProofData.raizAssinada)) //processa  
-
-        //setProofData(proofData => provaDeConsistencia(arvorePrincipal, arvoreParcial, consistencyProofData.BUsAdicionados, consistencyProofData.raizAssinada))
         if(consistencyProofData.ultimo == true){ //se este dado estiver marcado como último, encerra o programa
           console.log("---------------------FIM---------------------")
           console.log("---------------------FIM---------------------")
