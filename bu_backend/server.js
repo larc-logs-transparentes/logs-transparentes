@@ -60,7 +60,6 @@ app.get("/bu/:id_inicial/:id_final/", (req, res) => {
 app.get("/bu", (req, res) => {
   req.query.id_inicial===req.params.id_inicial
   req.query.id_final===req.params.id_final
-  //console.log(`/bu/${req.params.id_inicial}/${req.params.id_final}/`)
   bu_controller.findByIdRange(req.query.id_inicial, req.query.id_final)
   .then((response) => {
     res.json(response)

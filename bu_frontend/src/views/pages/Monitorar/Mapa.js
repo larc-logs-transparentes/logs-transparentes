@@ -22,7 +22,6 @@ import {findByIdRange} from '../../../api/bu.api.js';
 class Mapa extends Component {
   axios = require('axios')
   bu_api_url = require('../../../config.json').bu_api_url
-  // bu_api_url = "http://172.20.11.11:8080"
 
   constructor() {
     super()
@@ -37,20 +36,15 @@ class Mapa extends Component {
   
 
   componentDidMount() {
-    this.axios.get(`${this.bu_api_url}/bu/${this.state.id_inicial}/${this.state.id_final}`) //Aqui faz a chamada pra o backend
+    this.axios.get(`${this.bu_api_url}/bu?id_inicial=${this.state.id_inicial}&id_final=${this.state.id_final}`)
       .then(response => this.setState({ lista: response.data })&&console.log(response.data))
       console.log(this.state)
   }
-
-
- /////////// TA RODANDO LOOP INFINITO /////////////        1,11 -> 1,11 -> 1,11 -> 12,12 -> 12,12 -> 12,12
 componentDidUpdate(prevProps, prevState) {
     console.log('---------this.state---------')
     console.log(this.state)
-    // console.log(prevState.id_final == this.state.id_final )
-
     if(prevState.id_final !== this.state.id_final) {
-      this.axios.get(`${this.bu_api_url}/bu/${this.state.id_inicial}/${this.state.id_final}`)
+      this.axios.get(`${this.bu_api_url}/bu?id_inicial=${this.state.id_inicial}&id_final=${this.state.id_final}`)
           .then(response => {this.setState({ lista: response.data });})
     }
     else
@@ -116,14 +110,6 @@ componentDidUpdate(prevProps, prevState) {
 
             </CardBody>
           </Card>
-
-          {/* <Card>
-            <CardHeader>Resultado da eleição</CardHeader>
-            <CardBody>
-                  <Button onClick={0}>Consultar</Button>
-
-            </CardBody>
-          </Card> */}
         </Col>
         
         <Col md={6}>

@@ -27,7 +27,6 @@ export default function Monitorar() {
         cor[i]='#ERRO#'}
       i++}
   }
-  //console.log(cor)
 
   function mostrargap(raiz){
       if (raiz.length===0)
@@ -50,7 +49,7 @@ function mostrarloader(raiz){
 
 function status(){
   if (raiz.length!=0){
-    setTimeout(() => {setState(!state)}, 2500);} /// O timeout funcionou com 0 segundos para esse caso, talvez deva aumentar para outros.
+    setTimeout(() => {setState(!state)}, 2500);}
     return}
 
   return (

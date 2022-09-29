@@ -24,7 +24,6 @@ export default function Monitorar() {
         proof[i]='#ERRO#'}
       i++}
   }
-  //console.log(busAdicionados)
 
   function mostrargap(secondHash){
       if (secondHash.length===0)
@@ -47,7 +46,7 @@ function mostrarloader(secondHash){
 
 function status(){
   if (secondHash.length!=0){
-    setTimeout(() => {setState(!state)}, 2500);} /// O timeout funcionou com 0 segundos para esse caso, talvez deva aumentar para outros.
+    setTimeout(() => {setState(!state)}, 2500);} 
     return}
 
   return (

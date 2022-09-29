@@ -8,7 +8,6 @@ import {RetotalizacaoDeBus} from './retg.js';
 
 
 export default function Retotalizar() {
-  const [show, setShow] = useState(false);
   const [showbbus, setBbus] = useState(false);
   const [showbbus2, setBbus2] = useState(false);
   const [showvbus, setVbus] = useState(false);
