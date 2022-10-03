@@ -54,7 +54,7 @@ exports.create = (data) => {
     if(consistencyCheckData.BUsAdicionados.length >= TAM_MTREE_PARCIAL){
       merkletree_adapter.getTreeRoot().then((treeRoot) => {
         consistencyCheckData.raizAssinada = treeRoot
-        publish("guilherme/teste", JSON.stringify(consistencyCheckData))
+        publish("logs-transparentes/consistencyCheck", JSON.stringify(consistencyCheckData))
         console.log("\n\nPublicado teste de consistência")
         console.log(JSON.stringify(consistencyCheckData))
         consistencyCheckData.BUsAdicionados = []
@@ -71,7 +71,7 @@ exports.create = (data) => {
         merkletree_adapter.getTreeRoot().then((treeRoot => {
           //Obtendo raiz atual
           consistencyProofData.second_hash = treeRoot
-          publish('guilherme/consistencyProof', JSON.stringify(consistencyProofData))
+          publish('logs-transparentes/consistencyProof', JSON.stringify(consistencyProofData))
           console.log("\n\nPublicado prova de consistência")
           console.log(JSON.stringify(consistencyProofData))
           consistencyProofData.first_hash = consistencyProofData.second_hash

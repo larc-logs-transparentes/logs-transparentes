@@ -1,5 +1,5 @@
 import client from './client'
-const MQTT_TOPIC = 'guilherme/teste'
+const MQTT_TOPIC = 'logs-transparentes/consistencyCheck'
 
 const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
@@ -90,7 +90,7 @@ export function subscriber(setProofData,setRaiz,setContador,setCor,setBU){
 /* Insere "data" no buffer e o ordena em ordem decrescente de "cont" */
 function inserirNoBuffer(data) {
   if(bufferJSONs.find(element => element.cont == data.cont) != undefined || data.cont <= ultimoCont){
-    console.log("CANCELADO")
+    console.log("Pacote repetido ou já processado")
     return
   }
   bufferJSONs.push(data)

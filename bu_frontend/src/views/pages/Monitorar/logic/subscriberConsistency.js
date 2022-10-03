@@ -1,5 +1,5 @@
 import client from './client'
-const MQTT_TOPIC = 'guilherme/consistencyProof'
+const MQTT_TOPIC = 'logs-transparentes/consistencyProof'
 
 const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
@@ -34,7 +34,7 @@ export function subscriber(setSecondHash,setLogId,setBusAdicionados, setProof){
       if(consistencyProofData.log_id > ultimoID)
         inserirNoBuffer(consistencyProofData) //insere no buffer ordenado pelo "log_id"
       else
-        console.log("Descartado")
+      console.log("Pacote repetido ou já processado")
       
       /* ----------------------------------------------------------------- */
 
@@ -54,10 +54,6 @@ export function subscriber(setSecondHash,setLogId,setBusAdicionados, setProof){
 
           consistency_proof.push(provaDeConsistencia(consistencyProofData))
           setProof(proof => consistency_proof)
-          
-        
-        /*  PDC.push(provaDeConsistencia(consistencyProofData))
-          setCor(cor => PDC) */
 
           if(consistencyProofData.ultimo == true){ //se este dado estiver marcado como último, encerra o programa
             console.log("---------------------FIM---------------------")
