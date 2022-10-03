@@ -35,11 +35,11 @@ class Mapa extends Component {
   
   
 
-  componentDidMount() {
-    this.axios.get(`${this.bu_api_url}/bu?id_inicial=${this.state.id_inicial}&id_final=${this.state.id_final}`)
-      .then(response => this.setState({ lista: response.data })&&console.log(response.data))
-      console.log(this.state)
-  }
+componentDidMount() {
+  this.axios.get(`${this.bu_api_url}/bu?id_inicial=${this.state.id_inicial}&id_final=${this.state.id_final}`)
+    .then(response => this.setState({ lista: response.data })&&console.log(response.data))
+    console.log(this.state)
+}
 componentDidUpdate(prevProps, prevState) {
     console.log('---------this.state---------')
     console.log(this.state)

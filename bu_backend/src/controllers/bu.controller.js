@@ -47,39 +47,8 @@ exports.create = (data) => {
       merkletree_leaf: merkletree_data.added_leaf,
       ...data
     })
-
-    consistencyCheckData.BUsAdicionados.push(merkletree_data.added_leaf)
-    console.log(merkletree_data.added_leaf + " " + consistencyCheckData.BUsAdicionados.length +" adicionado ao buffer de BUs")
-
-    if(consistencyCheckData.BUsAdicionados.length >= TAM_MTREE_PARCIAL){
-      merkletree_adapter.getTreeRoot().then((treeRoot) => {
-        consistencyCheckData.raizAssinada = treeRoot
-        publish("logs-transparentes/consistencyCheck", JSON.stringify(consistencyCheckData))
-        console.log("\n\nPublicado teste de consistência")
-        console.log(JSON.stringify(consistencyCheckData))
-        consistencyCheckData.BUsAdicionados = []
-        consistencyCheckData.cont ++
-      }) 
-    }
-
-    consistencyProofData.tree_size_2++ //A cada BU inserido, o tamanho da árvore a ser provada aumenta
-    if(consistencyProofData.tree_size_2 % QTD_BUs_CONSISTENCY_PROOF == 0){ 
-      //Enviar prova de consistência
-      merkletree_adapter.getProof(consistencyProofData.tree_size_1).then((proof) => {
-        //Obtendo os dados necessários para realizar a prova
-        consistencyProofData.consistency_path = proof
-        merkletree_adapter.getTreeRoot().then((treeRoot => {
-          //Obtendo raiz atual
-          consistencyProofData.second_hash = treeRoot
-          publish('logs-transparentes/consistencyProof', JSON.stringify(consistencyProofData))
-          console.log("\n\nPublicado prova de consistência")
-          console.log(JSON.stringify(consistencyProofData))
-          consistencyProofData.first_hash = consistencyProofData.second_hash
-          consistencyProofData.tree_size_1 = consistencyProofData.tree_size_2
-          consistencyProofData.log_id ++
-        }))
-      })
-    }
+    publishConsistencyCheck(merkletree_data.added_leaf)
+    publishConsistencyProof()    
   })
   return
 };
@@ -108,7 +77,7 @@ function totalizarvotos(data) {
         } 
     }
 
-  totaldevotos.sort((a, b) => b.votos - a.votos) //ordena por qtd de votos
+  totaldevotos.sort((a, b) => b.nome - a.nome) //ordena por nome do candidato
   console.log('Resultado Final')
   console.log(totaldevotos)
   return totaldevotos
@@ -168,4 +137,50 @@ function publish(topic, payload){
       client.publish(topic, payload, {qos: 2})
       client.end()
   })
+}
+
+/**
+* publishConsistencyCheck
+* @desc - Processa e envia a verificação de consistência a cada inserção de BU, e a envia conforme necessário
+* @param {String} BUAdicionado - Hash do último BU adicionado na árvore
+*/
+function publishConsistencyCheck(BUAdicionado){
+  consistencyCheckData.BUsAdicionados.push(BUAdicionado)
+  console.log(BUAdicionado + " " + consistencyCheckData.BUsAdicionados.length + " adicionado ao buffer de BUs")
+
+  if(consistencyCheckData.BUsAdicionados.length >= TAM_MTREE_PARCIAL){
+    merkletree_adapter.getTreeRoot().then((treeRoot) => {
+      consistencyCheckData.raizAssinada = treeRoot
+      publish("logs-transparentes/consistencyCheck", JSON.stringify(consistencyCheckData))
+      console.log("\n\nPublicado teste de consistência")
+      console.log(JSON.stringify(consistencyCheckData))
+      consistencyCheckData.BUsAdicionados = []
+      consistencyCheckData.cont ++
+    }) 
+  }
+}
+
+/**
+* publishConsistencyProof
+* @desc - Processa e envia a prova de consistência a cada inserção de BU
+*/
+function publishConsistencyProof(){
+  consistencyProofData.tree_size_2++ //A cada BU inserido, o tamanho da árvore a ser provada aumenta
+  if(consistencyProofData.tree_size_2 % QTD_BUs_CONSISTENCY_PROOF == 0){ 
+    //Enviar prova de consistência
+    merkletree_adapter.getProof(consistencyProofData.tree_size_1).then((proof) => {
+      //Obtendo os dados necessários para realizar a prova
+      consistencyProofData.consistency_path = proof
+      merkletree_adapter.getTreeRoot().then((treeRoot => {
+        //Obtendo raiz atual
+        consistencyProofData.second_hash = treeRoot
+        publish('logs-transparentes/consistencyProof', JSON.stringify(consistencyProofData))
+        console.log("\n\nPublicado prova de consistência")
+        console.log(JSON.stringify(consistencyProofData))
+        consistencyProofData.first_hash = consistencyProofData.second_hash
+        consistencyProofData.tree_size_1 = consistencyProofData.tree_size_2
+        consistencyProofData.log_id ++
+      }))
+    })
+  }
 }

@@ -6,8 +6,6 @@ const bu_api_url = require('../config.json').bu_api_url
 var crypto_js_1 = require("crypto-js");
 const SHA256 = require('crypto-js/sha256')
 var hashFn = bufferifyFn(SHA256)
-//const bucontroller=require('../../controllers/bu.controller.js')
-
 
 function getBuByIdString(bu_id) {
     return axios.get(`${bu_api_url}/bu/${bu_id}`)
