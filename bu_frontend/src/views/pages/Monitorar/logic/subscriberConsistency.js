@@ -27,15 +27,13 @@ export function subscriber(setSecondHash,setLogId,setBusAdicionados, setProof){
   client.on('message',function (topic, payload, packet) {
     if(topic == MQTT_TOPIC){
       /* -------------------Recebe e armazena os dados-------------------- */
-      console.log(`Topic: ${topic}, Message: ${payload}, Qos: ${packet.qos}`)
       consistencyProofData = JSON.parse(payload)
       if(ultimoID == -1) 
         ultimoID = consistencyProofData.log_id - 1
-      if(consistencyProofData.log_id > ultimoID)
+      if(consistencyProofData.log_id > ultimoID){
         inserirNoBuffer(consistencyProofData) //insere no buffer ordenado pelo "log_id"
-      else
-      console.log("Pacote repetido ou já processado")
-      
+        console.log(`Topic: ${topic}, Message: ${payload}, Qos: ${packet.qos}`)
+      }
       /* ----------------------------------------------------------------- */
 
       /* ------------------Processa os dados do buffer-------------------- */
