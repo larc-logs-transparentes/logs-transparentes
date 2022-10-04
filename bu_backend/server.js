@@ -46,15 +46,6 @@ app.get("/bu/get_all", (req, res) => {
   })
 });
 
-// retrieve all BUs
-app.get("/bu/:id_inicial/:id_final/", (req, res) => {
-  console.log(`/bu/${req.params.id_inicial}/${req.params.id_final}/`)
-  bu_controller.findByIdRange(req.params.id_inicial, req.params.id_final)
-  .then((response) => {
-    res.json(response)
-  })
-});
-
 // retrieve list of BUs with GET parameters.
 app.get("/bu", (req, res) => {
   bu_controller.findByIdRange(req.query.id_inicial, req.query.id_final)

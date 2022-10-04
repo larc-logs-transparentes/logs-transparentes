@@ -71,12 +71,8 @@ exports.getAllLeaves = () => {
     })
 }
 
-/* 
-  m = quantidade de folhas consistentes na árvore desde alguma prova anterior 
-  m = 0 se não houve prova de consistência 
-*/
-exports.getProof = (m) => {
-  return axios.get(`${merkletreeHostname}:${merkletreePort}/tree/proof?m=${m}`)
+exports.getProof = (firstTreeSize) => {
+  return axios.get(`${merkletreeHostname}:${merkletreePort}/tree/proof?m=${firstTreeSize}`)
   .then(res => {
     return res.data
   })
