@@ -41,8 +41,24 @@ export default {
       },
     },
     {
+      name: 'Monitorar2',
+      url: '/monitorar2',
+      icon: 'Package',
+      badge: {
+        text: 'Monitor',
+      },
+    },
+    {
       name: 'Recontabilizar',
       url: '/recontabilizar',
+      icon: 'Package',
+      badge: {
+        text: 'Monitor',
+      },
+    },
+    {
+      name: 'Mapa',
+      url: '/mapa',
       icon: 'Package',
       badge: {
         text: 'Monitor',

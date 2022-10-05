@@ -1,6 +1,7 @@
 const express = require('express')
 const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
+const consistencyProof = require('./controllers/consistencyProof.controller')
 var bodyParser = require('body-parser');
 
 // TODO: throtling
@@ -82,6 +83,11 @@ app.get('/tree/root', (req, res) => {
   const root = tree.getRoot().toString('hex')
   console.log(root)
   res.send(root)
+})
+
+app.get('/tree/proof', (req, res) => {
+  console.log(`Prova de consistência com m = ${req.query.m}`)
+  res.send(consistencyProof.proof(req.query.m, tree.getHexLeaves()))
 })
 
 app.get('/tree/leaf/:id', (req, res) => {

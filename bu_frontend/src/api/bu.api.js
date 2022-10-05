@@ -24,6 +24,19 @@ export function getBuAll() {
       return []
     })
 }
+export function findByIdRange(id_inicial, id_final) {
+  axios.get(`${bu_api_url}/bu?id_inicial=${id_inicial}&id_final=${id_final}`)
+    .then(response => {
+
+      console.log(response.data)
+     return response.data
+//      console.log(ret)
+    })
+    .catch(err => {
+      console.log(err)
+      return []
+    })
+}
 
 export const getBuById = (bu_id) => {
   return axios.get(`${bu_api_url}/bu/${bu_id}`)

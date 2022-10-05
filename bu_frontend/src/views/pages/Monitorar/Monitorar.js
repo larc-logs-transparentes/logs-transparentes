@@ -27,7 +27,6 @@ export default function Monitorar() {
         cor[i]='#ERRO#'}
       i++}
   }
-  //console.log(cor)
 
   function mostrargap(raiz){
       if (raiz.length===0)
@@ -50,14 +49,14 @@ function mostrarloader(raiz){
 
 function status(){
   if (raiz.length!=0){
-    setTimeout(() => {setState(!state)}, 2500);} /// O timeout funcionou com 0 segundos para esse caso, talvez deva aumentar para outros.
+    setTimeout(() => {setState(!state)}, 2500);}
     return}
 
   return (
     <React.Fragment>
       <Card>
         <CardBody>
-          <h4>Monitorar alteração de raiz</h4>
+          <h4>Monitorar construção da árvore</h4>
           <div style={{textAlign:'center'}}>
             <button onClick={()=> setShow(true)} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
                 Capturar transações
