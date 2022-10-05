@@ -5,10 +5,15 @@ const mosquitto_url = require('../../../../config.json').mosquitto_url
 const client  = mqtt.connect(mosquitto_url)
 
 client.on('connect', function () {
-  client.subscribe('guilherme/teste', {qos: 2}, function (err) {
+  client.subscribe('logs-transparentes/consistencyCheck', {qos: 0}, function (err) {
     if (!err) 
-      console.log("Conectado")
+      console.log("Conectado ao tópico consistencyCheck")
+  })
+  client.subscribe('logs-transparentes/consistencyProof', {qos: 0}, function (err) {
+    if (!err) 
+      console.log("Conectado ao tópico consistencyProof")
   })
 })
+/* ----------------------------------------------------------------- */
 
-export default client
+export default (client)

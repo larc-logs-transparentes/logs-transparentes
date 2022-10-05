@@ -8,8 +8,6 @@ import {RetotalizacaoDeBus} from './retg.js';
 
 
 export default function Retotalizar() {
-  const imagemaux=1
-  const [show, setShow] = useState(false);
   const [showbbus, setBbus] = useState(false);
   const [showbbus2, setBbus2] = useState(false);
   const [showvbus, setVbus] = useState(false);
@@ -17,6 +15,7 @@ export default function Retotalizar() {
   const [showret, setRet] = useState(false);
   const [showret2, setRet2] = useState(false);
   const [busbaixados,setBUsBaixados] = useState(0);
+  
   let busbaixadosobj = {
     numerobus:busbaixados[0],
     verificaqtd:busbaixados[1],
@@ -62,10 +61,8 @@ export default function Retotalizar() {
       }
       if(imagemaux==1){
         return approval
-      }
+      }   }
 /////////////////////////Funções de verificação/////////////////////////////////
-
-    }
     function verificacaodebus(){
       if (busbaixadosobj.verificainclusao.isTrue==false){
         return ('- A prova de inclusão de um dos BUs falhou.')
@@ -114,10 +111,10 @@ export default function Retotalizar() {
         <Col md={12}>
             <Card>
               <CardBody >
-              <h4> Recontabilização dos votos</h4>
+              <h4> Retotalização dos votos</h4>
                 <div style={{textAlign:'center'}} >
                   <button onClick={()=> {BaixarBus(true)}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
-                    Solicitar Recontabilização
+                    Solicitar Retotalização
                   </button>
                 </div>
                 </CardBody>
@@ -171,7 +168,7 @@ export default function Retotalizar() {
 
                 {showret?<div style={{display:stop1(),textAlign:'justify'}}>
                   <div style={{display:'flex',alignItems:'center'}}>
-                    <h5>3) Recontabilizando BUS</h5>
+                    <h5>3) Retotalizando BUS</h5>
                     <Row md={4} style={{padding:'2vw'}}>
                       {!showret2?<Loader small type="spin"/>:null}
                       {showret2?<img src={approval} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />

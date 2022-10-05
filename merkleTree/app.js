@@ -84,6 +84,11 @@ app.get('/tree/root', (req, res) => {
   res.send(root)
 })
 
+app.get('/tree/proof', (req, res) => {
+  console.log(`Prova de consistência com m = ${req.query.m}`)
+  res.send(consistencyProof.proof(req.query.m, tree.getHexLeaves()))
+})
+
 app.get('/tree/leaf/:id', (req, res) => {
   // Return a leaf with id equals to id and its proof.
   const leaf = tree.getLeaf(req.params.id).toString('hex')

@@ -1,5 +1,5 @@
 const express = require("express");
-
+const axios = require('axios');
 const cors = require("cors");
 const app = express();
 const bu_controller = require("./src/controllers/bu.controller")
@@ -45,6 +45,15 @@ app.get("/bu/get_all", (req, res) => {
     console.log(err);
     res.json(err)
   })
+});
+
+// retrieve list of BUs with GET parameters.
+app.get("/bu", (req, res) => {
+  bu_controller.findByIdRange(req.query.id_inicial, req.query.id_final)
+  .then((response) => {
+    res.json(response)
+  })
+  
 });
 
 // save new BU
