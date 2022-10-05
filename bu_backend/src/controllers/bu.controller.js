@@ -123,10 +123,24 @@ exports.Sum = () => {
 };
 
 exports.InfoBUsGenerate = () => {
-  return modeloBoletim.modeloBoletim1.find({}).then((data) => {
-    data = data.sort((a, b) => {return a.id - b.id})
-    console.log(data)
-    return data
+  return modeloBoletim.modeloBoletim1.find({}).then((BUs) => {
+    BUsOrdenados = BUs.sort((a, b) => {return a.id - b.id})
+    console.log(BUsOrdenados)
+
+    let folha = {
+      regras_aplicadas: null,
+      votos_validos: null,
+      indice_na_arvore_de_BUs: null,
+    }
+    const folhas = []
+
+    for (let i = 0; i < BUsOrdenados.length; i++) {
+      const BU = BUsOrdenados[i];
+      folha.indice_na_arvore_de_BUs = BUs.indexOf(BU)
+      folha.votos_validos = BU.votos;
+      folhas.push(folha)
+    }
+    return folhas
   })
 }
 

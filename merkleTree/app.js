@@ -1,6 +1,7 @@
 const express = require('express')
 const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
+const consistencyProof = require('./controllers/consistencyProof.controller')
 
 // TODO: throtling
 // TODO: alguma otimizaçao para assinar a raiz (lru cache, ou assinar a cada X minutos)
