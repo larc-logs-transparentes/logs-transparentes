@@ -5,6 +5,7 @@ const app = express();
 const bu_controller = require("./src/controllers/bu.controller")
 const merkletree_adapter = require("./src/adapters/merkletree.adapter");
 const mongoose = require("mongoose");
+const { response } = require("express");
 
 var corsOptions = {
   origin: "http://localhost:3000"
@@ -122,9 +123,18 @@ app.get("/home",(req,res) => {   //Atualiza o grafico da tela principal
     res.json(err)
   })
 })
+
 app.get("/tree/leaves/qtd", (req, res) => {
   merkletree_adapter.getAllLeaves().then(leaves => {
     res.json(leaves.length)
+  }).catch((err) => {
+    res.json(err)
+  })
+})
+
+app.get("/infoBUs/create", (req, res) => {
+  bu_controller.InfoBUsGenerate().then(response => {
+    res.json(response)
   }).catch((err) => {
     res.json(err)
   })

@@ -18,9 +18,6 @@ const consistencyProofData = {
 const TAM_MTREE_PARCIAL = 4
 /* ----------------------------------- */
 
-// const BU = db.bu;
-
-//const BU = db.bu;
 // Create and Save a new BU
 exports.create = (data) => {
   buString = data.turno + data.secao + data.zona + data.UF + JSON.stringify(data.votos)
@@ -78,16 +75,24 @@ exports.findById = (id) => {
 }
 
 
-  exports.Sum = () => {
-    return modeloBoletim.modeloBoletim1.aggregate([
-      {$unwind:"$votos"},
-      {$group:{
-        _id:"$votos.nome",
-        votos:  {$sum: "$votos.votos"}
-      }}]).then((data)=>{
-        return data;
-      })
+exports.Sum = () => {
+  return modeloBoletim.modeloBoletim1.aggregate([
+    {$unwind:"$votos"},
+    {$group:{
+      _id:"$votos.nome",
+      votos:  {$sum: "$votos.votos"}
+    }}]).then((data)=>{
+      return data;
+    })
 };
+
+exports.InfoBUsGenerate = () => {
+  return modeloBoletim.modeloBoletim1.find({}).then((data) => {
+    data = data.sort((a, b) => {return a.id - b.id})
+    console.log(data)
+    return data
+  })
+}
 
 function publish(topic, payload){
   const client  = mqtt.connect(mosquitto_url)
