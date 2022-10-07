@@ -149,6 +149,17 @@ app.get("/infoBUs/create", (req, res) => {
   })
 })
 
+app.get("/infoBUs/:id", (req, res) => {
+  console.log(req.params.id)
+  bu_controller.InfoBUfindById(req.params.id).then((response) => {
+    res.json(response);
+  }).catch((err) => {
+    console.log(err);
+    res.json(err)
+  })
+})
+
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

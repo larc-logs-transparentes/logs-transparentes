@@ -22,7 +22,20 @@ const boletimSchema = new mongoose.Schema({  ///aaa
     __v: Number
 });
 
+const InfoBuSchema = new mongoose.Schema({  
+    id: { type: Number, required: true }  ,
+    secao: String,
+    zona: String,
+    UF: String,
+    turno: String,
+    regras_aplicadas: String,
+    votos_validos: [candidatos],
+    indice_na_arvore_de_BUs: Number, 
+    merkletree_leaf_id: String,
+    merkletree_leaf: String,
+});
+
 const modeloBoletim1 = mongoose.model("bu",boletimSchema) //"bu" = collection of database
+const modeloInfoBU = mongoose.model("InfoBU",InfoBuSchema) 
 
-
-module.exports = {modeloBoletim1}
+module.exports = {modeloBoletim1, modeloInfoBU}
