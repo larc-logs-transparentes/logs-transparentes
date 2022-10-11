@@ -8,6 +8,7 @@ const consistencyProof = require('./controllers/consistencyProof.controller')
 // TODO: 2 ataques na lib do merkltreejs (fork) -> prof simplicio vai explicar como corrige
 const app = express()
 app.use(express.json())
+
 const port = 3001
 //mudar a funcao de hash
 const tree = new MerkleTree([], SHA256)
@@ -122,22 +123,8 @@ app.get('/tree/leaves', (req, res) => {
   res.send(leaves.map(leaf => {return {"hash": leaf}}))
 })
 
-app.post('/infoBUs/leaf', (req, res) => {
-  console.log(req.body)
-  const leafString = JSON.stringify(req.body.leaf)
-  console.log({leafString})
-  infoBUs.addLeaf(SHA256(leafString))
-  const leaf_index = infoBUs.getLeafIndex(SHA256(leafString))
-  const added_leaf = infoBUs.getLeaf(leaf_index).toString('hex')
-  console.log({leaf_index})
-  console.log({added_leaf})
-  res.json({
-    "leaf_index": leaf_index,
-    "added_leaf": added_leaf,
-    ...req.body
-  });
-})
-
+const infobuRoutes = require('./routes/infobuRoutes')
+app.use('/infobus', infobuRoutes)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

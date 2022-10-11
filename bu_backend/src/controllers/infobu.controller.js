@@ -1,6 +1,6 @@
 const modeloBoletim = require("../models/bu.model")
 const merkletree_adapter = require("../adapters/merkletree.adapter")
-const { SHA256, mode } = require("crypto-js")
+const { SHA256 } = require("crypto-js")
 
 exports.findById = async (id) => {
     console.log({id})
@@ -9,6 +9,8 @@ exports.findById = async (id) => {
 }
 
 exports.inicializar = async () => {
+    const folhas = []
+
     const BUs = await modeloBoletim.modeloBoletim1.find({})
     const BUsOrdenados = BUs.sort((a, b) => { return a.id - b.id })
     for (let index = 0; index < BUsOrdenados.length; index++) {
@@ -21,14 +23,17 @@ exports.inicializar = async () => {
             turno: BU.turno,
             regras_aplicadas: null,
             votos_validos: BU.votos,
-            indice_na_arvore_de_BUs: BU.merkletree_leaf_id, //? 
+            indice_na_arvore_de_BUs: BU.merkletree_leaf_id,
         }
+        folhas.push(infoBU)
         modeloBoletim.modeloInfoBU.create({
             ...infoBU,
             merkletree_index: index,
             merkletree_leaf: SHA256(JSON.stringify(infoBU)).toString(),
         })  
     }
+    
+    await merkletree_adapter.infoBUs_sendLeaves(folhas)
     return {
         message: "árvore de infoBUs inicializada"
     }

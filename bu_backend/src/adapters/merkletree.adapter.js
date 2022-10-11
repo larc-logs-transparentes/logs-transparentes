@@ -80,3 +80,16 @@ exports.getProof = (firstTreeSize) => {
     console.log(err)
   }) 
 }
+
+exports.infoBUs_sendLeaves = (leaves) => {
+  return axios.post(`${merkletreeHostname}:${merkletreePort}/infobus/leaves`, {
+    leaves: leaves
+  })
+  .then(res => {
+    console.log(res.data)
+    return res.data
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
