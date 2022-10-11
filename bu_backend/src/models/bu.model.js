@@ -31,7 +31,7 @@ const InfoBuSchema = new mongoose.Schema({
     regras_aplicadas: String,
     votos_validos: [candidatos],
     indice_na_arvore_de_BUs: Number, 
-    merkletree_leaf_id: String,
+    merkletree_index: String,
     merkletree_leaf: String,
 });
 

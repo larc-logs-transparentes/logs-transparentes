@@ -1,4 +1,3 @@
-const db = require("../models");
 const modeloBoletim = require("../models/bu.model")
 const merkletree_adapter = require("../adapters/merkletree.adapter")
 const mongoose = require("mongoose");
@@ -122,73 +121,6 @@ exports.Sum = () => {
       return data;
     })
 };
-
-exports.InfoBUfindById = (id) => {
-  console.log({id})
-  return modeloBoletim.modeloInfoBU.findOne({id: id}).then((data) => {
-    return data
-  })
-};
-
-exports.InfoBUsGenerate = () => {
-  return modeloBoletim.modeloBoletim1.find({}).then((BUs) => {
-    const BUsOrdenados = BUs.sort((a, b) => {return a.id - b.id})
-    
-    /* Inserir no DB */
-    for (let index = 0; index < BUsOrdenados.length; index++) {
-      let infoBU = {
-        id: BUsOrdenados[index].id,
-        secao: BUsOrdenados[index].secao,
-        zona: BUsOrdenados[index].zona,
-        UF: BUsOrdenados[index].UF,
-        turno: BUsOrdenados[index].turno,
-        regras_aplicadas: null,
-        votos_validos: BUsOrdenados[index].votos,
-        indice_na_arvore_de_BUs: BUsOrdenados[index].merkletree_leaf_id, //? 
-        merkletree_leaf_id: null,
-        merkletree_leaf: null,
-     }
-     console.log(infoBU)
-     modeloBoletim.modeloInfoBU.create(infoBU)
-    }
-
-    return
-    
-    
-    
-    /* 
-    const testLeaf : TLeafPref = {leaf: ll , vote: myMap}
-    const myMap = new Array<Array<[string, number]>>([
-      ["key1", 1],
-      ["key2", 2]
-    ]); 
-    */
-    /* Colocar toda a informação do BU, e manda ordenado */
-    let leafPref_InfoBU = [
-      leaf = {
-        id: null,
-        secao: null,
-        zona: null,
-        UF: null,
-        turno: null,
-        regras_aplicadas: null,
-        indice_na_arvore_de_BUs: null,
-      },
-      prefix = {
-        votos_validos: null
-      },
-    ]   
-    const folhas = []
-
-    for (let i = 0; i < BUsOrdenados.length; i++) {
-      const BU = BUsOrdenados[i];
-      folha.indice_na_arvore_de_BUs = BUs.indexOf(BU)
-      folha.votos_validos = BU.votos;
-      folhas.push(folha)
-    }
-    return folhas
-  })
-}
 
 /**
 * publish

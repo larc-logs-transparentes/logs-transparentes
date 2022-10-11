@@ -1,11 +1,10 @@
 const express = require("express");
-const axios = require('axios');
 const cors = require("cors");
 const app = express();
 const bu_controller = require("./src/controllers/bu.controller")
+const infobu_controller = require("./src/controllers/infobu.controller")
 const merkletree_adapter = require("./src/adapters/merkletree.adapter");
 const mongoose = require("mongoose");
-const { response } = require("express");
 
 var corsOptions = {
   origin: "http://localhost:3000"
@@ -22,6 +21,10 @@ mongoose.connect(url)
   .then(() => {
     mongoose.connection.db.dropCollection("bus", ()=>{
       console.log("bus collection droped")
+      // mongoose.connection.close()
+    })
+    mongoose.connection.db.dropCollection("infobus", ()=>{
+      console.log("infobus collection droped")
       // mongoose.connection.close()
     })
   })
@@ -142,7 +145,8 @@ app.get("/tree/leaves/qtd", (req, res) => {
 })
 
 app.get("/infoBUs/create", (req, res) => {
-  bu_controller.InfoBUsGenerate().then(response => {
+  infobu_controller.inicializar().then(response => {
+    console.log("infobus populados")
     res.json(response)
   }).catch((err) => {
     res.json(err)
@@ -151,7 +155,7 @@ app.get("/infoBUs/create", (req, res) => {
 
 app.get("/infoBUs/:id", (req, res) => {
   console.log(req.params.id)
-  bu_controller.InfoBUfindById(req.params.id).then((response) => {
+  infobu_controller.findById(req.params.id).then((response) => {
     res.json(response);
   }).catch((err) => {
     console.log(err);
