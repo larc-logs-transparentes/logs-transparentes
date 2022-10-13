@@ -12,8 +12,6 @@ app.use(express.json())
 const port = 3001
 //mudar a funcao de hash
 const tree = new MerkleTree([], SHA256)
-const infoBUs = new MerkleTree([], SHA256)
-
 
 app.get('/', (req, res) => {
   res.send('Hello World!' + tree.toString())
