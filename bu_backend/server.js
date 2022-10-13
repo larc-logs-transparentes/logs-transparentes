@@ -163,6 +163,16 @@ app.get("/infoBUs/:id", (req, res) => {
   })
 })
 
+app.get("/infoBUs", (req, res) => {
+  console.log(req.params.id)
+  infobu_controller.findAll().then((response) => {
+    res.json(response);
+  }).catch((err) => {
+    console.log(err);
+    res.json(err)
+  })
+})
+
 
 
 // set port, listen for requests

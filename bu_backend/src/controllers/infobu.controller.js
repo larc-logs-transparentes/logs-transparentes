@@ -2,6 +2,11 @@ const modeloBoletim = require("../models/bu.model")
 const merkletree_adapter = require("../adapters/merkletree.adapter")
 const { SHA256 } = require("crypto-js")
 
+exports.findAll = async () => {
+    const data = await modeloBoletim.modeloInfoBU.find({})
+    return data
+}
+
 exports.findById = async (id) => {
     console.log({id})
     const data = await modeloBoletim.modeloInfoBU.findOne({ id: id })
@@ -16,6 +21,7 @@ exports.inicializar = async () => {
     for (let index = 0; index < BUsOrdenados.length; index++) {
         var BU = BUsOrdenados[index]
         let infoBU = {
+            _id: BU.id,
             id: BU.id,
             secao: BU.secao,
             zona: BU.zona,

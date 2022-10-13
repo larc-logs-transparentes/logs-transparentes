@@ -23,7 +23,8 @@ const boletimSchema = new mongoose.Schema({  ///aaa
 });
 
 const InfoBuSchema = new mongoose.Schema({  
-    id: { type: Number, required: true }  ,
+    _id: { type: Number, required: true },
+    id: { type: Number, required: true },
     secao: String,
     zona: String,
     UF: String,
