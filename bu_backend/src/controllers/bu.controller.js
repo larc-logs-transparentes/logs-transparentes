@@ -31,9 +31,6 @@ const TAM_MTREE_PARCIAL = 4
 const QTD_BUs_CONSISTENCY_PROOF = TAM_MTREE_PARCIAL //Frequência de envio da prova de consistência
 /* ----------------------------------- */
 
-// const BU = db.bu;
-
-//const BU = db.bu;
 // Create and Save a new BU
 exports.create = (data) => {
   buString = data.turno + data.secao + data.zona + data.UF + JSON.stringify(data.votos)
