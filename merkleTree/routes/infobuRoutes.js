@@ -21,5 +21,50 @@ router.post('/leaves', (req, res) => {
     infoBUsTree.addLeaves(leaves)
     return res.json(req.body)
 })
+
+router.get('/', (req, res) => {
+    console.log(infoBUsTree.toString())
+    console.log("tree leaves: ", infoBUsTree.getLeafCount())
+    console.log(infoBUsTree.getHexLayersFlat())
+    res.send(infoBUsTree.getHexLayers())
+})
+
+router.get('/root', (req, res) => {
+    const root = infoBUsTree.getRoot().toString('hex')
+    console.log(root)
+    res.send(root)
+})
+
+router.get('/leaves', (req, res) => {
+    if(req.query.id === undefined){
+        const leaves = infoBUsTree.getHexLeaves()
+        console.log(leaves)
+        res.send(leaves.map(leaf => {return {"hash": leaf}}))
+        return
+    }
+
+    const leaf = infoBUsTree.getLeaf(req.query.id).toString('hex')
+    console.log(leaf)
+    res.send({
+      "id": req.query.id,
+      "leaf": leaf,
+    })
+})
   
+router.get('/leaf/:id', (req, res) => {
+    // Return a leaf with id equals to id and its proof.
+    const leaf = infoBUsTree.getLeaf(req.params.id).toString('hex')
+    const root = infoBUsTree.getRoot()
+    const proofHex = infoBUsTree.getHexProof(leaf)
+    const proof = infoBUsTree.getProof(leaf)
+    console.log(proof)
+    console.log(infoBUsTree.verify(proof, leaf, root))
+    res.send({
+      "id": req.params.id,
+      "leaf": leaf,
+      "proof": proof,
+      "proofHex": proofHex
+    })
+})
+
 module.exports = router
