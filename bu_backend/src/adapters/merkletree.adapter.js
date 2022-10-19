@@ -83,7 +83,7 @@ exports.getProof = (firstTreeSize) => {
 
 exports.infoBUs_sendLeaves = (leaves) => {
   return axios.post(`${merkletreeHostname}:${merkletreePort}/infobus/leaves`, {
-    leaves: leaves
+    data: leaves
   })
   .then(res => {
     console.log(res.data)
