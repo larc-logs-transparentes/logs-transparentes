@@ -17,7 +17,7 @@ const boletimSchema = new mongoose.Schema({  ///aaa
     UF: String,
     turno: String,
     votos: [candidatos],
-    merkletree_leaf_id: String,
+    merkletree_leaf_index: String,
     merkletree_leaf: String,
     __v: Number
 });

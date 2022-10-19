@@ -39,7 +39,7 @@ exports.create = (data) => {
 
   merkletree_adapter.addLeaf(buString).then((merkletree_data) => {
     modeloBoletim.modeloBoletim1.create({
-      merkletree_leaf_id: merkletree_data.leaf_index,
+      merkletree_leaf_index: merkletree_data.leaf_index,
       merkletree_leaf: merkletree_data.added_leaf,
       ...data
     })
@@ -103,11 +103,11 @@ exports.findById = (id) => {
 
 // Find BU by BU info
  exports.findByInfo = (turno,UF,secao,zona) =>{
-        return modeloBoletim.modeloBoletim1.findOne({turno:turno, UF:UF, secao:secao, zona:zona}
-          
-          ).then((data) =>{
-            return data;
-          }) 
+  return modeloBoletim.modeloBoletim1.findOne({turno:turno, UF:UF, secao:secao, zona:zona}
+    
+    ).then((data) =>{
+      return data;
+    }) 
 }
 
 
