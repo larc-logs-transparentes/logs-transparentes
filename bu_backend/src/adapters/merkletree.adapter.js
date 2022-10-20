@@ -86,7 +86,6 @@ exports.infoBUs_sendLeaves = (leaves) => {
     data: leaves
   })
   .then(res => {
-    console.log(res.data)
     return res.data
   })
   .catch(err => {
