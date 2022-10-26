@@ -71,10 +71,14 @@ exports.getAllLeaves = () => {
     })
 }
 
-exports.getProof = (firstTreeSize) => {
-  return axios.get(`${merkletreeHostname}:${merkletreePort}/tree/proof?m=${firstTreeSize}`)
+exports.getProof = (firstTreeSize, secondTreeSize) => {
+  return axios.get(`${merkletreeHostname}:${merkletreePort}/tree/proof?initial=${firstTreeSize}&final=${secondTreeSize}`)
   .then(res => {
-    return res.data
+    return {
+      proof_path: res.data.path,
+      first_tree_hash: res.data.first_hash,
+      second_tree_hash: res.data.second_hash
+    }
   })
   .catch(err => {
     console.log(err)

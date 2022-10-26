@@ -80,8 +80,8 @@ function inserirNoBuffer(data) {
 
 export function provaDeConsistencia(consistencyProofData){
   if(consistencyProofData.tree_size_1 == 0)
-    return new MerkleTree(consistencyProofData.consistency_path, SHA256).getRoot().toString('hex') === consistencyProofData.second_hash; 
-
+    return new MerkleTree(consistencyProofData.consistency_path, SHA256).getHexRoot() === consistencyProofData.second_hash; 
+  
   /* 1. If consistency_path is an empty array, stop and fail the proof verification. */
   if(consistencyProofData.consistency_path == null)
     return false

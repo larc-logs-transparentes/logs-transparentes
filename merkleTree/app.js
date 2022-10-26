@@ -85,8 +85,12 @@ app.get('/tree/root', (req, res) => {
 })
 
 app.get('/tree/proof', (req, res) => {
-  console.log(`Prova de consistência com m = ${req.query.m}`)
-  res.send(consistencyProof.proof(req.query.m, tree.getHexLeaves()))
+  if(req.query.final === undefined)
+    final = tree.getLeafCount()
+  else
+    final = req.query.final
+  console.log(`Prova de consistência com initial = ${req.query.initial} e final = ${final}`)
+  res.send(consistencyProof.proof(req.query.initial, tree.getHexLeaves().slice(0, final)))
 })
 
 app.get('/tree/leaf/:id', (req, res) => {
