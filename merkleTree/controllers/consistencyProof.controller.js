@@ -20,7 +20,8 @@ function proof(m, D_n){
         return null
     return {
         path: path,
-        tree_root: MTH(D_n)
+        first_hash: MTH(D_n.slice(0, m)),
+        second_hash: MTH(D_n),
     }
 }
 

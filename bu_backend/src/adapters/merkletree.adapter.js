@@ -76,7 +76,8 @@ exports.getProof = (firstTreeSize, secondTreeSize) => {
   .then(res => {
     return {
       proof_path: res.data.path,
-      tree_root: res.data.tree_root
+      first_tree_hash: res.data.first_hash,
+      second_tree_hash: res.data.second_hash
     }
   })
   .catch(err => {
