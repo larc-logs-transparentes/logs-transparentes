@@ -2,17 +2,16 @@ const express = require('express')
 const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
 const consistencyProof = require('./controllers/consistencyProof.controller')
-var bodyParser = require('body-parser');
 
 // TODO: throtling
 // TODO: alguma otimizaçao para assinar a raiz (lru cache, ou assinar a cada X minutos)
 // TODO: 2 ataques na lib do merkltreejs (fork) -> prof simplicio vai explicar como corrige
 const app = express()
 app.use(express.json())
+
 const port = 3001
 //mudar a funcao de hash
 const tree = new MerkleTree([], SHA256)
-
 
 app.get('/', (req, res) => {
   res.send('Hello World!' + tree.toString())
@@ -86,8 +85,12 @@ app.get('/tree/root', (req, res) => {
 })
 
 app.get('/tree/proof', (req, res) => {
-  console.log(`Prova de consistência com m = ${req.query.m}`)
-  res.send(consistencyProof.proof(req.query.m, tree.getHexLeaves()))
+  if(req.query.final === undefined)
+    final = tree.getLeafCount()
+  else
+    final = req.query.final
+  console.log(`Prova de consistência com initial = ${req.query.initial} e final = ${final}`)
+  res.send(consistencyProof.proof(req.query.initial, tree.getHexLeaves().slice(0, final)))
 })
 
 app.get('/tree/leaf/:id', (req, res) => {

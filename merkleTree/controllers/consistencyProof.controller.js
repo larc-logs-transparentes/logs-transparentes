@@ -9,12 +9,20 @@ const SHA256 = require('crypto-js/sha256')
 * @return {String[]}
 */
 function proof(m, D_n){
-    if(m == 0)
-        return D_n
+    let path
     n = D_n.length
-    if(m < n)
-        return __subProof(m, D_n, true)
-    return null
+
+    if(m == 0)
+        path = D_n
+    else if(m < n)
+        path = __subProof(m, D_n, true)
+    else
+        return null
+    return {
+        path: path,
+        first_hash: MTH(D_n.slice(0, m)),
+        second_hash: MTH(D_n),
+    }
 }
 
 /**
