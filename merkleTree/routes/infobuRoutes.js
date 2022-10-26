@@ -29,16 +29,18 @@ router.get('/', (req, res) => {
 })
 
 router.get('/root', (req, res) => {
-    const root = infoBUsTree.getRoot().toString('hex')
-    console.log(root)
-    res.send(root)
+    const {leaf, vote} = infoBUsTree.getHexRoot()
+    res.send({
+        leaf: leaf,
+        vote: vote
+    })
 })
 
 router.get('/leaves', (req, res) => {
     if(req.query.id === undefined){
         const leaves = infoBUsTree.getHexLeaves()
         console.log(leaves)
-        res.send(leaves.map(leaf => {return {"hash": leaf}}))
+        res.send(leaves)
         return
     }
 
