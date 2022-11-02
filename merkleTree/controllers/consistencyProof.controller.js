@@ -33,10 +33,6 @@ function proof(m, D_n){
  */
 function MTH(D){
     n = D.length
-
-    if (n == 1)
-        return D[0]
-
     return new MerkleTree(D, SHA256).getRoot().toString('hex')
 }
 
