@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { MerkleTreePrefix } = require('../merkletreejs/dist/MerkleTreePrefix')
 
 const { SHA256 } = require('crypto-js')
-const infoBUsTree = new MerkleTreePrefix([], SHA256)
+const infoBUsTree = new MerkleTreePrefix([], SHA256, {fillDefaultHash: true})
 
 router.post('/leaves', (req, res) => {
     const infoBUs = req.body.data
