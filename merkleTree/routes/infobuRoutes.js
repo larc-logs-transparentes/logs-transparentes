@@ -44,27 +44,26 @@ router.get('/leaves', (req, res) => {
         return
     }
 
-    const leaf = infoBUsTree.getLeaf(req.query.id).toString('hex')
+    const leaf = infoBUsTree.getLeaf(req.query.id)
     console.log(leaf)
     res.send({
       "id": req.query.id,
-      "leaf": leaf,
+      "leaf": leaf.leaf.toString('hex'),
+      "vote": leaf.vote
     })
 })
   
 router.get('/leaf/:id', (req, res) => {
     // Return a leaf with id equals to id and its proof.
-    const leaf = infoBUsTree.getLeaf(req.params.id).toString('hex')
+    const leaf = infoBUsTree.getLeaf(req.params.id)
     const root = infoBUsTree.getRoot()
-    const proofHex = infoBUsTree.getHexProof(leaf)
-    const proof = infoBUsTree.getProof(leaf)
+    const proof = infoBUsTree.getProof(leaf, req.params.id)
     console.log(proof)
     console.log(infoBUsTree.verify(proof, leaf, root))
     res.send({
       "id": req.params.id,
       "leaf": leaf,
       "proof": proof,
-      "proofHex": proofHex
     })
 })
 
