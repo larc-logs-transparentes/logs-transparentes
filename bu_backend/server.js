@@ -173,6 +173,16 @@ app.get("/infoBUs", (req, res) => {
   })
 })
 
+app.get("/infoBUs/tree/leaf/:id", async (req, res) => {
+  const infoBU = await infobu_controller.findById(req.params.id)
+  merkletree_adapter.infoBUs_getLeafProof(infoBU).then((response) => {
+    res.json(response);
+  }).catch((err) => {
+    console.log(err);
+    res.json(err)
+  })
+})
+
 
 
 // set port, listen for requests

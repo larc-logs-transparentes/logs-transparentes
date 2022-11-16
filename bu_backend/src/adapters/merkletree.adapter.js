@@ -96,3 +96,15 @@ exports.infoBUs_sendLeaves = (leaves) => {
     console.log(err)
   })
 }
+
+exports.infoBUs_getLeafProof = (infoBU) => {
+  return axios.post(`${merkletreeHostname}:${merkletreePort}/infobus/proof`, {
+    leaf: infoBU
+  })
+  .then(res => {
+    return res.data
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}

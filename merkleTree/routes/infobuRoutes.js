@@ -67,4 +67,23 @@ router.get('/leaf/:id', (req, res) => {
     })
 })
 
+router.post('/proof', (req, res) => {
+    // returns proof
+    const root = infoBUsTree.getRoot()
+    console.log(req.body.leaf)
+    const leaf = {
+        leaf: SHA256(JSON.stringify(req.body.leaf)).toString(), 
+        vote: new Array(req.body.leaf.votos_validos.map(candidato => ([candidato.nome, candidato.votos])))
+    }
+    console.log(infoBUsTree.toString())
+    console.log(leaf)
+    const proof = infoBUsTree.getProof(leaf)
+    if (infoBUsTree.verify(proof, leaf, root)){
+      res.json(proof)
+    }
+    else{
+      res.send('Proof not found')
+    }
+  })
+
 module.exports = router
