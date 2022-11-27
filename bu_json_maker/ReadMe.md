@@ -1,6 +1,6 @@
 # Read me
 
-Este programa lê múltiplos arquivos "bu" e transforma-os em uma lista (json) e escreve em arquivo.
+Este é um programa Python que lê múltiplos arquivos "bu" e transforma-os em uma lista (json) e escreve em arquivo.
 
 
 # Como usar
