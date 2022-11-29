@@ -12,13 +12,6 @@ const rootSchema = new mongoose.Schema({
     consistency_path: [],
     log_id: Number,
     ultimo:false,
-    // tree_size_1: tree_size_1,
-    //   tree_size_2: tree_size_2,
-    //   first_hash: first_tree_hash, 
-    //   second_hash: second_tree_hash,
-    //   consistency_path: proof_path,
-    //   log_id: log_id,
-    //   ultimo: false
 });
 
 const modeloroot = mongoose.model("roots",rootSchema) //"roots" = collection of database
