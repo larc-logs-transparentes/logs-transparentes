@@ -192,11 +192,6 @@ function publishConsistencyProof(tree_size_1, tree_size_2, log_id){
       second_hash: second_tree_hash,
       consistency_path: proof_path,
       log_id: log_id
-      // id:log_id,
-      // _id:log_id,
-      // raiz: second_tree_hash,
-      // busadicionados: tree_size_2-tree_size_1,
-      // //timestamp: raiz.createdAt
     })
     
     publish('logs-transparentes/consistencyProof', JSON.stringify(consistencyProofData))
