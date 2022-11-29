@@ -49,6 +49,14 @@ export default {
       },
     },
     {
+      name: 'Raizassinada',
+      url: '/raizassinada',
+      icon: 'Package',
+      badge: {
+        text: 'Monitor',
+      },
+    },
+    {
       name: 'Recontabilizar',
       url: '/recontabilizar',
       icon: 'Package',
