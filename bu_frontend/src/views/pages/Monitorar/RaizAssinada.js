@@ -5,8 +5,6 @@ import { provaDeConsistencia } from './logic/subscriberConsistency';
 import { Loader } from '../../../vibe';
 import { getRootAll } from '../../../api/bu.api';
 import {baixarRoots} from './Roots.js';
-//Crio um state, passo pro subscriber, usar um useeffect com o proofdata, toda vez que o proofdata mudar
-// o useffect vai executar oq ta dentro, toda vez q mudar, vai atualizar o que ta sendo exibido.
 export default function Raizassinada() {
   getRootAll()
   const [vetorvalidar,setVetor] = useState([]);
