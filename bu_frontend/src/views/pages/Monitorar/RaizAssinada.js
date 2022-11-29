@@ -22,16 +22,13 @@ export default function Raizassinada() {
     while(i < rootsbaixadas.length){
       let resultadoProva=provaDeConsistencia(rootsbaixadas[i])
       if (resultadoProva===true){
-        console.log(rootsbaixadas)
         vetorvalidar[i]='Validado'}
       if ( resultadoProva === false ){
-        console.log(rootsbaixadas[i])
         vetorvalidar[i]='#ERRO#'
         resultadoProva=0}
       i++}
     return vetorvalidar
   }
-  console.log(vetorvalidar)
 
 
   return (
