@@ -1,7 +1,8 @@
 const router = require('express').Router()
 const { MerkleTreePrefix } = require('../merkletreejs/dist/MerkleTreePrefix')
-
 const { SHA256 } = require('crypto-js')
+const resultProof = require('../controllers/resultProof.controller')
+
 const infoBUsTree = new MerkleTreePrefix([], SHA256, {fillDefaultHash: true})
 
 router.post('/leaves', (req, res) => {
@@ -12,7 +13,7 @@ router.post('/leaves', (req, res) => {
         const infoBU = infoBUs[index];
         leaves.push({
             leaf: SHA256(JSON.stringify(infoBU)).toString(),
-            vote: new Array(infoBU.votos_validos.map(candidato => ([candidato.nome, candidato.votos])))
+            vote: infoBU.votos_validos.map(candidato => ([candidato.nome, candidato.votos]))
         })
     }
     
@@ -65,6 +66,23 @@ router.get('/leaf/:id', (req, res) => {
       "leaf": leaf,
       "proof": proof,
     })
+})
+
+router.get('/resultProof', (req, res) => {
+    const i_inicial = req.query.i_inicial
+    const i_final = req.query.i_final
+    if(!i_inicial || !i_final){
+        res.send("Missing parameters i_inicial and i_final")
+        return
+    }
+    const leaves = infoBUsTree.getHexLeaves().map(leaf => {
+        return {
+            leaf: leaf.leaf,
+            vote: JSON.parse(leaf.vote)
+        }
+    })
+    const nodeKeys = resultProof.nodeKeys(leaves, parseInt(i_inicial), parseInt(i_final))
+    res.send(nodeKeys)
 })
 
 router.post('/proof', (req, res) => {
