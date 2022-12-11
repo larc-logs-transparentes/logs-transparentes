@@ -1,3 +1,4 @@
 asn1tools~=0.164.0
 asn1crypto~=1.5.1
 ed25519~=1.5
+requests~=2.28.1

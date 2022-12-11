@@ -24,7 +24,8 @@ let tree_size_1 = 0, tree_size_2 = 0, log_id = 0
 
 // Create and Save a new BU
 exports.create = (data) => {
-  buString = data.turno + data.secao + data.zona + data.UF + JSON.stringify(data.votos)
+  buString = JSON.stringify(data.bu_inteiro)
+  console.log(typeof buString);
   console.log("Debug BU")
   console.log(buString)
   console.log({"BU": data})
@@ -33,7 +34,12 @@ exports.create = (data) => {
     modeloBoletim.modeloBoletim1.create({
       merkletree_leaf_id: merkletree_data.leaf_index,
       merkletree_leaf: merkletree_data.added_leaf,
-      ...data
+      // ...data
+      _id: data._id,
+      id: data.id,
+      zona: data.zona,
+      secao: data.secao,
+      bu_inteiro: JSON.stringify(data.bu_inteiro)
     })
     publishConsistencyCheck(merkletree_data.added_leaf)
 

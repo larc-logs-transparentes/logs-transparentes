@@ -9,17 +9,30 @@ const candidatos = new mongoose.Schema({  //subSchema para os candidatos
     _id: { type: String, required: true }
 })
 
-const boletimSchema = new mongoose.Schema({  ///aaa
+
+// Old boletim schema:
+// const boletimSchema = new mongoose.Schema({  ///aaa
+//     _id: { type: Number, required: true }  ,
+//     id: { type: Number, required: true }  ,
+//     secao: String,
+//     zona: String,
+//     UF: String,
+//     turno: String,
+//     votos: [candidatos],
+//     merkletree_leaf_id: String,
+//     merkletree_leaf: String,
+//     __v: Number
+// });
+
+
+const boletimSchema = new mongoose.Schema({
     _id: { type: Number, required: true }  ,
     id: { type: Number, required: true }  ,
-    secao: String,
-    zona: String,
-    UF: String,
-    turno: String,
-    votos: [candidatos],
-    merkletree_leaf_id: String,
-    merkletree_leaf: String,
-    __v: Number
+    // turno: ## informação não disponível no BU
+    // uf: ## informação não disponível no BU
+    zona: Number,
+    secao: Number,
+    bu_inteiro: String, 
 });
 
 const modeloBoletim1 = mongoose.model("bu",boletimSchema) //"bu" = collection of database

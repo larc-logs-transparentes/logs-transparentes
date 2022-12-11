@@ -3,11 +3,7 @@ import glob
 import json
 
 
-# Constants
-asn1_specs_path = './assets/specification_files/bu.asn1'
-BU_PATH = './assets/bus/bu_ac/o00406-0100700090001.bu'
-ALL_BU_FOLDERS_PATH = './assets/bus/'
-RESULT_JSON_PATH = 'results/bus.json'
+from constants import ASN1_SPECS_PATH, RESULT_JSON_PATH, ALL_BU_FOLDERS_PATH
 
 
 # Helper class to encode BU to JSON
@@ -24,7 +20,7 @@ class DictWithBytesToJsonEncoder(json.JSONEncoder):
 
 # Decodes BU with path
 def decode_bu(bu_path):
-    asn1_converter = asn1tools.compile_files(asn1_specs_path)   # asn1 spec file path
+    asn1_converter = asn1tools.compile_files(ASN1_SPECS_PATH)   # asn1 spec file path
 
     with open(bu_path, "rb") as file:
         envelope_encoded = bytearray(file.read())
