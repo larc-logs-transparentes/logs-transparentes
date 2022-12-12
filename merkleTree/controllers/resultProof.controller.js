@@ -9,7 +9,7 @@ function __nodeKeys(leaves, i_inicial, i_final, depth, index){
     const nodes = []
     const n = leaves.length
     if (n == 1 || (i_inicial == 0 && i_final == n - 1)) 
-        return{depth: depth, index: index, hash: MTH(leaves)}
+        return{depth: depth, index: index}
 
     const p = largerPowerOfTwoLessThan(n)
     if(i_inicial < p)

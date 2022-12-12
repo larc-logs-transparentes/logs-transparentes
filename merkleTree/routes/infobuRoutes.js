@@ -68,13 +68,14 @@ router.get('/leaf/:id', (req, res) => {
     })
 })
 
-router.get('/resultProof', (req, res) => {
+router.get('/nodeKeys', (req, res) => {
     const i_inicial = req.query.i_inicial
     const i_final = req.query.i_final
     if(!i_inicial || !i_final){
         res.send("Missing parameters i_inicial and i_final")
         return
     }
+
     const leaves = infoBUsTree.getHexLeaves().map(leaf => {
         return {
             leaf: leaf.leaf,
@@ -82,6 +83,7 @@ router.get('/resultProof', (req, res) => {
         }
     })
     const nodeKeys = resultProof.nodeKeys(leaves, parseInt(i_inicial), parseInt(i_final))
+    
     res.send(nodeKeys)
 })
 
