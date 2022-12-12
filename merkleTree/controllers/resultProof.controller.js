@@ -2,7 +2,7 @@ const { MerkleTreePrefix } = require('../merkletreejs/dist/MerkleTreePrefix')
 const SHA256 = require("crypto-js/sha256");
 
 function nodeKeys(leaves, i_inicial, i_final) {
-    return __nodeKeys(leaves, i_inicial, i_final, 0, 0)
+    return __nodeKeys(leaves, i_inicial, i_final, parseInt(Math.log2(leaves.length)), 0)
 }
 
 function __nodeKeys(leaves, i_inicial, i_final, depth, index){
