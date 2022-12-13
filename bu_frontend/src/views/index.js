@@ -75,7 +75,7 @@ const pageList = [
     //},
   },
   {
-    name: 'RaizAssinada',
+    name: 'Histórico da árvore',
     path: '/raizassinada',
     component: Raizassinada
     //badge: {

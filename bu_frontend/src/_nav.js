@@ -49,7 +49,7 @@ export default {
       },
     },
     {
-      name: 'Raizassinada',
+      name: 'Histórico da árvore',
       url: '/raizassinada',
       icon: 'Package',
       badge: {
