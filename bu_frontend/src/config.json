@@ -1,4 +1,4 @@
 {
-    "bu_api_url": "http://localhost:8080", 
+    "bu_api_url": "http://172.20.11.11:8080", 
     "mosquitto_url": "ws://test.mosquitto.org:8080/"
 }

@@ -24,7 +24,7 @@ export default function Raizassinada() {
       saveRootBaixada.push(rootsbaixadas[i])
       let resultadoProva=provaDeConsistencia(rootsbaixadas[i])
       if (resultadoProva===true){
-        vetorvalidar[i]='Validado'}
+        vetorvalidar[i]='Correta'}
       if ( resultadoProva === false ){
         vetorvalidar[i]='#ERRO#'
         resultadoProva=0}
@@ -48,10 +48,10 @@ export default function Raizassinada() {
     <React.Fragment>
       <Card>
         <CardBody>
-          <h4>Nessa página, você tem todo o histórico da árvore de BUs. Apertando o botão, você consegue verificar que nenhum dado foi removido da árvore entre cada atualização.</h4>
+          <h4>Histórico da árvore de BUs</h4>
           <div style={{textAlign:'center'}}>
           <button disabled={show} onClick={()=> setVetor(vetorvalidar=>validar(i))} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
-                Validar Consistência da Árvore.
+                Verificar integridade 
             </button>
           </div>
           <div>
@@ -63,18 +63,25 @@ export default function Raizassinada() {
                     {rootsbaixadas.map(rootsbaixadas => <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px'}}>{rootsbaixadas._id}</h5>)}
                 </div>
                 <div>
-                    <h5>Raiz Parcial</h5>
+                    <h5>Raiz parcial da árvore</h5>
                     {rootsbaixadas.map(rootsbaixadas=> <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px',textAlign:'justify'}}>
-                     {rootsbaixadas.second_hash}
+                     <small>{rootsbaixadas.second_hash}</small>
                      </h5>)}
                 </div>
                 <div>
-                  <h5 style={{width:'170px'}}>Tamanho da Árvore</h5>
+                  <h5>Tamanho</h5>
                   {rootsbaixadas.map(rootsbaixadas => 
                     <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',position:'flex'}}>
                       {rootsbaixadas.tree_size_2}
                     </h5>)}
                 </div> 
+                <div>
+                <h5>Assinatura</h5>
+                  {rootsbaixadas.map(rootsbaixadas=> 
+                    <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw'}}>
+                      <small>{'3c3b72a69d0e25c9b2abc0d636'}</small>
+                    </h5>)}
+                </div>
                 <div>
                 <h5>Validação</h5>
                   {vetorvalidar.map(vetorvalidar=> 
@@ -82,17 +89,10 @@ export default function Raizassinada() {
                       {vetorvalidar}
                     </h5>)}
                 </div>
-                <div>
-                <h5>Assinatura</h5>
-                  {vetorvalidar.map(vetorvalidar=> 
-                    <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw'}}>
-                      {'3c3b72a69d0e25c9b2abc0d636'}
-                    </h5>)}
-                </div>
               </div>
-              <div style={{display:'inline-block',columnCount:'3',gap:'6vw', marginTop:'10vw',marginRight:'20vw',textAlign:'start',alignContent:'start'}}>
+              <div style={{display:'inline-block',columnCount:'1',gap:'6vw', marginTop:'10vw',marginRight:'20vw',textAlign:'start',alignContent:'start'}}>
               {rootbaixada.map( ( {_id,tree_size_1,tree_size_2,first_hash,second_hash,consistency_path,log_id,__v} ) => {
-                return <p style={{width:'15vw'}} key={_id}>log_id:{log_id}<br/> tree_size_1 :{tree_size_1}<br/>tree_size_2 :{tree_size_2}<br/>first_hash :{first_hash}<br/>
+                return <p key={_id}>log_id:{log_id}<br/> tree_size_1 :{tree_size_1}<br/>tree_size_2 :{tree_size_2}<br/>first_hash :{first_hash}<br/>
                 second_hash:{second_hash}<br/>consistency_path:{consistency_path.map(consistency_path => <li>{consistency_path}</li>)}
                 <br/> ----------------------------------------------------<br/></p>})}
               </div>

@@ -13,6 +13,11 @@ export default {
       //  text: 'NEW',
       //},
     },
+    {
+      name: 'Consultar Cidade',
+      url: '/mapa',
+      icon: 'Package'
+    },
     // {
     //   name: 'Auditar BU',
     //   url: '/elements/auditar',
@@ -24,66 +29,23 @@ export default {
     {
       divider: true,
     },
-    // {
-    //   name: 'Inserir BU',
-    //   url: '/elements/inserir',
-    //   icon: 'Package',
-    //   badge: {
-    //     text: 'RESTRITO',
-    //   },
-    // },
-    {
-      name: 'Monitorar',
-      url: '/monitorar',
-      icon: 'Package',
-      badge: {
-        text: 'Monitor',
-      },
-    },
-    {
-      name: 'Monitorar2',
-      url: '/monitorar2',
-      icon: 'Package',
-      badge: {
-        text: 'Monitor',
-      },
-    },
     {
       name: 'Histórico da árvore',
       url: '/raizassinada',
-      icon: 'Package',
-      badge: {
-        text: 'Monitor',
-      },
+      icon: 'Package'
     },
     {
       name: 'Recontabilizar',
       url: '/recontabilizar',
-      icon: 'Package',
-      badge: {
-        text: 'Monitor',
-      },
-    },
-    {
-      name: 'Mapa',
-      url: '/mapa',
-      icon: 'Package',
-      badge: {
-        text: 'Monitor',
-      },
+      icon: 'Package'
     }
-
   ],
   bottom: [
     
     {
       name: 'Account',
       url: '/dashboard',
-      icon: 'User',
-      badge: {
-        variant: 'success',
-        text: '3',
-      },
+      icon: 'User'
     },
   ],
 };
