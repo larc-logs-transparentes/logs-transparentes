@@ -44,11 +44,3 @@ exports.inicializar = async () => {
         message: "árvore de infoBUs inicializada"
     }
 }
-      
-    /* 
-     const testLeaf : TLeafPref = {leaf: ll , vote: myMap}
-      const myMap = new Array<Array<[string, number]>>([
-        ["key1", 1],
-        ["key2", 2]
-      ]); 
-    */

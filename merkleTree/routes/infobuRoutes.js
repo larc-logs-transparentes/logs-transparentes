@@ -83,20 +83,52 @@ router.get('/nodeKeys', (req, res) => {
 router.post('/proof', (req, res) => {
     // returns proof
     const root = infoBUsTree.getRoot()
-    console.log(req.body.leaf)
     const leaf = {
-        leaf: SHA256(JSON.stringify(req.body.leaf)).toString(), 
-        vote: new Array(req.body.leaf.votos_validos.map(candidato => ([candidato.nome, candidato.votos])))
+        leaf: req.body.leaf.merkletree_leaf, 
+        vote: req.body.leaf.votos_validos.map(candidato => ([candidato.nome, candidato.votos]))
     }
-    console.log(infoBUsTree.toString())
-    console.log(leaf)
     const proof = infoBUsTree.getProof(leaf)
+
     if (infoBUsTree.verify(proof, leaf, root)){
-      res.json(proof)
+      res.json({
+        leaf: leaf,
+        proof: proof,
+      })
     }
     else{
       res.send('Proof not found')
     }
-  })
+})
+
+router.get('/resultProof', (req, res) => {
+    // returns proof
+    const i_inicial = req.query.i_inicial
+    const i_final = req.query.i_final
+    if(!i_inicial || !i_final){
+        res.send("Missing parameters i_inicial and i_final")
+        return
+    }
+    const nodes = nodeKeys(infoBUsTree.getLayers()[0], parseInt(i_inicial), parseInt(i_final))
+    const root = infoBUsTree.getRoot()
+    const proofs = []
+    nodes.map(key => {
+        const node = infoBUsTree.getNode(key.index, key.depth)
+        const proof = infoBUsTree.getProof(node, key.index, key.depth)
+        if(infoBUsTree.verify(proof, node, root))
+            proofs.push({
+                leaf: node,
+                coordinates: key,
+                proof: infoBUsTree.getProof(node, key.index, key.depth)
+            })
+        else
+            proofs.push({
+                leaf: node,
+                coordinates: key,
+                proof: 'Proof not found'
+            })
+    })
+     
+    res.json(proofs)
+})
 
 module.exports = router
