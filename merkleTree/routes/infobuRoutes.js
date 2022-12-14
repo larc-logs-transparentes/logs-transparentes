@@ -76,12 +76,13 @@ router.get('/nodeKeys', (req, res) => {
         return
     }
 
-    const leaves = infoBUsTree.getHexLeaves().map(leaf => {
+    const leaves = infoBUsTree.getLayers()[0]
+    /* const leaves = infoBUsTree.getLayers()[0].map(leaf => {
         return {
             leaf: leaf.leaf,
             vote: JSON.parse(leaf.vote)
         }
-    })
+    }) */
     const nodeKeys = resultProof.nodeKeys(leaves, parseInt(i_inicial), parseInt(i_final))
     
     res.send(nodeKeys)
