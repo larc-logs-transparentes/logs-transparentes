@@ -31,6 +31,7 @@ import ChartDetail from './elements/chart_detail';
 import MostrarBU from './elements/MostrarBU';
 import Consultar_Todos from './elements/consultar_todos';
 import Retotalizar from './pages/Monitorar/Retotalizar.js';
+import Raizassinada from './pages/Monitorar/RaizAssinada.js';
 import Mapa from './pages/Monitorar/Mapa.js';
 import Root from './elements/Root';
 
@@ -69,6 +70,14 @@ const pageList = [
     name: 'Recontabilizar',
     path: '/recontabilizar',
     component: Retotalizar
+    //badge: {
+    //  text: 'NEW',
+    //},
+  },
+  {
+    name: 'Histórico da árvore',
+    path: '/raizassinada',
+    component: Raizassinada
     //badge: {
     //  text: 'NEW',
     //},
