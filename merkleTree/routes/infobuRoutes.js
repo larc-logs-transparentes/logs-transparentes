@@ -109,16 +109,15 @@ router.get('/resultProof', (req, res) => {
         return
     }
     const nodes = nodeKeys(infoBUsTree.getLayers()[0], parseInt(i_inicial), parseInt(i_final))
-    const root = infoBUsTree.getRoot()
     const proofs = []
     nodes.map(key => {
         const node = infoBUsTree.getNode(key.index, key.depth)
         const proof = infoBUsTree.getProof(node, key.index, key.depth)
-        if(infoBUsTree.verify(proof, node, root))
+        if(proof)
             proofs.push({
                 leaf: node,
                 coordinates: key,
-                proof: infoBUsTree.getProof(node, key.index, key.depth)
+                proof: proof
             })
         else
             proofs.push({
