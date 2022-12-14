@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { MerkleTreePrefix } = require('../merkletreejs/dist/MerkleTreePrefix')
 const { SHA256 } = require('crypto-js')
-const resultProof = require('../controllers/resultProof.controller')
+const { nodeKeys } = require('../controllers/nodeKeys.controller')
 
 const infoBUsTree = new MerkleTreePrefix([], SHA256, {fillDefaultHash: true})
 
@@ -76,16 +76,8 @@ router.get('/nodeKeys', (req, res) => {
         return
     }
 
-    const leaves = infoBUsTree.getLayers()[0]
-    /* const leaves = infoBUsTree.getLayers()[0].map(leaf => {
-        return {
-            leaf: leaf.leaf,
-            vote: JSON.parse(leaf.vote)
-        }
-    }) */
-    const nodeKeys = resultProof.nodeKeys(leaves, parseInt(i_inicial), parseInt(i_final))
-    
-    res.send(nodeKeys)
+    const leaves = infoBUsTree.getLayers()[0]    
+    res.send(nodeKeys(leaves, parseInt(i_inicial), parseInt(i_final)))
 })
 
 router.post('/proof', (req, res) => {
