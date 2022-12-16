@@ -1,5 +1,6 @@
 const db = require("../models");
 const modeloBoletim = require("../models/bu.model")
+const modeloRoot = require("../models/root.model")
 const merkletree_adapter = require("../adapters/merkletree.adapter")
 const mongoose = require("mongoose");
 const axios = require('axios');
@@ -89,6 +90,11 @@ exports.findAll = () => {
     return data
   })
 };
+exports.findAllroot = () => {
+  return modeloRoot.modeloroot.find({}).then((data) => {
+    return data
+  })
+};
 // Find BUs inside a ID range.
 exports.findByIdRange = (id_inicial, id_final) => {
   return modeloBoletim.modeloBoletim1.find({id:{ $gte:id_inicial, $lte:id_final}})
@@ -105,6 +111,13 @@ exports.findById = (id) => {
 };
 
 // Find BU by BU info
+ exports.findByInfo = (turno,UF,secao,zona) =>{
+        return modeloBoletim.modeloBoletim1.findOne({turno:turno, UF:UF, secao:secao, zona:zona}
+          
+          ).then((data) =>{
+            return data;
+          }) 
+}
  exports.findByInfo = (turno,UF,secao,zona) =>{
         return modeloBoletim.modeloBoletim1.findOne({turno:turno, UF:UF, secao:secao, zona:zona}
           
@@ -175,6 +188,18 @@ function publishConsistencyProof(tree_size_1, tree_size_2, log_id){
       log_id: log_id,
       ultimo: false
     }
+    publish('logs-transparentes/consistencyProof', JSON.stringify(consistencyProofData))
+    
+    modeloRoot.modeloroot.create({
+      _id:log_id,
+      tree_size_1: tree_size_1,
+      tree_size_2: tree_size_2,
+      first_hash: first_tree_hash, 
+      second_hash: second_tree_hash,
+      consistency_path: proof_path,
+      log_id: log_id
+    })
+    
     publish('logs-transparentes/consistencyProof', JSON.stringify(consistencyProofData))
     console.log("\n\nPublicado prova de consistência")
     console.log(JSON.stringify(consistencyProofData))
