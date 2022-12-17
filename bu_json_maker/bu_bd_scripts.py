@@ -3,6 +3,7 @@ import requests
 import time
 
 from constants import DB_URL
+from counties_codes import get_county_uf_with_number
 
 
 # reads bus from file made with bu_json_converter.py
@@ -22,7 +23,19 @@ def get_body_list_with_zona_secao():
     for bu in bus:
         zona = bu['identificacaoSecao']['municipioZona']['zona']
         secao = bu['identificacaoSecao']['secao']
-        body_dict = {"_id": id1, "id": id2, "zona": zona, "secao": secao, "bu_inteiro": bu}
+        cod_municipio = bu['identificacaoSecao']['municipioZona']['municipio']
+        uf = get_county_uf_with_number(cod_municipio)
+
+        body_dict = {
+            "_id": id1,
+            "id": id2,
+            "turno": "2",
+            "uf": uf,
+            "zona": zona,
+            "secao": secao,
+            "bu_inteiro": bu
+        }
+
         body_dict_list.append(body_dict)
         id1 += 1
         id2 += 1
