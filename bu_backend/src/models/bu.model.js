@@ -28,8 +28,8 @@ const candidatos = new mongoose.Schema({  //subSchema para os candidatos
 const boletimSchema = new mongoose.Schema({
     _id: { type: Number, required: true }  ,
     id: { type: Number, required: true }  ,
-    // turno: ## informação não disponível no BU
-    // uf: ## informação não disponível no BU
+    turno: String,
+    uf: String,
     zona: Number,
     secao: Number,
     bu_inteiro: String, 

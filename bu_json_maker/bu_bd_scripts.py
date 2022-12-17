@@ -57,6 +57,7 @@ def insert_list_bus_to_db():
     res_list = []
     for body in bodies:
         res = insert_body_to_db(body)
+        print(res)
         res_list.append(res)
         time.sleep(0.1) # sleep between inserts so it won`t flood db and get error
 
