@@ -32,7 +32,10 @@ const boletimSchema = new mongoose.Schema({
     uf: String,
     zona: Number,
     secao: Number,
-    bu_inteiro: String, 
+    bu_inteiro: String,
+    merkletree_leaf_id: String,
+    merkletree_leaf: String,
+    __v: Number,
 });
 
 const modeloBoletim1 = mongoose.model("bu",boletimSchema) //"bu" = collection of database

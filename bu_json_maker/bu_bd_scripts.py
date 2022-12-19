@@ -33,7 +33,8 @@ def get_body_list_with_zona_secao():
             "uf": uf,
             "zona": zona,
             "secao": secao,
-            "bu_inteiro": bu
+            "bu_inteiro": bu,
+            "__v": 0,
         }
 
         body_dict_list.append(body_dict)
