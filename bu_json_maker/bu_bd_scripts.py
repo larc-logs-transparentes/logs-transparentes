@@ -30,7 +30,7 @@ def get_body_list_with_zona_secao():
             "_id": id1,
             "id": id2,
             "turno": "2",
-            "uf": uf,
+            "UF": uf,
             "zona": zona,
             "secao": secao,
             "bu_inteiro": bu,

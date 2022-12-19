@@ -29,7 +29,7 @@ const boletimSchema = new mongoose.Schema({
     _id: { type: Number, required: true }  ,
     id: { type: Number, required: true }  ,
     turno: String,
-    uf: String,
+    UF: String,
     zona: Number,
     secao: Number,
     bu_inteiro: String,

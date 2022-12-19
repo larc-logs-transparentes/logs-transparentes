@@ -39,7 +39,7 @@ exports.create = (data) => {
       _id: data._id,
       id: data.id,
       turno: data.turno,
-      uf: data.uf,
+      UF: data.UF,
       zona: data.zona,
       secao: data.secao,
       bu_inteiro: JSON.stringify(data.bu_inteiro)
