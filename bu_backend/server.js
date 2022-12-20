@@ -183,7 +183,16 @@ app.get("/infoBUs/tree/leaf/:id", async (req, res) => {
   })
 })
 
-
+app.get("/infoBUs/tree/resultProof", async (req, res) => {
+  const i_inicial = parseInt(req.query.i_inicial)
+  const i_final = parseInt(req.query.i_final)
+  merkletree_adapter.infoBUs_getResultProof(i_inicial, i_final).then((response) => {
+    res.json(response);
+  }).catch((err) => {
+    console.log(err);
+    res.json(err)
+  })
+})
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

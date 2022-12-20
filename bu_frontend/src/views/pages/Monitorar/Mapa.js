@@ -17,8 +17,8 @@ import {
   Input, 
   FormText
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import {findByIdRange} from '../../../api/bu.api.js';
+import { verifyProof } from '../../../api/merkletree_InfoBUs.api'
+
 class Mapa extends Component {
   axios = require('axios')
   bu_api_url = require('../../../config.json').bu_api_url
@@ -37,18 +37,28 @@ class Mapa extends Component {
 
 componentDidMount() {
   this.axios.get(`${this.bu_api_url}/bu?id_inicial=${this.state.id_inicial}&id_final=${this.state.id_final}`)
-    .then(response => this.setState({ lista: response.data })&&console.log(response.data))
+    .then(response => {
+      this.setState({ lista: response.data })&&console.log(response.data)
+    })
     console.log(this.state)
 }
+
 componentDidUpdate(prevProps, prevState) {
     console.log('---------this.state---------')
     console.log(this.state)
     if(prevState.id_final !== this.state.id_final) {
       this.axios.get(`${this.bu_api_url}/bu?id_inicial=${this.state.id_inicial}&id_final=${this.state.id_final}`)
           .then(response => {this.setState({ lista: response.data });})
-    }
-    else
-    return
+
+      this.axios.get(`${this.bu_api_url}/infoBUs/tree/resultProof?i_inicial=${this.state.id_inicial}&i_final=${this.state.id_final}`)
+      .then(response => {
+          console.log(verifyProof())
+          console.log(response.data)
+      })
+      .catch(error => {
+          console.log(error)
+      })
+  }
 }
 
 
