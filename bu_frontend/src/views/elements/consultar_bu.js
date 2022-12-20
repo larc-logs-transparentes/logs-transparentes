@@ -64,8 +64,8 @@ class Consultar_BU extends Component {
     var len = lista.length
     var i=0
     while (i<len) {
-      if ( form.turno === lista[i].turno && form.uf === lista[i].UF
-        && form.zona === lista[i].zona && form.secao === lista[i].secao) {
+      if ( form.turno == lista[i].turno && form.uf == lista[i].UF
+        && form.zona == lista[i].zona && form.secao == lista[i].secao) {
           break
       }
       i++
