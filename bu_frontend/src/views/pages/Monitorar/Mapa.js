@@ -54,8 +54,7 @@ componentDidUpdate(prevProps, prevState) {
       .then(async response => {
           console.log(response.data)
           const root = await getRoot()
-          console.log(root)
-          console.log(verifyMultipleProofs(root, response.data))
+          console.log(`resultado da prova de inclusão: ${verifyMultipleProofs(root, response.data)}`)
       })
       .catch(error => {
           console.log(error)

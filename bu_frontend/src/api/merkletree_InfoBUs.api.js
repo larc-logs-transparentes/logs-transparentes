@@ -11,7 +11,7 @@ export function verifyProof(leaf, root, proof){
     if (!Array.isArray(proof) || !leaf || !root)
         return false;
     if(!Buffer.isBuffer(root.leaf)) 
-        root.leaf = bufferifyFn(root.leaf);
+        root.leaf = Buffer.from(root.leaf);
     for (let i = 0; i < proof.length; i++) {
         const node = proof[i];
         let data = node.data;
@@ -47,6 +47,9 @@ export function verifyMultipleProofs(root, proofs){
 }
 
 function parentOf(leftNode, rightNode) {
+    leftNode.leaf = Buffer.from(leftNode.leaf);
+    rightNode.leaf = Buffer.from(rightNode.leaf);
+
     let parentVote = _.cloneDeep(leftNode.vote).concat(_.cloneDeep(rightNode.vote));
     parentVote = parentVote.filter((item, i) => {
         const index = parentVote.findIndex((x) => x[0] === item[0]);

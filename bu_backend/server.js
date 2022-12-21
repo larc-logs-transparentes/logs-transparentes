@@ -196,7 +196,7 @@ app.get("/infoBUs/tree/resultProof", async (req, res) => {
 
 app.get("/infoBUs/tree/root", async (req, res) => {
   merkletree_adapter.infoBUs_getRoot().then((response) => {
-    res.json(response);
+    res.send(response);
   }).catch((err) => {
     console.log(err);
     res.json(err)

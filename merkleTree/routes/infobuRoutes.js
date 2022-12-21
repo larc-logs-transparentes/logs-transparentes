@@ -30,11 +30,8 @@ router.get('/', (req, res) => {
 })
 
 router.get('/root', (req, res) => {
-    const {leaf, vote} = infoBUsTree.getRoot()
-    res.send({
-        leaf: leaf,
-        vote: vote
-    })
+    const root = infoBUsTree.getRoot()
+    res.send(root)
 })
 
 router.get('/leaves', (req, res) => {
