@@ -118,3 +118,13 @@ exports.infoBUs_getResultProof = (i_inicial, i_final) => {
     console.log(err)
   })
 }
+
+exports.infoBUs_getRoot = () => {
+  return axios.get(`${merkletreeHostname}:${merkletreePort}/infobus/root`)
+  .then(res => {
+    return res.data
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}

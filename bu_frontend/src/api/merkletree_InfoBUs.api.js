@@ -3,11 +3,15 @@ const SHA256 = require('crypto-js/sha256')
 const crypto_js_1 = require("crypto-js");
 var hashFn = bufferifyFn(SHA256)
 const _ = require('lodash');
+const axios = require('axios')
+const bu_api_url = require('../config.json').bu_api_url
 
 export function verifyProof(leaf, root, proof){    
     let hash = leaf;
     if (!Array.isArray(proof) || !leaf || !root)
         return false;
+    if(!Buffer.isBuffer(root.leaf)) 
+        root.leaf = bufferifyFn(root.leaf);
     for (let i = 0; i < proof.length; i++) {
         const node = proof[i];
         let data = node.data;
@@ -20,6 +24,19 @@ export function verifyProof(leaf, root, proof){
     return Buffer.compare(hash.leaf, root.leaf) === 0;
 }
 
+export function getRoot(){
+    return new Promise(function (resolve, reject){
+        axios.get(`${bu_api_url}/infoBUs/tree/root`)
+        .then((res) => {
+            resolve(res.data);
+        },
+        (err) => {
+            console.log(err)
+            reject(err);
+        })       
+    })
+}
+
 export function verifyMultipleProofs(root, proofs){
     for (let i = 0; i < proofs.length; i++) {
         const proof = proofs[i];
@@ -28,6 +45,7 @@ export function verifyMultipleProofs(root, proofs){
     }
     return true;
 }
+
 function parentOf(leftNode, rightNode) {
     let parentVote = _.cloneDeep(leftNode.vote).concat(_.cloneDeep(rightNode.vote));
     parentVote = parentVote.filter((item, i) => {

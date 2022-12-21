@@ -17,7 +17,7 @@ import {
   Input, 
   FormText
 } from 'reactstrap';
-import { verifyProof } from '../../../api/merkletree_InfoBUs.api'
+import { getRoot, verifyMultipleProofs } from '../../../api/merkletree_InfoBUs.api'
 
 class Mapa extends Component {
   axios = require('axios')
@@ -51,9 +51,11 @@ componentDidUpdate(prevProps, prevState) {
           .then(response => {this.setState({ lista: response.data });})
 
       this.axios.get(`${this.bu_api_url}/infoBUs/tree/resultProof?i_inicial=${this.state.id_inicial}&i_final=${this.state.id_final}`)
-      .then(response => {
-          console.log(verifyProof())
+      .then(async response => {
           console.log(response.data)
+          const root = await getRoot()
+          console.log(root)
+          console.log(verifyMultipleProofs(root, response.data))
       })
       .catch(error => {
           console.log(error)
