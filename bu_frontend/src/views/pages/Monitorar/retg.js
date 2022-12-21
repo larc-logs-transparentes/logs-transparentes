@@ -81,17 +81,38 @@ async function verificarInclusao(BUs){
 function retotalizar(BUs){
     const ret = []
     for (let i = 0; i < BUs.length; i++) { //percorre BUs
-        const candidatos = BUs[i].votos;
-        for (let j = 0; j < candidatos.length; j++) { //percorre registros dos candidatos em um BU
-            const element = candidatos[j];
-            let aux = ret.findIndex(candidato => candidato.nome == element.nome)
+        // const candidatos = BUs[i].votos;
+        // for (let j = 0; j < candidatos.length; j++) { //percorre registros dos candidatos em um BU
+        //     const element = candidatos[j];
+        //     let aux = ret.findIndex(candidato => candidato.nome == element.nome)
             
-            if(aux != -1) //se encontrado candidato no array
-                ret[aux].votos += element.votos //soma os votos
-            else
-                ret.push(element) //insere no array
-        }   
+        //     if(aux != -1) //se encontrado candidato no array
+        //         ret[aux].votos += element.votos //soma os votos
+        //     else
+        //         ret.push(element) //insere no array
+        // }   
+        const bu_inteiro = BUs[i].bu_inteiro;
+        const bu_json = JSON.parse(bu_inteiro)
+        console.log('buinteiro', bu_json)
+        const votosVotaveis = bu_json.resultadosVotacaoPorEleicao[0].resultadosVotacao[0].totaisVotosCargo[0].votosVotaveis
+        for (let j = 0; j < votosVotaveis.length; j++) {
+            if (votosVotaveis[j].hasOwnProperty("identificacaoVotavel")) {
+                let candidatoIndexInArray = ret.findIndex(voto => voto.codigo == votosVotaveis[j].identificacaoVotavel.codigo)
+
+                if (candidatoIndexInArray != -1) ret[candidatoIndexInArray].votos += votosVotaveis[j].quantidadeVotos
+                else {
+                    let votoVotavel = {
+                        partido: votosVotaveis[j].identificacaoVotavel.partido,
+                        codigo: votosVotaveis[j].identificacaoVotavel.codigo,
+                        votos: votosVotaveis[j].quantidadeVotos,
+                    }
+
+                    ret.push(votoVotavel)
+                }
+            }
+        }
     }
+    console.log("votosvotaveis", ret)
 
     ret.sort((a, b) => b.votos - a.votos) //ordena por qtd de votos
     return ret
