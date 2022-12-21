@@ -108,3 +108,13 @@ exports.infoBUs_getLeafProof = (infoBU) => {
     console.log(err)
   })
 }
+
+exports.infoBUs_getResultProof = (i_inicial, i_final) => {
+  return axios.get(`${merkletreeHostname}:${merkletreePort}/infobus/resultProof?i_inicial=${i_inicial}&i_final=${i_final}`)
+  .then(res => {
+    return res.data
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
