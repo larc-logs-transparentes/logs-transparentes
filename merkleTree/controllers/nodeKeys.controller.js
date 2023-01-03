@@ -1,4 +1,4 @@
-const { MerkleTreePrefix } = require('../merkletreejs/dist/MerkleTreePrefix')
+const { MerkleTreePrefix } = require('../lib/MerkleTreePrefix')
 const SHA256 = require("crypto-js/sha256");
 
 function nodeKeys(leaves, i_inicial, i_final) {

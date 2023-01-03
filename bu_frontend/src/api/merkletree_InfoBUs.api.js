@@ -38,6 +38,9 @@ export function getRoot(){
 }
 
 export function verifyMultipleProofs(root, proofs){
+    if(proofs.length === 0) 
+        return false
+        
     for (let i = 0; i < proofs.length; i++) {
         const proof = proofs[i];
         if (!verifyProof(proof.leaf, root, proof.proof))

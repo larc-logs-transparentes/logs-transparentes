@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { MerkleTreePrefix } = require('../merkletreejs/dist/MerkleTreePrefix')
+const { MerkleTreePrefix } = require('../lib/MerkleTreePrefix')
 const { SHA256 } = require('crypto-js')
 const { nodeKeys } = require('../controllers/nodeKeys.controller')
 
