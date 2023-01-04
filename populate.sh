@@ -168,3 +168,4 @@ do
 done
 
 curl localhost:3001/tree
+curl localhost:8080/infoBUs/create
