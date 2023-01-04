@@ -371,6 +371,7 @@ export declare class MerkleTreePrefix extends Base {
      *```
      */
     verify(proof: any[], targetNode: TLeafPref, root: TLeafPref): boolean;
+    modifyNode(data: TLeafPref, index: number, depth?: number): void;
     /**
      * verifyMultiProof
      * @desc Returns true if the multiproofs can connect the leaves to the Merkle root.

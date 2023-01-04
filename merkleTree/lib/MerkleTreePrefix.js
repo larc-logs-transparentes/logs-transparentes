@@ -878,6 +878,11 @@ class MerkleTreePrefix extends Base_1.default {
         console.log(this.bufferToHex(root.leaf));
         return buffer_1.Buffer.compare(hash.leaf, root.leaf) === 0;
     }
+    modifyNode(data, index, depth) {
+        if (typeof depth === 'undefined')
+            depth = 0;
+        this.layers[depth][index].vote = data;
+    }
     /**
      * verifyMultiProof
      * @desc Returns true if the multiproofs can connect the leaves to the Merkle root.

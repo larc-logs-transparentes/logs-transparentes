@@ -127,4 +127,19 @@ router.get('/resultProof', (req, res) => {
     res.json(proofs)
 })
 
+router.get('/modify', (req, res) => {
+    const index = parseInt(req.query.index)
+    let depth = req.query.depth
+    if(!depth)
+        depth = 0
+    else
+        depth = parseInt(depth)
+
+    const vote = [['Candidado A', 1000], ['Candidado B', 1000]]
+    
+    infoBUsTree.modifyNode(vote, index, depth)
+
+    res.send(infoBUsTree.getNode(index, depth))
+})
+
 module.exports = router
