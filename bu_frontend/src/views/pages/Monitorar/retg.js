@@ -93,7 +93,6 @@ function retotalizar(BUs){
         // }   
         const bu_inteiro = BUs[i].bu_inteiro;
         const bu_json = JSON.parse(bu_inteiro)
-        console.log('buinteiro', bu_json)
         const votosVotaveis = bu_json.resultadosVotacaoPorEleicao[0].resultadosVotacao[0].totaisVotosCargo[0].votosVotaveis
         for (let j = 0; j < votosVotaveis.length; j++) {
             if (votosVotaveis[j].hasOwnProperty("identificacaoVotavel")) {
