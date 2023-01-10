@@ -18,6 +18,8 @@ import {
   FormText
 } from 'reactstrap';
 import { getRoot, verifyMultipleProofs } from '../../../api/merkletree_InfoBUs.api'
+import cadVerde from '../../../assets/images/cad-verde.png';
+import cadVermelho from '../../../assets/images/cad-vermelho.png';
 
 class Mapa extends Component {
   axios = require('axios')
@@ -28,7 +30,10 @@ class Mapa extends Component {
     this.state = {
                   lista: [],
                   id_inicial:'' ,
-                  id_final:''
+                  id_final:'',
+                  prova: false,
+                  mostrarProva: false,
+                  fullProof: [],
                 }
 
   }
@@ -54,6 +59,8 @@ componentDidUpdate(prevProps, prevState) {
       .then(async response => {
           console.log(response.data)
           const root = await getRoot()
+          this.setState({ fullProof : response.data })
+          this.setState({ prova : verifyMultipleProofs(root, response.data) })
           console.log(`resultado da prova de inclusão: ${verifyMultipleProofs(root, response.data)}`)
       })
       .catch(error => {
@@ -88,6 +95,11 @@ componentDidUpdate(prevProps, prevState) {
       this.defineFaixaMarilia();}
     return
   }
+
+  mostraProva() {
+    this.setState({mostrarProva: !this.state.mostrarProva})
+  }
+
   render() {
     const { lista } = this.state
     let cidadeArr = ['São Carlos','Campinas', 'Ribeirão Preto', 'Marília']
@@ -114,7 +126,7 @@ componentDidUpdate(prevProps, prevState) {
           </Card>
                   
           <Card>
-            <CardHeader>Resultado da eleição:</CardHeader>
+            <CardHeader>Resultado da eleição:<button className="btn float-right" onClick={() => this.mostraProva()}><img src={(this.state.prova===true)? cadVerde : cadVermelho} alt="estado" /></button></CardHeader>
                   <h5 style={{marginLeft:'20px'}}>{lista.map(({nome, votos}) =>
                    (<p key={nome}>{nome}: {votos} votos</p>))}</h5>
             <CardBody>
@@ -128,7 +140,29 @@ componentDidUpdate(prevProps, prevState) {
             <CardHeader>Prova de Resultado</CardHeader>
             <CardBody>
               <FormGroup>
-                <h2>Em construção</h2>
+              {this.state.mostrarProva === true && this.state.prova && (<Col md={14}>
+              <Card>
+                <CardHeader >Este BU foi devidamente verificado nos sistemas da Justiça Federal</CardHeader>
+                <CardBody>
+                    <CardBody>
+                    <Label>Prova</Label>
+                    <CardText>{JSON.stringify(this.state.fullProof)}</CardText>
+                    </CardBody>
+                </CardBody>
+              </Card>
+            </Col>)}
+              {this.state.mostrarProva === true && !this.state.prova && (
+              <Col md={14}>
+              <Card>
+                <CardHeader>ATENÇÃO: Este BU não pode ser verificado ou foi ALTERADO</CardHeader>
+                <CardBody>
+                    <CardBody>
+                    <Label>Prova</Label>
+                    <CardText>{JSON.stringify(this.state.fullProof)}</CardText>
+                    </CardBody>
+                </CardBody>
+              </Card>
+            </Col>)}
                 
             </FormGroup>
             </CardBody>

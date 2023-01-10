@@ -79,14 +79,12 @@ router.get('/nodeKeys', (req, res) => {
 
 router.post('/proof', (req, res) => {
     // returns proof
-    const root = infoBUsTree.getRoot()
     const leaf = {
         leaf: req.body.leaf.merkletree_leaf, 
         vote: req.body.leaf.votos_validos.map(candidato => ([candidato.nome, candidato.votos]))
     }
     const proof = infoBUsTree.getProof(leaf)
-
-    if (infoBUsTree.verify(proof, leaf, root)){
+    if (proof){
       res.json({
         leaf: leaf,
         proof: proof,
