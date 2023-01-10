@@ -31,9 +31,9 @@ class Mapa extends Component {
                   lista: [],
                   id_inicial:'' ,
                   id_final:'',
-                  prova: false,
+                  resultadoProva: false,
                   mostrarProva: false,
-                  fullProof: [],
+                  provaDados: [],
                 }
 
   }
@@ -59,8 +59,8 @@ componentDidUpdate(prevProps, prevState) {
       .then(async response => {
           console.log(response.data)
           const root = await getRoot()
-          this.setState({ fullProof : response.data })
-          this.setState({ prova : verifyMultipleProofs(root, response.data) })
+          this.setState({ provaDados : response.data })
+          this.setState({ resultadoProva : verifyMultipleProofs(root, response.data) })
           console.log(`resultado da prova de inclusão: ${verifyMultipleProofs(root, response.data)}`)
       })
       .catch(error => {
@@ -126,7 +126,7 @@ componentDidUpdate(prevProps, prevState) {
           </Card>
                   
           <Card>
-            <CardHeader>Resultado da eleição:<button className="btn float-right" onClick={() => this.mostraProva()}><img src={(this.state.prova===true)? cadVerde : cadVermelho} alt="estado" /></button></CardHeader>
+            <CardHeader>Resultado da eleição:<button className="btn float-right" onClick={() => this.mostraProva()}><img src={(this.state.resultadoProva===true)? cadVerde : cadVermelho} alt="estado" /></button></CardHeader>
                   <h5 style={{marginLeft:'20px'}}>{lista.map(({nome, votos}) =>
                    (<p key={nome}>{nome}: {votos} votos</p>))}</h5>
             <CardBody>
@@ -140,25 +140,25 @@ componentDidUpdate(prevProps, prevState) {
             <CardHeader>Prova de Resultado</CardHeader>
             <CardBody>
               <FormGroup>
-              {this.state.mostrarProva === true && this.state.prova && (<Col md={14}>
+              {this.state.mostrarProva === true && this.state.resultadoProva && (<Col md={14}>
               <Card>
                 <CardHeader >Este BU foi devidamente verificado nos sistemas da Justiça Federal</CardHeader>
                 <CardBody>
                     <CardBody>
                     <Label>Prova</Label>
-                    <CardText>{JSON.stringify(this.state.fullProof)}</CardText>
+                    <CardText>{JSON.stringify(this.state.provaDados)}</CardText>
                     </CardBody>
                 </CardBody>
               </Card>
             </Col>)}
-              {this.state.mostrarProva === true && !this.state.prova && (
+              {this.state.mostrarProva === true && !this.state.resultadoProva && (
               <Col md={14}>
               <Card>
                 <CardHeader>ATENÇÃO: Este BU não pode ser verificado ou foi ALTERADO</CardHeader>
                 <CardBody>
                     <CardBody>
                     <Label>Prova</Label>
-                    <CardText>{JSON.stringify(this.state.fullProof)}</CardText>
+                    <CardText>{JSON.stringify(this.state.provaDados)}</CardText>
                     </CardBody>
                 </CardBody>
               </Card>
