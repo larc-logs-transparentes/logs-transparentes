@@ -110,23 +110,27 @@ componentDidUpdate(prevProps, prevState) {
         <Col md={6}>
           <Card>
             <CardHeader>Selecionar Cidade</CardHeader>
-            <CardBody>
+            <CardBody>  
               <FormGroup>
-                <Label for="turnoSelect">Cidade</Label>
-                <Input type="select" name="turno" id="turnoSelect" onChange={this.handleChange.bind(this)}>
-                  <option value=""></option>
-                
-                  {cidadeArr.map((entry) => (
-                      <option value={entry}>{entry}</option>
-                      
-                  ))}
-                </Input>
-            </FormGroup>
+                <div style={{display:'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+                  <Label for="turnoSelect">Cidade:</Label>
+                  <Input type="select" name="turno" id="turnoSelect" onChange={this.handleChange.bind(this)}>
+                    <option value=""></option>
+                    {cidadeArr.map((entry) => (
+                        <option value={entry}>{entry}</option>
+                        
+                    ))}
+                  </Input>
+                  {this.state.id_inicial && <button className="btn float-right" style={{position: 'relative', bottom: '2px'}} onClick={() => this.mostraProva()}><img src={(this.state.resultadoProva===true)? cadVerde : cadVermelho} alt="estado" /></button>}
+                  {!this.state.id_inicial && <span  style={{width: '65.8px'}} />}
+                </div>
+                {!this.state.id_inicial && !this.state.id_final && <FormText color="muted">Selecione a cidade para visualizar os BU's</FormText>}
+                {this.state.id_inicial && this.state.id_final && <FormText color="muted">Faixa de BU's da cidade: {this.state.id_inicial} a {this.state.id_final}</FormText>}
+              </FormGroup>
             </CardBody>
           </Card>
-                  
           <Card>
-            <CardHeader>Resultado da eleição:<button className="btn float-right" onClick={() => this.mostraProva()}><img src={(this.state.resultadoProva===true)? cadVerde : cadVermelho} alt="estado" /></button></CardHeader>
+            <CardHeader>Resultado da eleição:</CardHeader>
                   <h5 style={{marginLeft:'20px'}}>{lista.map(({nome, votos}) =>
                    (<p key={nome}>{nome}: {votos} votos</p>))}</h5>
             <CardBody>
@@ -137,15 +141,16 @@ componentDidUpdate(prevProps, prevState) {
         
         <Col md={6}>
           <Card>
-            <CardHeader>Prova de Resultado</CardHeader>
+            <CardHeader>Verificação resumida</CardHeader>
             <CardBody>
               <FormGroup>
               {this.state.mostrarProva === true && this.state.resultadoProva && (<Col md={14}>
               <Card>
-                <CardHeader >Este BU foi devidamente verificado nos sistemas da Justiça Federal</CardHeader>
+                <CardHeader >O resultado dessa cidade foi verificada nos sistemas da Justiça eleitoral</CardHeader>
                 <CardBody>
                     <CardBody>
                     <Label>Prova</Label>
+                    <CardText>Foram verificados {this.state.provaDados.length} nós da árvore de infoBUs</CardText>                    
                     <CardText>{JSON.stringify(this.state.provaDados)}</CardText>
                     </CardBody>
                 </CardBody>
@@ -154,7 +159,7 @@ componentDidUpdate(prevProps, prevState) {
               {this.state.mostrarProva === true && !this.state.resultadoProva && (
               <Col md={14}>
               <Card>
-                <CardHeader>ATENÇÃO: Este BU não pode ser verificado ou foi ALTERADO</CardHeader>
+                <CardHeader>ATENÇÃO: O resultado dessa cidade não pode ser verificado ou foi ALTERADO</CardHeader>
                 <CardBody>
                     <CardBody>
                     <Label>Prova</Label>
