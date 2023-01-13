@@ -97,9 +97,9 @@ exports.infoBUs_sendLeaves = (leaves) => {
   })
 }
 
-exports.infoBUs_getLeafProof = (infoBU) => {
+exports.infoBUs_getProof = (infoBU) => {
   return axios.post(`${merkletreeHostname}:${merkletreePort}/infobus/proof`, {
-    leaf: infoBU
+    leaves: infoBU
   })
   .then(res => {
     return res.data

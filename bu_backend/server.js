@@ -173,9 +173,14 @@ app.get("/infoBUs", (req, res) => {
   })
 })
 
-app.get("/infoBUs/tree/leaf/:id", async (req, res) => {
-  const infoBU = await infobu_controller.findById(req.params.id)
-  merkletree_adapter.infoBUs_getLeafProof(infoBU).then((response) => {
+app.get("/infoBUs/tree/leaf", async (req, res) => {
+  const id = parseInt(req.query.id)
+  let id_final = parseInt(req.query.id_final)
+  if(!id_final) id_final = id
+  const infoBU = []
+  for(let i = id; i <= id_final; i++) 
+    infoBU.push(await infobu_controller.findById(i))
+  merkletree_adapter.infoBUs_getProof(infoBU).then((response) => {
     res.json(response);
   }).catch((err) => {
     console.log(err);

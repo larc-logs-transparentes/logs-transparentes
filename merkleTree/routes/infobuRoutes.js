@@ -79,20 +79,26 @@ router.get('/nodeKeys', (req, res) => {
 
 router.post('/proof', (req, res) => {
     // returns proof
-    const leaf = {
-        leaf: req.body.leaf.merkletree_leaf, 
-        vote: req.body.leaf.votos_validos.map(candidato => ([candidato.nome, candidato.votos]))
+    const data = []
+    for (let index = 0; index < req.body.leaves.length; index++) {
+        const leaf = {
+            leaf: req.body.leaves[index].merkletree_leaf,
+            vote: req.body.leaves[index].votos_validos.map(candidato => ([candidato.nome, candidato.votos]))
+        }
+        const proof = infoBUsTree.getProof(leaf)
+        if(proof)
+            data.push({
+                leaf: leaf,
+                proof: infoBUsTree.getProof(leaf)
+            })
+        else
+            data.push({
+                leaf: leaf,
+                proof: 'Proof not found'
+            })
     }
-    const proof = infoBUsTree.getProof(leaf)
-    if (proof){
-      res.json({
-        leaf: leaf,
-        proof: proof,
-      })
-    }
-    else{
-      res.send('Proof not found')
-    }
+
+    res.json(data)
 })
 
 router.get('/resultProof', (req, res) => {
