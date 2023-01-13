@@ -21,11 +21,12 @@ mongoose.connect(url)
   .then(() => {
     mongoose.connection.db.dropCollection("bus", ()=>{
       console.log("bus collection droped")
-      // mongoose.connection.close()
     })
     mongoose.connection.db.dropCollection("infobus", ()=>{
       console.log("infobus collection droped")
-      // mongoose.connection.close()
+    })
+    mongoose.connection.db.dropCollection("roots", ()=>{
+      console.log("roots collection droped")
     })
   })
 
@@ -43,6 +44,15 @@ app.get("/", (req, res) => {
 app.get("/bu/get_all", (req, res) => {
   console.log("/bu/")
   bu_controller.findAll().then((response) => {
+    res.json(response);
+  }).catch((err) => {
+    console.log(err);
+    res.json(err)
+  })
+});
+app.get("/root/get_all", (req, res) => {
+  console.log("/root/")
+  bu_controller.findAllroot().then((response) => {
     res.json(response);
   }).catch((err) => {
     console.log(err);
