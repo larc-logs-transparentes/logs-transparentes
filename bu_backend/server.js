@@ -7,7 +7,7 @@ const merkletree_adapter = require("./src/adapters/merkletree.adapter");
 const mongoose = require("mongoose");
 
 var corsOptions = {
-  origin: "http://localhost:3000"
+  origin: ["http://localhost:3000","http://172.20.11.11:3000"]
 };
 app.use(cors(corsOptions));
 // parse requests of content-type - application/json
