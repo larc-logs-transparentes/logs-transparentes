@@ -4,10 +4,11 @@ const app = express();
 const bu_controller = require("./src/controllers/bu.controller")
 const infobu_controller = require("./src/controllers/infobu.controller")
 const merkletree_adapter = require("./src/adapters/merkletree.adapter");
+const cors_origin_url = require('./src/config/config').cors_origin_url
 const mongoose = require("mongoose");
 
 var corsOptions = {
-  origin: ["http://localhost:3000","http://172.20.11.11:3000"]
+  origin: cors_origin_url
 };
 app.use(cors(corsOptions));
 // parse requests of content-type - application/json
