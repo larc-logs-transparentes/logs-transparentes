@@ -17,7 +17,7 @@ import {
   Input, 
   FormText
 } from 'reactstrap';
-import { getRoot, verifyMultipleProofs, verifyProof } from '../../../api/merkletree_InfoBUs.api'
+import { getRoot, verifyMultipleProofs, verifyProof, votosTotal, getHash } from '../../../api/merkletree_InfoBUs.api'
 import cadVerde from '../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../assets/images/cad-vermelho.png';
 
@@ -102,16 +102,23 @@ componentDidUpdate(prevProps, prevState) {
   }
 
   provaCompleta(id_inicial, id_final) {
-    this.axios.get(`${this.bu_api_url}/infoBUs/tree/leaf?id=${id_inicial}&id_final=${id_final}`)
+    this.axios.get(`${this.bu_api_url}/infoBUs?id=${id_inicial}&id_final=${id_final}`)
     .then(async response => {
-        this.setState({ show: !this.state.show })      
-        console.log(response.data)
-        const root = await getRoot()
-        response.data = response.data.map((infoBU) => {
-          return {...infoBU, resultadoProvaParcial: verifyProof(infoBU.leaf, root, infoBU.proof)}
-        })
-        console.log(response.data)
+        const infoBUs = response.data
+        this.axios.get(`${this.bu_api_url}/infoBUs/tree/leaf?id=${id_inicial}&id_final=${id_final}`)
+        .then(async response => {
+            let leaves = response.data
+            this.setState({ show: !this.state.show }) 
+            console.log('InfoBUS: ', infoBUs)
+            console.log('Recontabilização: ', votosTotal(infoBUs))
 
+            console.log('Folhas da árvore', leaves)
+            const root = await getRoot()
+            leaves = leaves.map((leaf, index) => {
+              return {...leaf, resultadoProvaDeInclusao: verifyProof(leaf.leaf, root, leaf.proof)}
+            })
+            console.log('Resultado da prova de inclusão: ', leaves)
+        })
     })
     .catch(error => {
         console.log(error)
@@ -151,11 +158,13 @@ componentDidUpdate(prevProps, prevState) {
             <CardHeader>Resultado da eleição:</CardHeader>
                   <h5 style={{marginLeft:'20px'}}>{lista.map(({nome, votos}) =>
                    (<p key={nome}>{nome}: {votos} votos</p>))}</h5>
-            <CardBody>
-            {this.state.resultadoProvaParcial && <button disabled={this.state.show} onClick={() => this.provaCompleta(this.state.id_inicial, this.state.id_final)} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem', float:'center'}}>
-                Verificar completa
-            </button>}
-            </CardBody>
+            {this.state.resultadoProvaParcial && 
+            <div style={{display: 'flex', justifyContent:'center'}}>
+              <button disabled={this.state.show} onClick={() => this.provaCompleta(this.state.id_inicial, this.state.id_final)} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem', width: '45%'}}>
+                Verificação completa
+              </button>
+
+            </div>}
           </Card>
         </Col>
         

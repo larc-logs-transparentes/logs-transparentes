@@ -49,6 +49,23 @@ export function verifyMultipleProofs(root, proofs){
     return true;
 }
 
+export function votosTotal(infoBUs){
+    const ret = []
+    for (let i = 0; i < infoBUs.length; i++) {
+        const candidatos = infoBUs[i].votos_validos;
+        for (let j = 0; j < candidatos.length; j++) {
+            const element = candidatos[j];
+            let aux = ret.findIndex(candidato => candidato.nome == element.nome)
+            
+            if(aux != -1) //se encontrado candidato no array
+                ret[aux].votos += element.votos //soma os votos
+            else
+                ret.push(element) //insere no array
+        }       
+    }
+    return ret
+}
+
 function parentOf(leftNode, rightNode) {
     leftNode.leaf = Buffer.from(leftNode.leaf);
     rightNode.leaf = Buffer.from(rightNode.leaf);

@@ -13,6 +13,11 @@ exports.findById = async (id) => {
     return data
 }
 
+exports.findByIdRange = async (id, id_final) => {
+    const data = await modeloBoletim.modeloInfoBU.find({ id: { $gte: id, $lte: id_final } })
+    return data
+}
+
 exports.inicializar = async () => {
     const folhas = []
 

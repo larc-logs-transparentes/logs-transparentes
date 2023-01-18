@@ -163,9 +163,11 @@ app.get("/infoBUs/create", (req, res) => {
   })
 })
 
-app.get("/infoBUs/:id", (req, res) => {
-  console.log(req.params.id)
-  infobu_controller.findById(req.params.id).then((response) => {
+app.get("/infoBUs", (req, res) => {
+  const id = parseInt(req.query.id)
+  let id_final = parseInt(req.query.id_final)
+  if(!id_final) id_final = id
+  infobu_controller.findByIdRange(id, id_final).then((response) => {
     res.json(response);
   }).catch((err) => {
     console.log(err);
