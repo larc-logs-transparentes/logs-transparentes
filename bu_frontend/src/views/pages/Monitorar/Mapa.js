@@ -17,7 +17,7 @@ import {
   Input, 
   FormText
 } from 'reactstrap';
-import { getRoot, verifyMultipleProofs } from '../../../api/merkletree_InfoBUs.api'
+import { getRoot, verifyMultipleProofs, verifyProof } from '../../../api/merkletree_InfoBUs.api'
 import cadVerde from '../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../assets/images/cad-vermelho.png';
 
@@ -31,9 +31,10 @@ class Mapa extends Component {
                   lista: [],
                   id_inicial:'' ,
                   id_final:'',
-                  resultadoProva: false,
-                  mostrarProva: false,
-                  provaDados: [],
+                  resultadoProvaParcial: false,
+                  mostrarProvaParcial: false,
+                  dadosProvaParcial: [],
+                  show: false,
                 }
 
   }
@@ -59,8 +60,8 @@ componentDidUpdate(prevProps, prevState) {
       .then(async response => {
           console.log(response.data)
           const root = await getRoot()
-          this.setState({ provaDados : response.data })
-          this.setState({ resultadoProva : verifyMultipleProofs(root, response.data) })
+          this.setState({ dadosProvaParcial : response.data })
+          this.setState({ resultadoProvaParcial : verifyMultipleProofs(root, response.data) })
           console.log(`resultado da prova de inclusão: ${verifyMultipleProofs(root, response.data)}`)
       })
       .catch(error => {
@@ -97,7 +98,24 @@ componentDidUpdate(prevProps, prevState) {
   }
 
   mostraProva() {
-    this.setState({mostrarProva: !this.state.mostrarProva})
+    this.setState({mostrarProvaParcial: !this.state.mostrarProvaParcial})
+  }
+
+  provaCompleta(id_inicial, id_final) {
+    this.axios.get(`${this.bu_api_url}/infoBUs/tree/leaf?id=${id_inicial}&id_final=${id_final}`)
+    .then(async response => {
+        this.setState({ show: !this.state.show })      
+        console.log(response.data)
+        const root = await getRoot()
+        response.data = response.data.map((infoBU) => {
+          return {...infoBU, resultadoProvaParcial: verifyProof(infoBU.leaf, root, infoBU.proof)}
+        })
+        console.log(response.data)
+
+    })
+    .catch(error => {
+        console.log(error)
+    })
   }
 
   render() {
@@ -121,7 +139,7 @@ componentDidUpdate(prevProps, prevState) {
                         
                     ))}
                   </Input>
-                  {this.state.id_inicial && <button className="btn float-right" style={{position: 'relative', bottom: '2px'}} onClick={() => this.mostraProva()}><img src={(this.state.resultadoProva===true)? cadVerde : cadVermelho} alt="estado" /></button>}
+                  {this.state.id_inicial && <button className="btn float-right" style={{position: 'relative', bottom: '2px'}} onClick={() => this.mostraProva()}><img src={(this.state.resultadoProvaParcial===true)? cadVerde : cadVermelho} alt="estado" /></button>}
                   {!this.state.id_inicial && <span  style={{width: '65.8px'}} />}
                 </div>
                 {!this.state.id_inicial && !this.state.id_final && <FormText color="muted">Selecione a cidade para visualizar os BU's</FormText>}
@@ -134,7 +152,9 @@ componentDidUpdate(prevProps, prevState) {
                   <h5 style={{marginLeft:'20px'}}>{lista.map(({nome, votos}) =>
                    (<p key={nome}>{nome}: {votos} votos</p>))}</h5>
             <CardBody>
-
+            {this.state.resultadoProvaParcial && <button disabled={this.state.show} onClick={() => this.provaCompleta(this.state.id_inicial, this.state.id_final)} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem', float:'center'}}>
+                Verificar completa
+            </button>}
             </CardBody>
           </Card>
         </Col>
@@ -144,26 +164,26 @@ componentDidUpdate(prevProps, prevState) {
             <CardHeader>Verificação resumida</CardHeader>
             <CardBody>
               <FormGroup>
-              {this.state.mostrarProva === true && this.state.resultadoProva && (<Col md={14}>
+              {this.state.mostrarProvaParcial === true && this.state.resultadoProvaParcial && (<Col md={14}>
               <Card>
                 <CardHeader >O resultado dessa cidade foi verificada nos sistemas da Justiça eleitoral</CardHeader>
                 <CardBody>
                     <CardBody>
                     <Label>Prova</Label>
-                    <CardText>Foram verificados {this.state.provaDados.length} nós da árvore de infoBUs</CardText>                    
-                    <CardText>{JSON.stringify(this.state.provaDados)}</CardText>
+                    <CardText>Foram verificados {this.state.dadosProvaParcial.length} nós da árvore de infoBUs</CardText>                    
+                    <CardText>{JSON.stringify(this.state.dadosProvaParcial )}</CardText>
                     </CardBody>
                 </CardBody>
               </Card>
             </Col>)}
-              {this.state.mostrarProva === true && !this.state.resultadoProva && (
+              {this.state.mostrarProvaParcial === true && !this.state.resultadoProvaParcial && (
               <Col md={14}>
               <Card>
                 <CardHeader>ATENÇÃO: O resultado dessa cidade não pode ser verificado ou foi ALTERADO</CardHeader>
                 <CardBody>
                     <CardBody>
                     <Label>Prova</Label>
-                    <CardText>{JSON.stringify(this.state.provaDados)}</CardText>
+                    <CardText>{JSON.stringify(this.state.dadosProvaParcial )}</CardText>
                     </CardBody>
                 </CardBody>
               </Card>
