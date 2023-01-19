@@ -17,7 +17,7 @@ import {
   Input, 
   FormText
 } from 'reactstrap';
-import { getRoot, verifyMultipleProofs, verifyProof, votosTotal, getHash } from '../../../api/merkletree_InfoBUs.api'
+import { getRoot, verifyMultipleProofs, verifyProof, votosTotal } from '../../../api/merkletree_InfoBUs.api'
 import cadVerde from '../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../assets/images/cad-vermelho.png';
 
@@ -125,6 +125,14 @@ componentDidUpdate(prevProps, prevState) {
     })
   }
 
+  redirecionaParaProvaCompleta(e) {
+    e.preventDefault()
+    const id_inicial = this.state.id_inicial
+    const id_final = this.state.id_final
+    var url = `/mapa/verificacaoCompleta/${id_inicial}/${id_final}`
+    window.location.href =  url
+  }
+
   render() {
     const { lista } = this.state
     let cidadeArr = ['São Carlos','Campinas', 'Ribeirão Preto', 'Marília']
@@ -160,7 +168,7 @@ componentDidUpdate(prevProps, prevState) {
                    (<p key={nome}>{nome}: {votos} votos</p>))}</h5>
             {this.state.resultadoProvaParcial && 
             <div style={{display: 'flex', justifyContent:'center'}}>
-              <button disabled={this.state.show} onClick={() => this.provaCompleta(this.state.id_inicial, this.state.id_final)} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem', width: '45%'}}>
+              <button onClick={this.redirecionaParaProvaCompleta.bind(this)} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem', width: '45%'}}>
                 Verificação completa
               </button>
 
