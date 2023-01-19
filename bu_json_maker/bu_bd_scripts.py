@@ -13,6 +13,19 @@ def get_list_of_dict_bu():
 
 
 # adds separated _id, id, zona, secao to each bu, and returns a list of bu dicts
+def get_candidates_votes_list(bu):
+    votosVotaveis = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
+    candidatos = []
+    for voto in votosVotaveis:
+        if "identificacaoVotavel" in voto:
+            candidato = {"partido": voto["identificacaoVotavel"]["partido"],
+                         "codigo": voto["identificacaoVotavel"]["codigo"],
+                         "votos": voto["quantidadeVotos"],
+                         "_id": voto["assinatura"]}
+            candidatos.append(candidato)
+    return candidatos
+
+
 def get_body_list_with_zona_secao():
     bus = get_list_of_dict_bu()
     id1 = 0
@@ -25,6 +38,7 @@ def get_body_list_with_zona_secao():
         secao = bu['identificacaoSecao']['secao']
         cod_municipio = bu['identificacaoSecao']['municipioZona']['municipio']
         uf = get_county_uf_with_number(cod_municipio)
+        candidates_votes_list = get_candidates_votes_list(bu)
 
         body_dict = {
             "_id": id1,
@@ -35,6 +49,7 @@ def get_body_list_with_zona_secao():
             "secao": secao,
             "bu_inteiro": bu,
             "__v": 0,
+            "votos": candidates_votes_list,
         }
 
         body_dict_list.append(body_dict)

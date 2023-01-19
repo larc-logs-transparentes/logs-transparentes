@@ -48,7 +48,8 @@ class MostrarBU extends Component {
                   votos: [],
                   root: [],
                   fullproof: [],
-                  mostrarProva: false}
+                  mostrarProva: false,
+                }
     
     this.mostraProva = this.mostraProva.bind(this);
 
@@ -81,7 +82,7 @@ class MostrarBU extends Component {
 //    console.log(prova.fullproof)
 //    console.log("root")
 //    console.log(prova.root)
-  
+
 
     console.log(JSON.stringify(this.state.prova))
     var mostrar = this.state.mostrarProva
@@ -90,7 +91,6 @@ class MostrarBU extends Component {
 
     var votosArr = (this.state.votos===undefined)? [] : Array.from(this.state.votos)
 
-    //console.log(votosArr)
 
    
   //    var votos = Array.from(bu.votos)
@@ -123,7 +123,7 @@ class MostrarBU extends Component {
               <Label>Votos</Label>
               <CardText><ul>
                 {votosArr.map(item => {
-                  return <li>{item.nome + "; " + item.votos  + "; " + item.partido}</li>
+                  return <li>{"Partido: " + item.partido + " ; Código: " + item.codigo + " ; Votos: " + item.votos}</li>
                 })}</ul>
               </CardText>
               </CardBody>

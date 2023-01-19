@@ -42,7 +42,8 @@ exports.create = (data) => {
       UF: data.UF,
       zona: data.zona,
       secao: data.secao,
-      bu_inteiro: JSON.stringify(data.bu_inteiro)
+      bu_inteiro: JSON.stringify(data.bu_inteiro),
+      votos: data.votos,
     })
     publishConsistencyCheck(merkletree_data.added_leaf)
 

@@ -40,6 +40,7 @@ const boletimSchema = new mongoose.Schema({
     zona: Number,
     secao: Number,
     bu_inteiro: String,
+    votos: [candidato_identificavel],
     merkletree_leaf_id: String,
     merkletree_leaf: String,
     __v: Number,
