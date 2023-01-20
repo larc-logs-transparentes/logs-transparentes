@@ -34,7 +34,6 @@ class Mapa extends Component {
                   resultadoProvaParcial: false,
                   mostrarProvaParcial: false,
                   dadosProvaParcial: [],
-                  show: false,
                 }
 
   }
@@ -99,30 +98,6 @@ componentDidUpdate(prevProps, prevState) {
 
   mostraProva() {
     this.setState({mostrarProvaParcial: !this.state.mostrarProvaParcial})
-  }
-
-  provaCompleta(id_inicial, id_final) {
-    this.axios.get(`${this.bu_api_url}/infoBUs?id=${id_inicial}&id_final=${id_final}`)
-    .then(async response => {
-        const infoBUs = response.data
-        this.axios.get(`${this.bu_api_url}/infoBUs/tree/leaf?id=${id_inicial}&id_final=${id_final}`)
-        .then(async response => {
-            let leaves = response.data
-            this.setState({ show: !this.state.show }) 
-            console.log('InfoBUS: ', infoBUs)
-            console.log('Recontabilização: ', votosTotal(infoBUs))
-
-            console.log('Folhas da árvore', leaves)
-            const root = await getRoot()
-            leaves = leaves.map((leaf, index) => {
-              return {...leaf, resultadoProvaDeInclusao: verifyProof(leaf.leaf, root, leaf.proof)}
-            })
-            console.log('Resultado da prova de inclusão: ', leaves)
-        })
-    })
-    .catch(error => {
-        console.log(error)
-    })
   }
 
   redirecionaParaProvaCompleta(e) {
