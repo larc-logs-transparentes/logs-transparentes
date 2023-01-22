@@ -28,7 +28,9 @@ export function getRoot(){
     return new Promise(function (resolve, reject){
         axios.get(`${bu_api_url}/infoBUs/tree/root`)
         .then((res) => {
-            resolve(res.data);
+            const root = res.data;
+            root.leaf = Buffer.from(root.leaf, 'hex');
+            resolve(root);
         },
         (err) => {
             console.log(err)

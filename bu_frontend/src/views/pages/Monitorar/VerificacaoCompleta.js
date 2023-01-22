@@ -1,7 +1,12 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { getRoot, verifyMultipleProofs, verifyProof, votosTotal } from '../../../api/merkletree_InfoBUs.api'
+import { Card, CardBody, Row, Col} from 'reactstrap';
+import { Loader } from '../../../vibe';
+import approval from '../../../assets/images/Approved.png';
+import error from '../../../assets/images/Error.png';
+import { getRoot, verifyProof, votosTotal } from '../../../api/merkletree_InfoBUs.api'
+import './Retotalizar.css';
 
 const VerificacaoCompleta = () => {
     const bu_api_url = require('../../../config.json').bu_api_url
@@ -9,6 +14,8 @@ const VerificacaoCompleta = () => {
     const { id_inicial, id_final } = useParams();
     const [infoBUs, setInfoBUs] = React.useState();
     const [folhas, setFolhas] = React.useState();
+    const [raiz, setRaiz] = React.useState();
+    const [retotalizacao, setRetotalizacao] = React.useState(null);
 
     React.useEffect(() => {
         axios.get(`${bu_api_url}/infoBUs?id=${id_inicial}&id_final=${id_final}`)
@@ -17,6 +24,7 @@ const VerificacaoCompleta = () => {
             axios.get(`${bu_api_url}/infoBUs/tree/leaf?id=${id_inicial}&id_final=${id_final}`)
             .then(async response => {
                 setFolhas(response.data)
+                setRaiz(await getRoot())
             })
         })
         .catch(error => {
@@ -24,27 +32,184 @@ const VerificacaoCompleta = () => {
         })
     }, [id_inicial, id_final])
 
+    if(!retotalizacao && infoBUs)
+        setRetotalizacao(votosTotal(infoBUs))
+
     const verificaProvaDeInclusao = async (folhas) => {
-        const root = await getRoot()
         let leaves = folhas.map((leaf) => {
-            return {...leaf, resultadoProvaDeInclusao: verifyProof(leaf.leaf, root, leaf.proof)}
+            return {...leaf, resultadoProvaDeInclusao: verifyProof(leaf.leaf, raiz, leaf.proof)}
         })
         console.log('Resultado da prova de inclusão: ', leaves)
         return leaves
     }
+
+    const infoBUsInconsistentes = (infoBUs) => {
+        let inconsistencias = infoBUs.filter((infoBU) => {
+            return infoBU.resultadoProvaDeInclusao === false
+        })
+        return inconsistencias
+    }
     
     if (infoBUs && folhas) {
+        console.log('Raiz: ', raiz)
         console.log('InfoBUS: ', infoBUs)
-        console.log('Recontabilização: ', votosTotal(infoBUs))
+        console.log('Recontabilização: ', retotalizacao)
         console.log('Folhas da árvore', folhas)
         verificaProvaDeInclusao(folhas)
     }
-        
+
+    /////////// FUNÇÕES DE TEMPO PARA IR MOSTRANDO A TELA ////////////////
+    const [baixarBUs, setBbus] = React.useState(false);
+    const [baixarBUsCompleto, setBbusCompleto] = React.useState(false);
+    const [verificarBUs, setVbus] = React.useState(false);
+    const [verificarBUs2, setVbus2] = React.useState(false);
+    const [showret, setRet] = React.useState(false);
+    const [showret2, setRet2] = React.useState(false);
+    function BaixarBus(){
+        setTimeout(() => {setBbus(true)}, 500);
+        return}
+    function BaixarBus2(){
+        setTimeout(() => {setBbusCompleto(true)}, 2000);
+        return}
+     function VerificarBus(){
+        setTimeout(() => {setVbus(true)},750);
+        return}
+    function VerificarBus2(){
+        setTimeout(() => {setVbus2(true)}, 2500);
+        return}
+    function RetotalizarBus(){
+        setTimeout(() => {setRet(true)}, 750);
+        return}
+    function RetotalizarBus2(){
+        setTimeout(() => {setRet2(true)}, 2500);
+        return}  
+
+    function selo1(){
+        if (infoBUs)
+            return approval
+        else
+            return error   
+    }
+    function selo2(){
+        if (infoBUs.length !== id_final - id_inicial + 1 || infoBUsInconsistentes(infoBUs).length > 0){
+          return (error)
+        }
+        else return (approval)
+    } 
+
+    /////////////////////////////////////////////////////////////////////
+    ////////////////////// FUNÇÔES DE VERIFICAÇÃO ///////////////////////
+    function verificacaodebus(){
+        if (infoBUsInconsistentes(infoBUs).length > 0){
+          return ('- A prova de inclusão de um dos BUs falhou.')
+        }
+        else return ('- Todos os BUs estao na árvore.')
+    } 
+
+    function auxiliarverificacao(){
+        if (infoBUsInconsistentes(infoBUs).length > 0){
+          return (`ID do BU com problemas: ${infoBUsInconsistentes(infoBUs)[0].id}`)
+        }
+    }
+      
+    function verificacaoinclusaocor(){
+        if (infoBUsInconsistentes(infoBUs).length > 0){
+          return ('red')}else return ('black')
+    } 
+    
+    function verificacaoquantidade(){
+        if (infoBUs.length !== id_final - id_inicial + 1){
+          return ('- A quantidade de BUs não coincide com o número de sessões')
+        }
+        else return ('- A quantidade de Bus corresponde ao número de sessões.')
+    } 
+
+    function verificacaoquantidadecor(){
+        console.log(infoBUs.length)
+        console.log(id_final - id_inicial)
+        if (infoBUs.length !== id_final - id_inicial + 1){
+          return ('red')
+        }
+        else return ('black')
+    } 
+    /////////////////////////////////////////////////////////////////////
+
     return (
-        <>
-            <div>id_inicial: {id_inicial}</div>
-            <div>id_final: {id_final}</div>
-        </>
+        <div>
+            <Row>
+                <Col md={12}>
+                    <Card>
+                        <CardBody >
+                            <h4> Verificação completa da cidade </h4>
+                            <div style={{textAlign:'center'}} >
+                            <button onClick={()=> {BaixarBus(true)}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
+                                Iniciar Verificação
+                            </button>
+                            </div>
+                        </CardBody>
+
+                        <div style={{margin:'auto', width:'20%'}}>
+                            {baixarBUs &&
+
+                            <div style={{display:'block',textAlign:'justify'}}>
+                                <h5>Raiz: {raiz.leaf}</h5>
+                                <div style={{display:'flex',alignItems:'center'}}>
+                                    <h5>1) Baixando BUs</h5>
+                                    <Row md={4} style={{padding:'2vw'}}>
+                                        {!baixarBUsCompleto && <Loader small type="spin"/>}
+                                        {baixarBUsCompleto && <img src={selo1()} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />}
+                                    </Row>
+                                </div>
+                                {BaixarBus2()}
+                                {baixarBUsCompleto &&  
+                                <div style={{display:'flex', alignItems:'center',gap:'1vw'}}>
+                                    <h5>- {id_final - id_inicial} BUs Baixados</h5>
+                                    {VerificarBus()}
+                                </div>}
+                            </div>}
+
+                            {verificarBUs && 
+                            <div style={{display:selo1(),textAlign:'justify'}}>
+                                <div style={{display:'flex',alignItems:'center'}}>
+                                    <h5>2) Verificando BUS</h5>
+                                    <Row md={4} style={{padding:'2vw'}}>
+                                        {!verificarBUs2 && <Loader small type="spin"/>}
+                                        {verificarBUs2 && <img src={selo2()} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />}
+                                    </Row>
+                                </div>
+                            {VerificarBus2()}
+                            {verificarBUs2 && 
+                            <div>
+                                <h5 style={{color:verificacaoinclusaocor()}}>{verificacaodebus()}</h5>
+                                <h5 style={{color:verificacaoinclusaocor()}}>{auxiliarverificacao()}</h5>
+                                <h5 style={{color:verificacaoquantidadecor()}}>{verificacaoquantidade()}</h5>
+                                {RetotalizarBus()}
+                            </div>}
+                            </div>}
+
+                            {showret &&
+                            <div style={{display:selo1(),textAlign:'justify'}}>
+                                <div style={{display:'flex',alignItems:'center'}}>
+                                    <h5>3) Retotalizando BUS</h5>
+                                    <Row md={4} style={{padding:'2vw'}}>
+                                        {!showret2 && <Loader small type="spin"/>}
+                                        {showret2 && <img src={approval} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />}
+                                    </Row>
+                                </div>
+                                {RetotalizarBus2()}
+                                {showret2 && 
+                                <div>
+                                    <h5>- Resultado final:</h5>
+                                    <h5>{retotalizacao.map(({nome, votos}) => (
+                                        <p key={nome}>{nome}: {votos} votos</p>))}
+                                    </h5>
+                                </div>}
+                            </div>}
+                        </div>
+                    </Card>
+                </Col>
+            </Row>
+        </div>
     );
 }
  
