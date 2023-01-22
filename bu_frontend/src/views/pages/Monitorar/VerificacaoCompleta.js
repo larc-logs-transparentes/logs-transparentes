@@ -43,11 +43,12 @@ const VerificacaoCompleta = () => {
         return leaves
     }
 
-    const infoBUsInconsistentes = (infoBUs) => {
-        let inconsistencias = infoBUs.filter((infoBU) => {
-            return infoBU.resultadoProvaDeInclusao === false
+    const folhaInconsistente = (folhas) => {
+        folhas.map((leaf, index) => {
+            if(!leaf.resultadoProvaDeInclusao)
+                return index
         })
-        return inconsistencias
+        return -1
     }
     
     if (infoBUs && folhas) {
@@ -91,7 +92,7 @@ const VerificacaoCompleta = () => {
             return error   
     }
     function selo2(){
-        if (infoBUs.length !== id_final - id_inicial + 1 || infoBUsInconsistentes(infoBUs).length > 0){
+        if (infoBUs.length !== id_final - id_inicial + 1 || folhaInconsistente(folhas) >= 0){
           return (error)
         }
         else return (approval)
@@ -100,28 +101,29 @@ const VerificacaoCompleta = () => {
     /////////////////////////////////////////////////////////////////////
     ////////////////////// FUNÇÔES DE VERIFICAÇÃO ///////////////////////
     function verificacaodebus(){
-        if (infoBUsInconsistentes(infoBUs).length > 0){
-          return ('- A prova de inclusão de um dos BUs falhou.')
+        console.log('aaaaaaaaaaaaaaaaaaaa', folhaInconsistente(folhas))
+        if (folhaInconsistente(folhas) >= 0){
+          return ('- A prova de inclusão de um dos infoBUs falhou.')
         }
-        else return ('- Todos os BUs estao na árvore.')
+        else return ('- Todos os infoBUs estao na árvore.')
     } 
 
     function auxiliarverificacao(){
-        if (infoBUsInconsistentes(infoBUs).length > 0){
-          return (`ID do BU com problemas: ${infoBUsInconsistentes(infoBUs)[0].id}`)
+        if (folhaInconsistente(folhas) >= 0){
+          return (`ID do infoBUs com problemas: ${folhaInconsistente(folhas) + id_inicial}`)
         }
     }
       
     function verificacaoinclusaocor(){
-        if (infoBUsInconsistentes(infoBUs).length > 0){
+        if (folhaInconsistente(folhas) >= 0){
           return ('red')}else return ('black')
     } 
     
     function verificacaoquantidade(){
         if (infoBUs.length !== id_final - id_inicial + 1){
-          return ('- A quantidade de BUs não coincide com o número de sessões')
+          return ('- A quantidade de infoBUs não coincide com o número de sessões')
         }
-        else return ('- A quantidade de Bus corresponde ao número de sessões.')
+        else return ('- A quantidade de infoBUs corresponde ao número de sessões.')
     } 
 
     function verificacaoquantidadecor(){
@@ -148,13 +150,13 @@ const VerificacaoCompleta = () => {
                             </div>
                         </CardBody>
 
-                        <div style={{margin:'auto', width:'20%'}}>
+                        <div style={{margin:'auto', width:'23%'}}>
                             {baixarBUs &&
 
                             <div style={{display:'block',textAlign:'justify'}}>
                                 <h5>Raiz: {raiz.leaf}</h5>
                                 <div style={{display:'flex',alignItems:'center'}}>
-                                    <h5>1) Baixando BUs</h5>
+                                    <h5>1) Baixando infoBUs</h5>
                                     <Row md={4} style={{padding:'2vw'}}>
                                         {!baixarBUsCompleto && <Loader small type="spin"/>}
                                         {baixarBUsCompleto && <img src={selo1()} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />}
@@ -163,7 +165,7 @@ const VerificacaoCompleta = () => {
                                 {BaixarBus2()}
                                 {baixarBUsCompleto &&  
                                 <div style={{display:'flex', alignItems:'center',gap:'1vw'}}>
-                                    <h5>- {id_final - id_inicial} BUs Baixados</h5>
+                                    <h5>- {id_final - id_inicial} infoBUs Baixados</h5>
                                     {VerificarBus()}
                                 </div>}
                             </div>}
@@ -171,7 +173,7 @@ const VerificacaoCompleta = () => {
                             {verificarBUs && 
                             <div style={{display:selo1(),textAlign:'justify'}}>
                                 <div style={{display:'flex',alignItems:'center'}}>
-                                    <h5>2) Verificando BUS</h5>
+                                    <h5>2) Verificando infoBUs</h5>
                                     <Row md={4} style={{padding:'2vw'}}>
                                         {!verificarBUs2 && <Loader small type="spin"/>}
                                         {verificarBUs2 && <img src={selo2()} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />}
@@ -190,7 +192,7 @@ const VerificacaoCompleta = () => {
                             {showret &&
                             <div style={{display:selo1(),textAlign:'justify'}}>
                                 <div style={{display:'flex',alignItems:'center'}}>
-                                    <h5>3) Retotalizando BUS</h5>
+                                    <h5>3) Retotalizando infoBUs</h5>
                                     <Row md={4} style={{padding:'2vw'}}>
                                         {!showret2 && <Loader small type="spin"/>}
                                         {showret2 && <img src={approval} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />}

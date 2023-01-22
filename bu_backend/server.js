@@ -175,16 +175,6 @@ app.get("/infoBUs", (req, res) => {
   })
 })
 
-app.get("/infoBUs", (req, res) => {
-  console.log(req.params.id)
-  infobu_controller.findAll().then((response) => {
-    res.json(response);
-  }).catch((err) => {
-    console.log(err);
-    res.json(err)
-  })
-})
-
 app.get("/infoBUs/tree/leaf", async (req, res) => {
   const id = parseInt(req.query.id)
   let id_final = parseInt(req.query.id_final)

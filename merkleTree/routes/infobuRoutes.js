@@ -31,6 +31,7 @@ router.get('/', (req, res) => {
 
 router.get('/root', (req, res) => {
     const root = infoBUsTree.getRoot()
+    root.leaf = root.leaf.toString('hex')
     res.send(root)
 })
 
