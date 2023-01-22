@@ -20,7 +20,9 @@ const VerificacaoCompleta = () => {
     React.useEffect(() => {
         axios.get(`${bu_api_url}/infoBUs?id=${id_inicial}&id_final=${id_final}`)
         .then(async response => {
-            setInfoBUs(response.data)
+            const infoBUs = response.data
+            infoBUs.sort((a, b) => a.id - b.id)
+            setInfoBUs(infoBUs)
             axios.get(`${bu_api_url}/infoBUs/tree/leaf?id=${id_inicial}&id_final=${id_final}`)
             .then(async response => {
                 setFolhas(response.data)
@@ -35,19 +37,20 @@ const VerificacaoCompleta = () => {
     if(!retotalizacao && infoBUs)
         setRetotalizacao(votosTotal(infoBUs))
 
-    const verificaProvaDeInclusao = async (folhas) => {
-        let leaves = folhas.map((leaf) => {
-            return {...leaf, resultadoProvaDeInclusao: verifyProof(leaf.leaf, raiz, leaf.proof)}
+    const verificaProvaDeInclusao = (InfoBUS) => {
+        let leaves = InfoBUS.map((infoBU, i) => {
+            return {...infoBU, resultadoProvaDeInclusao: verifyProof(folhas[i].leaf, raiz, folhas[i].proof)}
         })
-        console.log('Resultado da prova de inclusão: ', leaves)
         return leaves
     }
 
-    const folhaInconsistente = (folhas) => {
-        folhas.map((leaf, index) => {
-            if(!leaf.resultadoProvaDeInclusao)
-                return index
-        })
+    const infoBUInconsistente = (infoBUs) => {
+        const infoBUsVerificados = verificaProvaDeInclusao(infoBUs)
+        for (let i = 0; i < infoBUsVerificados.length; i++) {
+            if (infoBUsVerificados[i].resultadoProvaDeInclusao === false){
+                return infoBUsVerificados[i].id
+            }
+        }
         return -1
     }
     
@@ -56,7 +59,7 @@ const VerificacaoCompleta = () => {
         console.log('InfoBUS: ', infoBUs)
         console.log('Recontabilização: ', retotalizacao)
         console.log('Folhas da árvore', folhas)
-        verificaProvaDeInclusao(folhas)
+        verificaProvaDeInclusao(infoBUs)
     }
 
     /////////// FUNÇÕES DE TEMPO PARA IR MOSTRANDO A TELA ////////////////
@@ -92,7 +95,7 @@ const VerificacaoCompleta = () => {
             return error   
     }
     function selo2(){
-        if (infoBUs.length !== id_final - id_inicial + 1 || folhaInconsistente(folhas) >= 0){
+        if (infoBUs.length !== id_final - id_inicial + 1 || infoBUInconsistente(infoBUs) >= 0){
           return (error)
         }
         else return (approval)
@@ -101,21 +104,21 @@ const VerificacaoCompleta = () => {
     /////////////////////////////////////////////////////////////////////
     ////////////////////// FUNÇÔES DE VERIFICAÇÃO ///////////////////////
     function verificacaodebus(){
-        console.log('aaaaaaaaaaaaaaaaaaaa', folhaInconsistente(folhas))
-        if (folhaInconsistente(folhas) >= 0){
+        console.log('aaaaaaaaaaaaaaaaaaaa', infoBUInconsistente(infoBUs))
+        if (infoBUInconsistente(infoBUs) >= 0){
           return ('- A prova de inclusão de um dos infoBUs falhou.')
         }
         else return ('- Todos os infoBUs estao na árvore.')
     } 
 
     function auxiliarverificacao(){
-        if (folhaInconsistente(folhas) >= 0){
-          return (`ID do infoBUs com problemas: ${folhaInconsistente(folhas) + id_inicial}`)
+        if (infoBUInconsistente(infoBUs) >= 0){
+          return (`ID do infoBUs com problemas: ${infoBUInconsistente(infoBUs)}`)
         }
     }
       
     function verificacaoinclusaocor(){
-        if (folhaInconsistente(folhas) >= 0){
+        if (infoBUInconsistente(infoBUs) >= 0){
           return ('red')}else return ('black')
     } 
     
