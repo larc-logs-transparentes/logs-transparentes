@@ -141,12 +141,13 @@ componentDidUpdate(prevProps, prevState) {
             <CardHeader>Resultado da eleição:</CardHeader>
                   <h5 style={{marginLeft:'20px'}}>{lista.map(({nome, votos}) =>
                    (<p key={nome}>{nome}: {votos} votos</p>))}</h5>
-            <div style={{display: 'flex', justifyContent:'center'}}>
-              <button onClick={this.redirecionaParaProvaCompleta.bind(this)} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem', width: '45%'}}>
+            
+            {this.state.id_inicial && <div style={{display: 'flex', justifyContent:'center'}}>
+              <button onClick={this.redirecionaParaProvaCompleta.bind(this)} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem', width: '45%', marginBottom: '20px'}}>
                 Verificação completa
               </button>
 
-            </div>
+            </div>}
           </Card>
         </Col>
         
