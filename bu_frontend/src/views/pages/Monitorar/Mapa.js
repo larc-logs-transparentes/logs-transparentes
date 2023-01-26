@@ -43,28 +43,29 @@ class Mapa extends Component {
 componentDidMount() {
   this.axios.get(`${this.bu_api_url}/bu?id_inicial=${this.state.id_inicial}&id_final=${this.state.id_final}`)
     .then(response => {
-      this.setState({ lista: response.data })&&console.log(response.data)
+      this.setState({ lista: response.data })
+      //console.log(response.data)
     })
-    console.log(this.state)
+    //console.log(this.state)
 }
 
 componentDidUpdate(prevProps, prevState) {
-    console.log('---------this.state---------')
-    console.log(this.state)
+    //console.log('---------this.state---------')
+    //console.log(this.state)
     if(prevState.id_final !== this.state.id_final) {
       this.axios.get(`${this.bu_api_url}/bu?id_inicial=${this.state.id_inicial}&id_final=${this.state.id_final}`)
           .then(response => {this.setState({ lista: response.data });})
 
       this.axios.get(`${this.bu_api_url}/infoBUs/tree/resultProof?i_inicial=${this.state.id_inicial}&i_final=${this.state.id_final}`)
       .then(async response => {
-          console.log(response.data)
+          //console.log(response.data)
           const root = await getRoot()
           this.setState({ dadosProvaParcial : response.data })
           this.setState({ resultadoProvaParcial : verifyMultipleProofs(root, response.data) })
-          console.log(`resultado da prova de inclusão: ${verifyMultipleProofs(root, response.data)}`)
+          //console.log(`resultado da prova de inclusão: ${verifyMultipleProofs(root, response.data)}`)
       })
       .catch(error => {
-          console.log(error)
+          //console.log(error)
       })
   }
 }

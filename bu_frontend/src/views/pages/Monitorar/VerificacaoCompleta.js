@@ -53,7 +53,8 @@ const VerificacaoCompleta = () => {
         }
         return -1
     }
-    
+   
+    /* 
     if (infoBUs && folhas) {
         console.log('Raiz: ', raiz)
         console.log('InfoBUS: ', infoBUs)
@@ -61,7 +62,8 @@ const VerificacaoCompleta = () => {
         console.log('Folhas da árvore', folhas)
         verificaProvaDeInclusao(infoBUs)
     }
-
+    */
+   
     /////////// FUNÇÕES DE TEMPO PARA IR MOSTRANDO A TELA ////////////////
     const [baixarBUs, setBbus] = React.useState(false);
     const [baixarBUsCompleto, setBbusCompleto] = React.useState(false);
@@ -129,8 +131,6 @@ const VerificacaoCompleta = () => {
     } 
 
     function verificacaoquantidadecor(){
-        console.log(infoBUs.length)
-        console.log(id_final - id_inicial)
         if (infoBUs.length !== id_final - id_inicial + 1){
           return ('red')
         }
