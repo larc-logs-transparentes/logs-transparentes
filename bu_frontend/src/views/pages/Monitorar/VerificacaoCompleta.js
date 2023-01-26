@@ -5,7 +5,7 @@ import { Card, CardBody, Row, Col} from 'reactstrap';
 import { Loader } from '../../../vibe';
 import approval from '../../../assets/images/Approved.png';
 import error from '../../../assets/images/Error.png';
-import { getRoot, verifyProof, votosTotal } from '../../../api/merkletree_InfoBUs.api'
+import { getRoot, verifyProof, votosTotal, bufferToHex } from '../../../api/merkletree_InfoBUs.api'
 import './Retotalizar.css';
 
 const VerificacaoCompleta = () => {
@@ -157,7 +157,7 @@ const VerificacaoCompleta = () => {
                             {baixarBUs &&
 
                             <div style={{display:'block',textAlign:'justify'}}>
-                                <h5>Raiz: {raiz.leaf}</h5>
+                                <h5>Raiz: {bufferToHex(raiz.leaf)}</h5>
                                 <div style={{display:'flex',alignItems:'center'}}>
                                     <h5>1) Baixando infoBUs</h5>
                                     <Row md={4} style={{padding:'2vw'}}>

@@ -17,7 +17,7 @@ import {
   Input, 
   FormText
 } from 'reactstrap';
-import { getRoot, verifyMultipleProofs, verifyProof, votosTotal } from '../../../api/merkletree_InfoBUs.api'
+import { getRoot, verifyMultipleProofs } from '../../../api/merkletree_InfoBUs.api'
 import cadVerde from '../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../assets/images/cad-vermelho.png';
 

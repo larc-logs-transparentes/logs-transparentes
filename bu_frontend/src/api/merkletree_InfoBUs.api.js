@@ -68,6 +68,10 @@ export function votosTotal(infoBUs){
     return ret
 }
 
+export function bufferToHex(value, withPrefix = true) {
+    return `${withPrefix ? '0x' : ''}${(value || Buffer.alloc(0)).toString('hex')}`;
+}
+
 function parentOf(leftNode, rightNode) {
     leftNode.leaf = Buffer.from(leftNode.leaf);
     rightNode.leaf = Buffer.from(rightNode.leaf);
