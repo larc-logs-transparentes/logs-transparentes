@@ -54,7 +54,7 @@ const VerificacaoCompleta = () => {
         return -1
     }
    
-    /* 
+     
     if (infoBUs && folhas) {
         console.log('Raiz: ', raiz)
         console.log('InfoBUS: ', infoBUs)
@@ -62,7 +62,7 @@ const VerificacaoCompleta = () => {
         console.log('Folhas da árvore', folhas)
         verificaProvaDeInclusao(infoBUs)
     }
-    */
+    
    
     /////////// FUNÇÕES DE TEMPO PARA IR MOSTRANDO A TELA ////////////////
     const [baixarBUs, setBbus] = React.useState(false);
@@ -167,7 +167,7 @@ const VerificacaoCompleta = () => {
                                 {BaixarBus2()}
                                 {baixarBUsCompleto &&  
                                 <div style={{display:'flex', alignItems:'center',gap:'1vw'}}>
-                                    <h5>- {id_final - id_inicial} infoBUs Baixados</h5>
+                                    <h5>- {infoBUs.length} infoBUs Baixados</h5>
                                     {VerificarBus()}
                                 </div>}
                             </div>}
