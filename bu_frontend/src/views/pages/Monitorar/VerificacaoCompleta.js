@@ -104,7 +104,6 @@ const VerificacaoCompleta = () => {
     /////////////////////////////////////////////////////////////////////
     ////////////////////// FUNÇÔES DE VERIFICAÇÃO ///////////////////////
     function verificacaodebus(){
-        console.log('aaaaaaaaaaaaaaaaaaaa', infoBUInconsistente(infoBUs))
         if (infoBUInconsistente(infoBUs) >= 0){
           return ('- A prova de inclusão de um dos infoBUs falhou.')
         }

@@ -111,3 +111,16 @@ function bufferifyFn(f) {
         return Buffer.from(f(crypto_js_1.enc.Hex.parse(value.toString('hex'))).toString(crypto_js_1.enc.Hex), 'hex');
     };
 }
+
+export function getHash(infoBU) {
+    return SHA256(JSON.stringify({
+        _id: infoBU.id,
+        id: infoBU.id,
+        secao: infoBU.secao,
+        zona: infoBU.zona,
+        UF: infoBU.UF,
+        turno: infoBU.turno,
+        regras_aplicadas: null,
+        votos_validos: infoBU.votos_validos,
+    })).toString();
+}

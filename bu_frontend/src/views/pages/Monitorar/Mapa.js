@@ -78,10 +78,10 @@ componentDidUpdate(prevProps, prevState) {
     this.setState( {id_final:6, id_inicial:4});
   }
   defineFaixaRibeiraoPreto(){
-    this.setState( {id_final:9, id_inicial:6});
+    this.setState( {id_final:9, id_inicial:7});
   }
   defineFaixaMarilia(){
-    this.setState( {id_final:12, id_inicial:9});
+    this.setState( {id_final:12, id_inicial:10});
   }
 
   handleChange(e) {
