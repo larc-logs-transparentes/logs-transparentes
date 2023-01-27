@@ -39,6 +39,22 @@ export function getRoot(){
     })
 }
 
+export function verify (root, proofs, infoBUs) {
+    let resultado_verificacao = verifyMultipleProofs(root, proofs)
+    if (resultado_verificacao === false)
+        return resultado_verificacao
+
+    let soma_infoBUs = votosTotal(infoBUs)
+    let soma_provas = votosTotalProofs(proofs)
+    console.log(soma_infoBUs)
+    console.log(soma_provas)
+    for(let i = 0; i < soma_infoBUs.length; i++)
+        if(soma_infoBUs[i].votos !== soma_provas[i])
+            return false
+
+    return resultado_verificacao
+}
+
 export function verifyMultipleProofs(root, proofs){
     if(proofs.length === 0) 
         return false
@@ -49,6 +65,16 @@ export function verifyMultipleProofs(root, proofs){
             return false;
     }
     return true;
+}
+
+export function votosTotalProofs(proofs){
+    const ret = [0, 0]
+    for (let i = 0; i < proofs.length; i++) {
+        const candidatos = proofs[i].leaf.vote;
+        ret[0] += candidatos[0][1]
+        ret[1] += candidatos[1][1]
+    }
+    return ret
 }
 
 export function votosTotal(infoBUs){

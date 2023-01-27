@@ -17,7 +17,7 @@ import {
   Input, 
   FormText
 } from 'reactstrap';
-import { getRoot, verifyMultipleProofs, votosTotal } from '../../../api/merkletree_InfoBUs.api'
+import { getRoot, verify, votosTotal } from '../../../api/merkletree_InfoBUs.api'
 import cadVerde from '../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../assets/images/cad-vermelho.png';
 
@@ -61,7 +61,7 @@ componentDidUpdate(prevProps, prevState) {
       .then(async response => {
           const root = await getRoot()
           this.setState({ dadosProvaParcial : response.data })
-          this.setState({ resultadoProvaParcial : verifyMultipleProofs(root, response.data) })
+          this.setState({ resultadoProvaParcial : verify(root, response.data, this.state.infoBUs) })
       })
       .catch(error => {
           console.log(error)
