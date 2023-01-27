@@ -57,7 +57,7 @@ componentDidUpdate(prevProps, prevState) {
             this.setState({ votos_cidade: votosTotal(response.data) })
           })
 
-      this.axios.get(`${this.bu_api_url}/infoBUs/tree/resultProof?i_inicial=${this.state.id_inicial}&i_final=${this.state.id_final}`)
+      this.axios.get(`${this.bu_api_url}/infoBUs/tree/resultProof?i_inicial=${this.state.id_inicial - 1}&i_final=${this.state.id_final - 1}`)
       .then(async response => {
           const root = await getRoot()
           this.setState({ dadosProvaParcial : response.data })

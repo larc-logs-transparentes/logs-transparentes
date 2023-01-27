@@ -62,7 +62,7 @@ export function votosTotal(infoBUs){
             if(aux != -1) //se encontrado candidato no array
                 ret[aux].votos += element.votos //soma os votos
             else
-                ret.push(element) //insere no array
+                ret.push(_.cloneDeep(element)) //insere no array
         }       
     }
     return ret
