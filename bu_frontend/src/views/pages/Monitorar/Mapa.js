@@ -17,7 +17,7 @@ import {
   Input, 
   FormText
 } from 'reactstrap';
-import { getRoot, verifyMultipleProofs } from '../../../api/merkletree_InfoBUs.api'
+import { getRoot, verifyMultipleProofs, votosTotal } from '../../../api/merkletree_InfoBUs.api'
 import cadVerde from '../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../assets/images/cad-vermelho.png';
 
@@ -28,9 +28,10 @@ class Mapa extends Component {
   constructor() {
     super()
     this.state = {
-                  lista: [],
-                  id_inicial:'' ,
-                  id_final:'',
+                  infoBUs: [],
+                  votos_cidade: [],
+                  id_inicial:"",
+                  id_final:"",
                   resultadoProvaParcial: false,
                   mostrarProvaParcial: false,
                   dadosProvaParcial: [],
@@ -41,31 +42,29 @@ class Mapa extends Component {
   
 
 componentDidMount() {
-  this.axios.get(`${this.bu_api_url}/bu?id_inicial=${this.state.id_inicial}&id_final=${this.state.id_final}`)
-    .then(response => {
-      this.setState({ lista: response.data })
-      //console.log(response.data)
-    })
-    //console.log(this.state)
+  return
+
 }
 
 componentDidUpdate(prevProps, prevState) {
-    //console.log('---------this.state---------')
-    //console.log(this.state)
+    console.log('---------this.state---------')
+    console.log(this.state)
+    console.log(votosTotal(this.state.infoBUs))
     if(prevState.id_final !== this.state.id_final) {
-      this.axios.get(`${this.bu_api_url}/bu?id_inicial=${this.state.id_inicial}&id_final=${this.state.id_final}`)
-          .then(response => {this.setState({ lista: response.data });})
+      this.axios.get(`${this.bu_api_url}/infoBUs?id=${this.state.id_inicial}&id_final=${this.state.id_final}`)
+          .then(response => {
+            this.setState({ infoBUs: response.data })
+            this.setState({ votos_cidade: votosTotal(response.data) })
+          })
 
       this.axios.get(`${this.bu_api_url}/infoBUs/tree/resultProof?i_inicial=${this.state.id_inicial}&i_final=${this.state.id_final}`)
       .then(async response => {
-          //console.log(response.data)
           const root = await getRoot()
           this.setState({ dadosProvaParcial : response.data })
           this.setState({ resultadoProvaParcial : verifyMultipleProofs(root, response.data) })
-          //console.log(`resultado da prova de inclusão: ${verifyMultipleProofs(root, response.data)}`)
       })
       .catch(error => {
-          //console.log(error)
+          console.log(error)
       })
   }
 }
@@ -110,7 +109,6 @@ componentDidUpdate(prevProps, prevState) {
   }
 
   render() {
-    const { lista } = this.state
     let cidadeArr = ['São Carlos','Campinas', 'Ribeirão Preto', 'Marília']
 
 
@@ -140,7 +138,7 @@ componentDidUpdate(prevProps, prevState) {
           </Card>
           <Card>
             <CardHeader>Resultado da eleição:</CardHeader>
-                  <h5 style={{marginLeft:'20px'}}>{lista.map(({nome, votos}) =>
+                  <h5 style={{marginLeft:'20px'}}>{this.state.votos_cidade.map(({nome, votos}) =>
                    (<p key={nome}>{nome}: {votos} votos</p>))}</h5>
             
             {this.state.id_inicial && <div style={{display: 'flex', justifyContent:'center'}}>
