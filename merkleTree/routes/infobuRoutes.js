@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { MerkleTreePrefix } = require('../lib/MerkleTreePrefix')
 const { SHA256 } = require('crypto-js')
-const { nodeKeys } = require('../controllers/nodeKeys.controller')
+const { keyNodes } = require('../controllers/keyNodes.controller')
 
 const infoBUsTree = new MerkleTreePrefix([], SHA256, {fillDefaultHash: true})
 
@@ -74,7 +74,7 @@ router.get('/nodeKeys', (req, res) => {
     }
 
     const leaves = infoBUsTree.getLayers()[0]    
-    res.send(nodeKeys(leaves, parseInt(i_inicial), parseInt(i_final)))
+    res.send(keyNodes(leaves, parseInt(i_inicial), parseInt(i_final)))
 })
 
 router.post('/proof', (req, res) => {
@@ -109,23 +109,19 @@ router.get('/resultProof', (req, res) => {
         res.send("Missing parameters i_inicial and i_final")
         return
     }
-    const nodes = nodeKeys(infoBUsTree.getLayers()[0], parseInt(i_inicial), parseInt(i_final))
+    const nodes = keyNodes(infoBUsTree.getLayers()[0], parseInt(i_inicial), parseInt(i_final))
     const proofs = []
     nodes.map(key => {
         const node = infoBUsTree.getNode(key.index, key.depth)
         const proof = infoBUsTree.getProof(node, key.index, key.depth)
-        if(proof)
-            proofs.push({
-                leaf: node,
-                coordinates: key,
-                proof: proof
-            })
-        else
-            proofs.push({
-                leaf: node,
-                coordinates: key,
-                proof: 'Proof not found'
-            })
+        if(!proof)
+            proof = 'Proof not found'
+        
+        proofs.push({
+            leaf: node,
+            coordinates: key,
+            proof: proof
+        })
     })
      
     res.json(proofs)

@@ -21,7 +21,7 @@ exports.findByIdRange = async (id, id_final) => {
 exports.inicializar = async () => {
     const folhas = []
 
-    const BUs = await modeloBoletim.modeloBoletim1.find({})
+    const BUs = await modeloBoletim.modeloBoletim.find({})
     const BUsOrdenados = BUs.sort((a, b) => { return a.id - b.id })
     for (let index = 0; index < BUsOrdenados.length; index++) {
         var BU = BUsOrdenados[index]

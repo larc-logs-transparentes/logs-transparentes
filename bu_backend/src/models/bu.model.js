@@ -36,7 +36,7 @@ const InfoBuSchema = new mongoose.Schema({
     merkletree_leaf: String,
 });
 
-const modeloBoletim1 = mongoose.model("bu",boletimSchema) //"bu" = collection of database
+const modeloBoletim = mongoose.model("bu",boletimSchema) //"bu" = collection of database
 const modeloInfoBU = mongoose.model("InfoBU",InfoBuSchema) 
 
-module.exports = {modeloBoletim1, modeloInfoBU}
+module.exports = {modeloBoletim, modeloInfoBU}
