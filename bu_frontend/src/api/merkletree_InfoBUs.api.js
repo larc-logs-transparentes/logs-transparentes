@@ -6,7 +6,7 @@ const _ = require('lodash');
 const axios = require('axios')
 const bu_api_url = require('../config.json').bu_api_url
 
-export function verifyProof(leaf, root, proof){    
+export function verifyInclusionProof(leaf, root, proof){    
     let hash = leaf;
     if (!Array.isArray(proof) || !leaf || !root)
         return false;
@@ -39,45 +39,21 @@ export function getRoot(){
     })
 }
 
-export function verify (root, proofs, infoBUs) {
-    let resultado_verificacao = verifyMultipleProofs(root, proofs)
-    if (resultado_verificacao === false)
-        return resultado_verificacao
+export function verifyInfoBUs (root, proofs, infoBUs) {
+    let proofsVerify_result = verifyMultipleProofs(root, proofs)
+    if (proofsVerify_result === false)
+        return false
 
-    let soma_infoBUs = votosTotal(infoBUs)
-    let soma_provas = votosTotalProofs(proofs)
-    console.log(soma_infoBUs)
-    console.log(soma_provas)
-    for(let i = 0; i < soma_infoBUs.length; i++)
-        if(soma_infoBUs[i].votos !== soma_provas[i])
+    let sum_infoBUs = getSumOfVotes_infoBUs(infoBUs)
+    let sum_proof = getSumOfVotes_proofData(proofs)
+    for(let i = 0; i < sum_infoBUs.length; i++)
+        if(sum_infoBUs[i].votos !== sum_proof[i])
             return false
 
-    return resultado_verificacao
+    return true
 }
 
-export function verifyMultipleProofs(root, proofs){
-    if(proofs.length === 0) 
-        return false
-        
-    for (let i = 0; i < proofs.length; i++) {
-        const proof = proofs[i];
-        if (!verifyProof(proof.leaf, root, proof.proof))
-            return false;
-    }
-    return true;
-}
-
-export function votosTotalProofs(proofs){
-    const ret = [0, 0]
-    for (let i = 0; i < proofs.length; i++) {
-        const candidatos = proofs[i].leaf.vote;
-        ret[0] += candidatos[0][1]
-        ret[1] += candidatos[1][1]
-    }
-    return ret
-}
-
-export function votosTotal(infoBUs){
+export function getSumOfVotes_infoBUs(infoBUs){
     const ret = []
     for (let i = 0; i < infoBUs.length; i++) {
         const candidatos = infoBUs[i].votos_validos;
@@ -96,6 +72,43 @@ export function votosTotal(infoBUs){
 
 export function bufferToHex(value, withPrefix = true) {
     return `${withPrefix ? '0x' : ''}${(value || Buffer.alloc(0)).toString('hex')}`;
+}
+
+export function getHash(infoBU) {
+    return SHA256(JSON.stringify({
+        _id: infoBU.id,
+        id: infoBU.id,
+        secao: infoBU.secao,
+        zona: infoBU.zona,
+        UF: infoBU.UF,
+        turno: infoBU.turno,
+        regras_aplicadas: null,
+        votos_validos: infoBU.votos_validos,
+    })).toString();
+}
+
+/* Funções privadas */
+
+function verifyMultipleProofs(root, proofs){
+    if(proofs.length === 0) 
+        return false
+        
+    for (let i = 0; i < proofs.length; i++) {
+        const proof = proofs[i];
+        if (!verifyInclusionProof(proof.leaf, root, proof.proof))
+            return false;
+    }
+    return true;
+}
+
+function getSumOfVotes_proofData(proofs){
+    const ret = [0, 0]
+    for (let i = 0; i < proofs.length; i++) {
+        const candidatos = proofs[i].leaf.vote;
+        ret[0] += candidatos[0][1]
+        ret[1] += candidatos[1][1]
+    }
+    return ret
 }
 
 function parentOf(leftNode, rightNode) {
@@ -136,17 +149,4 @@ function bufferifyFn(f) {
         // crypto-js support
         return Buffer.from(f(crypto_js_1.enc.Hex.parse(value.toString('hex'))).toString(crypto_js_1.enc.Hex), 'hex');
     };
-}
-
-export function getHash(infoBU) {
-    return SHA256(JSON.stringify({
-        _id: infoBU.id,
-        id: infoBU.id,
-        secao: infoBU.secao,
-        zona: infoBU.zona,
-        UF: infoBU.UF,
-        turno: infoBU.turno,
-        regras_aplicadas: null,
-        votos_validos: infoBU.votos_validos,
-    })).toString();
 }

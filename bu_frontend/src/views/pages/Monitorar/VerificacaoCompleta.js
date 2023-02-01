@@ -5,7 +5,7 @@ import { Card, CardBody, Row, Col} from 'reactstrap';
 import { Loader } from '../../../vibe';
 import approval from '../../../assets/images/Approved.png';
 import error from '../../../assets/images/Error.png';
-import { getRoot, verifyProof, votosTotal, bufferToHex } from '../../../api/merkletree_InfoBUs.api'
+import { getRoot, verifyInclusionProof, getSumOfVotes_infoBUs, bufferToHex } from '../../../api/merkletree_InfoBUs.api'
 import './Retotalizar.css';
 
 const VerificacaoCompleta = () => {
@@ -35,17 +35,16 @@ const VerificacaoCompleta = () => {
     }, [id_inicial, id_final])
 
     if(!retotalizacao && infoBUs)
-        setRetotalizacao(votosTotal(infoBUs))
+        setRetotalizacao(getSumOfVotes_infoBUs(infoBUs))
 
-    const verificaProvaDeInclusao = (InfoBUS) => {
-        let leaves = InfoBUS.map((infoBU, i) => {
-            return {...infoBU, resultadoProvaDeInclusao: verifyProof(folhas[i].leaf, raiz, folhas[i].proof)}
-        })
-        return leaves
-    }
+    const searchIncosistent_InfoBU = (infoBUs) => {
+        const infoBUsVerificados = () => {
+            let leaves = infoBUs.map((infoBU, i) => {
+                return {...infoBU, resultadoProvaDeInclusao: verifyInclusionProof(folhas[i].leaf, raiz, folhas[i].proof)}
+            })
+            return leaves
+        }
 
-    const infoBUInconsistente = (infoBUs) => {
-        const infoBUsVerificados = verificaProvaDeInclusao(infoBUs)
         for (let i = 0; i < infoBUsVerificados.length; i++) {
             if (infoBUsVerificados[i].resultadoProvaDeInclusao === false){
                 return infoBUsVerificados[i].id
@@ -55,12 +54,12 @@ const VerificacaoCompleta = () => {
     }
    
      
+    const id_incosistente = searchIncosistent_InfoBU(infoBUs)
     if (infoBUs && folhas) {
         console.log('Raiz: ', raiz)
         console.log('InfoBUS: ', infoBUs)
         console.log('Recontabilização: ', retotalizacao)
         console.log('Folhas da árvore', folhas)
-        verificaProvaDeInclusao(infoBUs)
     }
     
    
@@ -97,7 +96,7 @@ const VerificacaoCompleta = () => {
             return error   
     }
     function selo2(){
-        if (infoBUs.length !== id_final - id_inicial + 1 || infoBUInconsistente(infoBUs) >= 0){
+        if (infoBUs.length !== id_final - id_inicial + 1 || id_incosistente >= 0){
           return (error)
         }
         else return (approval)
@@ -106,20 +105,20 @@ const VerificacaoCompleta = () => {
     /////////////////////////////////////////////////////////////////////
     ////////////////////// FUNÇÔES DE VERIFICAÇÃO ///////////////////////
     function verificacaodebus(){
-        if (infoBUInconsistente(infoBUs) >= 0){
+        if (id_incosistente >= 0){
           return ('- A prova de inclusão de um dos infoBUs falhou.')
         }
         else return ('- Todos os infoBUs estao na árvore.')
     } 
 
     function auxiliarverificacao(){
-        if (infoBUInconsistente(infoBUs) >= 0){
-          return (`ID do infoBUs com problemas: ${infoBUInconsistente(infoBUs)}`)
+        if (id_incosistente >= 0){
+          return (`ID do infoBUs com problemas: ${id_incosistente}`)
         }
     }
       
     function verificacaoinclusaocor(){
-        if (infoBUInconsistente(infoBUs) >= 0){
+        if (id_incosistente >= 0){
           return ('red')}else return ('black')
     } 
     
