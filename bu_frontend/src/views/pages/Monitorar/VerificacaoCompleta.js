@@ -64,29 +64,26 @@ const VerificacaoCompleta = () => {
     
    
     /////////// FUNÇÕES DE TEMPO PARA IR MOSTRANDO A TELA ////////////////
-    const [baixarBUs, setBbus] = React.useState(false);
-    const [baixarBUsCompleto, setBbusCompleto] = React.useState(false);
-    const [verificarBUs, setVbus] = React.useState(false);
-    const [verificarBUs2, setVbus2] = React.useState(false);
-    const [showret, setRet] = React.useState(false);
-    const [showret2, setRet2] = React.useState(false);
-    function BaixarBus(){
-        setTimeout(() => {setBbus(true)}, 500);
+    const [stateDownloadInfoBUs, setStateDownload] = React.useState('not started');
+    const [stateVerificationInfoBUs, setStateVerification] = React.useState('not started');
+    const [stateRetotalizationInfoBUs, setStateRetotalization] = React.useState('not started');
+    function StartDownloadInfoBUs(){ 
+        setTimeout(() => {setStateDownload('downloading')}, 500);
         return}
-    function BaixarBus2(){
-        setTimeout(() => {setBbusCompleto(true)}, 2000);
+    function CompleteDownloadInfoBUs(){
+        setTimeout(() => {setStateDownload('completed')}, 2000);
         return}
-     function VerificarBus(){
-        setTimeout(() => {setVbus(true)},750);
+     function StartVerificationInfoBUs(){
+        setTimeout(() => {setStateVerification('verifying')},750);
         return}
-    function VerificarBus2(){
-        setTimeout(() => {setVbus2(true)}, 2500);
+    function CompleteVerificationInfoBUs(){
+        setTimeout(() => {setStateVerification('completed')}, 2500);
         return}
-    function RetotalizarBus(){
-        setTimeout(() => {setRet(true)}, 750);
+    function StartRetotalizationInfoBUs(){
+        setTimeout(() => {setStateRetotalization('calculating')}, 750);
         return}
-    function RetotalizarBus2(){
-        setTimeout(() => {setRet2(true)}, 2500);
+    function CompleteRetotalizationInfoBUs(){
+        setTimeout(() => {setStateRetotalization('completed')}, 2500);
         return}  
 
     function selo1(){
@@ -95,6 +92,7 @@ const VerificacaoCompleta = () => {
         else
             return error   
     }
+    
     function selo2(){
         if (infoBUs.length !== id_final - id_inicial + 1 || id_incosistente >= 0){
           return (error)
@@ -145,62 +143,63 @@ const VerificacaoCompleta = () => {
                         <CardBody >
                             <h4> Verificação completa da cidade </h4>
                             <div style={{textAlign:'center'}} >
-                            <button onClick={()=> {BaixarBus(true)}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
+                            <button onClick={()=> {StartDownloadInfoBUs()}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
                                 Iniciar Verificação
                             </button>
                             </div>
                         </CardBody>
 
                         <div style={{margin:'auto', width:'23%'}}>
-                            {baixarBUs &&
+                            {stateDownloadInfoBUs !== 'not started' &&
 
                             <div style={{display:'block',textAlign:'justify'}}>
                                 <h5>Raiz: {bufferToHex(raiz.leaf)}</h5>
                                 <div style={{display:'flex',alignItems:'center'}}>
                                     <h5>1) Baixando infoBUs</h5>
                                     <Row md={4} style={{padding:'2vw'}}>
-                                        {!baixarBUsCompleto && <Loader small type="spin"/>}
-                                        {baixarBUsCompleto && <img src={selo1()} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />}
+                                        {stateDownloadInfoBUs === 'downloading' && <Loader small type="spin"/>}
+                                        {stateDownloadInfoBUs === 'completed' && <img src={selo1()} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />}
                                     </Row>
                                 </div>
-                                {BaixarBus2()}
-                                {baixarBUsCompleto &&  
+
+                                {CompleteDownloadInfoBUs()}
+                                {stateDownloadInfoBUs === 'completed' &&  
                                 <div style={{display:'flex', alignItems:'center',gap:'1vw'}}>
                                     <h5>- {infoBUs.length} infoBUs Baixados</h5>
-                                    {VerificarBus()}
+                                    {stateVerificationInfoBUs === 'not started' && StartVerificationInfoBUs()}    
                                 </div>}
                             </div>}
 
-                            {verificarBUs && 
+                            {stateVerificationInfoBUs !== 'not started' && 
                             <div style={{display:selo1(),textAlign:'justify'}}>
                                 <div style={{display:'flex',alignItems:'center'}}>
                                     <h5>2) Verificando infoBUs</h5>
                                     <Row md={4} style={{padding:'2vw'}}>
-                                        {!verificarBUs2 && <Loader small type="spin"/>}
-                                        {verificarBUs2 && <img src={selo2()} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />}
+                                        {stateVerificationInfoBUs === 'verifying' && <Loader small type="spin"/>}
+                                        {stateVerificationInfoBUs === 'completed' && <img src={selo2()} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />}
                                     </Row>
                                 </div>
-                            {VerificarBus2()}
-                            {verificarBUs2 && 
-                            <div>
-                                <h5 style={{color:verificacaoinclusaocor()}}>{verificacaodebus()}</h5>
-                                <h5 style={{color:verificacaoinclusaocor()}}>{auxiliarverificacao()}</h5>
-                                <h5 style={{color:verificacaoquantidadecor()}}>{verificacaoquantidade()}</h5>
-                                {RetotalizarBus()}
-                            </div>}
+                                {CompleteVerificationInfoBUs()}
+                                {stateVerificationInfoBUs === 'completed' && 
+                                <div>
+                                    <h5 style={{color:verificacaoinclusaocor()}}>{verificacaodebus()}</h5>
+                                    <h5 style={{color:verificacaoinclusaocor()}}>{auxiliarverificacao()}</h5>
+                                    <h5 style={{color:verificacaoquantidadecor()}}>{verificacaoquantidade()}</h5>
+                                    {stateRetotalizationInfoBUs === 'not started' && StartRetotalizationInfoBUs()}
+                                </div>}
                             </div>}
 
-                            {showret &&
+                            {stateRetotalizationInfoBUs !== 'not started' &&
                             <div style={{display:selo1(),textAlign:'justify'}}>
                                 <div style={{display:'flex',alignItems:'center'}}>
                                     <h5>3) Retotalizando infoBUs</h5>
                                     <Row md={4} style={{padding:'2vw'}}>
-                                        {!showret2 && <Loader small type="spin"/>}
-                                        {showret2 && <img src={approval} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />}
+                                        {stateRetotalizationInfoBUs === 'calculating' && <Loader small type="spin"/>}
+                                        {stateRetotalizationInfoBUs === 'completed' && <img src={approval} style={{ width: 32,paddingBottom:'.5vh' }} className="" alt="profile" />}
                                     </Row>
                                 </div>
-                                {RetotalizarBus2()}
-                                {showret2 && 
+                                {CompleteRetotalizationInfoBUs()}
+                                {stateRetotalizationInfoBUs === 'completed' && 
                                 <div>
                                     <h5>- Resultado final:</h5>
                                     <h5>{retotalizacao.map(({nome, votos}) => (
