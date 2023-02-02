@@ -102,32 +102,32 @@ const VerificacaoCompleta = () => {
 
     /////////////////////////////////////////////////////////////////////
     ////////////////////// FUNÇÔES DE VERIFICAÇÃO ///////////////////////
-    function verificacaodebus(){
+    function str_resultInclusionProof(){
         if (id_incosistente >= 0){
           return ('- A prova de inclusão de um dos infoBUs falhou.')
         }
         else return ('- Todos os infoBUs estao na árvore.')
     } 
 
-    function auxiliarverificacao(){
+    function str_aux_resultInclusionProof(){
         if (id_incosistente >= 0){
           return (`ID do infoBUs com problemas: ${id_incosistente}`)
         }
     }
       
-    function verificacaoinclusaocor(){
+    function color_resultInclusionProof(){
         if (id_incosistente >= 0){
           return ('red')}else return ('black')
     } 
     
-    function verificacaoquantidade(){
+    function str_qtdVerification(){
         if (infoBUs.length !== id_final - id_inicial + 1){
           return ('- A quantidade de infoBUs não coincide com o número de sessões')
         }
         else return ('- A quantidade de infoBUs corresponde ao número de sessões.')
     } 
 
-    function verificacaoquantidadecor(){
+    function color_qtdVerification(){
         if (infoBUs.length !== id_final - id_inicial + 1){
           return ('red')
         }
@@ -182,9 +182,9 @@ const VerificacaoCompleta = () => {
                                 {CompleteVerificationInfoBUs()}
                                 {stateVerificationInfoBUs === 'completed' && 
                                 <div>
-                                    <h5 style={{color:verificacaoinclusaocor()}}>{verificacaodebus()}</h5>
-                                    <h5 style={{color:verificacaoinclusaocor()}}>{auxiliarverificacao()}</h5>
-                                    <h5 style={{color:verificacaoquantidadecor()}}>{verificacaoquantidade()}</h5>
+                                    <h5 style={{color:color_resultInclusionProof()}}>{str_resultInclusionProof()}</h5>
+                                    <h5 style={{color:color_resultInclusionProof()}}>{str_aux_resultInclusionProof()}</h5>
+                                    <h5 style={{color:color_qtdVerification()}}>{str_qtdVerification()}</h5>
                                     {stateRetotalizationInfoBUs === 'not started' && StartRetotalizationInfoBUs()}
                                 </div>}
                             </div>}
