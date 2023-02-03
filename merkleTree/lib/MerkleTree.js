@@ -1156,18 +1156,3 @@ if (typeof window !== 'undefined') {
     window.MerkleTree = MerkleTree;
 }
 exports.default = MerkleTree;
-const tree = new MerkleTree([], sha256_1.default);
-const ll = sha256_1.default("aya");
-const myMap = new Map([
-    ["key1", 1],
-    ["key2", 2]
-]);
-console.log(ll);
-console.log(tree);
-tree.addLeaf(ll);
-console.log(tree);
-tree.addLeaf(ll);
-console.log(tree);
-tree.addLeaf(ll);
-console.log("a");
-console.log(tree);

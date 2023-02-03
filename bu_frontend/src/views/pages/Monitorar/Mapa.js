@@ -1,23 +1,17 @@
-import React, { Component , useState, useEffect} from 'react';
+import React, { Component } from 'react';
 import {
   Row,
-  Button,
   Col,
   Card,
   CardHeader,
-  CardFooter,
   CardBody,
-  CardImg,
-  CardTitle,
-  CardSubtitle,
   CardText,
-  Form,
   FormGroup,
   Label,
   Input, 
   FormText
 } from 'reactstrap';
-import { getRoot, verifyInfoBUs, getSumOfVotes_infoBUs } from '../../../api/merkletree_InfoBUs.api'
+import { getRoot, verifyResultProof, getSumOfVotes_infoBUs } from '../../../api/merkletree_InfoBUs.api'
 import cadVerde from '../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../assets/images/cad-vermelho.png';
 
@@ -61,7 +55,7 @@ componentDidUpdate(prevProps, prevState) {
       .then(async response => {
           const root = await getRoot()
           this.setState({ dadosProvaParcial : response.data })
-          this.setState({ resultadoProvaParcial : verifyInfoBUs(root, response.data, this.state.infoBUs) })
+          this.setState({ resultadoProvaParcial : verifyResultProof(this.state.infoBUs, response.data, root) })
       })
       .catch(error => {
           console.log(error)

@@ -39,18 +39,24 @@ export function getRoot(){
     })
 }
 
-export function verifyInfoBUs (root, proofs, infoBUs) {
-    let proofsVerify_result = verifyMultipleProofs(root, proofs)
-    if (proofsVerify_result === false)
+export function verifyResultProof (listInfoBUS, resultInclusionProof, root) {
+    if(!listInfoBUS || !resultInclusionProof || !root)
         return false
 
-    let sum_infoBUs = getSumOfVotes_infoBUs(infoBUs)
-    let sum_proof = getSumOfVotes_proofData(proofs)
+    if (verifyMultipleInclusionProofs(root, resultInclusionProof) === false)
+        return false
+
+    let sum_infoBUs = getSumOfVotes_infoBUs(listInfoBUS)
+    let sum_proof = getSumOfVotes_proofData(resultInclusionProof)
     for(let i = 0; i < sum_infoBUs.length; i++)
         if(sum_infoBUs[i].votos !== sum_proof[i])
             return false
 
     return true
+}
+
+export function verifyInfoBUs(infoBUs){
+
 }
 
 export function getSumOfVotes_infoBUs(infoBUs){
@@ -89,7 +95,7 @@ export function getHash(infoBU) {
 
 /* Funções privadas */
 
-function verifyMultipleProofs(root, proofs){
+function verifyMultipleInclusionProofs(root, proofs){
     if(proofs.length === 0) 
         return false
         

@@ -5,7 +5,7 @@ import { Card, CardBody, Row, Col} from 'reactstrap';
 import { Loader } from '../../../vibe';
 import approval from '../../../assets/images/Approved.png';
 import error from '../../../assets/images/Error.png';
-import { getRoot, verifyInclusionProof, getSumOfVotes_infoBUs, bufferToHex } from '../../../api/merkletree_InfoBUs.api'
+import { getRoot, getSumOfVotes_infoBUs, bufferToHex, verifyInfoBUs } from '../../../api/merkletree_InfoBUs.api'
 import './Retotalizar.css';
 
 const VerificacaoCompleta = () => {
@@ -37,29 +37,26 @@ const VerificacaoCompleta = () => {
     if(!retotalizacao && infoBUs)
         setRetotalizacao(getSumOfVotes_infoBUs(infoBUs))
 
-    const searchIncosistent_InfoBU = (infoBUs) => {
-        const infoBUsVerificados = () => {
-            let leaves = infoBUs.map((infoBU, i) => {
-                return {...infoBU, resultadoProvaDeInclusao: verifyInclusionProof(folhas[i].leaf, raiz, folhas[i].proof)}
-            })
-            return leaves
-        }
+    const searchIncosistent_InfoBU = (infoBUs, root, inclusionProofs) => {
+        if(!infoBUs || !inclusionProofs || !root) return -1
 
-        for (let i = 0; i < infoBUsVerificados.length; i++) {
-            if (infoBUsVerificados[i].resultadoProvaDeInclusao === false){
-                return infoBUsVerificados[i].id
+        for (let i = 0; i < infoBUs.length; i++) {
+            if (verifyInfoBUs(root, [inclusionProofs[i]], [infoBUs[i]]) === false) {
+                return infoBUs[i].id
             }
+
         }
         return -1
     }
    
      
-    const id_incosistente = searchIncosistent_InfoBU(infoBUs)
+    const id_incosistente = searchIncosistent_InfoBU(infoBUs, raiz, folhas)
     if (infoBUs && folhas) {
         console.log('Raiz: ', raiz)
         console.log('InfoBUS: ', infoBUs)
         console.log('Recontabilização: ', retotalizacao)
         console.log('Folhas da árvore', folhas)
+        console.log('ID do infoBU com problemas: ', id_incosistente)
     }
     
    
