@@ -34,8 +34,9 @@ exports.inicializar = async () => {
             turno: BU.turno,
             regras_aplicadas: null,
             votos_validos: BU.votos,
-            indice_na_arvore_de_BUs: BU.merkletree_leaf_id,
+            indice_na_arvore_de_BUs: parseInt(BU.merkletree_leaf_index),
         }
+        console.log(JSON.stringify(infoBU))
         folhas.push(infoBU)
         modeloBoletim.modeloInfoBU.create({
             ...infoBU,

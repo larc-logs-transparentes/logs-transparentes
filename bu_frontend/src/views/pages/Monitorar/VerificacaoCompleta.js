@@ -36,21 +36,9 @@ const VerificacaoCompleta = () => {
 
     if(!retotalizacao && infoBUs)
         setRetotalizacao(getSumOfVotes_infoBUs(infoBUs))
-
-    const searchIncosistent_InfoBU = (infoBUs, root, inclusionProofs) => {
-        if(!infoBUs || !inclusionProofs || !root) return -1
-
-        for (let i = 0; i < infoBUs.length; i++) {
-            if (verifyInfoBUs(root, [inclusionProofs[i]], [infoBUs[i]]) === false) {
-                return infoBUs[i].id
-            }
-
-        }
-        return -1
-    }
    
      
-    const id_incosistente = searchIncosistent_InfoBU(infoBUs, raiz, folhas)
+    const id_incosistente = verifyInfoBUs(infoBUs, folhas, raiz)
     if (infoBUs && folhas) {
         console.log('Raiz: ', raiz)
         console.log('InfoBUS: ', infoBUs)

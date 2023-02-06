@@ -1,6 +1,6 @@
 import { Buffer } from "buffer"
 const SHA256 = require('crypto-js/sha256')
-const crypto_js_1 = require("crypto-js");
+const crypto_js = require("crypto-js");
 var hashFn = bufferifyFn(SHA256)
 const _ = require('lodash');
 const axios = require('axios')
@@ -55,8 +55,22 @@ export function verifyResultProof (listInfoBUS, resultInclusionProof, root) {
     return true
 }
 
-export function verifyInfoBUs(infoBUs){
 
+export function verifyInfoBUs(listInfoBUS, listInclusionProofs, root){
+    if(!listInfoBUS || !listInclusionProofs || !root)
+        return -1
+
+    for (let i = 0; i < listInfoBUS.length; i++) {
+        const infoBUHash = getHash(listInfoBUS[i]);
+        
+        if(Buffer.compare(Buffer.from(infoBUHash, 'hex'), Buffer.from(listInclusionProofs[i].leaf.leaf)) !== 0)
+            return listInfoBUS[i].id
+
+        if(!verifyInclusionProof(listInclusionProofs[i].leaf, root, listInclusionProofs[i].proof))
+            return listInfoBUS[i].id
+    }
+
+    return -1
 }
 
 export function getSumOfVotes_infoBUs(infoBUs){
@@ -82,7 +96,7 @@ export function bufferToHex(value, withPrefix = true) {
 
 export function getHash(infoBU) {
     return SHA256(JSON.stringify({
-        _id: infoBU.id,
+        _id: infoBU._id,
         id: infoBU.id,
         secao: infoBU.secao,
         zona: infoBU.zona,
@@ -90,6 +104,7 @@ export function getHash(infoBU) {
         turno: infoBU.turno,
         regras_aplicadas: null,
         votos_validos: infoBU.votos_validos,
+        indice_na_arvore_de_BUs: infoBU.indice_na_arvore_de_BUs,
     })).toString();
 }
 
@@ -153,6 +168,6 @@ function bufferifyFn(f) {
             return Buffer.from(v.buffer, v.byteOffset, v.byteLength);
         }
         // crypto-js support
-        return Buffer.from(f(crypto_js_1.enc.Hex.parse(value.toString('hex'))).toString(crypto_js_1.enc.Hex), 'hex');
+        return Buffer.from(f(crypto_js.enc.Hex.parse(value.toString('hex'))).toString(crypto_js.enc.Hex), 'hex');
     };
 }
