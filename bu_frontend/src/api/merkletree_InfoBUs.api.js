@@ -6,6 +6,13 @@ const _ = require('lodash');
 const axios = require('axios')
 const bu_api_url = require('../config.json').bu_api_url
 
+/**
+     * @desc - Verify a Inclusion Proof for a leaf
+     * @param {Object} leaf - leaf data
+     * @param {Object} root - Root of the tree
+     * @param {Object[]} proof - Array of proof data
+     * @returns {boolean} - true if the proof is valid, false otherwise.
+*/
 export function verifyInclusionProof(leaf, root, proof){    
     let hash = leaf;
     if (!Array.isArray(proof) || !leaf || !root)
@@ -24,6 +31,9 @@ export function verifyInclusionProof(leaf, root, proof){
     return Buffer.compare(hash.leaf, root.leaf) === 0;
 }
 
+/**
+    * @desc - Acess the API and get the root of the tree
+*/
 export function getRoot(){
     return new Promise(function (resolve, reject){
         axios.get(`${bu_api_url}/infoBUs/tree/root`)
@@ -39,6 +49,13 @@ export function getRoot(){
     })
 }
 
+/**
+    * @desc - Verify a Inclusion Proof for a leaf and sum of votes
+    * @param {Object[]} listInfoBUS - array of infoBUs
+    * @param {Object[]} resultInclusionProof - array with Proof with proof of each key node
+    * @param {Object} root - Root of the tree
+    * @returns {boolean} - true if the proof and sum is valid, false otherwise.
+*/
 export function verifyResultProof (listInfoBUS, resultInclusionProof, root) {
     if(!listInfoBUS || !resultInclusionProof || !root)
         return false
@@ -56,6 +73,13 @@ export function verifyResultProof (listInfoBUS, resultInclusionProof, root) {
 }
 
 
+/**
+    * @desc - Verify hash of each infoBU and the inclusion proof
+    * @param {Object[]} listInfoBUS - array of infoBUs
+    * @param {Object[]} listInclusionProofs - array with Proof with proof node of each infoBU
+    * @param {Object} root - Root of the tree
+    * @returns {boolean} - id of the infoBU that is invalid, -1 if all is valid.
+*/
 export function verifyInfoBUs(listInfoBUS, listInclusionProofs, root){
     if(!listInfoBUS || !listInclusionProofs || !root)
         return -1
@@ -73,6 +97,11 @@ export function verifyInfoBUs(listInfoBUS, listInclusionProofs, root){
     return -1
 }
 
+/**
+    * @desc - get the sum of votes of each candidate
+    * @param {Object[]} infoBUs - array with infoBUs
+    * @returns {Object[]} - array with sum of votes of each candidate
+*/
 export function getSumOfVotes_infoBUs(infoBUs){
     const ret = []
     for (let i = 0; i < infoBUs.length; i++) {
@@ -90,10 +119,21 @@ export function getSumOfVotes_infoBUs(infoBUs){
     return ret
 }
 
+/**
+    * @desc - buffer to hex string with prefix
+    * @param {Buffer} value - Buffer to convert
+    * @param {boolean} withPrefix - true if you want to add the prefix 0x
+    * @returns {string} - hex string
+*/
 export function bufferToHex(value, withPrefix = true) {
     return `${withPrefix ? '0x' : ''}${(value || Buffer.alloc(0)).toString('hex')}`;
 }
 
+/**
+    * @desc - get hash of infoBU
+    * @param {Object} infoBU - infoBU to get hash
+    * @returns {string} - hash of infoBU
+*/
 export function getHash(infoBU) {
     return SHA256(JSON.stringify({
         _id: infoBU._id,
