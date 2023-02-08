@@ -1,5 +1,5 @@
 import React from "react";
-import { FormGroup, Label, Col, Card, CardHeader, CardBody, CardText } from "reactstrap";
+import { CardHeader } from "reactstrap";
 
 const ResultadoEleicao = ({ votos_cidade, id_inicial, id_final }) => {
     

@@ -81,15 +81,12 @@ router.post('/proof', (req, res) => {
     // returns proof
     const data = []
     for (let index = 0; index < req.body.leaves.length; index++) {
-        const leaf = {
-            leaf: req.body.leaves[index].merkletree_leaf,
-            vote: req.body.leaves[index].votos_validos.map(candidato => ([candidato.nome, candidato.votos]))
-        }
+        const leaf = infoBUsTree.getLeaf(req.body.leaves[index].merkletree_index)
         const proof = infoBUsTree.getProof(leaf)
         if(proof)
             data.push({
                 leaf: leaf,
-                proof: infoBUsTree.getProof(leaf)
+                proof: proof
             })
         else
             data.push({

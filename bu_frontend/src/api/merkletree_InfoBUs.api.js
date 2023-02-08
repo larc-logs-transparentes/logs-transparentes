@@ -90,6 +90,7 @@ export function verifyInfoBUs(listInfoBUS, listInclusionProofs, root){
         if(Buffer.compare(Buffer.from(infoBUHash, 'hex'), Buffer.from(listInclusionProofs[i].leaf.leaf)) !== 0)
             return listInfoBUS[i].id
 
+        console.log(listInclusionProofs[i])
         if(!verifyInclusionProof(listInclusionProofs[i].leaf, root, listInclusionProofs[i].proof))
             return listInfoBUS[i].id
     }
