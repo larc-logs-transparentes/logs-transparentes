@@ -15,6 +15,7 @@ exports.findById = async (id) => {
 
 exports.findByIdRange = async (id, id_final) => {
     const data = await modeloBoletim.modeloInfoBU.find({ id: { $gte: id, $lte: id_final } })
+    data.sort((a, b) => a.id - b.id)
     return data
 }
 

@@ -111,3 +111,14 @@ export const getRoot = (root_id) => {
       console.log(err)
     })
 }
+
+export const getInfoBUsFromIdRange = async (initial_id, final_id) => {
+  return await axios.get(`${bu_api_url}/infoBUs?id=${initial_id}&id_final=${final_id}`)
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}

@@ -12,6 +12,7 @@ import {
   FormText
 } from 'reactstrap';
 import { getRoot, verifyResultProof, getSumOfVotes_infoBUs } from '../../../api/merkletree_InfoBUs.api'
+import { getInfoBUsFromIdRange } from '../../../api/bu.api';
 import cadVerde from '../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../assets/images/cad-vermelho.png';
 
@@ -45,12 +46,9 @@ componentDidUpdate(prevProps, prevState) {
     console.log(this.state)
     console.log(getSumOfVotes_infoBUs(this.state.infoBUs))
     if(prevState.id_final !== this.state.id_final) {
-      this.axios.get(`${this.bu_api_url}/infoBUs?id=${this.state.id_inicial}&id_final=${this.state.id_final}`)
-          .then(response => {
-            this.setState({ infoBUs: response.data })
-            this.setState({ votos_cidade: getSumOfVotes_infoBUs(response.data) })
-          })
-
+      const infoBUs = getInfoBUsFromIdRange(this.state.id_inicial, this.state.id_final)
+      this.setState({ infoBUs: infoBUs })
+      this.setState({ votos_cidade: getSumOfVotes_infoBUs(infoBUs) })
       this.axios.get(`${this.bu_api_url}/infoBUs/tree/resultProof?i_inicial=${this.state.id_inicial - 1}&i_final=${this.state.id_final - 1}`)
       .then(async response => {
           const root = await getRoot()
