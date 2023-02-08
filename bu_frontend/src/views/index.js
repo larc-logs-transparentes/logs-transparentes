@@ -32,7 +32,7 @@ import MostrarBU from './elements/MostrarBU';
 import Consultar_Todos from './elements/consultar_todos';
 import Retotalizar from './pages/Monitorar/Retotalizar.js';
 import Raizassinada from './pages/Monitorar/RaizAssinada.js';
-import Mapa from './pages/Monitorar/Mapa.js';
+import Mapa from './pages/Monitorar/Mapa/Mapa.js';
 import Root from './elements/Root';
 import VerificacaoCompleta from './pages/Monitorar/VerificacaoCompleta';
 

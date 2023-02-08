@@ -1,6 +1,5 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { Card, CardBody, Row, Col} from 'reactstrap';
 import { Loader } from '../../../vibe';
 import approval from '../../../assets/images/Approved.png';
@@ -10,8 +9,6 @@ import { getInfoBUsFromIdRange, getLeavesAndProofFromIdRange } from '../../../ap
 import './Retotalizar.css';
 
 const VerificacaoCompleta = () => {
-    const bu_api_url = require('../../../config.json').bu_api_url
-
     const { id_inicial, id_final } = useParams();
     const [infoBUs, setInfoBUs] = React.useState();
     const [folhas, setFolhas] = React.useState();
