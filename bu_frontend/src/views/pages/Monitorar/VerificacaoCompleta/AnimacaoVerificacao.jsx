@@ -10,8 +10,11 @@ const AnimacaoVerificacao = ({stateDownloadInfoBUs, stateVerificationInfoBUs, st
     const id_final = infoBUs ? infoBUs[infoBUs.length-1].id : 0
     const [raiz, setRaiz] = React.useState();
     
-    React.useEffect(async () => {
-        setRaiz(await getRoot())
+    React.useEffect(() => {
+        async function fetchData() {
+            setRaiz(await getRoot())
+        }
+        fetchData()
     }, [])
     
     ////////////////////// FUNÇÔES DE VERIFICAÇÃO ///////////////////////

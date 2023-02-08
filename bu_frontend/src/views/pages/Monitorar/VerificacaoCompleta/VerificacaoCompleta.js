@@ -13,14 +13,18 @@ const VerificacaoCompleta = () => {
     const [raiz, setRaiz] = React.useState();
     const [retotalizacao, setRetotalizacao] = React.useState(null);
 
-    React.useEffect(async () => {
-        const infoBUs = await getInfoBUsFromIdRange(id_inicial, id_final)
-        setInfoBUs(infoBUs)
-        setRetotalizacao(getSumOfVotes_infoBUs(infoBUs))
+    React.useEffect(() => {
+        async function fetchData(){
+            const infoBUs = await getInfoBUsFromIdRange(id_inicial, id_final)
+            setInfoBUs(infoBUs)
+            setRetotalizacao(getSumOfVotes_infoBUs(infoBUs))
+            
+            const leaves = await getLeavesAndProofFromIdRange(id_inicial, id_final)
+            setFolhas(leaves)
+            setRaiz(await getRoot())
+        }
+        fetchData()
 
-        const leaves = await getLeavesAndProofFromIdRange(id_inicial, id_final)
-        setFolhas(leaves)
-        setRaiz(await getRoot())
     }, [id_inicial, id_final])
      
     const id_incosistente = verifyInfoBUs(infoBUs, folhas, raiz)

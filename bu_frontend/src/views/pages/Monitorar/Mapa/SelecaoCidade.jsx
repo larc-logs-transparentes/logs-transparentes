@@ -39,8 +39,8 @@ const SelecaoCidade = ({state, setState}) => {
                 <Label for="turnoSelect">Cidade:</Label>
                 <Input type="select" name="turno" id="turnoSelect" onChange={handleChange.bind(this)}>
                     <option value=""></option>
-                    {cidadeArr.map((entry) => (
-                    <option value={entry}>{entry}</option>            
+                    {cidadeArr.map((entry, i) => (
+                    <option value={entry} key={i}>{entry}</option>            
                     ))}
                 </Input>
                 {state.id_inicial && <button className="btn float-right" style={{position: 'relative', bottom: '2px'}} onClick={() => mostraProva()}><img src={(state.resultadoProvaParcial===true)? cadVerde : cadVermelho} alt="estado" /></button>}
