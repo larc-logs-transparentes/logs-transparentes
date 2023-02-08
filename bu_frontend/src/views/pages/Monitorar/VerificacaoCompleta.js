@@ -6,7 +6,7 @@ import { Loader } from '../../../vibe';
 import approval from '../../../assets/images/Approved.png';
 import error from '../../../assets/images/Error.png';
 import { getRoot, getSumOfVotes_infoBUs, bufferToHex, verifyInfoBUs } from '../../../api/merkletree_InfoBUs.api'
-import { getInfoBUsFromIdRange } from '../../../api/bu.api';
+import { getInfoBUsFromIdRange, getLeavesAndProofFromIdRange } from '../../../api/bu.api';
 import './Retotalizar.css';
 
 const VerificacaoCompleta = () => {
@@ -21,14 +21,10 @@ const VerificacaoCompleta = () => {
     React.useEffect(async () => {
         const infoBUs = await getInfoBUsFromIdRange(id_inicial, id_final)
         setInfoBUs(infoBUs)
-        axios.get(`${bu_api_url}/infoBUs/tree/leaf?id=${id_inicial}&id_final=${id_final}`)
-        .then(async response => {
-            setFolhas(response.data)
-            setRaiz(await getRoot())
-        })
-        .catch(error => {
-            console.log(error)
-        })
+        
+        const leaves = await getLeavesAndProofFromIdRange(id_inicial, id_final)
+        setFolhas(leaves)
+        setRaiz(await getRoot())
     }, [id_inicial, id_final])
 
     if(!retotalizacao && infoBUs)

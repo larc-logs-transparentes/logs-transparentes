@@ -12,7 +12,7 @@ import {
   FormText
 } from 'reactstrap';
 import { getRoot, verifyResultProof, getSumOfVotes_infoBUs } from '../../../api/merkletree_InfoBUs.api'
-import { getInfoBUsFromIdRange } from '../../../api/bu.api';
+import { getInfoBUsFromIdRange, getResultProofFromIdRange } from '../../../api/bu.api';
 import cadVerde from '../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../assets/images/cad-vermelho.png';
 
@@ -41,27 +41,20 @@ componentDidMount() {
 
 }
 
-componentDidUpdate(prevProps, prevState) {
+async componentDidUpdate(prevProps, prevState) {
     console.log('---------this.state---------')
     console.log(this.state)
-    console.log(getSumOfVotes_infoBUs(this.state.infoBUs))
     if(prevState.id_final !== this.state.id_final) {
-      const infoBUs = getInfoBUsFromIdRange(this.state.id_inicial, this.state.id_final)
+      const infoBUs = await getInfoBUsFromIdRange(this.state.id_inicial, this.state.id_final)
       this.setState({ infoBUs: infoBUs })
       this.setState({ votos_cidade: getSumOfVotes_infoBUs(infoBUs) })
-      this.axios.get(`${this.bu_api_url}/infoBUs/tree/resultProof?i_inicial=${this.state.id_inicial - 1}&i_final=${this.state.id_final - 1}`)
-      .then(async response => {
-          const root = await getRoot()
-          this.setState({ dadosProvaParcial : response.data })
-          this.setState({ resultadoProvaParcial : verifyResultProof(this.state.infoBUs, response.data, root) })
-      })
-      .catch(error => {
-          console.log(error)
-      })
+      
+      const root = await getRoot()
+      const resultProof = await getResultProofFromIdRange(this.state.id_inicial, this.state.id_final)
+      this.setState({ dadosProvaParcial : resultProof })
+      this.setState({ resultadoProvaParcial : verifyResultProof(infoBUs, resultProof, root) })
   }
 }
-
-
 
   defineFaixaSaoCarlos(){
     this.setState( {id_final:3, id_inicial:1});
