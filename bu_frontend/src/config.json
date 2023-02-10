@@ -1,4 +1,4 @@
 {
-    "bu_api_url": "http://ts-logt-reais.larc2.usp:8080", 
+    "bu_api_url": "http://localhost:8080",
     "mosquitto_url": "ws://test.mosquitto.org:8080/"
 }

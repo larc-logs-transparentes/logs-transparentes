@@ -68,12 +68,15 @@ def insert_body_to_db(body_dict):
 
 
 # sends list of bus (dicts) to db
-def insert_list_bus_to_db():
+def insert_list_bus_to_db(showProgress=False):
     bodies = get_body_list_with_zona_secao()
     res_list = []
     for body in bodies:
         res = insert_body_to_db(body)
-        print(res)
+        if showProgress:
+            print('Remaining: {}'.format(len(bodies) - bodies.index(body)), end='\r')
+        else:
+            print(res)
         res_list.append(res)
         time.sleep(0.1) # sleep between inserts so it won`t flood db and get error
 
@@ -81,5 +84,5 @@ def insert_list_bus_to_db():
 
 
 if __name__ == '__main__':
-    responses = insert_list_bus_to_db()
+    responses = insert_list_bus_to_db(showProgress=True)
     print(responses)
