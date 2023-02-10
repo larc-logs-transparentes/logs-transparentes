@@ -32,10 +32,9 @@ import MostrarBU from './elements/MostrarBU';
 import Consultar_Todos from './elements/consultar_todos';
 import Retotalizar from './pages/Monitorar/Retotalizar.js';
 import Raizassinada from './pages/Monitorar/RaizAssinada.js';
-import Mapa from './pages/Monitorar/Mapa.js';
+import Mapa from './pages/Monitorar/Mapa/Mapa.js';
 import Root from './elements/Root';
-
-import Atualizacao from './elements/charts';
+import VerificacaoCompleta from './pages/Monitorar/VerificacaoCompleta/VerificacaoCompleta.js';
 
 // See React Router documentation for details: https://reacttraining.com/react-router/web/api/Route
 const pageList = [
@@ -43,7 +42,7 @@ const pageList = [
     name: 'Dashboard',
     path: '/home',
     component: Dashboard,
-  },
+  },  
   {
     name: 'Detalhes',
     path: '/elements/chart_detail',
@@ -85,10 +84,16 @@ const pageList = [
   {
     name: 'Mapa',
     path: '/mapa',
-    component: Mapa
+    component: Mapa,
+
     //badge: {
     //  text: 'NEW',
     //},
+  },
+  {
+    name: 'Verificação completa de resultado da cidade',
+    path: '/mapa/verificacaoCompleta/:id_inicial/:id_final',
+    component: VerificacaoCompleta
   },
   {
     name: 'Ver mais',   //Raiz assinada

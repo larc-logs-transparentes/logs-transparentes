@@ -263,10 +263,9 @@ function bufferify(value) {
 }
 
 export async function verify(buId){
-   
     var BU = await getBuById(buId)
-    console.log("bu_verify", BU)
-    var leafid = BU.merkletree_leaf_id
+   // console.log(BU)
+    var leafid = BU.merkletree_leaf_index
     var root = await getRoot()
     var rootString = root.toString('hex')
     var fullproof
