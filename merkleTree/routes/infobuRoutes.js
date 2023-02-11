@@ -13,7 +13,7 @@ router.post('/leaves', (req, res) => {
         const infoBU = infoBUs[index];
         leaves.push({
             leaf: SHA256(JSON.stringify(infoBU)).toString(),
-            vote: infoBU.votos_validos.map(candidato => ([candidato.nome, candidato.votos]))
+            vote: infoBU.votos_validos.map(candidato => ([candidato.codigo, candidato.votos]))
         })
     }
     

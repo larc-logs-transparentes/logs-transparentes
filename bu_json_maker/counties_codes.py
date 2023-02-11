@@ -10,8 +10,8 @@ def get_county_codes_json():
     return county_list
 
 # Check the UF of county number
-def get_county_uf_with_number(number):
+def get_county_uf_and_city_with_number(number):
     counties = get_county_codes_json()
     county = [c for c in counties if c["codigo_tse"] == number]
 
-    return county[0]["uf"]
+    return county[0]

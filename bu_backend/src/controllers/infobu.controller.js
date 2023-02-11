@@ -33,6 +33,8 @@ exports.inicializar = async () => {
             zona: BU.zona,
             UF: BU.UF,
             turno: BU.turno,
+            cidade: BU.cidade,
+            bu_inteiro: BU.bu_inteiro,
             regras_aplicadas: null,
             votos_validos: BU.votos,
             indice_na_arvore_de_BUs: parseInt(BU.merkletree_leaf_index),

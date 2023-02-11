@@ -135,7 +135,7 @@ export const getLeavesAndProofFromIdRange = (initial_id, final_id) => {
 }
 
 export const getResultProofFromIdRange = (initial_id, final_id) => {
-  return axios.get(`${bu_api_url}/infoBUs/tree/resultProof?i_inicial=${initial_id - 1}&i_final=${final_id - 1}`)
+  return axios.get(`${bu_api_url}/infoBUs/tree/resultProof?i_inicial=${initial_id}&i_final=${final_id}`)
     .then(res => {
       console.log(res.data)
       return res.data

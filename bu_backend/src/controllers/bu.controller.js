@@ -40,6 +40,7 @@ exports.create = (data) => {
       turno: data.turno,
       UF: data.UF,
       zona: data.zona,
+      cidade: data.cidade,
       secao: data.secao,
       bu_inteiro: JSON.stringify(data.bu_inteiro),
       votos: data.votos,

@@ -112,6 +112,10 @@ class MostrarBU extends Component {
               <CardText>{bu.UF}</CardText>
               </CardBody>
               <CardBody>
+              <Label>Município</Label>
+              <CardText>{bu.cidade}</CardText>
+              </CardBody>
+              <CardBody>
               <Label>Seção</Label>
               <CardText>{bu.secao}</CardText>
               </CardBody>

@@ -1,9 +1,10 @@
 import json
 import requests
 import time
+import sys
 
-from constants import DB_URL
-from counties_codes import get_county_uf_with_number
+from constants import BACKEND_URL
+from counties_codes import get_county_uf_and_city_with_number
 
 
 # reads bus from file made with bu_json_converter.py
@@ -37,7 +38,9 @@ def get_body_list_with_zona_secao():
         zona = bu['identificacaoSecao']['municipioZona']['zona']
         secao = bu['identificacaoSecao']['secao']
         cod_municipio = bu['identificacaoSecao']['municipioZona']['municipio']
-        uf = get_county_uf_with_number(cod_municipio)
+        county = get_county_uf_and_city_with_number(cod_municipio)
+        uf = county['uf']
+        municipio = county['nome_municipio']
         candidates_votes_list = get_candidates_votes_list(bu)
 
         body_dict = {
@@ -47,6 +50,7 @@ def get_body_list_with_zona_secao():
             "UF": uf,
             "zona": zona,
             "secao": secao,
+            "cidade": municipio.capitalize(),
             "bu_inteiro": bu,
             "__v": 0,
             "votos": candidates_votes_list,
@@ -64,14 +68,22 @@ def insert_body_to_db(body_dict):
     header = {
         "content-type": "application/json"
     }
-    return requests.post(DB_URL, json=body_dict, headers=header)
+    return requests.post(f"{BACKEND_URL}/bu", json=body_dict, headers=header)
 
+
+def initialize_infoBUs_tree():
+    header = {
+        "content-type": "application/json"
+    }
+    return requests.post(f"{BACKEND_URL}/infobus/create", headers=header)
 
 # sends list of bus (dicts) to db
-def insert_list_bus_to_db(showProgress=False):
+def insert_list_bus_to_db(showProgress=False, limit=-1):
     bodies = get_body_list_with_zona_secao()
     res_list = []
     for body in bodies:
+        if limit != -1 and bodies.index(body) == limit:
+            break
         res = insert_body_to_db(body)
         if showProgress:
             print(f'{bodies.index(body)} de {len(bodies)}', end='\r')
@@ -84,5 +96,9 @@ def insert_list_bus_to_db(showProgress=False):
 
 
 if __name__ == '__main__':
-    responses = insert_list_bus_to_db(showProgress=True)
+    if(len(sys.argv) > 1):
+        responses = insert_list_bus_to_db(showProgress=True, limit=int(sys.argv[1]))
+    else:
+        responses = insert_list_bus_to_db(showProgress=True)
     print(responses)
+    print(initialize_infoBUs_tree())
