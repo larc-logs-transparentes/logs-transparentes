@@ -1,9 +1,10 @@
 import asn1tools
 import glob
+import os
 import json
 
 
-from constants import ASN1_SPECS_PATH, RESULT_JSON_PATH, ALL_BU_FOLDERS_PATH
+from constants import ASN1_SPECS_PATH, RESULT_JSON_PATH, RESULT_FOLDER, ALL_BU_FOLDERS_PATH
 
 
 # Helper class to encode BU to JSON
@@ -52,10 +53,9 @@ def get_list_all_bus_json_from_path(path):
 
     for file in files_list:
         bu_list.append(convert_bu_to_json(file))
-        print(f"{path.rsplit('/', 1)[-1]} {files_list.index(file)} de {len(files_list)}")
+        print(f"{path.rsplit('/', 1)[-1]} {files_list.index(file)} de {len(files_list)}", end='\r')
         # if files_list.index(file) == 1:   # Stops at only 2 items from each list, for testing purposes
         #     break
-
     return bu_list
 
 
@@ -71,6 +71,9 @@ def write_bus_as_json_to_file(all_bus_path):
     bus_dirs = get_all_bu_dirs(all_bus_path)
 
     # Create file or overwrite if it already exists
+    if not os.path.exists(RESULT_FOLDER):
+        os.makedirs(RESULT_FOLDER)
+
     hard_file = open(RESULT_JSON_PATH, 'w')
     hard_file.write('[')
 

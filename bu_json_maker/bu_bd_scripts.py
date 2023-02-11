@@ -74,7 +74,7 @@ def insert_list_bus_to_db(showProgress=False):
     for body in bodies:
         res = insert_body_to_db(body)
         if showProgress:
-            print(f'Remaining: {len(bodies) - bodies.index(body)}', end='\r')
+            print(f'{bodies.index(body)} de {len(bodies)}', end='\r')
         else:
             print(res)
         res_list.append(res)
