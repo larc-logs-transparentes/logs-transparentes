@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { NUMBER } = require("sequelize");
 
 const candidato_identificavel = new mongoose.Schema({  //subSchema para os candidatos 
     partido: {type: Number,},
@@ -25,8 +26,8 @@ const boletimSchema = new mongoose.Schema({
 const InfoBuSchema = new mongoose.Schema({  
     _id: { type: Number, required: true },
     id: { type: Number, required: true },
-    secao: String,
-    zona: String,
+    secao: Number,
+    zona: Number,
     UF: String,
     turno: String,
     cidade: String,
