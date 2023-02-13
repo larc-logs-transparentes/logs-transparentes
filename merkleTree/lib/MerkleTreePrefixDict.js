@@ -1242,25 +1242,3 @@ if (typeof window !== 'undefined') {
     window.MerkleTreePrefix = MerkleTreePrefix;
 }
 exports.default = MerkleTreePrefix;
-const tree = new MerkleTreePrefix([], sha256_1.default);
-const ll = SHA256F("aya");
-const myMap = new Map([
-    ["key1", 1],
-    ["key2", 2]
-]);
-const testLeaf = { leaf: ll,
-    vote: myMap };
-console.log(testLeaf);
-tree.addLeaf(testLeaf);
-tree.addLeaf(testLeaf);
-tree.addLeaf(testLeaf);
-tree.addLeaf(testLeaf);
-tree.addLeaf(testLeaf);
-console.log("a");
-console.log(tree);
-for (var layer in tree.layers) {
-    console.log(tree.layers[layer]);
-    for (var layerj in tree.layers[layer]) {
-        console.log(tree.layers[layer][layerj]);
-    }
-}

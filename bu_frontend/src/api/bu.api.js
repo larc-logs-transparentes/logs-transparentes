@@ -111,3 +111,36 @@ export const getRoot = (root_id) => {
       console.log(err)
     })
 }
+
+export const getInfoBUsFromIdRange = (initial_id, final_id) => {
+  return axios.get(`${bu_api_url}/infoBUs?id=${initial_id}&id_final=${final_id}`)
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
+export const getLeavesAndProofFromIdRange = (initial_id, final_id) => {
+  return axios.get(`${bu_api_url}/infoBUs/tree/leaf?id=${initial_id}&id_final=${final_id}`)
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
+export const getResultProofFromIdRange = (initial_id, final_id) => {
+  return axios.get(`${bu_api_url}/infoBUs/tree/resultProof?i_inicial=${initial_id}&i_final=${final_id}`)
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}

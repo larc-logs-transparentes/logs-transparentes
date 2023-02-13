@@ -4,7 +4,7 @@ const SHA256 = require('crypto-js/sha256')
 const consistencyProof = require('./controllers/consistencyProof.controller')
 
 const app = express()
-app.use(express.json())
+app.use(express.json({limit: '50mb'}));
 
 const port = 3001
 //mudar a funcao de hash

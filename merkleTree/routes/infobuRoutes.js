@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const { MerkleTreePrefix } = require('../lib/MerkleTreePrefix')
 const { SHA256 } = require('crypto-js')
-const { nodeKeys } = require('../controllers/nodeKeys.controller')
+const { keyNodes } = require('../controllers/keyNodes.controller')
 
 const infoBUsTree = new MerkleTreePrefix([], SHA256, {fillDefaultHash: true})
 
@@ -13,7 +13,7 @@ router.post('/leaves', (req, res) => {
         const infoBU = infoBUs[index];
         leaves.push({
             leaf: SHA256(JSON.stringify(infoBU)).toString(),
-            vote: infoBU.votos_validos.map(candidato => ([candidato.nome, candidato.votos]))
+            vote: infoBU.votos_validos.map(candidato => ([candidato.codigo, candidato.votos]))
         })
     }
     
@@ -74,22 +74,19 @@ router.get('/nodeKeys', (req, res) => {
     }
 
     const leaves = infoBUsTree.getLayers()[0]    
-    res.send(nodeKeys(leaves, parseInt(i_inicial), parseInt(i_final)))
+    res.send(keyNodes(leaves, parseInt(i_inicial), parseInt(i_final)))
 })
 
 router.post('/proof', (req, res) => {
     // returns proof
     const data = []
     for (let index = 0; index < req.body.leaves.length; index++) {
-        const leaf = {
-            leaf: req.body.leaves[index].merkletree_leaf,
-            vote: req.body.leaves[index].votos_validos.map(candidato => ([candidato.nome, candidato.votos]))
-        }
+        const leaf = infoBUsTree.getLeaf(req.body.leaves[index].merkletree_index)
         const proof = infoBUsTree.getProof(leaf)
         if(proof)
             data.push({
                 leaf: leaf,
-                proof: infoBUsTree.getProof(leaf)
+                proof: proof
             })
         else
             data.push({
@@ -109,37 +106,33 @@ router.get('/resultProof', (req, res) => {
         res.send("Missing parameters i_inicial and i_final")
         return
     }
-    const nodes = nodeKeys(infoBUsTree.getLayers()[0], parseInt(i_inicial), parseInt(i_final))
+    const nodes = keyNodes(infoBUsTree.getLayers()[0], parseInt(i_inicial), parseInt(i_final))
     const proofs = []
     nodes.map(key => {
         const node = infoBUsTree.getNode(key.index, key.depth)
         const proof = infoBUsTree.getProof(node, key.index, key.depth)
-        if(proof)
-            proofs.push({
-                leaf: node,
-                coordinates: key,
-                proof: proof
-            })
-        else
-            proofs.push({
-                leaf: node,
-                coordinates: key,
-                proof: 'Proof not found'
-            })
+        if(!proof)
+            proof = 'Proof not found'
+        
+        proofs.push({
+            leaf: node,
+            coordinates: key,
+            proof: proof
+        })
     })
      
     res.json(proofs)
 })
 
-router.get('/modify', (req, res) => {
-    const index = parseInt(req.query.index)
-    let depth = req.query.depth
+router.post('/modify', (req, res) => {
+    const index = req.body.index
+    let depth = req.body.depth
     if(!depth)
         depth = 0
     else
         depth = parseInt(depth)
 
-    const vote = [['Candidado A', 1000], ['Candidado B', 1000]]
+    const vote = req.body.vote
     
     infoBUsTree.modifyNode(vote, index, depth)
 

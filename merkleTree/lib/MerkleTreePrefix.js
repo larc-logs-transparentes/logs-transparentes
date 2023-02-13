@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MerkleTreePrefix = void 0;
-const buffer_1 = require("buffer");
-const sha256_1 = __importDefault(require("crypto-js/sha256"));
-const treeify_1 = __importDefault(require("treeify"));
-const Base_1 = __importDefault(require("./Base"));
+const buffer = require("buffer");
+const sha256 = __importDefault(require("crypto-js/sha256"));
+const treeify = __importDefault(require("treeify"));
+const Base = __importDefault(require("./Base"));
 const _ = require('lodash');
 // TODO: Clean up and DRY up code
 // Disclaimer: The multiproof code is unaudited and may possibly contain serious issues. It's in a hacky state as is and it's begging for a rewrite!
@@ -16,7 +16,7 @@ const SHA256F = require('crypto-js/sha256');
  * Class reprensenting a Merkle Tree
  * @namespace MerkleTreePrefix
  */
-class MerkleTreePrefix extends Base_1.default {
+class MerkleTreePrefix extends Base.default {
     /**
      * @desc Constructs a Merkle Tree.
      * All nodes and leaves are stored as Buffers.
@@ -39,7 +39,7 @@ class MerkleTreePrefix extends Base_1.default {
      *const tree = new MerkleTreePrefix(leaves, sha256)
      *```
      */
-    constructor(leaves, hashFn = sha256_1.default, options = {}) {
+    constructor(leaves, hashFn = sha256.default, options = {}) {
         super();
         this.duplicateOdd = false;
         this.hashLeaves = false;
@@ -117,7 +117,7 @@ class MerkleTreePrefix extends Base_1.default {
                 parentVote[index][1] += item[1];
             return false;
         });
-        const parentHash = this.hashFn(buffer_1.Buffer.concat([this.hashFn(parentVote.toString()), leftNode.leaf, rightNode.leaf], 3));
+        const parentHash = this.hashFn(buffer.Buffer.concat([this.hashFn(parentVote.toString()), leftNode.leaf, rightNode.leaf], 3));
         return {
             leaf: parentHash,
             vote: parentVote
@@ -192,7 +192,7 @@ class MerkleTreePrefix extends Base_1.default {
     getLeaf(index) {
         if (index < 0 || index > this.leaves.length - 1) {
             return {
-                leaf: buffer_1.Buffer.from([]),
+                leaf: buffer.Buffer.from([]),
                 vote: null
             };
         }
@@ -208,7 +208,7 @@ class MerkleTreePrefix extends Base_1.default {
     getNode(index, depth) {
         if (index < 0 || index > this.leaves.length - 1) {
             return {
-                leaf: buffer_1.Buffer.from([]),
+                leaf: buffer.Buffer.from([]),
                 vote: null
             };
         }
@@ -358,7 +358,7 @@ class MerkleTreePrefix extends Base_1.default {
             }
             return acc;
         }, []);
-        layers.unshift(buffer_1.Buffer.from([0]));
+        layers.unshift(buffer.Buffer.from([0]));
         return layers;
     }
     /**
@@ -397,7 +397,7 @@ class MerkleTreePrefix extends Base_1.default {
     getRoot() {
         if (this.layers.length === 0)
             return {
-                leaf: buffer_1.Buffer.from([]),
+                leaf: buffer.Buffer.from([]),
                 vote: []
             };
         return this.layers[this.layers.length - 1][0];
@@ -443,10 +443,10 @@ class MerkleTreePrefix extends Base_1.default {
         if (!Number.isInteger(index) && typeof depth === 'undefined') {
             index = -1;
             depth = 0;
-            if (!buffer_1.Buffer.isBuffer(leaf.leaf))
+            if (!buffer.Buffer.isBuffer(leaf.leaf))
                 leaf.leaf = this.bufferify(leaf.leaf);
             for (let i = 0; i < this.leaves.length; i++) {
-                if (buffer_1.Buffer.compare(leaf.leaf, this.leaves[i].leaf) === 0) {
+                if (buffer.Buffer.compare(leaf.leaf, this.leaves[i].leaf) === 0) {
                     index = i;
                 }
             }
@@ -528,7 +528,7 @@ class MerkleTreePrefix extends Base_1.default {
             if (typeof item === 'string') {
                 return item;
             }
-            if (buffer_1.Buffer.isBuffer(item)) {
+            if (buffer.Buffer.isBuffer(item)) {
                 return MerkleTreePrefix.bufferToHex(item);
             }
             return {
@@ -876,7 +876,7 @@ class MerkleTreePrefix extends Base_1.default {
             console.log(`${this.bufferToHex((buffers[0].leaf))} + ${this.bufferToHex((buffers[1].leaf))} = ${this.bufferToHex(hash.leaf)}`);
         }
         console.log(this.bufferToHex(root.leaf));
-        return buffer_1.Buffer.compare(hash.leaf, root.leaf) === 0;
+        return buffer.Buffer.compare(hash.leaf, root.leaf) === 0;
     }
     modifyNode(data, index, depth) {
         if (typeof depth === 'undefined')
@@ -929,9 +929,9 @@ class MerkleTreePrefix extends Base_1.default {
             if (index >= 2 && ({}).hasOwnProperty.call(tree, index ^ 1)) {
                 let pair = [tree[index - (index % 2)], tree[index - (index % 2) + 1]];
                 if (this.sortPairs) {
-                    pair = pair.sort(buffer_1.Buffer.compare);
+                    pair = pair.sort(buffer.Buffer.compare);
                 }
-                const hash = pair[1] ? this.hashFn(buffer_1.Buffer.concat(pair)) : pair[0];
+                const hash = pair[1] ? this.hashFn(buffer.Buffer.concat(pair)) : pair[0];
                 tree[(index / 2) | 0] = hash;
                 indexqueue.push((index / 2) | 0);
             }
@@ -952,10 +952,10 @@ class MerkleTreePrefix extends Base_1.default {
         for (let i = 0; i < totalHashes; i++) {
             const bufA = proofFlag[i] ? (leafPos < leavesLen ? leaves[leafPos++] : hashes[hashPos++]) : proofs[proofPos++];
             const bufB = leafPos < leavesLen ? leaves[leafPos++] : hashes[hashPos++];
-            const buffers = [bufA, bufB].sort(buffer_1.Buffer.compare);
-            hashes[i] = this.hashFn(buffer_1.Buffer.concat(buffers));
+            const buffers = [bufA, bufB].sort(buffer.Buffer.compare);
+            hashes[i] = this.hashFn(buffer.Buffer.concat(buffers));
         }
-        return buffer_1.Buffer.compare(hashes[totalHashes - 1], root) === 0;
+        return buffer.Buffer.compare(hashes[totalHashes - 1], root) === 0;
     }
     verifyMultiProofForUnevenTree(root, indices, leaves, leavesCount, proof) {
         root = this.bufferify(root);
@@ -985,7 +985,7 @@ class MerkleTreePrefix extends Base_1.default {
      *```
      */
     getLayersAsObject() {
-        const layers = this.getLayers().map((layer) => layer.map((value) => (buffer_1.Buffer.isBuffer(value.leaf) ? this.bufferToHex(value.leaf) : value.leaf)));
+        const layers = this.getLayers().map((layer) => layer.map((value) => (buffer.Buffer.isBuffer(value.leaf) ? this.bufferToHex(value.leaf) : value.leaf)));
         const objs = [];
         for (let i = 0; i < layers.length; i++) {
             const arr = [];
@@ -1093,7 +1093,7 @@ class MerkleTreePrefix extends Base_1.default {
      */
     _toTreeString() {
         const obj = this.getLayersAsObject();
-        return treeify_1.default.asTree(obj, true);
+        return treeify.default.asTree(obj, true);
     }
     /**
      * toStringpow
@@ -1144,7 +1144,7 @@ class MerkleTreePrefix extends Base_1.default {
                 const parentNodeTreeIndex = parentIndices[i];
                 const bufA = currentLayer[i * 2];
                 const bufB = currentLayer[i * 2 + 1];
-                const hash = bufB ? this.hashFn(buffer_1.Buffer.concat([bufA, bufB])) : bufA;
+                const hash = bufB ? this.hashFn(buffer.Buffer.concat([bufA, bufB])) : bufA;
                 parentLayer.push([parentNodeTreeIndex, hash]);
             }
             tree.push(parentLayer);

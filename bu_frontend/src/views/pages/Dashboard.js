@@ -36,7 +36,7 @@ class Dashboard extends Component {
         </Row>
         <Row>
           <Col md={6} style={cardStyles}>
-              <Card>
+              {/* <Card>
                 <Chart/>
                 <CardBody>
                   <CardTitle>Último resultado parcial</CardTitle>
@@ -44,19 +44,24 @@ class Dashboard extends Component {
                   <Button>Detalhes</Button>
                   </Link>
                 </CardBody>
-              </Card>
+              </Card> */}
           </Col>
         </Row>
         <Row>
           <Col md={6} style={cardStyles}>
               <Card>
                 <CardBody>
-                  <CardTitle>Clique aqui para baixar a prova do Último resultado parcial(raiz assinada)</CardTitle>
+                  <CardTitle>Código global da eleição:</CardTitle>
                   <CardText>
-                    
+                    8627bd73b84d229f73c9dbb02d7d492f67741d724ec35a02cf62343223f5de94
                   </CardText>
+                  <CardTitle>Verificado Por: </CardTitle>
+                  <CardText>
+                    Universidade de São Paulo
+                  </CardText>
+
                   <Link to="tree/root">
-                  <Button>Ver Mais</Button>
+                  <Button>Detalhes</Button>
                   </Link>
                 </CardBody>
               </Card>
