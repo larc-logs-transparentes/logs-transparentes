@@ -151,12 +151,39 @@ function verifyLeaf(leafS, BU){
     var BUHash = SHA256(buString)
     BUHash = bufferify(BUHash)
 
+    if(verifyBUinformation(BU) == false ) 
+        return [ false , BUHash ]
+
     if (Buffer.compare(BUHash, hash) === 0){
         return [ true, BUHash ]
     }
     else{
         return [false , BUHash]
     }
+}
+
+function verifyBUinformation(BU){
+    const parsedBU = JSON.parse(BU.bu_inteiro)
+    const parsedVotes = parsedBU["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
+    
+    let verificationResult = true
+
+    if (BU.secao != parsedBU["identificacaoSecao"]["secao"] ||
+        BU.zona != parsedBU["identificacaoSecao"]["municipioZona"]["zona"]) {
+            verificationResult = false
+    }
+
+    for(let i = 0; i < BU.votos.length; i++){
+        if(BU.votos[0].votos != parsedVotes[0]["quantidadeVotos"] ||
+           BU.votos[0].codigo != parsedVotes[0]["identificacaoVotavel"]["codigo"] ||
+           BU.votos[0].partido != parsedVotes[0]["identificacaoVotavel"]["partido"]){
+                verificationResult = false
+        }
+    }
+
+    // TODO: verify UF
+
+    return  verificationResult
 }
 
 
@@ -264,7 +291,7 @@ function bufferify(value) {
 
 export async function verify(buId){
     var BU = await getBuById(buId)
-   // console.log(BU)
+    console.log("bu_verify", BU)
     var leafid = BU.merkletree_leaf_index
     var root = await getRoot()
     var rootString = root.toString('hex')
