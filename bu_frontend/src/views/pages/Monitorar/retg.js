@@ -80,17 +80,7 @@ async function verificarInclusao(BUs){
 
 function retotalizar(BUs){
     const ret = []
-    for (let i = 0; i < BUs.length; i++) { //percorre BUs
-        // const candidatos = BUs[i].votos;
-        // for (let j = 0; j < candidatos.length; j++) { //percorre registros dos candidatos em um BU
-        //     const element = candidatos[j];
-        //     let aux = ret.findIndex(candidato => candidato.nome == element.nome)
-            
-        //     if(aux != -1) //se encontrado candidato no array
-        //         ret[aux].votos += element.votos //soma os votos
-        //     else
-        //         ret.push(element) //insere no array
-        // }   
+    for (let i = 0; i < BUs.length; i++) {
         const bu_inteiro = BUs[i].bu_inteiro;
         const bu_json = JSON.parse(bu_inteiro)
         const votosVotaveis = bu_json.resultadosVotacaoPorEleicao[0].resultadosVotacao[0].totaisVotosCargo[0].votosVotaveis
