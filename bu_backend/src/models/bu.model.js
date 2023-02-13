@@ -1,36 +1,39 @@
 const mongoose = require("mongoose");
-// const url = 'mongodb://127.0.0.1:5432/bu_db';
-// mongoose.connect(url)
+const { NUMBER } = require("sequelize");
 
-const candidatos = new mongoose.Schema({  //subSchema para os candidatos 
-    partido: {type: String,},
-    nome: {type: String,},
+const candidato_identificavel = new mongoose.Schema({  //subSchema para os candidatos 
+    partido: {type: Number,},
+    codigo: {type: Number,},
     votos: {type: Number,},
     _id: { type: String, required: true }
 })
 
-const boletimSchema = new mongoose.Schema({  ///aaa
+const boletimSchema = new mongoose.Schema({
     _id: { type: Number, required: true }  ,
     id: { type: Number, required: true }  ,
-    secao: String,
-    zona: String,
-    UF: String,
     turno: String,
-    votos: [candidatos],
+    UF: String,
+    zona: Number,
+    secao: Number,
+    cidade: String,
+    bu_inteiro: String,
+    votos: [candidato_identificavel],
     merkletree_leaf_index: String,
     merkletree_leaf: String,
-    __v: Number
+    __v: Number,
 });
 
 const InfoBuSchema = new mongoose.Schema({  
     _id: { type: Number, required: true },
     id: { type: Number, required: true },
-    secao: String,
-    zona: String,
+    secao: Number,
+    zona: Number,
     UF: String,
     turno: String,
+    cidade: String,
+    bu_inteiro: String,
     regras_aplicadas: String,
-    votos_validos: [candidatos],
+    votos_validos: [candidato_identificavel],
     indice_na_arvore_de_BUs: Number, 
     merkletree_index: String,
     merkletree_leaf: String,

@@ -145,21 +145,12 @@ function getProofInfo(leafid){
 
 
 function verifyLeaf(leafS, BU){    
-    var hash = bufferify(leafS);  
-    var buString =  BU.turno + BU.secao + BU.zona + BU.UF + JSON.stringify(BU.votos)
-    buString = JSON.stringify(buString)
-   // console.log("BuString:")
-   // console.log(buString)
+    var hash = bufferify(leafS);
 
-   //tem q usar o stringify
-   // var BUHash = SHA256(JSON.stringify(buString))
+    var buString = JSON.stringify(BU.bu_inteiro)
     var BUHash = SHA256(buString)
     BUHash = bufferify(BUHash)
-   // console.log("leaf")
-   // console.log("leaf", leafS)
-   // console.log("BU hash", BUHash)
-   // console.log(hash)
-   // console.log(Buffer.compare(BUHash, hash) === 0)
+
     if (Buffer.compare(BUHash, hash) === 0){
         return [ true, BUHash ]
     }
@@ -272,7 +263,6 @@ function bufferify(value) {
 }
 
 export async function verify(buId){
-   
     var BU = await getBuById(buId)
    // console.log(BU)
     var leafid = BU.merkletree_leaf_index

@@ -5,16 +5,16 @@ import cadVermelho from '../../../../assets/images/cad-vermelho.png';
 
 const SelecaoCidade = ({state, setState}) => {
     function defineFaixaSaoCarlos(){
-        setState( {id_final:3, id_inicial:1});
+        setState( {id_final:76, id_inicial:1});
      }
     function defineFaixaCampinas(){
-        setState( {id_final:6, id_inicial:4});
+        setState( {id_final:200, id_inicial:77});
      }
     function defineFaixaRibeiraoPreto(){
-        setState( {id_final:9, id_inicial:7});
+        setState( {id_final:279, id_inicial:201});
     }
     function defineFaixaMarilia(){
-        setState( {id_final:12, id_inicial:10});
+        setState( {id_final:432, id_inicial:280});
     }
     
     function  handleChange(e) {

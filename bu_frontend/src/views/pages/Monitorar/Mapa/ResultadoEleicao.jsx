@@ -12,8 +12,8 @@ const ResultadoEleicao = ({ votos_cidade, id_inicial, id_final }) => {
     return (
         <>
             <CardHeader>Resultado da eleição:</CardHeader>
-                <h5 style={{marginLeft:'20px'}}>{votos_cidade.map(({nome, votos}) =>
-                    (<p key={nome}>{nome}: {votos} votos</p>))}</h5>
+                <h5 style={{marginLeft:'20px'}}>{votos_cidade.map(({codigo, votos}) =>
+                    (<p key={codigo}>{codigo}: {votos} votos</p>))}</h5>
             
             {id_inicial && <div style={{display: 'flex', justifyContent:'center'}}>
               <button onClick={redirecionaParaProvaCompleta.bind(this)} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem', width: '45%', marginBottom: '20px'}}>

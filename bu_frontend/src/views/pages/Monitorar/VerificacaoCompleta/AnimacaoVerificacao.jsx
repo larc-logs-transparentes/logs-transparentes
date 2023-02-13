@@ -115,8 +115,8 @@ const AnimacaoVerificacao = ({stateDownloadInfoBUs, stateVerificationInfoBUs, st
                 {stateRetotalizationInfoBUs === 'completed' && 
                 <div>
                     <h5>- Resultado final:</h5>
-                    <h5>{retotalizacao.map(({nome, votos}) => (
-                        <p key={nome}>{nome}: {votos} votos</p>))}
+                    <h5>{retotalizacao.map(({codigo, votos}) => (
+                        <p key={codigo}>{codigo}: {votos} votos</p>))}
                     </h5>
                 </div>}
             </div>}

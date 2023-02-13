@@ -65,9 +65,10 @@ export function verifyResultProof (listInfoBUS, resultInclusionProof, root) {
 
     let sum_infoBUs = getSumOfVotes_infoBUs(listInfoBUS)
     let sum_proof = getSumOfVotes_proofData(resultInclusionProof)
-    for(let i = 0; i < sum_infoBUs.length; i++)
-        if(sum_infoBUs[i].votos !== sum_proof[i])
+    for(let i = 0; i < sum_infoBUs.length; i++){
+        if(sum_infoBUs[i].votos !== sum_proof[i][1])
             return false
+    }
 
     return true
 }
@@ -109,7 +110,7 @@ export function getSumOfVotes_infoBUs(infoBUs){
         const candidatos = infoBUs[i].votos_validos;
         for (let j = 0; j < candidatos.length; j++) {
             const element = candidatos[j];
-            let aux = ret.findIndex(candidato => candidato.nome == element.nome)
+            let aux = ret.findIndex(candidato => candidato.codigo == element.codigo)
             
             if(aux != -1) //se encontrado candidato no array
                 ret[aux].votos += element.votos //soma os votos
@@ -143,6 +144,8 @@ export function getHash(infoBU) {
         zona: infoBU.zona,
         UF: infoBU.UF,
         turno: infoBU.turno,
+        cidade: infoBU.cidade,
+        bu_inteiro: infoBU.bu_inteiro,
         regras_aplicadas: null,
         votos_validos: infoBU.votos_validos,
         indice_na_arvore_de_BUs: infoBU.indice_na_arvore_de_BUs,
@@ -164,11 +167,18 @@ function verifyMultipleInclusionProofs(root, proofs){
 }
 
 function getSumOfVotes_proofData(proofs){
-    const ret = [0, 0]
+    /* {"leaf": {"leaf": {}, "vote": [[null, 313]]},"coordinates": {},"proof": [{}]} */
+    const ret = []
     for (let i = 0; i < proofs.length; i++) {
-        const candidatos = proofs[i].leaf.vote;
-        ret[0] += candidatos[0][1]
-        ret[1] += candidatos[1][1]
+        const vote = proofs[i].leaf.vote;
+        for (let j = 0; j < vote.length; j++) {
+            const resultPerCandidate = vote[j];
+            let aux = ret.findIndex(candidato => candidato[0] === resultPerCandidate[0])
+            if (aux != -1) //se encontrado candidato no array
+                ret[aux][1] += resultPerCandidate[1] //soma os votos
+            else
+                ret.push(_.cloneDeep(resultPerCandidate)) //insere no array 
+        }
     }
     return ret
 }
