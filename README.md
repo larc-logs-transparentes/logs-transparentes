@@ -85,7 +85,7 @@ Outras funcionalidades podem ser acessadas no menu lateral
 Entretanto, antes de utilizá-las, é preciso inserir alguns dados na aplicação
 
 ### Popular árvore e BD
-O protótipo oferece suporte a dados reais das eleições brasileiras, para isso, consultar a [documentação para inserção de dados reais](https://github.com/larc-logs-transparentes/logs-transparentes/blob/0034e5dd02322b73627e0fe27a096be7b8478a64/bu_json_maker/ReadMe.md).
+O protótipo oferece suporte a dados reais das eleições brasileiras, para isso, consultar a [documentação para inserção de dados reais](https://github.com/larc-logs-transparentes/logs-transparentes/tree/main/bu_json_maker#readme).
 
 ```
 cd bu_json_maker
