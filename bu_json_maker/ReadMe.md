@@ -1,7 +1,8 @@
 # Inserção de dados reais na aplicação
 
-- bu_json_converter.py: Programa Python que lê múltiplos arquivos "bu" e transforma-os em uma lista (json) e escreve em arquivo.
-- bu_bd_scripts.py: Verifica os dados presentes no diretório "results/", e insere dados reais caso exista, ou os dados disponíveis para exemplo caso contrário.
+### Scripts
+- [bu_json_converter.py](https://github.com/larc-logs-transparentes/logs-transparentes/blob/main/bu_json_maker/bu_json_converter.py): Programa Python que lê múltiplos arquivos "bu" e transforma-os em uma lista (json) e escreve em arquivo.
+- [bu_bd_scripts.py](https://github.com/larc-logs-transparentes/logs-transparentes/blob/main/bu_json_maker/bu_bd_scripts.py): Verifica os dados presentes no diretório "results/", e insere dados reais caso exista, ou os dados disponíveis para exemplo caso contrário.
 
 # Como usar
 
