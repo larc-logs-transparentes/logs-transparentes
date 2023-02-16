@@ -1,7 +1,6 @@
 import json
 import requests
 import time
-import sys
 
 from constants import BACKEND_URL
 from counties_codes import get_county_uf_and_city_with_number
