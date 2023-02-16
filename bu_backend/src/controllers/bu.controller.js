@@ -17,7 +17,7 @@ const consistencyCheckData = {
 }
 
 const TAM_MTREE_PARCIAL = 4
-const QTD_BUs_CONSISTENCY_PROOF = 128 //Frequência de envio da prova de consistência
+const QTD_BUs_CONSISTENCY_PROOF = 16 //Frequência de envio da prova de consistência
 let tree_size_1 = 0, tree_size_2 = 0, log_id = 0
 
 /* ----------------------------------- */

@@ -1,3 +1,5 @@
 assets/bus/*
 results/*
 .idea/*
+
+!results/example_bus_consolidated.json
