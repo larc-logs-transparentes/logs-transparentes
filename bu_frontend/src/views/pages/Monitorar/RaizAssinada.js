@@ -5,6 +5,9 @@ import { provaDeConsistencia } from './logic/subscriberConsistency';
 import { Loader } from '../../../vibe';
 import { getRootAll } from '../../../api/bu.api';
 import {baixarRoots} from './Roots.js';
+import {main} from './Pyodide.js';
+
+
 export default function Raizassinada() {
   getRootAll()
   const [vetorvalidar,setVetor] = useState([]);
@@ -102,6 +105,7 @@ export default function Raizassinada() {
           
         </CardBody>
       </Card>
+
       
     </React.Fragment>
   );
