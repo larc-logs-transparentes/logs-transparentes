@@ -1,5 +1,5 @@
 const axios = require('axios')
-const bu_api_url = "http://localhost:8080"
+const bu_api_url = require('../config.json').bu_api_url
 
 export const addBu = (data) => {
   return axios.post(`${bu_api_url}/bu`, data)
@@ -101,8 +101,8 @@ export const Sum = () => {
       })
 } 
 
-export const getRoot = (root_id) => {
-  return axios.get(`${bu_api_url}/tree/root/${root_id}`)
+export const getRoot = () => {
+  return axios.get(`${bu_api_url}/tree/root`)
     .then(res => {
       console.log(res.data)
       return res.data
