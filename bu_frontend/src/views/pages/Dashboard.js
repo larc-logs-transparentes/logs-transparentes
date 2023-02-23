@@ -12,6 +12,22 @@ import { Link } from 'react-router-dom';
 import monitoresImage from '../../assets/images/monitores.png';
 import Chart from '../../views/elements/charts';
 class Dashboard extends Component {
+  axios = require('axios')
+    bu_api_url = require('../../config.json').bu_api_url
+    
+    constructor() {
+        super()
+        this.state = {
+                       lista: []            
+                    }
+      }
+      
+  componentDidMount(){
+    this.axios.get(`${this.bu_api_url}/tree/root`) //partial
+      .then(response => this.setState({ lista: response.data }))
+  }
+
+
   render() {
     const heroStyles = {
       padding: '50px 0 70px'
@@ -21,6 +37,7 @@ class Dashboard extends Component {
       //padding: '50px 0 70px',
       marginLeft: '25%'
     };
+    const { lista } = this.state
 
     return (
       <div>
@@ -53,7 +70,7 @@ class Dashboard extends Component {
                 <CardBody>
                   <CardTitle>Código global da eleição:</CardTitle>
                   <CardText>
-                    8627bd73b84d229f73c9dbb02d7d492f67741d724ec35a02cf62343223f5de94
+                    {lista}
                   </CardText>
                   <CardTitle>Verificado Por: </CardTitle>
                   <CardText>
