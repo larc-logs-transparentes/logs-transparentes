@@ -1,8 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import { Card, CardBody, Col, Row, Button,Table } from 'reactstrap'
-import { subscriber } from './logic/subscriberConsistency';
-import { provaDeConsistencia } from './logic/subscriberConsistency';
-import { Loader } from '../../../vibe';
+import { provaDeConsistencia } from './logic/consistencyProof';
 import { getRootAll } from '../../../api/bu.api';
 import {baixarRoots} from './Roots.js';
 import {main} from './Pyodide.js';

@@ -1,7 +1,6 @@
 import json
 import requests
 import time
-import sys
 
 from constants import BACKEND_URL
 from counties_codes import get_county_uf_and_city_with_number
@@ -9,7 +8,10 @@ from counties_codes import get_county_uf_and_city_with_number
 
 # reads bus from file made with bu_json_converter.py
 def get_list_of_dict_bu():
-    file = open("./results/bus_consolidated.json")
+    try:
+        file = open("./results/bus_consolidated.json")
+    except FileNotFoundError:
+        file = open("./results/example_bus_consolidated.json")
     return json.load(file)
 
 
@@ -78,17 +80,12 @@ def initialize_infoBUs_tree():
     return requests.post(f"{BACKEND_URL}/infobus/create", headers=header)
 
 # sends list of bus (dicts) to db
-def insert_list_bus_to_db(showProgress=False, limit=-1):
+def insert_list_bus_to_db():
     bodies = get_body_list_with_zona_secao()
     res_list = []
     for body in bodies:
-        if limit != -1 and bodies.index(body) == limit:
-            break
         res = insert_body_to_db(body)
-        if showProgress:
-            print(f'{bodies.index(body)} de {len(bodies)}', end='\r')
-        else:
-            print(res)
+        print(f'{bodies.index(body)} de {len(bodies)}, {res}', end='\r')
         res_list.append(res)
         time.sleep(0.1) # sleep between inserts so it won`t flood db and get error
 
@@ -96,9 +93,5 @@ def insert_list_bus_to_db(showProgress=False, limit=-1):
 
 
 if __name__ == '__main__':
-    if(len(sys.argv) > 1):
-        responses = insert_list_bus_to_db(showProgress=True, limit=int(sys.argv[1]))
-    else:
-        responses = insert_list_bus_to_db(showProgress=True)
-    print(responses)
-    print(initialize_infoBUs_tree())
+    insert_list_bus_to_db()
+    initialize_infoBUs_tree()

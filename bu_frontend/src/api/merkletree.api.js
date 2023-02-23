@@ -56,8 +56,6 @@ function getLeafDataFromBu(BU) {
     }
 }
 
-
-
 async function main(){
     var leafid = 1
     var root = await getRoot()
@@ -333,12 +331,3 @@ export async function verify(buId){
     var isTrue = isProofTrue && isBUTrue
     return { isTrue, fullproof, rootString, BU, newBUHash }
 }
-
-async function exampleVerify(buId){
-    var verifyOutput = await verify(buId)
-    console.log("------ExampleVerify-----")
-    console.log(verifyOutput)
-    console.log("-----------")
-}
-//module.exports = { verify }
-//exampleVerify(1)
