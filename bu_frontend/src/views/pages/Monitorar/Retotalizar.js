@@ -5,6 +5,7 @@ import { Loader } from '../../../vibe';
 import approval from '../../../assets/images/Approved.png';
 import error from '../../../assets/images/Error.png';
 import {RetotalizacaoDeBus} from './retg.js';
+import LoadingSpinner from '../../elements/LoadingSpinner';
 
 
 export default function Retotalizar() {
@@ -30,6 +31,7 @@ export default function Retotalizar() {
 
 /////////// FUNÇÕES DE TEMPO PARA IR MOSTRANDO A TELA ////////////////
   function BaixarBus(){
+      console.log("bus_baixados", busbaixados)
       setTimeout(() => {setBbus(true)}, 500);
       return}
   function BaixarBus2(){
@@ -102,7 +104,7 @@ export default function Retotalizar() {
         return (error)
       }
       else return (approval)
-    } 
+    }
     
     
   return (
@@ -113,9 +115,10 @@ export default function Retotalizar() {
               <CardBody >
               <h4> Retotalização dos votos</h4>
                 <div style={{textAlign:'center'}} >
-                  <button onClick={()=> {BaixarBus(true)}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
-                    Solicitar Retotalização
+                  <button disabled={busbaixados[0] == null} onClick={()=> {BaixarBus(true)}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
+                    {busbaixados[0] == null ? "Aguarde enquanto baixamos as informações" : "Solicitar Retotalização"}
                   </button>
+                    {busbaixados[0] == null ? <LoadingSpinner /> : null}
                 </div>
                 </CardBody>
 
@@ -178,8 +181,8 @@ export default function Retotalizar() {
                   {RetotalizarBus2()}
                   {showret2?<div>
                     <h5>- Resultado final:</h5>
-                    <h5>{busbaixadosobj.votos.map(({nome, votos, partido}) => (
-                      <p key={nome}>{nome}: {votos} votos</p>
+                    <h5>{busbaixadosobj.votos.map(({codigo, votos, partido}) => (
+                      <p key={codigo}>{codigo}: {votos} votos</p>
                     ))}
                       </h5>
                   </div>:null}

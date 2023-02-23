@@ -63,32 +63,32 @@ export default function Raizassinada() {
               <div style={{display:'flex',position:'relative',gap:'0.5vw',textAlign:'center',fontSize:'30px',padding:'.3vw',marginTop:'-20vh',marginLeft:'auto',marginRight:'auto'}}>
                 <div >
                     <h5>ID</h5>
-                    {rootsbaixadas.map(rootsbaixadas => <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px'}}>{rootsbaixadas._id}</h5>)}
+                    {rootsbaixadas.map((rootsbaixadas, i) => <h5 key={i} style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px'}}>{rootsbaixadas._id}</h5>)}
                 </div>
                 <div>
                     <h5>Raiz parcial da árvore</h5>
-                    {rootsbaixadas.map(rootsbaixadas=> <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px',textAlign:'justify'}}>
+                    {rootsbaixadas.map((rootsbaixadas, i)=> <h5 key={i} style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px',textAlign:'justify'}}>
                      <small>{rootsbaixadas.second_hash}</small>
                      </h5>)}
                 </div>
                 <div>
                   <h5>Tamanho</h5>
-                  {rootsbaixadas.map(rootsbaixadas => 
-                    <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',position:'flex'}}>
+                  {rootsbaixadas.map((rootsbaixadas, i) => 
+                    <h5 key={i} style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',position:'flex'}}>
                       {rootsbaixadas.tree_size_2}
                     </h5>)}
                 </div> 
                 <div>
                 <h5>Assinatura</h5>
-                  {rootsbaixadas.map(rootsbaixadas=> 
-                    <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw'}}>
+                  {rootsbaixadas.map((rootsbaixadas, i)=> 
+                    <h5 key={i} style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw'}}>
                       <small>{'3c3b72a69d0e25c9b2abc0d636'}</small>
                     </h5>)}
                 </div>
                 <div>
                 <h5>Validação</h5>
-                  {vetorvalidar.map(vetorvalidar=> 
-                    <h5 style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw'}}>
+                  {vetorvalidar.map((vetorvalidar, i)=> 
+                    <h5 key={i} style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw'}}>
                       {vetorvalidar}
                     </h5>)}
                 </div>

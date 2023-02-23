@@ -84,3 +84,47 @@ exports.getProof = (firstTreeSize, secondTreeSize) => {
     console.log(err)
   }) 
 }
+
+exports.infoBUs_sendLeaves = (leaves) => {
+  return axios.post(`${merkletreeHostname}:${merkletreePort}/infobus/leaves`, {
+    data: leaves
+  })
+  .then(res => {
+    return res.data
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
+exports.infoBUs_getProof = (infoBU) => {
+  return axios.post(`${merkletreeHostname}:${merkletreePort}/infobus/proof`, {
+    leaves: infoBU
+  })
+  .then(res => {
+    return res.data
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
+exports.infoBUs_getResultProof = (i_inicial, i_final) => {
+  return axios.get(`${merkletreeHostname}:${merkletreePort}/infobus/resultProof?i_inicial=${i_inicial}&i_final=${i_final}`)
+  .then(res => {
+    return res.data
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
+exports.infoBUs_getRoot = () => {
+  return axios.get(`${merkletreeHostname}:${merkletreePort}/infobus/root`)
+  .then(res => {
+    return res.data
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
