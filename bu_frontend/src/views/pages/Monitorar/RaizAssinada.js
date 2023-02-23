@@ -3,8 +3,6 @@ import { Card, CardBody, Col, Row, Button,Table } from 'reactstrap'
 import { provaDeConsistencia } from './logic/consistencyProof';
 import { getRootAll } from '../../../api/bu.api';
 import {baixarRoots} from './Roots.js';
-import {main} from './Pyodide.js';
-
 
 export default function Raizassinada() {
   getRootAll()

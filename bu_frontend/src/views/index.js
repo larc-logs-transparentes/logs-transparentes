@@ -30,7 +30,6 @@ import MostrarBU from './elements/MostrarBU';
 import Consultar_Todos from './elements/consultar_todos';
 import Retotalizar from './pages/Monitorar/Retotalizar.js';
 import Raizassinada from './pages/Monitorar/RaizAssinada.js';
-import Pyodide from './pages/Monitorar/Pyodide.js';
 import Mapa from './pages/Monitorar/Mapa/Mapa.js';
 import Root from './elements/Root';
 import VerificacaoCompleta from './pages/Monitorar/VerificacaoCompleta/VerificacaoCompleta.js';
@@ -66,13 +65,7 @@ const pageList = [
     //  text: 'NEW',
     //},
   },
-  {
-    name: 'Pyodide',
-    path: '/Pyodide',
-    component: Pyodide
-    //  text: 'NEW',
-    //},
-  },
+ 
   {
     name: 'Mapa',
     path: '/mapa',

@@ -40,11 +40,7 @@ export default {
       icon: 'Package'
     },{
       divider: true,
-    }, {
-      name: 'Pyodide',
-      url: '/Pyodide',
-      icon: 'Package'
-    }
+    },
   ],
   bottom: [
     
