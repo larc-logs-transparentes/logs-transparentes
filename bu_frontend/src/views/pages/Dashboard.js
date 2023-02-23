@@ -10,23 +10,21 @@ import { Card, CardBody, Row, Col, CardHeader,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import monitoresImage from '../../assets/images/monitores.png';
-import Chart from '../../views/elements/charts';
+import { getRoot } from '../../api/bu.api';
+
 class Dashboard extends Component {
-  axios = require('axios')
-    bu_api_url = require('../../config.json').bu_api_url
-    
-    constructor() {
-        super()
-        this.state = {
-                       lista: []            
-                    }
-      }
-      
-  componentDidMount(){
-    this.axios.get(`${this.bu_api_url}/tree/root`) //partial
-      .then(response => this.setState({ lista: response.data }))
+  constructor() {
+    super()
+    this.state = {
+      root: null,
+    }
   }
 
+  async componentDidMount() {
+    const root = await getRoot()
+    console.log(root)
+    this.setState({ root: root })
+  }
 
   render() {
     const heroStyles = {
@@ -70,7 +68,7 @@ class Dashboard extends Component {
                 <CardBody>
                   <CardTitle>Código global da eleição:</CardTitle>
                   <CardText>
-                    {lista}
+                    {this.state.root}
                   </CardText>
                   <CardTitle>Verificado Por: </CardTitle>
                   <CardText>

@@ -22,7 +22,7 @@ const AnimacaoVerificacao = ({stateDownloadInfoBUs, stateVerificationInfoBUs, st
         if (id_incosistente >= 0){
           return ('- A prova de inclusão de um dos infoBUs falhou.')
         }
-        else return ('- Todos os infoBUs estao na árvore.')
+        else return ('- Todos os infoBUs estão na árvore e não foram modificados.')
     } 
 
     function str_aux_resultInclusionProof(){
