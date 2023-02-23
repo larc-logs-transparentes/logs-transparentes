@@ -1,9 +1,5 @@
 const axios = require('axios')
-const merkletree_adapter = require("../../../api/merkletree.adapter")
 const merkletree_api = require("../../../api/merkletree.api")
-
-const backendHostname = "http://localhost"
-const backendPort = 8080
 const bu_api_url = require('../../../config.json').bu_api_url
 
 export async function RetotalizacaoDeBus(){
@@ -24,16 +20,14 @@ export async function RetotalizacaoDeBus(){
     return [numerodebusadicionados,verificarbusquantidade,votosretotalizacao,verificarbusinclusao,teste]
 }
 
-const a = RetotalizacaoDeBus()
-console.log(a)
-
 async function baixarBUs(){
+    console.log(`${bu_api_url}/bu/get_all`)
     return await axios.get(`${bu_api_url}/bu/get_all`)
     .then(res => {
         return res.data
     })
     .catch(err => {
-        return 0
+        console.log(err)
     })
 }
 
@@ -106,4 +100,3 @@ function retotalizar(BUs){
     ret.sort((a, b) => b.votos - a.votos) //ordena por qtd de votos
     return ret
 }
-
