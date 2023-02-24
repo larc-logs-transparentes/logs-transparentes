@@ -10,8 +10,22 @@ import { Card, CardBody, Row, Col, CardHeader,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import monitoresImage from '../../assets/images/monitores.png';
-import Chart from '../../views/elements/charts';
+import { getRoot } from '../../api/bu.api';
+
 class Dashboard extends Component {
+  constructor() {
+    super()
+    this.state = {
+      root: null,
+    }
+  }
+
+  async componentDidMount() {
+    const root = await getRoot()
+    console.log(root)
+    this.setState({ root: root })
+  }
+
   render() {
     const heroStyles = {
       padding: '50px 0 70px'
@@ -21,6 +35,7 @@ class Dashboard extends Component {
       //padding: '50px 0 70px',
       marginLeft: '25%'
     };
+    const { lista } = this.state
 
     return (
       <div>
@@ -53,7 +68,7 @@ class Dashboard extends Component {
                 <CardBody>
                   <CardTitle>Código global da eleição:</CardTitle>
                   <CardText>
-                    8627bd73b84d229f73c9dbb02d7d492f67741d724ec35a02cf62343223f5de94
+                    {this.state.root}
                   </CardText>
                   <CardTitle>Verificado Por: </CardTitle>
                   <CardText>

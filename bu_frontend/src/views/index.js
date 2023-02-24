@@ -65,6 +65,7 @@ const pageList = [
     //  text: 'NEW',
     //},
   },
+ 
   {
     name: 'Mapa',
     path: '/mapa',

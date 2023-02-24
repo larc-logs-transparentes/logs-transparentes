@@ -56,59 +56,6 @@ function getLeafDataFromBu(BU) {
     }
 }
 
-async function main(){
-    var leafid = 1
-    var root = await getRoot()
-    var n
-    n = await getProofInfo(leafid)
-    var leaf = n[1]
-    var proof = n[2]
-
-    var isTrue =  verifyProof(leaf, root, proof)
-
-    var BU = await getBuByIdString(1)
-    const BuLeafData = getLeafDataFromBu(BU)
-    //var isBUTrue = verifyLeaf(leaf, BuLeafData, root )
-    console.log("Teste do BU")
-    console.log(BU)
-    console.log(leaf)
-    //console.log(isBUTrue)
-
-    console.log("teste com dados certos")
-    console.log(isTrue)
-    console.log("raiz")
-    console.log(root)
-    console.log("prova")
-    console.log(proof)
-
-    var proofWrong = proof
-    proofWrong[1].data = proofWrong[0].data 
-    isTrue = await verifyProof(leaf, root, proofWrong)
-    console.log("teste com prova errada")
-    console.log(isTrue)
-    console.log("raiz")
-    console.log(root)
-    console.log("prova")
-    console.log(proofWrong)
-
-    isTrue = await verifyProof(leaf, leaf, proof)
-    console.log("teste com root errada")
-    console.log(isTrue)
-    console.log("raiz")
-    console.log(leaf)
-    console.log("prova")
-    console.log(proof)
-
-    isTrue = await verifyProof(root, root, proof)
-    console.log("teste com folha errada")
-    console.log(isTrue)
-    console.log("raiz")
-    console.log(root)
-    console.log("prova")
-    console.log(proof)
-}
-
-
 function getProofInfo(leafid){
     return new Promise(function (resolve, reject){
         axios.get(`${bu_api_url}/tree/leaf/${leafid}`)

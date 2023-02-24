@@ -38,7 +38,9 @@ export default {
       name: 'Recontabilizar',
       url: '/recontabilizar',
       icon: 'Package'
-    }
+    },{
+      divider: true,
+    },
   ],
   bottom: [
     
