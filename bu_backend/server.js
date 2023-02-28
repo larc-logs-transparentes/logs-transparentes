@@ -1,7 +1,6 @@
 const cors = require("cors");
 const express = require("express");
 
-const bu_controller = require("./src/controllers/bu.controller")
 const infobu_controller = require("./src/controllers/infobu.controller")
 const merkletree_adapter = require("./src/adapters/merkletree.adapter");
 
@@ -22,64 +21,6 @@ mongoose = connect("mongodb://localhost:27017/bu", ["bus", "infobus", "roots"]);
 app.get("/", (req, res) => {
   res.json({ message: "Backend Executando" });
 });
-
-// retrieve all BUs
-app.get("/bu/get_all", (req, res) => {
-  console.log("/bu/")
-  bu_controller.findAll().then((response) => {
-    res.json(response);
-  }).catch((err) => {
-    console.log(err);
-    res.json(err)
-  })
-});
-app.get("/root/get_all", (req, res) => {
-  console.log("/root/")
-  bu_controller.findAllroot().then((response) => {
-    res.json(response);
-  }).catch((err) => {
-    console.log(err);
-    res.json(err)
-  })
-});
-
-// retrieve list of BUs with GET parameters.
-app.get("/bu", (req, res) => {
-  bu_controller.findByIdRange(req.query.id_inicial, req.query.id_final)
-  .then((response) => {
-    res.json(response)
-  })
-  
-});
-
-// save new BU
-app.post("/bu", (req, res) => {
-  console.log("posting on /bu")
-  const result = bu_controller.create(req.body)
-  res.json(result)
-})
-
-app.get("/bu/get_one/", (req, res) => {
-  console.log(req.query)
-  bu_controller.findByInfo(req.query.turno, req.query.uf, req.query.zona, req.query.secao).then((response) => {
-    // console.log(response)
-    res.json(response)
-  }).catch((err) => {
-    res.json(err)
-  })
-})
-
-// retrieve BU by ID
-app.get("/bu/:id", (req, res) => {
-  console.log(req.params.id)
-  bu_controller.findById(req.params.id).then((response) => {
-    // console.log({response})
-    res.json(response);
-  }).catch((err) => {
-    console.log(err);
-    res.json(err)
-  })
-})
 
 app.get("/tree", (req, res) => {
   merkletree_adapter.getTree().then(tree => {
@@ -116,14 +57,6 @@ app.get("/leaf/:id", (req, res) => {
 app.get("/tree/leaves", (req, res) => {
   merkletree_adapter.getAllLeaves().then(leaves => {
     res.json(leaves)
-  }).catch((err) => {
-    res.json(err)
-  })
-})
-
-app.get("/home",(req,res) => {   //Atualiza o grafico da tela principal 
-  bu_controller.Sum().then((response) => {
-    res.json(response)
   }).catch((err) => {
     res.json(err)
   })
@@ -194,6 +127,12 @@ app.get("/infoBUs/tree/root", async (req, res) => {
     res.json(err)
   })
 })
+
+const buRoutes = require("./src/routes/buRoutes");
+app.use("/bu", buRoutes);
+
+const rootRoutes = require("./src/routes/rootRoutes");
+app.use("/root", rootRoutes);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

@@ -1,20 +1,22 @@
-const modeloBoletim = require("../models/bu.model")
+const { modeloInfoBU } = require("../models/bu.model")
+const { findAll: findAllBUs } = require("./bu.controller")
+
 const merkletree_adapter = require("../adapters/merkletree.adapter")
 const { SHA256 } = require("crypto-js")
 
 exports.findAll = async () => {
-    const data = await modeloBoletim.modeloInfoBU.find({})
+    const data = await modeloInfoBU.find({})
     return data
 }
 
 exports.findById = async (id) => {
     console.log({id})
-    const data = await modeloBoletim.modeloInfoBU.findOne({ id: id })
+    const data = await modeloInfoBU.findOne({ id: id })
     return data
 }
 
 exports.findByIdRange = async (id, id_final) => {
-    const data = await modeloBoletim.modeloInfoBU.find({ id: { $gte: id, $lte: id_final } })
+    const data = await modeloInfoBU.find({ id: { $gte: id, $lte: id_final } })
     data.sort((a, b) => a.id - b.id)
     return data
 }
@@ -22,7 +24,8 @@ exports.findByIdRange = async (id, id_final) => {
 exports.inicializar = async () => {
     const folhas = []
 
-    const BUs = await modeloBoletim.modeloBoletim.find({})
+    console.log("inicializando árvore de infoBUs")
+    const BUs = await findAllBUs()    
     const BUsOrdenados = BUs.sort((a, b) => { return a.id - b.id })
     for (let index = 0; index < BUsOrdenados.length; index++) {
         var BU = BUsOrdenados[index]
@@ -41,7 +44,7 @@ exports.inicializar = async () => {
         }
         console.log(JSON.stringify(infoBU))
         folhas.push(infoBU)
-        modeloBoletim.modeloInfoBU.create({
+        modeloInfoBU.create({
             ...infoBU,
             merkletree_index: index,
             merkletree_leaf: SHA256(JSON.stringify(infoBU)).toString(),
