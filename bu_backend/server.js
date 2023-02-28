@@ -1,36 +1,18 @@
-const express = require("express");
 const cors = require("cors");
-const app = express();
+const express = require("express");
+
 const bu_controller = require("./src/controllers/bu.controller")
 const infobu_controller = require("./src/controllers/infobu.controller")
 const merkletree_adapter = require("./src/adapters/merkletree.adapter");
-const cors_origin_url = require('./src/config/config').cors_origin_url
-const mongoose = require("mongoose");
 
-var corsOptions = {
-  origin: cors_origin_url
-};
-app.use(cors(corsOptions));
-// parse requests of content-type - application/json
+const app = express();
 app.use(express.json());
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+const cors_origin_url = require('./src/config/config').cors_origin_url
+app.use(cors({origin: cors_origin_url}));
 
-// Connect URL
-const url = 'mongodb://127.0.0.1:27017/bu_db';
-mongoose.connect(url)
-  .then(() => {
-    mongoose.connection.db.dropCollection("bus", ()=>{
-      console.log("bus collection droped")
-    })
-    mongoose.connection.db.dropCollection("infobus", ()=>{
-      console.log("infobus collection droped")
-    })
-    mongoose.connection.db.dropCollection("roots", ()=>{
-      console.log("roots collection droped")
-    })
-  })
-
+const { connect } = require("./src/config/mongodb.config");
+mongoose = connect("mongodb://localhost:27017/bu", ["bus", "infobus", "roots"]);
 
 // ##############################################################
 // ########################## ROUTES ############################
