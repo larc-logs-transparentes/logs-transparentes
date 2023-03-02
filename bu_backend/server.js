@@ -21,54 +21,6 @@ app.get("/", (req, res) => {
   res.json({ message: "Backend Executando" });
 });
 
-app.get("/tree", (req, res) => {
-  merkletree_adapter.getTree().then(tree => {
-    res.json(tree)
-  }).catch((err) => {
-    res.json(err)
-  })
-})
-
-app.get("/tree/root", (req, res) => {
-  merkletree_adapter.getTreeRoot().then(root => {
-    res.json(root)
-  }).catch((err) => {
-    res.json(err)
-  })
-})
-
-app.get("/tree/leaf/:id", (req, res) => {
-  merkletree_adapter.getLeafAndProofById(req.params.id).then(leafAndProof => {
-    res.json(leafAndProof)
-  }).catch((err) => {
-    res.json(err)
-  })
-})
-
-app.get("/leaf/:id", (req, res) => {
-  merkletree_adapter.getLeafById(req.params.id).then(leaf => {
-    res.json(leaf)
-  }).catch((err) => {
-    res.json(err)
-  })
-})
-
-app.get("/tree/leaves", (req, res) => {
-  merkletree_adapter.getAllLeaves().then(leaves => {
-    res.json(leaves)
-  }).catch((err) => {
-    res.json(err)
-  })
-})
-
-app.get("/tree/leaves/qtd", (req, res) => {
-  merkletree_adapter.getAllLeaves().then(leaves => {
-    res.json(leaves.length)
-  }).catch((err) => {
-    res.json(err)
-  })
-})
-
 const buRoutes = require("./src/routes/buRoutes");
 app.use("/bu", buRoutes);
 
@@ -77,6 +29,9 @@ app.use("/infoBUs", infobuRoutes);
 
 const rootRoutes = require("./src/routes/rootRoutes");
 app.use("/root", rootRoutes);
+
+const treeRoutes = require("./src/routes/treeRoutes");
+app.use("/tree", treeRoutes);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
