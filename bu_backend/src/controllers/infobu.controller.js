@@ -21,7 +21,7 @@ exports.findByIdRange = async (id, id_final) => {
     return data
 }
 
-exports.inicializar = async () => {
+exports.initialize = async () => {
     const folhas = []
 
     console.log("inicializando árvore de infoBUs")

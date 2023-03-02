@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { NUMBER } = require("sequelize");
 
 const candidato_identificavel = new mongoose.Schema({  //subSchema para os candidatos 
     partido: {type: Number,},

@@ -3,7 +3,6 @@ const bu_controller = require('../controllers/bu.controller');
 
 // retrieve all BUs
 router.get("/get_all", (req, res) => {
-    console.log("/bu/")
     bu_controller.findAll().then((response) => {
       res.json(response);
     }).catch((err) => {
@@ -14,7 +13,7 @@ router.get("/get_all", (req, res) => {
   
 // retrieve list of BUs with GET parameters.
 router.get("/", (req, res) => {
-    bu_controller.findByIdRange(req.query.id_inicial, req.query.id_final)
+    bu_controller.findTotalVotesByIdRange(req.query.id_inicial, req.query.id_final)
     .then((response) => {
       res.json(response)
     })    
@@ -28,7 +27,6 @@ router.post("/", (req, res) => {
 })
   
 router.get("/get_one", (req, res) => {
-    console.log(req.query)
     bu_controller.findByInfo(req.query.turno, req.query.uf, req.query.zona, req.query.secao).then((response) => {
         // console.log(response)
         res.json(response)
@@ -39,12 +37,10 @@ router.get("/get_one", (req, res) => {
   
 // retrieve BU by ID
 router.get("/:id", (req, res) => {
-    console.log(req.params.id)
     bu_controller.findById(req.params.id).then((response) => {
         // console.log({response})
         res.json(response);
     }).catch((err) => {
-      console.log(err);
       res.json(err)
     })
 })

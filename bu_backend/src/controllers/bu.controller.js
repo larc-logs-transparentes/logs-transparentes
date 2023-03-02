@@ -3,7 +3,7 @@ const { modeloroot } = require("../models/root.model")
 
 const merkletree_adapter = require("../adapters/bus_merkletree.adapter")
 
-const QTD_BUs_CONSISTENCY_PROOF = 16 //Frequência de envio da prova de consistência
+const CONSISTENCY_PROOF_FREQUENCY = 16
 let tree_size_1 = 0, tree_size_2 = 0, log_id = 0
 
 // Create and Save a new BU
@@ -18,7 +18,6 @@ exports.create = (data) => {
     modeloBoletim.create({
       merkletree_leaf_index: merkletree_data.leaf_index,
       merkletree_leaf: merkletree_data.added_leaf,
-      // ...data
       _id: data._id,
       id: data.id,
       turno: data.turno,
@@ -31,8 +30,8 @@ exports.create = (data) => {
     })
 
     tree_size_2++ 
-    if(tree_size_2 % QTD_BUs_CONSISTENCY_PROOF == 0){
-      publishConsistencyProof(tree_size_1, tree_size_2, log_id)
+    if(tree_size_2 % CONSISTENCY_PROOF_FREQUENCY == 0){
+      storeConsistencyProof(tree_size_1, tree_size_2, log_id)
       tree_size_1 = tree_size_2
       log_id++
     }
@@ -40,17 +39,8 @@ exports.create = (data) => {
   return
 };
 
-function getVotesByIdRange(data) {
-  console.log(' o Vetor que entra na função')
-  let votesum=totalizarvotos(data)
-  let formattedVotesum = delete votesum._id
-
-  return votesum
-}
-
 function totalizarvotos(data) {
   const totaldevotos = []
-  console.log(data)
     for (let i = 0; i < data.length; i++) { //percorre BUs
         const candidatos = data[i].votos;
         for (let j = 0; j < candidatos.length; j++) { //percorre registros dos candidatos em um BU
@@ -77,12 +67,13 @@ exports.findAll = async () => {
 };
 
 // Find BUs inside a ID range.
-exports.findByIdRange = (id_inicial, id_final) => {
+exports.findTotalVotesByIdRange = (id_inicial, id_final) => {
   return modeloBoletim.find({id:{ $gte:id_inicial, $lte:id_final}})
   .then((data) => {
-    return getVotesByIdRange(data)
+    return totalizarvotos(data)
   })
 };
+
 // Find a single BU with an id
 exports.findById = (id) => {
   console.log({id})
@@ -92,21 +83,12 @@ exports.findById = (id) => {
 };
 
 // Find BU by BU info
- exports.findByInfo = (turno,UF,secao,zona) =>{
-  return modeloBoletim.findOne({turno:turno, UF:UF, secao:secao, zona:zona}
-    
-    ).then((data) =>{
+exports.findByInfo = (turno,UF,secao,zona) =>{
+  return modeloBoletim.findOne({turno:turno, UF:UF, secao:secao, zona:zona})
+  .then((data) =>{
       return data;
-    }) 
+  }) 
 }
- exports.findByInfo = (turno,UF,secao,zona) =>{
-        return modeloBoletim.findOne({turno:turno, UF:UF, secao:secao, zona:zona}
-          
-          ).then((data) =>{
-            return data;
-          }) 
-}
-
 
 exports.Sum = () => {
   return modeloBoletim.modeloBoletim.aggregate([
@@ -123,7 +105,7 @@ exports.Sum = () => {
 * publishConsistencyProof
 * @desc - Processa e armazena prova de consistência
 */
-function publishConsistencyProof(tree_size_1, tree_size_2, log_id){
+function storeConsistencyProof(tree_size_1, tree_size_2, log_id){
   merkletree_adapter.getProof(tree_size_1, tree_size_2).then(({proof_path, first_tree_hash, second_tree_hash}) => {  
     modeloroot.create({
       _id:log_id,

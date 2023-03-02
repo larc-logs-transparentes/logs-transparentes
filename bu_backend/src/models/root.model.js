@@ -11,6 +11,6 @@ const rootSchema = new mongoose.Schema({
     ultimo:false,
 });
 
-const modeloroot = mongoose.model("roots",rootSchema) //"roots" = collection of database
+const modeloroot = mongoose.model("roots", rootSchema) //"roots" = collection of database
 
 module.exports = {modeloroot}
