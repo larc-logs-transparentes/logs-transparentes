@@ -18,10 +18,7 @@ import {
   FormText
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Loader } from '../../vibe/';
-import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext';
-import laptopImage from '../../assets/images/laptop.jpeg';
-import { getBu, getBuAll } from '../../api/bu.api'
+import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext'
 
 class Consultar_BU extends Component {
   axios = require('axios')
