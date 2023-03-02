@@ -1,0 +1,64 @@
+const router = require('express').Router();
+const infobu_controller = require('../controllers/infobu.controller')
+const merkletree_adapter = require('../adapters/merkletree.adapter')
+
+router.post("/create", (req, res) => {
+    infobu_controller.inicializar().then(response => {
+      console.log("infobus populados")
+      res.json(response)
+    }).catch((err) => {
+      res.json(err)
+    })
+})
+  
+router.get("/", (req, res) => {
+    const id = parseInt(req.query.id)
+    let id_final = parseInt(req.query.id_final)
+    if(!id_final) id_final = id
+    infobu_controller.findByIdRange(id, id_final).then((response) => {
+      res.json(response);
+    }).catch((err) => {
+      console.log(err);
+      res.json(err)
+    })
+})
+  
+router.get("/tree/leaf", async (req, res) => {
+    const id = parseInt(req.query.id)
+  
+    /* query opcional */
+    let id_final = parseInt(req.query.id_final)
+    if(!id_final) id_final = id
+  
+    const infoBUs = await infobu_controller.findByIdRange(id, id_final)
+  
+    merkletree_adapter.infoBUs_getProof(infoBUs).then((response) => {
+      res.json(response);
+    }).catch((err) => {
+      console.log(err);
+      res.json(err)
+    })
+})
+  
+router.get("/tree/resultProof", async (req, res) => {
+    const i_inicial = parseInt(req.query.i_inicial)
+    const i_final = parseInt(req.query.i_final)
+    merkletree_adapter.infoBUs_getResultProof(i_inicial, i_final).then((response) => {
+      res.json(response);
+    }).catch((err) => {
+      console.log(err);
+      res.json(err)
+    })
+})
+  
+router.get("/tree/root", async (req, res) => {
+    merkletree_adapter.infoBUs_getRoot().then((response) => {
+      res.send(response);
+    }).catch((err) => {
+      console.log(err);
+      res.json(err)
+    })
+})
+
+
+module.exports = router;

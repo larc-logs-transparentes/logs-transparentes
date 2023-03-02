@@ -1,7 +1,6 @@
 const cors = require("cors");
 const express = require("express");
 
-const infobu_controller = require("./src/controllers/infobu.controller")
 const merkletree_adapter = require("./src/adapters/merkletree.adapter");
 
 const app = express();
@@ -70,66 +69,11 @@ app.get("/tree/leaves/qtd", (req, res) => {
   })
 })
 
-app.post("/infoBUs/create", (req, res) => {
-  infobu_controller.inicializar().then(response => {
-    console.log("infobus populados")
-    res.json(response)
-  }).catch((err) => {
-    res.json(err)
-  })
-})
-
-app.get("/infoBUs", (req, res) => {
-  const id = parseInt(req.query.id)
-  let id_final = parseInt(req.query.id_final)
-  if(!id_final) id_final = id
-  infobu_controller.findByIdRange(id, id_final).then((response) => {
-    res.json(response);
-  }).catch((err) => {
-    console.log(err);
-    res.json(err)
-  })
-})
-
-app.get("/infoBUs/tree/leaf", async (req, res) => {
-  const id = parseInt(req.query.id)
-
-  /* query opcional */
-  let id_final = parseInt(req.query.id_final)
-  if(!id_final) id_final = id
-
-  const infoBUs = await infobu_controller.findByIdRange(id, id_final)
-
-  merkletree_adapter.infoBUs_getProof(infoBUs).then((response) => {
-    res.json(response);
-  }).catch((err) => {
-    console.log(err);
-    res.json(err)
-  })
-})
-
-app.get("/infoBUs/tree/resultProof", async (req, res) => {
-  const i_inicial = parseInt(req.query.i_inicial)
-  const i_final = parseInt(req.query.i_final)
-  merkletree_adapter.infoBUs_getResultProof(i_inicial, i_final).then((response) => {
-    res.json(response);
-  }).catch((err) => {
-    console.log(err);
-    res.json(err)
-  })
-})
-
-app.get("/infoBUs/tree/root", async (req, res) => {
-  merkletree_adapter.infoBUs_getRoot().then((response) => {
-    res.send(response);
-  }).catch((err) => {
-    console.log(err);
-    res.json(err)
-  })
-})
-
 const buRoutes = require("./src/routes/buRoutes");
 app.use("/bu", buRoutes);
+
+const infobuRoutes = require("./src/routes/infobusRoutes");
+app.use("/infoBUs", infobuRoutes);
 
 const rootRoutes = require("./src/routes/rootRoutes");
 app.use("/root", rootRoutes);
