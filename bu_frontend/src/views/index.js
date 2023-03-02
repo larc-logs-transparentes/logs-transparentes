@@ -5,7 +5,7 @@ import Raizassinada from './pages/Monitorar/RaizAssinada.js';
 import Mapa from './pages/Monitorar/Mapa/Mapa.js';
 import Root from './elements/Root';
 import VerificacaoCompleta from './pages/Monitorar/VerificacaoCompleta/VerificacaoCompleta.js';
-
+import Consultar_BU from './elements/consultar_bu';
 // See React Router documentation for details: https://reacttraining.com/react-router/web/api/Route
 const pageList = [
   {
@@ -48,6 +48,15 @@ const pageList = [
     name: 'Ver mais',   //Raiz assinada
     path: '/tree/root',
     component: Root,
+  },
+  {
+    name: 'Consultar Todos BUs',
+    
+    path: '/elements/consultar_bu',
+    component: Consultar_BU,
+    //badge: {
+    //  text: 'NEW',
+    //},
   },
 ];
 
