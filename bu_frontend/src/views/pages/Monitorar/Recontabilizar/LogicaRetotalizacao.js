@@ -1,6 +1,6 @@
 const axios = require('axios')
-const merkletree_api = require("../../../api/merkletree.api")
-const bu_api_url = require('../../../config.json').bu_api_url
+const merkletree_api = require("../../../../api/merkletree.api")
+const bu_api_url = require('../../../../config.json').bu_api_url
 
 export async function RetotalizacaoDeBus(){
     console.log("Download de BUs iniciado")

@@ -1,6 +1,6 @@
 import Dashboard from './pages/Dashboard';
 import MostrarBU from './elements/MostrarBU';
-import Retotalizar from './pages/Monitorar/Retotalizar.js';
+import Retotalizar from './pages/Monitorar/Recontabilizar/Retotalizar.js';
 import Raizassinada from './pages/Monitorar/RaizAssinada.js';
 import Mapa from './pages/Monitorar/Mapa/Mapa.js';
 import Root from './elements/Root';

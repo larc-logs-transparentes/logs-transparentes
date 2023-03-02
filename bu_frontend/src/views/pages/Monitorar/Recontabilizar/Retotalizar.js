@@ -1,11 +1,11 @@
 import React, { Component,useEffect,useState } from 'react';
 import './Retotalizar.css';
 import { Card, CardBody, Row, Col} from 'reactstrap';
-import { Loader } from '../../../vibe';
-import approval from '../../../assets/images/Approved.png';
-import error from '../../../assets/images/Error.png';
-import {RetotalizacaoDeBus} from './retg.js';
-import LoadingSpinner from '../../elements/LoadingSpinner';
+import { Loader } from '../../../../vibe';
+import approval from '../../../../assets/images/Approved.png';
+import error from '../../../../assets/images/Error.png';
+import {RetotalizacaoDeBus} from './LogicaRetotalizacao.js';
+import LoadingSpinner from '../../../elements/LoadingSpinner';
 
 
 export default function Retotalizar() {

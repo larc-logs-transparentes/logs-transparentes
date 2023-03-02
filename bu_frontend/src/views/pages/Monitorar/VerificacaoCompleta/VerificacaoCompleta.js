@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Card, CardBody, Row, Col} from 'reactstrap';
 import { getRoot, getSumOfVotes_infoBUs, verifyInfoBUs } from '../../../../api/merkletree_InfoBUs.api'
 import { getInfoBUsFromIdRange, getLeavesAndProofFromIdRange } from '../../../../api/bu.api';
-import '../Retotalizar.css';
+import '../Recontabilizar/Retotalizar.css';
 import AnimacaoVerificacao from './AnimacaoVerificacao';
 
 const VerificacaoCompleta = () => {
