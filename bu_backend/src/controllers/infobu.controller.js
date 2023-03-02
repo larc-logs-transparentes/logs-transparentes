@@ -1,7 +1,7 @@
 const { modeloInfoBU } = require("../models/bu.model")
 const { findAll: findAllBUs } = require("./bu.controller")
 
-const merkletree_adapter = require("../adapters/merkletree.adapter")
+const infobu_merkletree_adapter = require('../adapters/infobus_merkletree.adapter')
 const { SHA256 } = require("crypto-js")
 
 exports.findAll = async () => {
@@ -51,7 +51,7 @@ exports.inicializar = async () => {
         })  
     }
     
-    await merkletree_adapter.infoBUs_sendLeaves(folhas)
+    await infobu_merkletree_adapter.sendLeaves(folhas)
     return {
         message: "árvore de infoBUs inicializada"
     }

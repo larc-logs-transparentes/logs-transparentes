@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const infobu_controller = require('../controllers/infobu.controller')
-const merkletree_adapter = require('../adapters/merkletree.adapter')
+const infobu_merkletree_adapter = require('../adapters/infobus_merkletree.adapter')
 
 router.post("/create", (req, res) => {
     infobu_controller.inicializar().then(response => {
@@ -32,7 +32,7 @@ router.get("/tree/leaf", async (req, res) => {
   
     const infoBUs = await infobu_controller.findByIdRange(id, id_final)
   
-    merkletree_adapter.infoBUs_getProof(infoBUs).then((response) => {
+    infobu_merkletree_adapter.getProof(infoBUs).then((response) => {
       res.json(response);
     }).catch((err) => {
       console.log(err);
@@ -43,7 +43,7 @@ router.get("/tree/leaf", async (req, res) => {
 router.get("/tree/resultProof", async (req, res) => {
     const i_inicial = parseInt(req.query.i_inicial)
     const i_final = parseInt(req.query.i_final)
-    merkletree_adapter.infoBUs_getResultProof(i_inicial, i_final).then((response) => {
+    infobu_merkletree_adapter.getResultProof(i_inicial, i_final).then((response) => {
       res.json(response);
     }).catch((err) => {
       console.log(err);
@@ -52,13 +52,12 @@ router.get("/tree/resultProof", async (req, res) => {
 })
   
 router.get("/tree/root", async (req, res) => {
-    merkletree_adapter.infoBUs_getRoot().then((response) => {
+    infobu_merkletree_adapter.getRoot().then((response) => {
       res.send(response);
     }).catch((err) => {
       console.log(err);
       res.json(err)
     })
 })
-
 
 module.exports = router;

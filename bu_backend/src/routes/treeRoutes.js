@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const merkletree_adapter = require("../adapters/merkletree.adapter")
+const merkletree_adapter = require("../adapters/bus_merkletree.adapter")
 
 router.get("/", (req, res) => {
     merkletree_adapter.getTree().then(tree => {

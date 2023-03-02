@@ -1,8 +1,6 @@
 const cors = require("cors");
 const express = require("express");
 
-const merkletree_adapter = require("./src/adapters/merkletree.adapter");
-
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

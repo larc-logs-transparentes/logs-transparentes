@@ -1,6 +1,6 @@
 const axios = require('axios')
-const merkletreeHostname = "http://localhost"
-const merkletreePort = 3001
+const merkletreeHostname = require('../config/config').merkletreeHostname
+const merkletreePort = require('../config/config').merkletreePort
 
 exports.addLeaf = (data) => {
   return axios.post(`${merkletreeHostname}:${merkletreePort}/tree/leaf`, {
@@ -83,48 +83,4 @@ exports.getProof = (firstTreeSize, secondTreeSize) => {
   .catch(err => {
     console.log(err)
   }) 
-}
-
-exports.infoBUs_sendLeaves = (leaves) => {
-  return axios.post(`${merkletreeHostname}:${merkletreePort}/infobus/leaves`, {
-    data: leaves
-  })
-  .then(res => {
-    return res.data
-  })
-  .catch(err => {
-    console.log(err)
-  })
-}
-
-exports.infoBUs_getProof = (infoBU) => {
-  return axios.post(`${merkletreeHostname}:${merkletreePort}/infobus/proof`, {
-    leaves: infoBU
-  })
-  .then(res => {
-    return res.data
-  })
-  .catch(err => {
-    console.log(err)
-  })
-}
-
-exports.infoBUs_getResultProof = (i_inicial, i_final) => {
-  return axios.get(`${merkletreeHostname}:${merkletreePort}/infobus/resultProof?i_inicial=${i_inicial}&i_final=${i_final}`)
-  .then(res => {
-    return res.data
-  })
-  .catch(err => {
-    console.log(err)
-  })
-}
-
-exports.infoBUs_getRoot = () => {
-  return axios.get(`${merkletreeHostname}:${merkletreePort}/infobus/root`)
-  .then(res => {
-    return res.data
-  })
-  .catch(err => {
-    console.log(err)
-  })
 }

@@ -1,7 +1,7 @@
 const { modeloBoletim } = require("../models/bu.model")
 const { modeloroot } = require("../models/root.model")
 
-const merkletree_adapter = require("../adapters/merkletree.adapter")
+const merkletree_adapter = require("../adapters/bus_merkletree.adapter")
 
 const QTD_BUs_CONSISTENCY_PROOF = 16 //Frequência de envio da prova de consistência
 let tree_size_1 = 0, tree_size_2 = 0, log_id = 0
