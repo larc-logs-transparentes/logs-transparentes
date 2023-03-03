@@ -27,9 +27,6 @@ import { Loader } from '../../vibe/';
 //import DeleteIcon from '@mui/icons-material/Delete';
 //import IconButton from '@mui/material/IconButton';
 //import Tooltip from '@mui/material/Tooltip';
-import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext';
-import laptopImage from '../../assets/images/laptop.jpeg';
-import { getBuById } from '../../api/bu.api'
 import { verify, facadeVerify } from '../../api/merkletree.api'
 import cadVerde from '../../assets/images/cad-verde.png';
 import cadVermelho from '../../assets/images/cad-vermelho.png';
