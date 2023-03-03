@@ -7,6 +7,7 @@ exports.sendLeaves = (leaves) => {
       data: leaves
     })
     .then(res => {
+      console.log(res.data)
       return res.data
     })
     .catch(err => {
@@ -39,6 +40,7 @@ exports.getResultProof = (i_inicial, i_final) => {
 exports.getRoot = () => {
     return axios.get(`${merkletreeHostname}:${merkletreePort}/infobus/root`)
     .then(res => {
+      console.log(res.data)
       return res.data
     })
     .catch(err => {

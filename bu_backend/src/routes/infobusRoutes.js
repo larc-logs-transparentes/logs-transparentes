@@ -10,7 +10,7 @@ router.post("/create", (req, res) => {
       res.json(err)
     })
 })
-  
+
 router.get("/", (req, res) => {
     const id = parseInt(req.query.id)
 

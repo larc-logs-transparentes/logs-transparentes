@@ -28,7 +28,6 @@ router.post("/", (req, res) => {
   
 router.get("/get_one", (req, res) => {
     bu_controller.findByInfo(req.query.turno, req.query.uf, req.query.zona, req.query.secao).then((response) => {
-        // console.log(response)
         res.json(response)
     }).catch((err) => {
         res.json(err)
@@ -38,7 +37,6 @@ router.get("/get_one", (req, res) => {
 // retrieve BU by ID
 router.get("/:id", (req, res) => {
     bu_controller.findById(req.params.id).then((response) => {
-        // console.log({response})
         res.json(response);
     }).catch((err) => {
       res.json(err)

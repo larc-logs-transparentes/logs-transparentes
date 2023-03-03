@@ -15,7 +15,6 @@ exports.addLeaf = (data) => {
     })
 }
 
-// return merkletree
 exports.getTree = () => {
   return axios.get(`${merkletreeHostname}:${merkletreePort}/tree`)
     .then(res => {
@@ -52,7 +51,6 @@ exports.getLeafAndProofById = (id) => {
 exports.getAllLeaves = () => {
   return axios.get(`${merkletreeHostname}:${merkletreePort}/tree/leaves`)
     .then(res => {
-      //console.log(res.data)
       return res.data
     })
     .catch(err => {
