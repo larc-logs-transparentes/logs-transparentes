@@ -1,8 +1,8 @@
 const router = require("express").Router()
-const merkletree_adapter = require("../adapters/bus_merkletree.adapter")
+const bus_merkletree_adapter = require("../adapters/bus_merkletree.adapter")
 
 router.get("/", (req, res) => {
-    merkletree_adapter.getTree().then(tree => {
+    bus_merkletree_adapter.getTree().then(tree => {
       res.json(tree)
     }).catch((err) => {
       res.json(err)
@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
 })
   
 router.get("/root", (req, res) => {
-    merkletree_adapter.getTreeRoot().then(root => {
+    bus_merkletree_adapter.getTreeRoot().then(root => {
       res.json(root)
     }).catch((err) => {
       res.json(err)
@@ -18,7 +18,7 @@ router.get("/root", (req, res) => {
 })
   
 router.get("/leaf/:id", (req, res) => {
-    merkletree_adapter.getLeafAndProofById(req.params.id).then(leafAndProof => {
+    bus_merkletree_adapter.getLeafAndProofById(req.params.id).then(leafAndProof => {
       res.json(leafAndProof)
     }).catch((err) => {
       res.json(err)
@@ -26,7 +26,7 @@ router.get("/leaf/:id", (req, res) => {
 })
   
 router.get("/leaves", (req, res) => {
-    merkletree_adapter.getAllLeaves().then(leaves => {
+    bus_merkletree_adapter.getAllLeaves().then(leaves => {
       res.json(leaves)
     }).catch((err) => {
       res.json(err)
@@ -34,7 +34,7 @@ router.get("/leaves", (req, res) => {
 })
   
 router.get("/leaves/qtd", (req, res) => {
-    merkletree_adapter.getAllLeaves().then(leaves => {
+    bus_merkletree_adapter.getAllLeaves().then(leaves => {
       res.json(leaves.length)
     }).catch((err) => {
       res.json(err)

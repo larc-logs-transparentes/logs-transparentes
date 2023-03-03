@@ -49,17 +49,6 @@ exports.getLeafAndProofById = (id) => {
     })
 }
 
-exports.getLeafById = (id) => {
-  return axios.get(`${merkletreeHostname}:${merkletreePort}/leaf/${id}`)
-    .then(res => {
-      console.log(res.data)
-      return res.data
-    })
-    .catch(err => {
-      console.log(err)
-    })
-}
-
 exports.getAllLeaves = () => {
   return axios.get(`${merkletreeHostname}:${merkletreePort}/tree/leaves`)
     .then(res => {

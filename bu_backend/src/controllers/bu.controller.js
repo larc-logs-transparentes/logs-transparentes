@@ -82,25 +82,6 @@ exports.findById = (id) => {
   })
 };
 
-// Find BU by BU info
-exports.findByInfo = (turno,UF,secao,zona) =>{
-  return modeloBoletim.findOne({turno:turno, UF:UF, secao:secao, zona:zona})
-  .then((data) =>{
-      return data;
-  }) 
-}
-
-exports.Sum = () => {
-  return modeloBoletim.modeloBoletim.aggregate([
-    {$unwind:"$votos"},
-    {$group:{
-      _id:"$votos.nome",
-      votos:  {$sum: "$votos.votos"}
-    }}]).then((data)=>{
-      return data;
-    })
-};
-
 /**
 * publishConsistencyProof
 * @desc - Processa e armazena prova de consistência

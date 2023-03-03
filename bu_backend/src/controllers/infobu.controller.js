@@ -4,17 +4,6 @@ const { findAll: findAllBUs } = require("./bu.controller")
 const infobu_merkletree_adapter = require('../adapters/infobus_merkletree.adapter')
 const { SHA256 } = require("crypto-js")
 
-exports.findAll = async () => {
-    const data = await modeloInfoBU.find({})
-    return data
-}
-
-exports.findById = async (id) => {
-    console.log({id})
-    const data = await modeloInfoBU.findOne({ id: id })
-    return data
-}
-
 exports.findByIdRange = async (id, id_final) => {
     const data = await modeloInfoBU.find({ id: { $gte: id, $lte: id_final } })
     data.sort((a, b) => a.id - b.id)
