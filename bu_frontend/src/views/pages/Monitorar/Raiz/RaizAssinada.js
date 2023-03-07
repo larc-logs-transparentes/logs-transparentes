@@ -12,7 +12,7 @@ export default function Raizassinada() {
   const i=0
   const [show, setShow] = useState(false);
   useEffect(() => {
-    const nome=baixarRoots().then((z)=>setRootsBaixadas(z))
+    baixarRoots().then((z)=>setRootsBaixadas(z))
     
   },[]);
 

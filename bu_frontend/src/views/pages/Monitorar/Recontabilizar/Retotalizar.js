@@ -25,8 +25,7 @@ export default function Retotalizar() {
     root:busbaixados[4]
   }
   useEffect(() => {
-    const nome=RetotalizacaoDeBus().then((z)=>setBUsBaixados(z))
-    
+    RetotalizacaoDeBus().then((z)=>setBUsBaixados(z))
   },[]);
 
 /////////// FUNÇÕES DE TEMPO PARA IR MOSTRANDO A TELA ////////////////
@@ -108,8 +107,8 @@ export default function Retotalizar() {
               <CardBody >
               <h4> Retotalização dos votos</h4>
                 <div style={{textAlign:'center'}} >
-                  <button disabled={busbaixados[0] === null} onClick={()=> {BaixarBus(true)}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
-                    {busbaixados[0] === null ? "Aguarde enquanto baixamos as informações" : "Solicitar Retotalização"}
+                  <button disabled={busbaixados[0] === undefined} onClick={()=> {BaixarBus(true)}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
+                    {busbaixados[0] === undefined ? "Aguarde enquanto baixamos as informações" : "Solicitar Retotalização"}
                   </button>
                     {busbaixados[0] === null ? <LoadingSpinner /> : null}
                 </div>

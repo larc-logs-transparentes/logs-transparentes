@@ -1,23 +1,9 @@
 import { Buffer } from "buffer"
 const axios = require('axios')
 const bu_api_url = require('../config.json').bu_api_url
-//const bu_api_url = "http://172.20.11.11:8080"
 var crypto_js_1 = require("crypto-js");
 const SHA256 = require('crypto-js/sha256')
 var hashFn = bufferifyFn(SHA256)
-
-
-function getBuByIdString(bu_id) {
-    return axios.get(`${bu_api_url}/bu/${bu_id}`)
-      .then(res => {
-        console.log(res.data)
-        var buString = res.data.turno + res.data.secao + res.data.zona + res.data.UF
-        return buString
-      })
-      .catch(err => {
-        console.log(err)
-      })
-}
 
 function getBuById(bu_id) {
     return axios.get(`${bu_api_url}/bu/${bu_id}`)
@@ -47,15 +33,6 @@ function getRoot(){
    
 }
 
-function getLeafDataFromBu(BU) {
-    return {
-        turno: BU.turno,
-        secao: BU.secao,
-        zona: BU.zona,
-        UF: BU.UF
-    }
-}
-
 function getProofInfo(leafid){
     return new Promise(function (resolve, reject){
         axios.get(`${bu_api_url}/tree/leaf/${leafid}`)
@@ -63,13 +40,15 @@ function getProofInfo(leafid){
            // console.log(res.data.proof[0].data)
             var proofS =  res.data.proof
             var proofHex = res.data.proofHex
-            for(var i = 0; i < proofS.length; i++){
+            for(let i = 0; i < proofS.length; i++){
+                // eslint-disable-next-line
                 if(typeof proofS[i].data.data === 'Array'){
                     proofS[i] = Buffer.from(JSON.stringify(proofS[i]))
                 }
                 proofS[i].data = Buffer.from(JSON.stringify(proofS[i].data.data))
             }
-            for(var i = 0; i < proofHex.length; i++){
+            for(let i = 0; i < proofHex.length; i++){
+                // eslint-disable-next-line
                 if(typeof proofHex[i] === 'string'){
                     proofS[i].data = Buffer.from(proofHex[i].replace('0x', ''), 'hex')
                 }

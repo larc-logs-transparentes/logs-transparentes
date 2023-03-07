@@ -52,7 +52,6 @@ class Consultar_BU extends Component {
   findBu() {
     const { lista } = this.state
     var form  = this.state.formulario
-
     var len = lista.length
     var i=0
     while (i<len) {
@@ -65,7 +64,7 @@ class Consultar_BU extends Component {
 
     console.log("i=" + i)
     if (i<len) {
-      this.state.buSelecionado = i
+      this.setState({buSelecionado: i})
       console.log("buSelecionado=" + this.state.buSelecionado)
       console.log(lista[i])
       return lista[i].id
@@ -111,6 +110,7 @@ class Consultar_BU extends Component {
   handleChangeZone(e) {
     var formulario  = this.state.formulario
     formulario[e.target.name] = e.target.value
+    // eslint-disable-next-line
     var list_bu_with_zone = this.state.lista.filter((item) => item.zona == e.target.value && item.UF == formulario.uf && item.turno == formulario.turno)
     var list_sections_filtered = list_bu_with_zone.map((item) => item.secao)
     var list_sections_unique = Array.from(new Set(list_sections_filtered))
