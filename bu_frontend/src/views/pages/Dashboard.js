@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 
-import { Card, CardBody, Row, Col, CardHeader,
-  CardFooter,
-  CardImg,
+import { Card, CardBody, Row, Col,
   CardTitle,
-  CardSubtitle,
   CardText,
   Button
 } from 'reactstrap';
@@ -35,7 +32,6 @@ class Dashboard extends Component {
       //padding: '50px 0 70px',
       marginLeft: '25%'
     };
-    const { lista } = this.state
 
     return (
       <div>

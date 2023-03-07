@@ -1,33 +1,18 @@
 import React, { Component } from 'react';
 import {
   Row,
-  Button,
   Col,
   Card,
   CardHeader,
-  CardFooter,
   CardBody,
-  CardImg,
-  CardTitle,
-  CardSubtitle,
   CardText,
-  Form,
-  FormGroup,
   Label,
-  Input, 
-  FormText,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalDialog
+
 } from 'reactstrap';
-import { useParams } from 'react-router-dom';
-import { Loader } from '../../vibe/';
 //import DeleteIcon from '@mui/icons-material/Delete';
 //import IconButton from '@mui/material/IconButton';
 //import Tooltip from '@mui/material/Tooltip';
-import { verify, facadeVerify } from '../../api/merkletree.api'
+import { verify } from '../../api/merkletree.api'
 import cadVerde from '../../assets/images/cad-verde.png';
 import cadVermelho from '../../assets/images/cad-vermelho.png';
 
@@ -83,8 +68,8 @@ class MostrarBU extends Component {
 
     console.log(JSON.stringify(this.state.prova))
     var mostrar = this.state.mostrarProva
-    var raizArr = (this.state.root===undefined)? [] : Array.from(this.state.root)
-    var fullproofArr = (this.state.fullproof===undefined)? [] : Array.from(this.state.fullproof)
+    // var raizArr = (this.state.root===undefined)? [] : Array.from(this.state.root)
+    // var fullproofArr = (this.state.fullproof===undefined)? [] : Array.from(this.state.fullproof)
 
     var votosArr = (this.state.votos===undefined)? [] : Array.from(this.state.votos)
 

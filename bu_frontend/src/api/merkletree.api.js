@@ -96,7 +96,7 @@ function verifyLeaf(leafS, BU){
     var BUHash = SHA256(buString)
     BUHash = bufferify(BUHash)
 
-    if(verifyBUinformation(BU) == false ) 
+    if(verifyBUinformation(BU) === false ) 
         return [ false , BUHash ]
 
     if (Buffer.compare(BUHash, hash) === 0){
@@ -113,15 +113,15 @@ function verifyBUinformation(BU){
     
     let verificationResult = true
 
-    if (BU.secao != parsedBU["identificacaoSecao"]["secao"] ||
-        BU.zona != parsedBU["identificacaoSecao"]["municipioZona"]["zona"]) {
+    if (BU.secao !== parsedBU["identificacaoSecao"]["secao"] ||
+        BU.zona !== parsedBU["identificacaoSecao"]["municipioZona"]["zona"]) {
             verificationResult = false
     }
 
     for(let i = 0; i < BU.votos.length; i++){
-        if(BU.votos[0].votos != parsedVotes[0]["quantidadeVotos"] ||
-           BU.votos[0].codigo != parsedVotes[0]["identificacaoVotavel"]["codigo"] ||
-           BU.votos[0].partido != parsedVotes[0]["identificacaoVotavel"]["partido"]){
+        if(BU.votos[0].votos !== parsedVotes[0]["quantidadeVotos"] ||
+           BU.votos[0].codigo !== parsedVotes[0]["identificacaoVotavel"]["codigo"] ||
+           BU.votos[0].partido !== parsedVotes[0]["identificacaoVotavel"]["partido"]){
                 verificationResult = false
         }
     }

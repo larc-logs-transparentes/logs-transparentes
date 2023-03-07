@@ -8,7 +8,7 @@ export async function RetotalizacaoDeBus(){
     console.log("Download de " + BUs.length + " BUs terminado")
     console.log(await verificarBUs(BUs))
     let numerodebusadicionados =  BUs.length;
-    if (BUs==0){
+    if (BUs===0){
         numerodebusadicionados=0
     }
     const verificarbus = await verificarBUs(BUs) // variavel para verificar os bus (true ou false)
@@ -41,7 +41,7 @@ async function verificarBUs(BUs){
 async function verificarQtdBUS(BUs){
     return await axios.get(`${bu_api_url}/tree/leaves/qtd`)
     .then(res => {
-        return res.data == BUs.length
+        return res.data === BUs.length
     })
     .catch((err) => {
         console.log(err)
@@ -80,9 +80,9 @@ function retotalizar(BUs){
         const votosVotaveis = bu_json.resultadosVotacaoPorEleicao[0].resultadosVotacao[0].totaisVotosCargo[0].votosVotaveis
         for (let j = 0; j < votosVotaveis.length; j++) {
             if (votosVotaveis[j].hasOwnProperty("identificacaoVotavel")) {
-                let candidatoIndexInArray = ret.findIndex(voto => voto.codigo == votosVotaveis[j].identificacaoVotavel.codigo)
+                let candidatoIndexInArray = ret.findIndex(voto => voto.codigo === votosVotaveis[j].identificacaoVotavel.codigo)
 
-                if (candidatoIndexInArray != -1) ret[candidatoIndexInArray].votos += votosVotaveis[j].quantidadeVotos
+                if (candidatoIndexInArray !== -1) ret[candidatoIndexInArray].votos += votosVotaveis[j].quantidadeVotos
                 else {
                     let votoVotavel = {
                         partido: votosVotaveis[j].identificacaoVotavel.partido,

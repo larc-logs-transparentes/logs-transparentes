@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react';
-import { Card, CardBody, Col, Row, Button,Table } from 'reactstrap'
+import { Card, CardBody } from 'reactstrap'
 import { provaDeConsistencia } from '../logic/consistencyProof';
 import { getRootAll } from '../../../../api/bu.api';
 import {baixarRoots} from './Roots.js';
@@ -32,17 +32,7 @@ export default function Raizassinada() {
       setRootBaixada(rootbaixada=>saveRootBaixada)}
     return vetorvalidar
   }
-
-
-  const [isHovering, setIsHovering] = useState(false);
-  const handleMouseOver = () => {
-    setIsHovering(true);
-  };
-
-  const handleMouseOut = () => {
-    setIsHovering(false);
-  };
-
+  
   return (
     <React.Fragment>
       <Card>
