@@ -89,7 +89,7 @@ const VerificacaoCompleta = () => {
                         <CardBody >
                             <h4> Verificação completa da cidade </h4>
                             <div style={{textAlign:'center'}} >
-                            <button onClick={()=> {StartDownloadInfoBUs()}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
+                            <button onClick={()=> {StartDownloadInfoBUs()}} disabled={stateDownloadInfoBUs !== 'not started'} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
                                 Iniciar Verificação
                             </button>
                             </div>

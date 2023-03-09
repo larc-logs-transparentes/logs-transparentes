@@ -7,7 +7,6 @@ import error from '../../../../assets/images/Error.png';
 import {RetotalizacaoDeBus} from './LogicaRetotalizacao.js';
 import LoadingSpinner from '../../../elements/LoadingSpinner';
 
-
 export default function Retotalizar() {
   const [showbbus, setBbus] = useState(false);
   const [showbbus2, setBbus2] = useState(false);
@@ -107,7 +106,7 @@ export default function Retotalizar() {
               <CardBody >
               <h4> Retotalização dos votos</h4>
                 <div style={{textAlign:'center'}} >
-                  <button disabled={busbaixados[0] === undefined} onClick={()=> {BaixarBus(true)}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
+                  <button disabled={busbaixados[0] === undefined || showbbus === true} onClick={()=>{BaixarBus(true)}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
                     {busbaixados[0] === undefined ? "Aguarde enquanto baixamos as informações" : "Solicitar Retotalização"}
                   </button>
                     {busbaixados[0] === null ? <LoadingSpinner /> : null}
