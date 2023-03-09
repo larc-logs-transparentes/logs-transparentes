@@ -110,9 +110,9 @@ export function getSumOfVotes_infoBUs(infoBUs){
         const candidatos = infoBUs[i].votos_validos;
         for (let j = 0; j < candidatos.length; j++) {
             const element = candidatos[j];
-            let aux = ret.findIndex(candidato => candidato.codigo == element.codigo)
+            let aux = ret.findIndex(candidato => candidato.codigo === element.codigo)
             
-            if(aux != -1) //se encontrado candidato no array
+            if(aux !== -1) //se encontrado candidato no array
                 ret[aux].votos += element.votos //soma os votos
             else
                 ret.push(_.cloneDeep(element)) //insere no array
@@ -174,7 +174,7 @@ function getSumOfVotes_proofData(proofs){
         for (let j = 0; j < vote.length; j++) {
             const resultPerCandidate = vote[j];
             let aux = ret.findIndex(candidato => candidato[0] === resultPerCandidate[0])
-            if (aux != -1) //se encontrado candidato no array
+            if (aux !== -1) //se encontrado candidato no array
                 ret[aux][1] += resultPerCandidate[1] //soma os votos
             else
                 ret.push(_.cloneDeep(resultPerCandidate)) //insere no array 
