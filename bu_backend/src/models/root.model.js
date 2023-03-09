@@ -1,7 +1,4 @@
 const mongoose = require("mongoose");
-// const url = 'mongodb://127.0.0.1:5432/bu_db';
-// mongoose.connect(url)
-
 
 const rootSchema = new mongoose.Schema({  
     _id: { type: Number},
@@ -14,7 +11,6 @@ const rootSchema = new mongoose.Schema({
     ultimo:false,
 });
 
-const modeloroot = mongoose.model("roots",rootSchema) //"roots" = collection of database
-
+const modeloroot = mongoose.model("roots", rootSchema) //"roots" = collection of database
 
 module.exports = {modeloroot}

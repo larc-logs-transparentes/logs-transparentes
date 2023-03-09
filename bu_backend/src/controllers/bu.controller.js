@@ -1,26 +1,10 @@
-const modeloBoletim = require("../models/bu.model")
-const modeloRoot = require("../models/root.model")
-const merkletree_adapter = require("../adapters/merkletree.adapter")
-const mongoose = require("mongoose");
-const axios = require('axios');
+const { modeloBoletim } = require("../models/bu.model")
+const { modeloroot } = require("../models/root.model")
 
+const merkletree_adapter = require("../adapters/bus_merkletree.adapter")
 
-/* ----------------------------------- */
-const mqtt = require('mqtt');
-const mosquitto_url = require('../config/config').mosquitto_url
-
-const consistencyCheckData = {
-  raizAssinada: null,
-  BUsAdicionados: [],
-  cont: 0,
-  ultimo: false,
-}
-
-const TAM_MTREE_PARCIAL = 4
-const QTD_BUs_CONSISTENCY_PROOF = 16 //Frequência de envio da prova de consistência
+const CONSISTENCY_PROOF_FREQUENCY = 16
 let tree_size_1 = 0, tree_size_2 = 0, log_id = 0
-
-/* ----------------------------------- */
 
 // Create and Save a new BU
 exports.create = (data) => {
@@ -31,10 +15,9 @@ exports.create = (data) => {
   console.log({"BU": data})
 
   merkletree_adapter.addLeaf(buString).then((merkletree_data) => {
-    modeloBoletim.modeloBoletim.create({
+    modeloBoletim.create({
       merkletree_leaf_index: merkletree_data.leaf_index,
       merkletree_leaf: merkletree_data.added_leaf,
-      // ...data
       _id: data._id,
       id: data.id,
       turno: data.turno,
@@ -46,11 +29,9 @@ exports.create = (data) => {
       votos: data.votos,
     })
 
-    publishConsistencyCheck(merkletree_data.added_leaf)
-
     tree_size_2++ 
-    if(tree_size_2 % QTD_BUs_CONSISTENCY_PROOF == 0){
-      publishConsistencyProof(tree_size_1, tree_size_2, log_id)
+    if(tree_size_2 % CONSISTENCY_PROOF_FREQUENCY == 0){
+      storeConsistencyProof(tree_size_1, tree_size_2, log_id)
       tree_size_1 = tree_size_2
       log_id++
     }
@@ -58,17 +39,8 @@ exports.create = (data) => {
   return
 };
 
-function getVotesByIdRange(data) {
-  console.log(' o Vetor que entra na função')
-  let votesum=totalizarvotos(data)
-  let formattedVotesum = delete votesum._id
-
-  return votesum
-}
-
 function totalizarvotos(data) {
   const totaldevotos = []
-  console.log(data)
     for (let i = 0; i < data.length; i++) { //percorre BUs
         const candidatos = data[i].votos;
         for (let j = 0; j < candidatos.length; j++) { //percorre registros dos candidatos em um BU
@@ -89,112 +61,34 @@ function totalizarvotos(data) {
 }
 
 // Retrieve all BUs from the database.
-exports.findAll = () => {
-  return modeloBoletim.modeloBoletim.find({}).then((data) => {
-    return data
-  })
+exports.findAll = async () => {
+  const data = await modeloBoletim.find({})
+  return data
 };
-exports.findAllroot = () => {
-  return modeloRoot.modeloroot.find({}).then((data) => {
-    return data
-  })
-};
+
 // Find BUs inside a ID range.
-exports.findByIdRange = (id_inicial, id_final) => {
-  return modeloBoletim.modeloBoletim.find({id:{ $gte:id_inicial, $lte:id_final}})
+exports.findTotalVotesByIdRange = (id_inicial, id_final) => {
+  return modeloBoletim.find({id:{ $gte:id_inicial, $lte:id_final}})
   .then((data) => {
-    return getVotesByIdRange(data)
+    return totalizarvotos(data)
   })
 };
+
 // Find a single BU with an id
 exports.findById = (id) => {
   console.log({id})
-  return modeloBoletim.modeloBoletim.findOne({id: id}).then((data) => {
+  return modeloBoletim.findOne({id: id}).then((data) => {
     return data
   })
 };
 
-// Find BU by BU info
- exports.findByInfo = (turno,UF,secao,zona) =>{
-  return modeloBoletim.modeloBoletim.findOne({turno:turno, UF:UF, secao:secao, zona:zona}
-    
-    ).then((data) =>{
-      return data;
-    }) 
-}
- exports.findByInfo = (turno,UF,secao,zona) =>{
-        return modeloBoletim.modeloBoletim.findOne({turno:turno, UF:UF, secao:secao, zona:zona}
-          
-          ).then((data) =>{
-            return data;
-          }) 
-}
-
-
-exports.Sum = () => {
-  return modeloBoletim.modeloBoletim.aggregate([
-    {$unwind:"$votos"},
-    {$group:{
-      _id:"$votos.nome",
-      votos:  {$sum: "$votos.votos"}
-    }}]).then((data)=>{
-      return data;
-    })
-};
-
-/**
-* publish
-* @desc - publica os dados contidos no payload no tópico correspondente
-* @param {String} topic
-* @param {any} payload - lista ordenada das n entradas da árvore
-*/
-function publish(topic, payload){
-  const client  = mqtt.connect(mosquitto_url)
-  client.on('connect', function () {
-      client.publish(topic, payload, {qos: 2})
-      client.end()
-  })
-}
-
-/**
-* publishConsistencyCheck
-* @desc - Processa e envia a verificação de consistência a cada inserção de BU, e a envia conforme necessário
-* @param {String} BUAdicionado - Hash do último BU adicionado na árvore
-*/
-function publishConsistencyCheck(BUAdicionado){
-  consistencyCheckData.BUsAdicionados.push(BUAdicionado)
-  console.log(BUAdicionado + " " + consistencyCheckData.BUsAdicionados.length + " adicionado ao buffer de BUs")
-
-  if(consistencyCheckData.BUsAdicionados.length >= TAM_MTREE_PARCIAL){
-    merkletree_adapter.getTreeRoot().then((treeRoot) => {
-      consistencyCheckData.raizAssinada = treeRoot
-      publish("logs-transparentes/consistencyCheck", JSON.stringify(consistencyCheckData))
-      console.log("\n\nPublicado teste de consistência")
-      console.log(JSON.stringify(consistencyCheckData))
-      consistencyCheckData.BUsAdicionados = []
-      consistencyCheckData.cont ++
-    }) 
-  }
-}
-
 /**
 * publishConsistencyProof
-* @desc - Processa e envia a prova de consistência a cada inserção de BU
+* @desc - Processa e armazena prova de consistência
 */
-function publishConsistencyProof(tree_size_1, tree_size_2, log_id){
-  merkletree_adapter.getProof(tree_size_1, tree_size_2).then(({proof_path, first_tree_hash, second_tree_hash}) => {
-    const consistencyProofData = {
-      tree_size_1: tree_size_1,
-      tree_size_2: tree_size_2,
-      first_hash: first_tree_hash, 
-      second_hash: second_tree_hash,
-      consistency_path: proof_path,
-      log_id: log_id,
-      ultimo: false
-    }
-    publish('logs-transparentes/consistencyProof', JSON.stringify(consistencyProofData))
-    
-    modeloRoot.modeloroot.create({
+function storeConsistencyProof(tree_size_1, tree_size_2, log_id){
+  merkletree_adapter.getProof(tree_size_1, tree_size_2).then(({proof_path, first_tree_hash, second_tree_hash}) => {  
+    modeloroot.create({
       _id:log_id,
       tree_size_1: tree_size_1,
       tree_size_2: tree_size_2,
@@ -203,9 +97,6 @@ function publishConsistencyProof(tree_size_1, tree_size_2, log_id){
       consistency_path: proof_path,
       log_id: log_id
     })
-    
-    publish('logs-transparentes/consistencyProof', JSON.stringify(consistencyProofData))
-    console.log("\n\nPublicado prova de consistência")
-    console.log(JSON.stringify(consistencyProofData))
+    console.log("\n\Armazenado prova de consistência")
   })
 }
