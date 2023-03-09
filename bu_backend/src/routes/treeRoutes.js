@@ -33,7 +33,7 @@ router.get("/leaves", (req, res) => {
     })
 })
   
-router.get("/leaves/qtd", (req, res) => {
+router.get("/tree-size", (req, res) => {
     bus_merkletree_adapter.getAllLeaves().then(leaves => {
       res.json(leaves.length)
     }).catch((err) => {

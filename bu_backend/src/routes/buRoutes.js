@@ -12,7 +12,7 @@ router.get("/get_all", (req, res) => {
   });
   
 // retrieve list of BUs with GET parameters.
-router.get("/", (req, res) => {
+router.get("/by_id_range", (req, res) => {
     bu_controller.findTotalVotesByIdRange(req.query.id_inicial, req.query.id_final)
     .then((response) => {
       res.json(response)
@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
 });
   
 // save new BU
-router.post("/", (req, res) => {
+router.post("/create", (req, res) => {
     console.log("posting on /bu")
     const result = bu_controller.create(req.body)
     res.json(result)
