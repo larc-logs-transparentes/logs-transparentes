@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Card, CardBody, Row, Col} from 'reactstrap';
 import { getRoot, getSumOfVotes_infoBUs, verifyInfoBUs } from '../../../../api/merkletree_InfoBUs.api'
 import { getInfoBUsFromIdRange, getLeavesAndProofFromIdRange } from '../../../../api/bu.api';
-import '../Retotalizar.css';
+import '../Recontabilizar/Retotalizar.css';
 import AnimacaoVerificacao from './AnimacaoVerificacao';
 
 const VerificacaoCompleta = () => {
@@ -89,7 +89,7 @@ const VerificacaoCompleta = () => {
                         <CardBody >
                             <h4> Verificação completa da cidade </h4>
                             <div style={{textAlign:'center'}} >
-                            <button onClick={()=> {StartDownloadInfoBUs()}} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
+                            <button onClick={()=> {StartDownloadInfoBUs()}} disabled={stateDownloadInfoBUs !== 'not started'} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
                                 Iniciar Verificação
                             </button>
                             </div>

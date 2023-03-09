@@ -5,12 +5,8 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardText,
-  FormGroup,
-  Label,
-  Input, 
-  FormText
-} from 'reactstrap';
+} 
+from 'reactstrap';
 import { getRoot, verifyResultProof, getSumOfVotes_infoBUs } from '../../../../api/merkletree_InfoBUs.api'
 import { getInfoBUsFromIdRange, getResultProofFromIdRange } from '../../../../api/bu.api';
 import SelecaoCidade from './SelecaoCidade';

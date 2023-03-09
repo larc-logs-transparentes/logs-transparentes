@@ -2,11 +2,11 @@ const { MerkleTree } = require('merkletreejs')
 const SHA256 = require('crypto-js/sha256')
 
 export function provaDeConsistencia(consistencyProofData){
-    if(consistencyProofData.tree_size_1 == 0)
+    if(consistencyProofData.tree_size_1 === 0)
       return new MerkleTree(consistencyProofData.consistency_path, SHA256).getRoot().toString('hex') === consistencyProofData.second_hash; 
     
     /* 1. If consistency_path is an empty array, stop and fail the proof verification. */
-    if(consistencyProofData.consistency_path == null)
+    if(consistencyProofData.consistency_path === null)
       return false
     
     /* 2. If first is an exact power of 2, then prepend first_hash to the consistency_path array. */
@@ -43,7 +43,7 @@ export function provaDeConsistencia(consistencyProofData){
         sr = createHash(c, sr)
   
         /* 2. If LSB(fn) is not set, then right-shift both fn and sn equally until either LSB(fn) is set or fn is 0. */
-        while(!lsb(fn) && fn != 0){
+        while(!lsb(fn) && fn !== 0){
           fn >>= 1
           sn >>= 1
         }
@@ -58,7 +58,7 @@ export function provaDeConsistencia(consistencyProofData){
     }
   
     /* 7. After completing iterating through the consistency_path array as described above, verify that the fr calculated is equal to the first_hash supplied, that the sr calculated is equal to the second_hash supplied and that sn is 0. */
-    return fr === consistencyProofData.first_hash && sr === consistencyProofData.second_hash && sn == 0;
+    return fr === consistencyProofData.first_hash && sr === consistencyProofData.second_hash && sn === 0;
   }
   
   function isPowOf2(v){

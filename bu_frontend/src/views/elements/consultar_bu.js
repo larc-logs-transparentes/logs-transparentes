@@ -5,28 +5,17 @@ import {
   Col,
   Card,
   CardHeader,
-  CardFooter,
   CardBody,
-  CardImg,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Form,
   FormGroup,
   Label,
-  Input, 
-  FormText
+  Input
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Loader } from '../../vibe/';
-import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext';
-import laptopImage from '../../assets/images/laptop.jpeg';
-import { getBu, getBuAll } from '../../api/bu.api'
+import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext'
 
 class Consultar_BU extends Component {
   axios = require('axios')
   bu_api_url = require('../../config.json').bu_api_url
-  // bu_api_url = "http://172.20.11.11:8080"
 
   constructor() {
     super()
@@ -56,21 +45,18 @@ class Consultar_BU extends Component {
   }
 
   componentDidMount() {
-    this.axios.get(`${this.bu_api_url}/bu/get_all`) //Aqui faz a chamada pra o backend
+    this.axios.get(`${this.bu_api_url}/bu/get_all`) 
       .then(response => this.setState({ lista: response.data }))
-//    this.setState({ lista: getBuAll()} )
-
   }
 
   findBu() {
     const { lista } = this.state
     var form  = this.state.formulario
-
     var len = lista.length
     var i=0
     while (i<len) {
-      if ( form.turno == lista[i].turno && form.uf == lista[i].UF
-        && form.zona == lista[i].zona && form.secao == lista[i].secao) {
+      if ( form.turno === lista[i].turno && form.uf === lista[i].UF
+        && form.zona === lista[i].zona && form.secao === lista[i].secao) {
           break
       }
       i++
@@ -78,7 +64,7 @@ class Consultar_BU extends Component {
 
     console.log("i=" + i)
     if (i<len) {
-      this.state.buSelecionado = i
+      this.setState({buSelecionado: i})
       console.log("buSelecionado=" + this.state.buSelecionado)
       console.log(lista[i])
       return lista[i].id
@@ -104,7 +90,7 @@ class Consultar_BU extends Component {
     var formulario  = this.state.formulario
     formulario[e.target.name] = e.target.value
     
-    var list_bu_with_turn = this.state.lista.filter((item) => item.turno == e.target.value)
+    var list_bu_with_turn = this.state.lista.filter((item) => item.turno === e.target.value)
     var list_states_filtered = list_bu_with_turn.map((item) => item.UF)
     var list_states_unique = Array.from(new Set(list_states_filtered))
     this.setState({uf_opts: list_states_unique}, () => console.log("qwer", this.state.uf_opts))
@@ -114,7 +100,7 @@ class Consultar_BU extends Component {
     var formulario  = this.state.formulario
     formulario[e.target.name] = e.target.value
     
-    var list_bu_with_state = this.state.lista.filter((item) => item.UF == e.target.value && item.turno == formulario.turno)
+    var list_bu_with_state = this.state.lista.filter((item) => item.UF === e.target.value && item.turno === formulario.turno)
     var list_zones_filtered = list_bu_with_state.map((item) => item.zona)
     var list_zones_unique = Array.from(new Set(list_zones_filtered))
     list_zones_unique.sort(function(a, b) { return a - b })
@@ -124,7 +110,7 @@ class Consultar_BU extends Component {
   handleChangeZone(e) {
     var formulario  = this.state.formulario
     formulario[e.target.name] = e.target.value
-    
+    // eslint-disable-next-line
     var list_bu_with_zone = this.state.lista.filter((item) => item.zona == e.target.value && item.UF == formulario.uf && item.turno == formulario.turno)
     var list_sections_filtered = list_bu_with_zone.map((item) => item.secao)
     var list_sections_unique = Array.from(new Set(list_sections_filtered))

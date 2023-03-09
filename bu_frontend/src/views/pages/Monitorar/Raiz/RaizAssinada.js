@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
-import { Card, CardBody, Col, Row, Button,Table } from 'reactstrap'
-import { provaDeConsistencia } from './logic/consistencyProof';
-import { getRootAll } from '../../../api/bu.api';
+import { Card, CardBody } from 'reactstrap'
+import { provaDeConsistencia } from '../logic/consistencyProof';
+import { getRootAll } from '../../../../api/bu.api';
 import {baixarRoots} from './Roots.js';
 
 export default function Raizassinada() {
@@ -12,7 +12,7 @@ export default function Raizassinada() {
   const i=0
   const [show, setShow] = useState(false);
   useEffect(() => {
-    const nome=baixarRoots().then((z)=>setRootsBaixadas(z))
+    baixarRoots().then((z)=>setRootsBaixadas(z))
     
   },[]);
 
@@ -32,17 +32,7 @@ export default function Raizassinada() {
       setRootBaixada(rootbaixada=>saveRootBaixada)}
     return vetorvalidar
   }
-
-
-  const [isHovering, setIsHovering] = useState(false);
-  const handleMouseOver = () => {
-    setIsHovering(true);
-  };
-
-  const handleMouseOut = () => {
-    setIsHovering(false);
-  };
-
+  
   return (
     <React.Fragment>
       <Card>
