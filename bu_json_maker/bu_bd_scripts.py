@@ -70,7 +70,7 @@ def insert_body_to_db(body_dict):
     header = {
         "content-type": "application/json"
     }
-    return requests.post(f"{BACKEND_URL}/bu", json=body_dict, headers=header)
+    return requests.post(f"{BACKEND_URL}/bu/create", json=body_dict, headers=header)
 
 
 def initialize_infoBUs_tree():
