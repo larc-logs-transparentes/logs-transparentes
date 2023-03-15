@@ -1,11 +1,15 @@
-const router = require('express').Router()
+const express = require('express')
+const router = express.Router()
+
 const { MerkleTreePrefix } = require('../lib/MerkleTreePrefix')
 const { SHA256 } = require('crypto-js')
 const { keyNodes } = require('../controllers/keyNodes.controller')
 
 const infoBUsTree = new MerkleTreePrefix([], SHA256, {fillDefaultHash: true})
 
-router.post('/leaves', (req, res) => {
+router.use(express.json({limit: '200mb'}));
+
+router.post('/leaves', (req, res) => {    
     const infoBUs = req.body.data
     const leaves = []
 

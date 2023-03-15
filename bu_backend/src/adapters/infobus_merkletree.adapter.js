@@ -3,6 +3,7 @@ const merkletreeHostname = require('../config/config').merkletreeHostname
 const merkletreePort = require('../config/config').merkletreePort
 
 exports.sendLeaves = (leaves) => {
+    axios.default.defaults.maxBodyLength = 10000000000
     return axios.post(`${merkletreeHostname}:${merkletreePort}/infobus/leaves`, {
       data: leaves
     })
