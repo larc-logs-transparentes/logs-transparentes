@@ -4,10 +4,9 @@ const SHA256 = require('crypto-js/sha256')
 const consistencyProof = require('./controllers/consistencyProof.controller')
 
 const app = express()
-app.use(express.json({limit: '50mb'}));
+app.use(express.json({limit: '200mb'}));
 
 const port = 3001
-//mudar a funcao de hash
 const tree = new MerkleTree([], SHA256)
 
 app.get('/', (req, res) => {
