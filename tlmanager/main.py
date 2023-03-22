@@ -13,6 +13,7 @@ async def index():
 async def tree_create(request: Request):
     tree_name = request.query_params['tree-name']
     commitment_size = request.query_params['commitment-size']
+
     if not tree_name:
         return {'status': 'error', 'message': 'Tree name not specified'}
     elif not commitment_size:
@@ -46,6 +47,16 @@ async def leaf(request: Request):
 @app.get('/tree')
 async def tree(request: Request):
     tree_name = request.query_params['tree-name']
+
     if not tree_name:
         return {'status': 'error', 'message': 'Tree name not specified'}
     return get_tree(tree_name)
+
+@app.post('/tree/publish')
+async def tree_publish(request: Request):
+    req_data = await request.json()
+    tree_name = req_data['tree-name']
+    
+    if not tree_name:
+        return {'status': 'error', 'message': 'Tree name not specified'}
+    return publish(tree_name)

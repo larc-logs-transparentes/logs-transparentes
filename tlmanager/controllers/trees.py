@@ -17,7 +17,6 @@ def insert_leaf(tree_name, data):
     if (tree.length % trees[tree_name]['commitment_size']) == 0:
         # sign tree root
         publish(tree_name) # publish in global_Tree
-        print('Tree root published')
         # the corresponding consistency-proof is saved in database
     return {'status': 'ok', 'value': hash_leaf}
 
@@ -26,7 +25,8 @@ def publish(tree_name):
         return {'status': 'error', 'message': 'Tree does not exist'}
     tree_root = trees[tree_name]['tree'].root
     global_tree = trees['global_tree']['tree']
-    global_tree.append_entry(tree_root)
+    global_tree.append_entry(tree_root) # hash de hash ?
+    print(f'Published tree {tree_name} with root {tree_root}')
     return {'status': 'ok'}
 
 def get_leaf(tree_name, leaf_index):
