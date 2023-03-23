@@ -1,4 +1,5 @@
 from pymerkle import MerkleTree
+import time
 
 trees = {'global_tree': {'tree': MerkleTree(), 'commitment_size': 1}}
 
@@ -50,3 +51,19 @@ def get_tree(tree_name):
 
 def trees_list():
     return {'status': 'running', 'trees': list(trees)}
+
+def get_inclusion_proof(tree_name, data, leaf_index):
+    if tree_name not in trees:
+        return {'status': 'error', 'message': 'Tree does not exist'}
+    
+    tree = trees[tree_name]['tree']
+    if leaf_index:
+        leaf_index = int(leaf_index)
+        if leaf_index >= tree.length:
+            return {'status': 'error', 'message': 'Leaf index out of range'}
+        leaf = tree.get_leaf(leaf_index)
+        offset, path = tree.generate_inclusion_path(leaf)
+        proof = tree.build_proof(offset, path)
+    else:
+        proof = tree.prove_inclusion(bytes(data, 'utf-8'))
+    return proof.serialize()

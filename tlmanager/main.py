@@ -56,7 +56,25 @@ async def tree(request: Request):
 async def tree_publish(request: Request):
     req_data = await request.json()
     tree_name = req_data['tree-name']
-    
+
     if not tree_name:
         return {'status': 'error', 'message': 'Tree name not specified'}
     return publish(tree_name)
+
+""" Basic proofs """
+@app.get('/inclusion-proof')
+async def inclusion_proof(request: Request):
+    tree_name = request.query_params['tree-name']
+    data = None
+    if 'data' in request.query_params:
+        data = request.query_params['data']
+
+    index = None
+    if 'index' in request.query_params:
+        index = request.query_params['index']
+
+    if not tree_name:
+        return {'status': 'error', 'message': 'Tree name not specified'}
+    elif not data and not index:
+        return {'status': 'error', 'message': 'Data or index not specified'}
+    return get_inclusion_proof(tree_name, data, index)
