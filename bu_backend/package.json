@@ -13,7 +13,7 @@
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.15",
     "pg": "^8.7.3",
-    "sequelize": "^6.17.0",
+    "sequelize": "^6.30.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

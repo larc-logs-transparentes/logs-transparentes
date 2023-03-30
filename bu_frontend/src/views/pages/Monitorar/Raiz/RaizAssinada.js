@@ -9,12 +9,25 @@ export default function Raizassinada() {
   const [vetorvalidar,setVetor] = useState([]);
   const [rootsbaixadas,setRootsBaixadas] = useState([]);
   const [rootbaixada,setRootBaixada] = useState([]);
+  const [hashVector,setHashVector] = useState([]);
   const i=0
   const [show, setShow] = useState(false);
   useEffect(() => {
-    baixarRoots().then((z)=>setRootsBaixadas(z))
-    
-  },[]);
+    baixarRoots().then((z) => {
+      setRootsBaixadas(z);
+      setHashVector(
+        z.map((root) => {
+          let hash = '';
+          const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+          for (let i = 0; i < 26; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            hash += characters[randomIndex];
+          }
+          return hash;
+        })
+      );
+    });
+  }, []);
 
   function validar(i){
     let vetorvalidar=[]
@@ -32,7 +45,9 @@ export default function Raizassinada() {
       setRootBaixada(rootbaixada=>saveRootBaixada)}
     return vetorvalidar
   }
-  
+
+
+
   return (
     <React.Fragment>
       <Card>
@@ -66,9 +81,9 @@ export default function Raizassinada() {
                 </div> 
                 <div>
                 <h5>Assinatura</h5>
-                  {rootsbaixadas.map((rootsbaixadas, i)=> 
+                  {hashVector.map((hashVector, i)=> 
                     <h5 key={i} style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw'}}>
-                      <small>{'3c3b72a69d0e25c9b2abc0d636'}</small>
+                      <small>{hashVector}</small>
                     </h5>)}
                 </div>
                 <div>
@@ -88,11 +103,8 @@ export default function Raizassinada() {
             </div>
             </div>
           </div>
-          
         </CardBody>
       </Card>
-
-      
     </React.Fragment>
   );
 }
