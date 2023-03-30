@@ -1,5 +1,4 @@
 from pymerkle import MerkleTree
-import time
 
 trees = {'global_tree': {'tree': MerkleTree(), 'commitment_size': 1}}
 
@@ -26,7 +25,7 @@ def publish(tree_name):
         return {'status': 'error', 'message': 'Tree does not exist'}
     tree_root = trees[tree_name]['tree'].root
     global_tree = trees['global_tree']['tree']
-    global_tree.append_entry(tree_root) # hash de hash ?
+    global_tree.append_entry(tree_root)
     print(f'Published tree {tree_name} with root {tree_root}')
     return {'status': 'ok'}
 
@@ -49,6 +48,12 @@ def get_tree(tree_name):
 
     return {'status': 'ok'} | metadata | {'hashes': hashes}
 
+def get_tree_root(tree_name):
+    if tree_name not in trees:
+        return {'status': 'error', 'message': 'Tree does not exist'}
+    tree = trees[tree_name]['tree']
+    return {'status': 'ok', 'value': tree.root}
+
 def trees_list():
     return {'status': 'running', 'trees': list(trees)}
 
@@ -66,4 +71,4 @@ def get_inclusion_proof(tree_name, data, leaf_index):
         proof = tree.build_proof(offset, path)
     else:
         proof = tree.prove_inclusion(bytes(data, 'utf-8'))
-    return proof.serialize()
+    return {'status': 'ok', 'proof': proof.serialize()}

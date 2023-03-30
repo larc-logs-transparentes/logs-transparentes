@@ -2,7 +2,7 @@
 from fastapi import FastAPI, Request
 from controllers.trees import *
 
-app = FastAPI()
+app = FastAPI() # to init: uvicorn main:app --reload
 
 @app.get('/')
 async def index():
@@ -19,7 +19,6 @@ async def tree_create(request: Request):
     elif not commitment_size:
         return {'status': 'error', 'message': 'Commitment size not specified'}
     return create_tree(tree_name, commitment_size)
-
 
 @app.post('/insert-leaf')
 async def tree_insert_leaf(request: Request):
@@ -51,6 +50,14 @@ async def tree(request: Request):
     if not tree_name:
         return {'status': 'error', 'message': 'Tree name not specified'}
     return get_tree(tree_name)
+
+@app.get('/tree/root')
+async def tree_root(request: Request):
+    tree_name = request.query_params['tree-name']
+
+    if not tree_name:
+        return {'status': 'error', 'message': 'Tree name not specified'}
+    return get_tree_root(tree_name)
 
 @app.post('/tree/publish')
 async def tree_publish(request: Request):
