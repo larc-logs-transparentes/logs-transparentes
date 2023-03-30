@@ -85,3 +85,21 @@ async def inclusion_proof(request: Request):
     elif not data and not index:
         return {'status': 'error', 'message': 'Data or index not specified'}
     return get_inclusion_proof(tree_name, data, index)
+
+""" Hign level proofs """
+@app.get('/data-proof')
+async def data_proof(request: Request):
+    tree_name = request.query_params['tree-name']
+    data = None
+    if 'data' in request.query_params:
+        data = request.query_params['data']
+
+    index = None
+    if 'index' in request.query_params:
+        index = request.query_params['index']
+
+    if not tree_name:
+        return {'status': 'error', 'message': 'Tree name not specified'}
+    elif not data and not index:
+        return {'status': 'error', 'message': 'Data or index not specified'}
+    return get_data_proof(tree_name, data, index)

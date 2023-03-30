@@ -72,3 +72,26 @@ def get_inclusion_proof(tree_name, data, leaf_index):
     else:
         proof = tree.prove_inclusion(bytes(data, 'utf-8'))
     return {'status': 'ok', 'proof': proof.serialize()}
+
+def get_data_proof(tree_name, data, index):
+    local_proof = get_inclusion_proof(tree_name, data, index)
+    if local_proof['status'] == 'error':
+        return local_proof
+    else:
+        local_proof = local_proof['proof']
+
+    global_tree = trees['global_tree']['tree']
+    tree = trees[tree_name]['tree']
+    global_proof = global_tree.prove_inclusion(tree.root)
+    return {
+        'status': 'ok',
+        'global_root': global_tree.root,
+        'local_tree': {
+            'local_root': tree.root,
+            'inclusion_proof': local_proof
+        },
+        'data': {
+            'raw_data': data,
+            'inclusion_proof': global_proof.serialize()
+        }
+    }
