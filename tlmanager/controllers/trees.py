@@ -91,7 +91,16 @@ def get_data_proof(tree_name, data, index):
             'inclusion_proof': local_proof
         },
         'data': {
-            'raw_data': data,
+            'raw_data': data, 
             'inclusion_proof': global_proof.serialize()
         }
     }
+
+def get_global_tree_consistency_proof(subroot, sublength):
+    global_tree = trees['global_tree']['tree']
+    sublength = int(sublength)
+    if sublength > global_tree.length:
+        return {'status': 'error', 'message': 'Subtree length out of range'}
+    
+    proof = global_tree.prove_consistency(subroot, sublength)
+    return {'status': 'ok', 'proof': proof.serialize()}

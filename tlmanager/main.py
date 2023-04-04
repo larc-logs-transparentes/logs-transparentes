@@ -86,6 +86,17 @@ async def inclusion_proof(request: Request):
         return {'status': 'error', 'message': 'Data or index not specified'}
     return get_inclusion_proof(tree_name, data, index)
 
+@app.get('/global-tree-consistency-proof')
+async def global_tree_consistency_proof(request: Request):
+    subroot = request.query_params['subroot']
+    sublength = request.query_params['sublength']
+
+    if not subroot:
+        return {'status': 'error', 'message': 'Subroot not specified'}
+    elif not sublength:
+        return {'status': 'error', 'message': 'Sublength not specified'}
+    return get_global_tree_consistency_proof(subroot, sublength)
+
 """ Hign level proofs """
 @app.get('/data-proof')
 async def data_proof(request: Request):
