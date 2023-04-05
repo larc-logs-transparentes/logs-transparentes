@@ -1,8 +1,6 @@
 #fastapi
-from fastapi import FastAPI, Request
+from config.fastapi import app, Request
 from controllers.trees import *
-
-app = FastAPI() # to init: uvicorn main:app --reload
 
 @app.get('/')
 async def index():
