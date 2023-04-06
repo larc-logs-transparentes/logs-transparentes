@@ -1,4 +1,4 @@
-from config.fastapi import app, database
+from config.fastapi import database
 from .lib.pymerkle import MerkleTree
 
 from datetime import datetime

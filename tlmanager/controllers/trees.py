@@ -4,7 +4,12 @@ from controllers.states import trees, save_state
 from datetime import datetime
 from .lib.pymerkle import MerkleTree
 
-""" 
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+private_key = Ed25519PrivateKey.from_private_bytes(open("keys/private_key.pem", "rb").read()[:32])
+
+
+""" Models
+
 root = {
 	value: <string>,
 	tree_name: <string>,
@@ -13,6 +18,7 @@ root = {
 	tree_size: <int>
 }
 """
+
 def create_tree(tree_name, commitment_size):
     if tree_name in trees:
         return {'status': 'error', 'message': 'Tree already exists'}
@@ -28,12 +34,11 @@ def insert_leaf(tree_name, data):
     hash_leaf = tree.append_entry(bytes(data, 'utf-8'))
     if (tree.length % trees[tree_name]['commitment_size']) == 0:
         # sign tree root
-        publish(tree_name) # publish in global_Tree
-        # the corresponding consistency-proof is saved in database
-    
+        publish(tree_name)    
     save_state(trees)
     return {'status': 'ok', 'value': hash_leaf}
 
+# assinar o root da árvore
 def publish(tree_name):
     if tree_name not in trees:
         return {'status': 'error', 'message': 'Tree does not exist'}
@@ -57,10 +62,11 @@ def save_global_tree_consistency_proof(global_tree):
     else:
         consistency_proof = None
 
+    root_signature = private_key.sign(global_tree.root)
     root = {
         'value': trees['global_tree']['tree'].root,
         'tree_name': 'global_tree',
-        'signature': '0x',
+        'signature': root_signature.hex(),
         'timestamp': datetime.now(),
         'tree_size': trees['global_tree']['tree'].length
     }
