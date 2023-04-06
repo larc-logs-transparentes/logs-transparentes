@@ -1,13 +1,14 @@
 from fastapi import FastAPI, Request
-from pymongo import MongoClient
+from .init_database import mongodb_client, database
 
 app = FastAPI() # to init: uvicorn main:app --reload
-database = MongoClient("mongodb://localhost:27017")["tlmanager"]
 
 @app.on_event("startup")
 async def startup_event():
-    app.mongodb_client = MongoClient("mongodb://localhost:27017")
-    app.database = app.mongodb_client["tlmanager"]
+    if database is None:
+        raise Exception('Database not initialized')
+    app.mongodb_client = mongodb_client
+    app.database = database
     print('Connected to MongoDB')
 
 @app.on_event("shutdown")

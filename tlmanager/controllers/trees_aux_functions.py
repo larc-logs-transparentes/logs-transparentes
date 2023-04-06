@@ -1,11 +1,9 @@
-from config.fastapi import database
-from controllers.states import trees, save_state
+from config.init_fastapi import database
+from controllers.trees_states import trees, save_state
+from controllers.keys import sign_root
 
 from datetime import datetime
 from .lib.pymerkle import MerkleTree
-
-from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
-private_key = Ed25519PrivateKey.from_private_bytes(open("keys/private_key.pem", "rb").read()[:32])
 
 
 """ Models
@@ -62,11 +60,10 @@ def save_global_tree_consistency_proof(global_tree):
     else:
         consistency_proof = None
 
-    root_signature = private_key.sign(global_tree.root)
     root = {
         'value': trees['global_tree']['tree'].root,
         'tree_name': 'global_tree',
-        'signature': root_signature.hex(),
+        'signature': sign_root(trees['global_tree']['tree'].root),
         'timestamp': datetime.now(),
         'tree_size': trees['global_tree']['tree'].length
     }
@@ -128,7 +125,7 @@ def get_data_proof(tree_name, data, index):
     global_root = {
         'value': global_tree.root,
         'tree_name': 'global_tree',
-        'signature': '0x',
+        'signature': sign_root(global_tree.root),
         'timestamp': datetime.now(),
         'tree_size': global_tree.length
     } 

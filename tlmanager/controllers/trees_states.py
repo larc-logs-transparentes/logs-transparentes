@@ -1,9 +1,9 @@
-from config.fastapi import database
-from .lib.pymerkle import MerkleTree
+from config.init_database import database
 
+from .lib.pymerkle import MerkleTree
 from datetime import datetime
 
-COMMITMENT_SIZE_GLOBAL_TREE = 4
+COMMITMENT_SIZE_GLOBAL_TREE = 2
 
 def save_state(trees):
     state = {}

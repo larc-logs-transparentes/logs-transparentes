@@ -1,6 +1,6 @@
 #fastapi
-from config.fastapi import app, Request
-from controllers.trees import *
+from config.init_fastapi import app, Request
+from controllers.trees_aux_functions import *
 
 @app.get('/')
 async def index():
