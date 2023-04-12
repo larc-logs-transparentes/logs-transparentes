@@ -15,6 +15,7 @@ import {
 import { verify } from '../../api/merkletree.api'
 import cadVerde from '../../assets/images/cad-verde.png';
 import cadVermelho from '../../assets/images/cad-vermelho.png';
+import ReactJson from 'react-json-view'
 
 class MostrarBU extends Component {
   axios = require('axios')
@@ -79,7 +80,7 @@ class MostrarBU extends Component {
   //    console.log(bu.votos)
   
     return (
-      <Row>
+      <Col>
       <Col md={5}>
         <Card>
           <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => this.mostraProva()}><img src={(prova.isTrue===true)? cadVerde : cadVermelho} alt="estado" /></button></CardHeader>
@@ -116,13 +117,14 @@ class MostrarBU extends Component {
           </CardBody>
         </Card>
       </Col>
+      <Col style={{width:"40vw"}}>
       {mostrar === true && prova.isTrue === true && (<Col md={4}>
-      <Card>
+      <Card style={{width:"60vw"}}>
         <CardHeader >Este BU foi devidamente verificado nos sistemas da Justiça Federal</CardHeader>
-        <CardBody>
+        <CardBody style={{overflowX:"scroll"}}>
             <CardBody>
             <Label>Prova</Label>
-            <CardText>{JSON.stringify(this.state.prova)}</CardText>
+            <ReactJson collapsed displayDataTypes={false} src={this.state.prova} />
             </CardBody>
         </CardBody>
       </Card>
@@ -130,15 +132,16 @@ class MostrarBU extends Component {
     {mostrar === true && prova.isTrue === false && (<Col md={4}>
       <Card>
         <CardHeader>ATENÇÃO: Este BU não pode ser verificado ou foi ALTERADO</CardHeader>
-        <CardBody>
+        <CardBody style={{overflowX:"scroll"}}>
             <CardBody>
             <Label>Prova</Label>
-            <CardText>{JSON.stringify(this.state.prova)}</CardText>
+            <ReactJson collapsed displayDataTypes={false} src={this.state.prova} />
             </CardBody>
         </CardBody>
       </Card>
     </Col>)}
-      </Row>
+    </Col>
+      </Col>
     );
   }
 }

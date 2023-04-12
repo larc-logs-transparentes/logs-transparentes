@@ -9,9 +9,9 @@ from counties_codes import get_county_uf_and_city_with_number
 # reads bus from file made with bu_json_converter.py
 def get_list_of_dict_bu():
     try:
-        file = open("./results/bus_consolidated.json")
+        file = open("./results/bus_consolidated.json",encoding="utf8")
     except FileNotFoundError:
-        file = open("./results/example_bus_consolidated.json")
+        file = open("./results/example_bus_consolidated.json",encoding="utf8")
     return json.load(file)
 
 
