@@ -5,36 +5,48 @@ from datetime import datetime
 
 COMMITMENT_SIZE_GLOBAL_TREE = 2
 
-def save_state(trees):
-    state = {}
-    for tree_name, tree in trees.items():
-        state[tree_name] = {
-            'metadata': tree['tree'].get_metadata(),
-            'commitment_size': tree['commitment_size'],
-            'hashes': [tree['tree'].leaf(i) for i in range(tree['tree'].length)]
+def save_state(tree, leaf=None):
+    last_state = database['state'].find_one(sort=[('timestamp', -1)])
+ 
+    if tree.tree_name not in last_state['state']:
+        last_state['state'][tree.tree_name] = { 
+            'hashes': [],
+            'commitment_size': tree.commitment_size
         }
-   
-    database['state'].insert_one({
+    
+    if leaf:
+        last_state['state'][tree.tree_name]['hashes'].append(leaf)
+
+    state = {
         'timestamp': datetime.now(),
-        'state': state
-    })
-    return {'status': 'ok'}
+        'state': last_state['state']
+    }
+
+    database['state'].update_one({'timestamp': last_state['timestamp']}, {'$set': state}, upsert=True)
+  
 
 def load_last_state():
     state = database['state'].find_one(sort=[('timestamp', -1)])
-    if not state:
-        trees = {'global_tree': {'tree': MerkleTree(), 'commitment_size': COMMITMENT_SIZE_GLOBAL_TREE}}
-        save_state(trees)
-        return trees
-    
-    trees = {}
-    for tree_name, tree in state['state'].items():
-        trees[tree_name] = {
-            'tree': MerkleTree(),
-            'commitment_size': tree['commitment_size']
+    if not state: #initial state
+        state = {
+            'timestamp': datetime.now(),
+            'state': {
+                'global_tree': {
+                    'hashes': [],
+                    'commitment_size': COMMITMENT_SIZE_GLOBAL_TREE
+                }
+            }
         }
-        for hash in tree['hashes']:
-            trees[tree_name]['tree'].append_entry(hash, encoding=False)
+        database['state'].insert_one(state)
+
+    trees = {}
+    for tree_name, tree_state in state['state'].items():
+        tree = MerkleTree()
+        tree.tree_name = tree_name
+        tree.commitment_size = tree_state['commitment_size']
+        for hash_leaf in tree_state['hashes']:
+            tree.append_entry(hash_leaf, encoding=False)
+        trees[tree_name] = tree
     return trees
 
 trees = load_last_state()

@@ -1,6 +1,5 @@
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.backends import default_backend
 import os
 
 def generate_keys():
