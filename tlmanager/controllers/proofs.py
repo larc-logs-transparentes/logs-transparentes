@@ -37,7 +37,6 @@ def get_data_proof(tree_name, data, index):
         local_proof = local_proof['proof']
 
     global_tree = trees['global_tree']        
-    print(tree.last_published_root)
     global_proof = global_tree.prove_inclusion(tree.last_published_root, checksum=False) 
 
     global_root = {
@@ -47,7 +46,7 @@ def get_data_proof(tree_name, data, index):
         'timestamp': datetime.now(),
         'tree_size': global_tree.length
     } 
-    
+
     return {
         'status': 'ok',
         'global_root': global_root,

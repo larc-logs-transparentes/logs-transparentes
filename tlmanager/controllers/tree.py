@@ -3,7 +3,7 @@ from services.trees_states import trees, save_state
 from services.keys import sign_root
 
 from datetime import datetime
-from lib.pymerkle import MerkleTree
+from lib.pymerkleLT import MerkleTree
 
 def create_tree(tree_name, commitment_size):
     if tree_name in trees:
@@ -38,7 +38,7 @@ def publish_tree(tree_name):
     
     if (global_tree.length % trees['global_tree'].commitment_size) == 0:
         save_global_tree_consistency_proof(global_tree)
-        save_state(global_tree, global_tree.root, published_root=True)
+        save_state(global_tree, tree.root, published_root=True)
     else:
         save_state(global_tree, tree.root, published_root=False)
 
