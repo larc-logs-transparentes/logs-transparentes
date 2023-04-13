@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from .init_database import mongodb_client, database
 
 app = FastAPI() # to init: uvicorn main:app --reload
