@@ -2,6 +2,12 @@ from services.trees_states import trees
 from services.keys import sign_root
 from datetime import datetime
 
+""" TODO
+    ~Buffer de folhas
+    Publish "forçado"
+    pip
+"""
+
 def get_inclusion_proof(tree_name, data, leaf_index):
     if tree_name not in trees:
         return {'status': 'error', 'message': 'Tree does not exist'}
@@ -26,9 +32,6 @@ def get_data_proof(tree_name, data, index):
         index = int(index)
         if index >= tree.length:
             return { 'status': 'error', 'message': 'Leaf index out of range' }
-        
-    if index >= tree.length - (tree.length % tree.commitment_size):
-        return { 'status': 'error', 'message': 'Data not committed to global tree' } 
     
     local_proof = get_inclusion_proof(tree_name, data, index)
     if local_proof['status'] == 'error':
@@ -37,7 +40,7 @@ def get_data_proof(tree_name, data, index):
         local_proof = local_proof['proof']
 
     global_tree = trees['global_tree']        
-    global_proof = global_tree.prove_inclusion(tree.last_published_root, checksum=False) 
+    global_proof = global_tree.prove_inclusion(tree.root, checksum=False) 
 
     global_root = {
         'value': global_tree.root,

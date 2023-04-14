@@ -11,6 +11,7 @@ def create_tree(tree_name, commitment_size):
     tree = MerkleTree()
     tree.tree_name = tree_name
     tree.commitment_size = int(commitment_size)
+    tree.entries_buffer = []
     trees[tree_name] = tree
     save_state(tree, None)
     return {'status': 'ok', 'message': 'Tree created'}
@@ -19,10 +20,10 @@ def insert_leaf(tree_name, data):
     if tree_name not in trees:
         return {'status': 'error', 'message': 'Tree does not exist'}
     tree = trees[tree_name]
-    hash_leaf = tree.append_entry(bytes(data, 'utf-8'))
-    if (tree.length % trees[tree_name].commitment_size) == 0:
+    hash_leaf = tree.hash_entry(bytes(data, 'utf-8'))
+    tree.entries_buffer.append(hash_leaf)
+    if (len(tree.entries_buffer) % tree.commitment_size) == 0:
         publish_tree(tree_name)    
-        trees[tree_name].last_published_root = tree.root
         save_state(tree, hash_leaf, published_root=True)
     else:
         save_state(tree, hash_leaf, published_root=False)
@@ -32,15 +33,19 @@ def insert_leaf(tree_name, data):
 def publish_tree(tree_name):
     if tree_name not in trees:
         return {'status': 'error', 'message': 'Tree does not exist'}
+    
     tree = trees[tree_name]
+    for entry in tree.entries_buffer:
+        tree.append_entry(entry, encoding=False)
+    tree.entries_buffer = []
+
     global_tree = trees['global_tree']
     global_tree.append_entry(tree.root, encoding=False)
-    
+    save_state(tree, published_root=True) 
+
     if (global_tree.length % trees['global_tree'].commitment_size) == 0:
         save_global_tree_consistency_proof(global_tree)
-        save_state(global_tree, tree.root, published_root=True)
-    else:
-        save_state(global_tree, tree.root, published_root=False)
+    save_state(global_tree, tree.root, published_root=True) #published_root=True because global tree does not have a buffer
 
     print(f'Published tree {tree_name} with root {tree.root}')
     return {'status': 'ok'}

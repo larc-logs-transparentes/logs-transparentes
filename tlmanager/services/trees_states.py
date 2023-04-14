@@ -12,13 +12,14 @@ def save_state(tree, inserted_leaf=None, published_root=False):
         last_state['state'][tree.tree_name] = { 
             'hashes': [],
             'commitment_size': tree.commitment_size,
-            'last_published_root': None
+            'entries_buffer': [],
         }
     
     if inserted_leaf:
-        last_state['state'][tree.tree_name]['hashes'].append(inserted_leaf)
-        if published_root:
-            last_state['state'][tree.tree_name]['last_published_root'] = tree.root
+        last_state['state'][tree.tree_name]['entries_buffer'].append(inserted_leaf)
+    if published_root:
+        last_state['state'][tree.tree_name]['hashes'].extend(last_state['state'][tree.tree_name]['entries_buffer'])
+        last_state['state'][tree.tree_name]['entries_buffer'] = []
 
     state = {
         'timestamp': datetime.now(),
@@ -37,7 +38,7 @@ def load_last_state():
                 'global_tree': {
                     'hashes': [],
                     'commitment_size': COMMITMENT_SIZE_GLOBAL_TREE,
-                    'last_published_root': None
+                    'entries_buffer': [],
                 }
             }
         }
@@ -48,7 +49,7 @@ def load_last_state():
         tree = MerkleTree()
         tree.tree_name = tree_name
         tree.commitment_size = tree_state['commitment_size']
-        tree.last_published_root = tree_state['last_published_root']
+        tree.entries_buffer = tree_state['entries_buffer']
         for hash_leaf in tree_state['hashes']:
             tree.append_entry(hash_leaf, encoding=False)
         trees[tree_name] = tree
