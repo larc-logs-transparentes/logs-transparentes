@@ -49,3 +49,7 @@ async def data_proof(request: Request):
     elif not data and not index:
         return {'status': 'error', 'message': 'Data or index not specified'}
     return get_data_proof(tree_name, data, index)
+
+@router.get('/all-consistency-proof')
+async def all_consistency_proof(request: Request):
+    return get_all_consistency_proof()

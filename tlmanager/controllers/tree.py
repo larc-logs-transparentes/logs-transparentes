@@ -3,7 +3,7 @@ from services.trees_states import trees, save_state
 from services.keys import sign_root
 
 from datetime import datetime
-from lib.pymerkleLT import MerkleTree
+from pymerkle_logsTransparentes import MerkleTree
 
 def create_tree(tree_name, commitment_size):
     if tree_name in trees:
@@ -93,6 +93,10 @@ def get_tree_root(tree_name):
         return {'status': 'error', 'message': 'Tree does not exist'}
     tree = trees[tree_name]
     return {'status': 'ok', 'value': tree.root}
+
+def get_global_tree_all_leaves():
+    tree = trees['global_tree']
+    return {'status': 'ok', 'value': [{'index': i, 'value': tree.leaf(i)} for i in range(tree.length)]}
 
 def trees_list():
     return {'status': 'ok', 'trees': list(trees)}

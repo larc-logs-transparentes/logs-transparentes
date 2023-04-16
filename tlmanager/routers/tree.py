@@ -60,3 +60,7 @@ async def tree_publish(request: Request):
     if not tree_name:
         return {'status': 'error', 'message': 'Tree name not specified'}
     return publish_tree(tree_name)
+
+@router.get('/global-tree/all-leaf-data', tags=["tree"])
+async def global_tree_all_leaves(request: Request):
+    return get_global_tree_all_leaves()

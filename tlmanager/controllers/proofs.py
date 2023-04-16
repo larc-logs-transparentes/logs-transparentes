@@ -1,5 +1,6 @@
 from services.trees_states import trees
 from services.keys import sign_root
+from config.init_database import database
 from datetime import datetime
 
 def get_inclusion_proof(tree_name, data, leaf_index):
@@ -65,3 +66,13 @@ def get_global_tree_consistency_proof(subroot, sublength):
     
     proof = global_tree.prove_consistency(sublength, subroot)
     return {'status': 'ok', 'proof': proof.serialize()}
+
+def get_all_consistency_proof():
+    consistency_proofs = database['global_tree_consistency_proofs'].find()
+    response = []
+    for proof in consistency_proofs:
+        response.append({
+            'root': proof['root'],
+            'consistency-proof': proof['consistency_proof']
+        })
+    return {'status': 'ok', 'proofs': response}
