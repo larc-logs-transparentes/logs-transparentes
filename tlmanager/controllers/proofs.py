@@ -2,12 +2,6 @@ from services.trees_states import trees
 from services.keys import sign_root
 from datetime import datetime
 
-""" TODO
-    ~Buffer de folhas
-    Publish "forçado"
-    pip
-"""
-
 def get_inclusion_proof(tree_name, data, leaf_index):
     if tree_name not in trees:
         return {'status': 'error', 'message': 'Tree does not exist'}

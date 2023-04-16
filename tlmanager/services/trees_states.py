@@ -1,6 +1,6 @@
 from config.init_database import database
 
-from lib.pymerkleLT import MerkleTree
+from pymerkle_logsTransparentes import MerkleTree 
 from datetime import datetime
 
 COMMITMENT_SIZE_GLOBAL_TREE = 2
