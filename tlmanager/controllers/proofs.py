@@ -34,9 +34,14 @@ def get_data_proof(tree_name, data, index):
     else:
         local_proof = local_proof['proof']
 
-    global_tree = trees['global_tree']        
-    global_proof = global_tree.prove_inclusion(tree.root, checksum=False) 
+    global_tree = trees['global_tree']
+    tree_root = database['global_tree_leaves'].find_one({'value.tree_name': tree_name}, sort=[('index', -1)])
+    if not tree_root:
+        return { 'status': 'error', 'message': 'Tree not found in global tree' }
+    
+    tree_root = tree_root['value']
 
+    global_proof = global_tree.prove_inclusion(bytes(str(tree_root), 'utf-8'))
     global_root = {
         'value': global_tree.root,
         'tree_name': 'global_tree',
@@ -49,7 +54,7 @@ def get_data_proof(tree_name, data, index):
         'status': 'ok',
         'global_root': global_root,
         'local_tree': {
-            'local_root': tree.root,
+            'local_root': tree_root,
             'inclusion_proof': local_proof
         },
         'data': {
@@ -68,11 +73,4 @@ def get_global_tree_consistency_proof(subroot, sublength):
     return {'status': 'ok', 'proof': proof.serialize()}
 
 def get_all_consistency_proof():
-    consistency_proofs = database['global_tree_consistency_proofs'].find()
-    response = []
-    for proof in consistency_proofs:
-        response.append({
-            'root': proof['root'],
-            'consistency-proof': proof['consistency_proof']
-        })
-    return {'status': 'ok', 'proofs': response}
+    return {'status': 'not implemented, yet :)'}

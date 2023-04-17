@@ -40,12 +40,28 @@ def publish_tree(tree_name):
     tree.entries_buffer = []
 
     global_tree = trees['global_tree']
-    global_tree.append_entry(tree.root, encoding=False)
-    save_state(tree, published_root=True) 
 
+    tree_root = {
+        'value': tree.root,
+        'tree_name': tree_name,
+        'signature': sign_root(tree.root),
+        'timestamp': datetime.now().isoformat(),
+        'tree_size': tree.length
+    }
+
+    database['global_tree_leaves'].insert_one(
+        {
+            'index': global_tree.length,
+            'value': tree_root,
+        }
+    )
+
+    entry = global_tree.append_entry(bytes(str(tree_root), 'utf-8'))
     if (global_tree.length % trees['global_tree'].commitment_size) == 0:
         save_global_tree_consistency_proof(global_tree)
-    save_state(global_tree, tree.root, published_root=True) #published_root=True because global tree does not have a buffer
+        
+    save_state(tree, published_root=True)
+    save_state(global_tree, entry, published_root=True) #published_root=True because global tree does not have a buffer
 
     print(f'Published tree {tree_name} with root {tree.root}')
     return {'status': 'ok'}
@@ -95,8 +111,13 @@ def get_tree_root(tree_name):
     return {'status': 'ok', 'value': tree.root}
 
 def get_global_tree_all_leaves():
-    tree = trees['global_tree']
-    return {'status': 'ok', 'value': [{'index': i, 'value': tree.leaf(i)} for i in range(tree.length)]}
+    global_tree_leaves = database['global_tree_leaves'].find()
+    return {'status': 'ok', 'leaves': [
+        {
+            'index': leaf['index'],
+            'value': leaf['value']
+        } for leaf in global_tree_leaves
+    ]}
 
 def trees_list():
     return {'status': 'ok', 'trees': list(trees)}
