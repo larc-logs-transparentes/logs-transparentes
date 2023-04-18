@@ -3,10 +3,11 @@ from controllers.tree import *
 
 router = APIRouter()
 
-@router.get('/tree-create', tags=["tree"])
+@router.post('/tree-create', tags=["tree"])
 async def tree_create(request: Request):
-    tree_name = request.query_params['tree-name']
-    commitment_size = request.query_params['commitment-size']
+    req_data = await request.json()
+    tree_name = req_data['tree-name']
+    commitment_size = req_data['commitment-size']
 
     if not tree_name:
         return {'status': 'error', 'message': 'Tree name not specified'}
@@ -53,13 +54,13 @@ async def tree_root(request: Request):
         return {'status': 'error', 'message': 'Tree name not specified'}
     return get_tree_root(tree_name)
 
-@router.post('/tree/publish', tags=["tree"])
+@router.post('/tree/commit', tags=["tree"])
 async def tree_publish(request: Request):
     req_data = await request.json()
     tree_name = req_data['tree-name']
     if not tree_name:
         return {'status': 'error', 'message': 'Tree name not specified'}
-    return publish_tree(tree_name)
+    return commit_local_tree(tree_name)
 
 @router.get('/global-tree/all-leaf-data', tags=["tree"])
 async def global_tree_all_leaves(request: Request):

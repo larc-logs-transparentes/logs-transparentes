@@ -1,65 +1,59 @@
 from services.trees_states import trees
-from services.keys import sign_root
-from config.init_database import database
-from datetime import datetime
+from services.objects_models import build_local_tree_root_object
+from config.init_fastapi import database
 
-def get_inclusion_proof(tree_name, data, leaf_index):
+def get_inclusion_proof(tree_name, data=None, index=None):
     if tree_name not in trees:
         return {'status': 'error', 'message': 'Tree does not exist'}
     
     tree = trees[tree_name]
-    if not data:
-        leaf_index = int(leaf_index)
-        if leaf_index >= tree.length:
-            return {'status': 'error', 'message': 'Leaf index out of range'}
-        proof = tree.prove_inclusion_at(leaf_index)
-    else:
-        proof = tree.prove_inclusion(bytes(data, 'utf-8'))
-    return {'status': 'ok', 'proof': proof.serialize()}
-
-def get_data_proof(tree_name, data, index):
-    tree = trees[tree_name]
-    if not index:
-        index = tree.find_leaf_index(tree.hash_entry(bytes(data, 'utf-8')))
-        if index is None:
-            return { 'status': 'error', 'message': 'Data not found in tree' }
-    else:
+    if index:
         index = int(index)
         if index >= tree.length:
             return { 'status': 'error', 'message': 'Leaf index out of range' }
+    else:
+        index = tree.find_leaf_index(tree.hash_entry(bytes(data, 'utf-8')))
+        if index == None:
+            return { 'status': 'error', 'message': 'Data not found in tree' }
+        
+    proof = tree.prove_inclusion_at(index)
+
+    return {'status': 'ok', 'proof': proof.serialize()}
+
+def get_data_proof(tree_name, data=None, index=None):
+    tree = trees[tree_name]
     
     local_proof = get_inclusion_proof(tree_name, data, index)
     if local_proof['status'] == 'error':
         return local_proof
-    else:
-        local_proof = local_proof['proof']
-
-    global_tree = trees['global_tree']
-    tree_root = database['global_tree_leaves'].find_one({'value.tree_name': tree_name}, sort=[('index', -1)])
-    if not tree_root:
-        return { 'status': 'error', 'message': 'Tree not found in global tree' }
+    local_root_object = build_local_tree_root_object(tree)
     
-    tree_root = tree_root['value']
+    global_proof = get_inclusion_proof('global_tree', str(local_root_object))
+    if global_proof['status'] == 'error':
+        return global_proof
+    global_root_object = database['global_tree_roots'].find_one({}, sort=[('timestamp', -1)])
+    del global_root_object['_id']
 
-    global_proof = global_tree.prove_inclusion(bytes(str(tree_root), 'utf-8'))
-    global_root = {
-        'value': global_tree.root,
-        'tree_name': 'global_tree',
-        'signature': sign_root(global_tree.root),
-        'timestamp': datetime.now(),
-        'tree_size': global_tree.length
-    } 
+    data_proof_object = build_data_proof_object(
+        global_root_object, 
+        local_root_object, 
+        local_proof['proof'], 
+        global_proof['proof']
+    )
 
+    return data_proof_object
+
+def build_data_proof_object(global_root_object, local_root_object, local_proof_object, data_proof_object):
     return {
         'status': 'ok',
-        'global_root': global_root,
+        'global_root': global_root_object,
         'local_tree': {
-            'local_root': tree_root,
-            'inclusion_proof': local_proof
+            'local_root': local_root_object,
+            'inclusion_proof': local_proof_object
         },
         'data': {
-            'inclusion_proof': global_proof.serialize()
-        }
+            'inclusion_proof': data_proof_object
+        }   
     }
 
 def get_global_tree_consistency_proof(subroot, sublength):

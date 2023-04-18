@@ -3,6 +3,7 @@ from cryptography.hazmat.primitives import serialization
 
 import os
 
+# TODO: this is a test function. When in production, apply all necessary security measures. 
 def generate_keys():
     private_key = Ed25519PrivateKey.generate()
     public_key = private_key.public_key()

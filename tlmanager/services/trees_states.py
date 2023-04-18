@@ -1,11 +1,11 @@
 from config.init_database import database
 
-from pymerkle_logsTransparentes import MerkleTree 
+from transparentlogs_pymerkle import MerkleTree 
 from datetime import datetime
 
 COMMITMENT_SIZE_GLOBAL_TREE = 2
 
-def save_state(tree, inserted_leaf=None, published_root=False):
+def save_state(tree, inserted_leaf=None, is_commited=False):
     last_state = database['state'].find_one(sort=[('timestamp', -1)])
  
     if tree.tree_name not in last_state['state']: #new tree
@@ -17,7 +17,7 @@ def save_state(tree, inserted_leaf=None, published_root=False):
     
     if inserted_leaf:
         last_state['state'][tree.tree_name]['entries_buffer'].append(inserted_leaf)
-    if published_root:
+    if is_commited:
         last_state['state'][tree.tree_name]['hashes'].extend(last_state['state'][tree.tree_name]['entries_buffer'])
         last_state['state'][tree.tree_name]['entries_buffer'] = []
 
