@@ -19,6 +19,28 @@ def get_list_of_dict_bu():
 def get_candidates_votes_list(bu):
     votosVotaveis = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
     candidatos = []
+   
+    for voto in votosVotaveis:
+        if "identificacaoVotavel" in voto:
+            candidato = {"partido": voto["identificacaoVotavel"]["partido"],
+                            "codigo": voto["identificacaoVotavel"]["codigo"],
+                            "votos": voto["quantidadeVotos"],
+                            "_id": voto["assinatura"]}
+            candidatos.append(candidato)
+
+            return 0
+    return candidatos
+
+def get_candidates_votes_list_primeiro(bu):
+    
+    votosVotaveisDeputadoFederal = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
+    votosVotaveisDeputadoEstadual = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][1]["votosVotaveis"]
+    votosVotaveisSenador = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][1]["totaisVotosCargo"][0]["votosVotaveis"]
+    votosVotaveisGovernador = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][1]["totaisVotosCargo"][1]["votosVotaveis"]
+    votosVotaveisPresidente = bu["resultadosVotacaoPorEleicao"][1]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"] 
+    ##object that contains all votosVotaveis for each cargo
+    votosVotaveis = votosVotaveisDeputadoFederal + votosVotaveisDeputadoEstadual + votosVotaveisSenador + votosVotaveisGovernador + votosVotaveisPresidente
+    candidatos = []
     for voto in votosVotaveis:
         if "identificacaoVotavel" in voto:
             candidato = {"partido": voto["identificacaoVotavel"]["partido"],
@@ -27,7 +49,6 @@ def get_candidates_votes_list(bu):
                          "_id": voto["assinatura"]}
             candidatos.append(candidato)
     return candidatos
-
 
 def get_body_list_with_zona_secao():
     bus = get_list_of_dict_bu()
@@ -43,7 +64,8 @@ def get_body_list_with_zona_secao():
         county = get_county_uf_and_city_with_number(cod_municipio)
         uf = county['uf']
         municipio = county['nome_municipio']
-        candidates_votes_list = get_candidates_votes_list(bu)
+        candidates_votes_list = get_candidates_votes_list_primeiro(bu)
+        #candidates_votes_list_primeiro = get_candidates_votes_list_primeiro(bu)
 
         body_dict = {
             "_id": id1,
@@ -56,6 +78,7 @@ def get_body_list_with_zona_secao():
             "bu_inteiro": bu,
             "__v": 0,
             "votos": candidates_votes_list,
+            # "votosPrimeiroTurno": candidates_votes_list_primeiro,
         }
 
         body_dict_list.append(body_dict)
