@@ -43,13 +43,13 @@ class MostrarBU extends Component {
 //    console.log("id=" + id)
     this.axios.get(`${this.bu_api_url}/bu/${id}`)
       .then(response => this.setState({ bu: response.data, votos: response.data.votos }))
-
     var retVerify = verify(id)
     retVerify.then( value => {
       this.setState({ prova: value })
       this.setState({ root: this.state.prova.root })
       this.setState({ fullproof: this.state.prova.fullproof })
     })
+    
   }
 
   mostraProva() {
@@ -66,8 +66,8 @@ class MostrarBU extends Component {
 //    console.log("root")
 //    console.log(prova.root)
 
-
-    console.log(JSON.stringify(this.state.prova))
+console.log(this.state.bu.bu_inteiro)
+  
     var mostrar = this.state.mostrarProva
     // var raizArr = (this.state.root===undefined)? [] : Array.from(this.state.root)
     // var fullproofArr = (this.state.fullproof===undefined)? [] : Array.from(this.state.fullproof)
@@ -110,7 +110,7 @@ class MostrarBU extends Component {
               <Label>Votos</Label>
               <CardText><ul>
                 {votosArr.map(item => {
-                  return <li>{"Partido: " + item.partido + " ; Código: " + item.codigo + " ; Votos: " + item.votos}</li>
+                  return <li>{"Cargo:"+ item.cargo + "; Partido: " + item.partido + " ; Código: " + item.codigo + " ; Votos: " + item.votos}</li>
                 })}</ul>
               </CardText>
               </CardBody>
