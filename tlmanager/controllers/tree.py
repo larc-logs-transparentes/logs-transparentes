@@ -43,7 +43,7 @@ def commit_local_tree(tree_name):
     tree.entries_buffer = []
 
     tree_root = build_local_tree_root_object(tree)
-
+    save_consistency_proof(tree_name, tree_root)
     append_global_tree(tree_root)
     save_state(tree, is_commited=True)
 
@@ -70,13 +70,13 @@ def append_global_tree(entry):
     return {'status': 'ok'}
 
 def save_consistency_proof(tree_name, root_object):
-    tree = trees[tree_name]
+    tree = trees[tree_name] 
     last_root = database['consistency_proofs'].find_one({'root.tree_name': tree_name}, sort=[('root.timestamp', -1)])
 
     if last_root:
         sublength = last_root['root']['tree_size']
         subroot = last_root['root']['value']
-        consistency_proof = tree.prove_consistency(sublength, subroot).serialize()
+        consistency_proof = tree.prove_consistency(sublength, subroot).serialize() #tem que ser a global, mudar readme da lib
     else:
         consistency_proof = None
 
@@ -98,9 +98,9 @@ def get_tree(tree_name):
     tree = trees[tree_name]
     metadata = tree.get_metadata()
 
-    hashes = [tree.leaf(i) for i in range(tree.length)]
-
-    return {'status': 'ok'} | metadata | {'hashes': hashes}
+    length = tree.length
+    buffer_length = len(tree.entries_buffer)
+    return {'status': 'ok'} | metadata | {'length': length, 'buffer_length': buffer_length}
 
 def get_tree_root(tree_name):
     if tree_name not in trees:

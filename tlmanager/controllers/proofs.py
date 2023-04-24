@@ -66,5 +66,18 @@ def get_global_tree_consistency_proof(subroot, sublength):
     proof = global_tree.prove_consistency(sublength, subroot)
     return {'status': 'ok', 'proof': proof.serialize()}
 
-def get_all_consistency_proof():
-    return {'status': 'not implemented, yet :)'}
+def get_all_consistency_proof(tree_name):
+    if tree_name not in trees:
+        return {'status': 'error', 'message': 'Tree does not exist'}
+    
+    tree = trees[tree_name]
+    global_tree = trees['global_tree']
+    proofs = database['consistency_proofs'].find({'root.tree_name': tree_name}, sort=[('root.timestamp', -1)])
+    proofs = list(proofs)
+    for proof in proofs:
+        del proof['_id']
+        proof['inclusion_proof'] = global_tree.prove_inclusion(str(proof['root'])).serialize()
+    if len(proofs) == 0:
+        return {'status': 'error', 'message': 'No proofs found'}
+    
+    return {'status': 'ok', 'proofs': proofs}

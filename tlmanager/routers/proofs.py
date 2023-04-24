@@ -52,4 +52,5 @@ async def data_proof(request: Request):
 
 @router.get('/all-consistency-proof')
 async def all_consistency_proof(request: Request):
-    return get_all_consistency_proof()
+    tree_name = request.query_params['tree-name']
+    return get_all_consistency_proof(tree_name)
