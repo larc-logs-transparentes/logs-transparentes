@@ -17,12 +17,22 @@ def get_list_of_dict_bu():
 
 # adds separated _id, id, zona, secao to each bu, and returns a list of bu dicts
 def get_candidates_votes_list(bu):
+    
+    #Talvez tenha que fazer correções para quando houver segundo turno entre governadores e presidente.
+    #votosVotaveisPresidente = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
+    #votosVotaveisGovernador = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][1]["votosVotaveis"]
+    #votosVotaveis = {
+    #     "Governador": votosVotaveisPresidente,
+    #     "Presidente": votosVotaveisGovernador
+    # }
+
     votosVotaveis = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
     candidatos = []
    
     for voto in votosVotaveis:
         if "identificacaoVotavel" in voto:
-            candidato = {"partido": voto["identificacaoVotavel"]["partido"],
+            candidato = {   "cargo": "Presidente",
+                            "partido": voto["identificacaoVotavel"]["partido"],
                             "codigo": voto["identificacaoVotavel"]["codigo"],
                             "votos": voto["quantidadeVotos"],
                             "_id": voto["assinatura"]}

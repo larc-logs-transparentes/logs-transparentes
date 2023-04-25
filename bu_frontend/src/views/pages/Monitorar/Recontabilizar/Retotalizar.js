@@ -96,7 +96,7 @@ export default function Retotalizar() {
       }
       else return (approval)
     }
-    
+    let CargoAtual = null;
     
   return (
     <div>
@@ -116,7 +116,7 @@ export default function Retotalizar() {
 
                 {/* BAIXANDO BUS */}
                 
-                <div style={{margin:'auto', width:'20%'}}>
+                <div style={{margin:'auto', width:'30%'}}>
                 {showbbus?
                   
                   <div style={{display:'block',textAlign:'justify'}}>
@@ -172,10 +172,23 @@ export default function Retotalizar() {
                   {RetotalizarBus2()}
                   {showret2?<div>
                     <h5>- Resultado final:</h5>
-                    <h5>{busbaixadosobj.votos.map(({codigo, votos, partido}) => (
-                      <p key={codigo}>{codigo}: {votos} votos</p>
-                    ))}
-                      </h5>
+                        {busbaixadosobj.votos.map(({ cargo, codigo, votos, partido }, index) => {
+                          if (cargo !== CargoAtual) {
+                            CargoAtual = cargo;
+                            return (
+                              <div key={index}>
+                                <h4 style={{ fontWeight: 'bold' }}>{cargo}</h4>
+                                <p>{codigo}: {votos} votos</p>
+                              </div>
+                            );
+                          } else {
+                            return (
+                              <div key={index}>
+                                <p>{codigo}: {votos} votos</p>
+                              </div>
+                            );
+                          }
+                        })}
                   </div>:null}
                 </div>:null}
 

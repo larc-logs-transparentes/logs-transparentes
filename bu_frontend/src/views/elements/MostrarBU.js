@@ -81,7 +81,7 @@ console.log(this.state.bu.bu_inteiro)
   
     return (
       <Col>
-      <Col md={5}>
+      <Col md={6}>
         <Card>
           <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => this.mostraProva()}><img src={(prova.isTrue===true)? cadVerde : cadVermelho} alt="estado" /></button></CardHeader>
           <CardBody>

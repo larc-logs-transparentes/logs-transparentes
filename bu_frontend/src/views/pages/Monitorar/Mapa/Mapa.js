@@ -64,8 +64,8 @@ async componentDidUpdate(prevProps, prevState) {
               />
             </CardBody>
           </Card>
-          <Card>
-            <ResultadoEleicao 
+          <Card style={{padding:"3vw"}} >
+            <ResultadoEleicao style={{overflowX:"scroll"}} 
               votos_cidade={this.state.votos_cidade}
               id_inicial={this.state.id_inicial}
               id_final={this.state.id_final}
