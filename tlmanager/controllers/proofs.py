@@ -62,7 +62,11 @@ def get_global_tree_consistency_proof(subroot, sublength):
     if sublength > global_tree.length:
         return {'status': 'error', 'message': 'Subtree length out of range'}
     
-    proof = global_tree.prove_consistency(sublength, subroot)
+    try:
+        proof = global_tree.prove_consistency(sublength, subroot)
+    except:
+        return {'status': 'error', 'message': 'Provided subroot was never root'}
+
     return {'status': 'ok', 'proof': proof.serialize()}
 
 def get_all_consistency_proof(tree_name):
