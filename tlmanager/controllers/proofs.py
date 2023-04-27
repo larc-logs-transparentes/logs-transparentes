@@ -73,10 +73,7 @@ def get_all_consistency_proof(tree_name):
     if tree_name not in trees:
         return {'status': 'error', 'message': 'Tree does not exist'}
     
-    global_tree = trees['global_tree']
     proofs = db_get_all_consistency_proof(tree_name)
-    for proof in proofs:
-        proof['inclusion_proof'] = global_tree.prove_inclusion(str(proof['root'])).serialize()
     if len(proofs) == 0:
         return {'status': 'error', 'message': 'No proofs found'}
     
