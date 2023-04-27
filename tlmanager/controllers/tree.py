@@ -1,8 +1,7 @@
-from config.init_fastapi import database
+from controllers.database import db_get_all_global_tree_leaves, db_get_last_consistency_proof, db_insert_global_tree_leaf, db_insert_consistency_proof
 from services.trees_states import trees, save_state
 from services.objects_models import build_global_tree_root_object, build_local_tree_root_object
 
-from datetime import datetime
 from transparentlogs_pymerkle import MerkleTree
 
 def create_tree(tree_name, commitment_size):
@@ -55,14 +54,8 @@ def append_global_tree(entry):
     hash_entry = global_tree.append_entry(str(entry))
     save_state(global_tree, hash_entry, is_commited=True)
     
-    database['global_tree_leaves'].insert_one(
-        {
-            'index': global_tree.length - 1,
-            'value': entry,
-        })
-
     global_root = build_global_tree_root_object(global_tree)
-    database['global_tree_roots'].insert_one(global_root)
+    db_insert_global_tree_leaf(global_tree.length - 1, entry, global_root)
 
     if global_tree.length % global_tree.commitment_size == 0:
         save_consistency_proof('global_tree', global_root)
@@ -71,16 +64,17 @@ def append_global_tree(entry):
 
 def save_consistency_proof(tree_name, root_object):
     tree = trees[tree_name] 
-    last_root = database['consistency_proofs'].find_one({'root.tree_name': tree_name}, sort=[('root.timestamp', -1)])
+    last_consistency_proof = db_get_last_consistency_proof(tree_name)
 
-    if last_root:
-        sublength = last_root['root']['tree_size']
-        subroot = last_root['root']['value']
-        consistency_proof = tree.prove_consistency(sublength, subroot).serialize() #tem que ser a global, mudar readme da lib
+    if last_consistency_proof:
+        last_root = last_consistency_proof['root']
+        sublength = last_root['tree_size']
+        subroot = last_root['value']
+        consistency_proof = tree.prove_consistency(sublength, subroot).serialize()
     else:
         consistency_proof = None
 
-    database['consistency_proofs'].insert_one({'root': root_object, 'consistency_proof': consistency_proof})
+    db_insert_consistency_proof(root_object, consistency_proof)
     print(f'Saved consistency proof for tree {tree_name} with root {root_object["value"]}')
 
 def get_leaf(tree_name, leaf_index):
@@ -109,13 +103,7 @@ def get_tree_root(tree_name):
     return {'status': 'ok', 'value': tree.root}
 
 def get_global_tree_all_leaves():
-    global_tree_leaves = database['global_tree_leaves'].find()
-    return {'status': 'ok', 'leaves': [
-        {
-            'index': leaf['index'],
-            'value': leaf['value']
-        } for leaf in global_tree_leaves
-    ]}
+    return {'status': 'ok'} | db_get_all_global_tree_leaves()
 
 def trees_list():
     return {'status': 'ok', 'trees': list(trees)}
