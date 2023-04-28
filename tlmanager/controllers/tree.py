@@ -23,12 +23,9 @@ def insert_leaf(tree_name, data):
     tree.entries_buffer.append(hash_leaf)
     if (len(tree.entries_buffer) >= tree.commitment_size):
         commit_local_tree(tree_name)    
-        save_state(tree, hash_leaf, is_commited=True)
-    else:
-        save_state(tree, hash_leaf, is_commited=False)
-    return {'status': 'ok', 'value': hash_leaf}
+        return {'status': 'ok', 'value': hash_leaf, 'message': 'Leaves in pending state have been inserted, and tree has been commited'}
+    return {'status': 'ok', 'value': hash_leaf, 'message': 'Leaf inserted in pending state'}
 
-# assinar o root da árvore
 def commit_local_tree(tree_name):
     if tree_name not in trees:
         return {'status': 'error', 'message': 'Tree does not exist'}
@@ -39,12 +36,12 @@ def commit_local_tree(tree_name):
     
     for entry in tree.entries_buffer:
         tree.append_entry(entry, encoding=False)
+    save_state(tree, tree.entries_buffer)
     tree.entries_buffer = []
 
     tree_root = build_local_tree_root_object(tree)
     save_consistency_proof(tree_name, tree_root)
     append_global_tree(tree_root)
-    save_state(tree, is_commited=True)
 
     print(f'Commited tree {tree_name} with root {tree.root}')
     return {'status': 'ok'}
@@ -52,7 +49,7 @@ def commit_local_tree(tree_name):
 def append_global_tree(entry):    
     global_tree = trees['global_tree']
     hash_entry = global_tree.append_entry(str(entry))
-    save_state(global_tree, hash_entry, is_commited=True)
+    save_state(global_tree, [hash_entry])
     
     global_root = build_global_tree_root_object(global_tree)
     db_insert_global_tree_leaf(global_tree.length - 1, entry, global_root)
