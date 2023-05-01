@@ -1,7 +1,5 @@
 from fastapi import FastAPI
 from .init_database import mongodb_client, database
-from controllers.tree import insert_leaf, create_tree, commit_local_tree
-import time
 
 from services.keys import check_keys
 import sys

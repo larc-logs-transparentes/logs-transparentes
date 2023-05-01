@@ -1,7 +1,8 @@
 from config.init_database import database
 
-from pymongo import errors
+from pymongo import errors as pymongo_errors
 from gridfs import errors as gridfs_errors
+
 from transparentlogs_pymerkle import MerkleTree 
 from datetime import datetime
 
@@ -9,24 +10,24 @@ COMMITMENT_SIZE_GLOBAL_TREE = 2
 
 def save_state(tree, inserted_leaves=None):
     last_state = database['state'].find_one({'tree_name': tree.tree_name})
-
-    if not last_state:
+    if last_state:
+        del last_state['_id']
+        last_state['tree_size'] = tree.length
+    else:
         last_state = {
             'tree_name': tree.tree_name,
             'commitment_size': tree.commitment_size,
             'tree_size': 0,
             'hashes': []
         }
-    else:
-        del last_state['_id']
+
     state = { 'timestamp': datetime.now().isoformat() } | last_state
     if inserted_leaves:
         state['hashes'].extend(inserted_leaves)
-        state['tree_size'] += len(inserted_leaves)
         
     try:
         database['state'].update_one({'tree_name': tree.tree_name}, {'$set': state}, upsert=True)
-    except errors.DocumentTooLarge:
+    except pymongo_errors.DocumentTooLarge:
         try:
             last_state_saved = database.fs.get_last_version(tree.tree_name).read()
             last_state_saved = eval(last_state_saved.decode('utf-8'))
@@ -59,7 +60,9 @@ def load_last_state():
         tree.commitment_size = tree_state['commitment_size']
         tree.entries_buffer = []
         for hash_leaf in tree_state['hashes']:
+            print(f'loading tree {tree.tree_name} {tree.length / tree_state["tree_size"] * 100:.2f}%', end='\r')
             tree.append_entry(hash_leaf, encoding=False)
+        print(f'loading tree {tree.tree_name} {tree.length / tree_state["tree_size"] * 100:.2f}%')
         trees[tree.tree_name] = tree
 
     return trees
