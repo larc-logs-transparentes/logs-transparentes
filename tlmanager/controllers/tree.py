@@ -23,8 +23,8 @@ def insert_leaf(tree_name, data):
     tree.entries_buffer.append(hash_leaf)
     if (len(tree.entries_buffer) >= tree.commitment_size):
         commit_local_tree(tree_name)    
-        return {'status': 'ok', 'value': hash_leaf, 'message': 'Leaves in pending state have been inserted, and tree has been commited'}
-    return {'status': 'ok', 'value': hash_leaf, 'message': 'Leaf inserted in pending state'}
+        return {'status': 'ok', 'value': hash_leaf, 'message': 'Commited'}
+    return {'status': 'ok', 'value': hash_leaf, 'message': 'Pending'}
 
 def commit_local_tree(tree_name):
     if tree_name not in trees:
@@ -90,8 +90,11 @@ def get_tree(tree_name):
     metadata = tree.get_metadata()
 
     length = tree.length
-    buffer_length = len(tree.entries_buffer)
-    return {'status': 'ok'} | metadata | {'length': length, 'buffer_length': buffer_length}
+    try:
+        buffer_length = len(tree.entries_buffer)
+    except:
+        buffer_length = 'Does not have buffer'
+    return {'status': 'ok'} | metadata | {'commitment size': tree.commitment_size, 'length': length, 'buffer_length': buffer_length}
 
 def get_tree_root(tree_name):
     if tree_name not in trees:
