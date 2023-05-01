@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from .init_database import mongodb_client, database
-from controllers.tree import insert_leaf, create_tree
+from controllers.tree import insert_leaf, create_tree, commit_local_tree
+import time
+
 from services.keys import check_keys
 import sys
 
@@ -16,10 +18,6 @@ async def startup_event():
         raise Exception('Keys not initialized')
     app.mongodb_client = mongodb_client
     app.database = database
-    create_tree('tree1', 2048)
-    for i in range(1000000):
-        print(i, end='\r')
-        insert_leaf('tree1', str(i)) 
     print('Connected to MongoDB')
 
 @app.on_event("shutdown")
