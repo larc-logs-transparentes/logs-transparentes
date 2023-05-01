@@ -52,7 +52,7 @@ def load_last_state():
             last_state_saved = database.fs.get_last_version(tree_state['tree_name']).read()
             last_state_saved = eval(last_state_saved.decode('utf-8'))
             tree_state['hashes'] = last_state_saved['hashes'] + tree_state['hashes']
-        except:
+        except gridfs_errors.NoFile:
             pass
 
         tree = MerkleTree()
