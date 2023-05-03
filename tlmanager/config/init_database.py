@@ -1,5 +1,5 @@
-from pymongo import MongoClient
-import gridfs
+from pymongo import MongoClient, errors as pymongo_errors
+from gridfs import GridFS, errors as gridfs_errors
 
 from pydantic import BaseSettings
 
@@ -13,7 +13,7 @@ COLLECTION = "tlmanager"
 
 mongodb_client = MongoClient(URL)
 database = mongodb_client[COLLECTION]
-database.fs = gridfs.GridFS(database)
+database.fs = GridFS(database)
 
 if settings.RESET:
     database['state'].drop()

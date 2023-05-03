@@ -65,7 +65,7 @@ def get_global_tree_consistency_proof(subroot, sublength):
     try:
         proof = global_tree.prove_consistency(sublength, subroot)
     except:
-        return {'status': 'error', 'message': 'Provided subroot was never root'}
+        return {'status': 'error', 'message': 'Consistency proof for provided subroot was not found'}
 
     return {'status': 'ok', 'proof': proof.serialize()}
 
