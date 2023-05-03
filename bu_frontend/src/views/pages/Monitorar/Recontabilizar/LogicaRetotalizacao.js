@@ -76,8 +76,9 @@ function retotalizar(BUs){
     const ret = []
     for (let i = 0; i < BUs.length; i++) {
         const votos= BUs[i].votos;
+        console.log(votos)
         for (let j = 0; j < votos.length; j++) {
-                let candidatoIndexInArray = ret.findIndex(voto => voto.codigo === votos[j].codigo)
+                let candidatoIndexInArray = ret.findIndex(voto => voto.codigo === votos[j].codigo && votos[j].cargo===voto.cargo)
 
                 if (candidatoIndexInArray !== -1) ret[candidatoIndexInArray].votos += votos[j].votos
                 else {

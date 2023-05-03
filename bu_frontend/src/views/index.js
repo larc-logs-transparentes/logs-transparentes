@@ -1,5 +1,6 @@
 import Dashboard from './pages/Dashboard';
 import MostrarBU from './elements/MostrarBU';
+import MostrarBUProva from './elements/MostrarBUProva';
 import Retotalizar from './pages/Monitorar/Recontabilizar/Retotalizar.js';
 import Raizassinada from './pages/Monitorar/Raiz/RaizAssinada.js';
 import Mapa from './pages/Monitorar/Mapa/Mapa.js';
@@ -62,6 +63,11 @@ const pageList = [
     name:'Boletim de Urna - Resultado da Consulta',
     path:'/elements/mostrarbu/:id',
     component: MostrarBU,
+  },
+  {
+    name:'Boletim de Urna - Resultado da Consulta',
+    path:'/elements/mostrarbuprova/:id',
+    component: MostrarBUProva,
   },
 ];
 

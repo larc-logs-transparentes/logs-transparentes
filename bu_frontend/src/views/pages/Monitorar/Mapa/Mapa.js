@@ -54,7 +54,7 @@ async componentDidUpdate(prevProps, prevState) {
   render() {
       return (
       <Row>
-        <Col md={6}>
+        <Col md={8}>
           <Card>
             <CardHeader>Selecionar Cidade</CardHeader>
             <CardBody>  
@@ -73,10 +73,10 @@ async componentDidUpdate(prevProps, prevState) {
           </Card>
         </Col>
         
-        <Col md={6}>
+        <Col md={4}>
           <Card>
             <CardHeader>Verificação resumida</CardHeader>
-            <CardBody>
+            <CardBody style={{overflowX:"scroll"}}>
               <ProvaParcial 
                 mostrarProvaParcial={this.state.mostrarProvaParcial}
                 resultadoProvaParcial={this.state.resultadoProvaParcial}

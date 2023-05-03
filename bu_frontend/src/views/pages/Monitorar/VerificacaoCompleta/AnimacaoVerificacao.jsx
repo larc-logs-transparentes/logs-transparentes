@@ -63,6 +63,10 @@ const AnimacaoVerificacao = ({stateDownloadInfoBUs, stateVerificationInfoBUs, st
         }
         else return (approval)
     } 
+    function definirColunas(resultadoAgrupado){
+        const numeroDeCargos=resultadoAgrupado.length
+            return `repeat(${numeroDeCargos}, minmax(150px, 1fr))`
+    }	
     /////////////////////////////////////////////////////////////////////
     const resultadoAgrupado = retotalizacao ? retotalizacao.reduce((acc, { cargo, codigo, votos, partido }) => {
         const index = acc.findIndex(item => item.cargo === cargo);
@@ -70,9 +74,11 @@ const AnimacaoVerificacao = ({stateDownloadInfoBUs, stateVerificationInfoBUs, st
             acc.push({ cargo, votosData: [{ codigo, votos }] });
         } else {
             acc[index].votosData.push({ codigo, votos });
+            acc[index].votosData.sort((a, b) => b.votos - a.votos);
         }
         return acc;
     }, []) : [];
+
     
     return (
         <div style={{margin:'auto', width:'50%'}}>
@@ -123,7 +129,7 @@ const AnimacaoVerificacao = ({stateDownloadInfoBUs, stateVerificationInfoBUs, st
                 {stateRetotalizationInfoBUs === 'completed' && 
                 <div>
                     <h5>- Resultado final:</h5>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "1em" }}>
+                    <div style={{ display: "grid", gridTemplateColumns:definirColunas(resultadoAgrupado), gap: "1em",columnCount:'5' }}>
                         {resultadoAgrupado.map(({ cargo, votosData }, index) => (
                         <div key={index}>
                             <h4 style={{ fontWeight: 'bold' }}>{cargo}</h4>

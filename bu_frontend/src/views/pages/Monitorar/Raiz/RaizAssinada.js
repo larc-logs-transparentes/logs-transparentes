@@ -3,7 +3,7 @@ import { Card, CardBody } from 'reactstrap'
 import { provaDeConsistencia } from '../logic/consistencyProof';
 import { getRootAll } from '../../../../api/bu.api';
 import {baixarRoots} from './Roots.js';
-
+import ReactJson from 'react-json-view'
 export default function Raizassinada() {
   getRootAll()
   const [vetorvalidar,setVetor] = useState([]);
@@ -94,11 +94,12 @@ export default function Raizassinada() {
                     </h5>)}
                 </div>
               </div>
-              <div style={{display:'inline-block',columnCount:'1',gap:'6vw', marginTop:'10vw',marginRight:'20vw',textAlign:'start',alignContent:'start'}}>
-              {rootbaixada.map( ( {_id,tree_size_1,tree_size_2,first_hash,second_hash,consistency_path,log_id,__v} ) => {
+              <div style={{display:'inline-block',columnCount:'1',gap:'6vw', marginTop:'10vw',marginRight:'20vw',textAlign:'start',alignContent:'start', width:'100%'}}>
+              {/* {rootbaixada.map( ( {_id,tree_size_1,tree_size_2,first_hash,second_hash,consistency_path,log_id,__v} ) => {
                 return <p key={_id}>log_id:{log_id}<br/> tree_size_1 :{tree_size_1}<br/>tree_size_2 :{tree_size_2}<br/>first_hash :{first_hash}<br/>
                 second_hash:{second_hash}<br/>consistency_path:{consistency_path.map(consistency_path => <li>{consistency_path}</li>)}
-                <br/> ----------------------------------------------------<br/></p>})}
+                <br/> ----------------------------------------------------<br/></p>})} */}
+                {show?<ReactJson collapsed displayDataTypes={false} src={rootbaixada} />:null}
               </div>
             </div>
             </div>

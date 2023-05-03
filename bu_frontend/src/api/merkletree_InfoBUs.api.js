@@ -110,7 +110,8 @@ export function getSumOfVotes_infoBUs(infoBUs){
         const candidatos = infoBUs[i].votos_validos;
         for (let j = 0; j < candidatos.length; j++) {
             const element = candidatos[j];
-            let aux = ret.findIndex(candidato => candidato.codigo === element.codigo)
+            console.log(infoBUs)
+            let aux = ret.findIndex(candidato => candidato.codigo === element.codigo && candidato.cargo === element.cargo)
             
             if(aux !== -1) //se encontrado candidato no array
                 ret[aux].votos += element.votos //soma os votos

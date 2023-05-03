@@ -96,8 +96,21 @@ export default function Retotalizar() {
       }
       else return (approval)
     }
-    let CargoAtual = null;
-    
+    function definirColunas(resultadoAgrupado){
+      const numeroDeCargos=resultadoAgrupado.length
+          return `repeat(${numeroDeCargos}, minmax(150px, 1fr))`
+  }	
+
+    const resultadoAgrupado = busbaixadosobj.votos ? busbaixadosobj.votos.reduce((acc, { cargo, codigo, votos, partido }) => {
+      const index = acc.findIndex(item => item.cargo === cargo);
+      if (index === -1) {
+          acc.push({ cargo, votosData: [{ codigo, votos }] });
+      } else {
+          acc[index].votosData.push({ codigo, votos });
+          acc[index].votosData.sort((a, b) => b.votos - a.votos);
+      }
+      return acc;
+  }, []) : [];
   return (
     <div>
       <Row>
@@ -116,7 +129,7 @@ export default function Retotalizar() {
 
                 {/* BAIXANDO BUS */}
                 
-                <div style={{margin:'auto', width:'30%'}}>
+                <div style={{margin:'auto', width:'70%'}}>
                 {showbbus?
                   
                   <div style={{display:'block',textAlign:'justify'}}>
@@ -170,26 +183,17 @@ export default function Retotalizar() {
                     </Row>
                   </div>
                   {RetotalizarBus2()}
-                  {showret2?<div>
-                    <h5>- Resultado final:</h5>
-                        {busbaixadosobj.votos.map(({ cargo, codigo, votos, partido }, index) => {
-                          if (cargo !== CargoAtual) {
-                            CargoAtual = cargo;
-                            return (
-                              <div key={index}>
-                                <h4 style={{ fontWeight: 'bold' }}>{cargo}</h4>
-                                <p>{codigo}: {votos} votos</p>
-                              </div>
-                            );
-                          } else {
-                            return (
-                              <div key={index}>
-                                <p>{codigo}: {votos} votos</p>
-                              </div>
-                            );
-                          }
-                        })}
-                  </div>:null}
+                  {showret2?
+                              <div style={{ display: "grid", gridTemplateColumns:definirColunas(resultadoAgrupado) , gap: "1em" }}>
+                              {resultadoAgrupado.map(({ cargo, votosData }, index) => (
+                                <div key={index}>
+                                  <h4 style={{ fontWeight: 'bold' }}>{cargo}</h4>
+                                  {votosData.map(({ codigo, votos }, i) => (
+                                    <p key={i}>{codigo}: {votos} votos</p>
+                                  ))}
+                                </div>
+                              ))}
+                            </div>:null}
                 </div>:null}
 
               </div>
