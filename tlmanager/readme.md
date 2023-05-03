@@ -24,3 +24,9 @@
 ```bash
     uvicorn main:app --reload
 ```
+
+### Start the server reseting the database
+
+```bash
+    RESET="true" uvicorn main:app --reload
+```

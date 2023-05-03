@@ -1,58 +1,57 @@
-from config.init_database import database
+from controllers.database import db_get_one_state, db_update_state, db_get_all_state
 
 from transparentlogs_pymerkle import MerkleTree 
 from datetime import datetime
 
 COMMITMENT_SIZE_GLOBAL_TREE = 2
 
-def save_state(tree, inserted_leaf=None, is_commited=False):
-    last_state = database['state'].find_one(sort=[('timestamp', -1)])
- 
-    if tree.tree_name not in last_state['state']: #new tree
-        last_state['state'][tree.tree_name] = { 
-            'hashes': [],
-            'commitment_size': tree.commitment_size,
-            'entries_buffer': [],
-        }
-    
-    if inserted_leaf:
-        last_state['state'][tree.tree_name]['entries_buffer'].append(inserted_leaf)
-    if is_commited:
-        last_state['state'][tree.tree_name]['hashes'].extend(last_state['state'][tree.tree_name]['entries_buffer'])
-        last_state['state'][tree.tree_name]['entries_buffer'] = []
-
-    state = {
-        'timestamp': datetime.now(),
-        'state': last_state['state']
-    }
-
-    database['state'].update_one({'timestamp': last_state['timestamp']}, {'$set': state}, upsert=True)
-  
-
-def load_last_state():
-    state = database['state'].find_one(sort=[('timestamp', -1)])
-    if not state: #initial state
+def save_state(tree, list_entries=[]):
+    last_state = db_get_one_state(tree.tree_name)
+    if last_state: 
+        # update state
         state = {
-            'timestamp': datetime.now(),
-            'state': {
-                'global_tree': {
-                    'hashes': [],
-                    'commitment_size': COMMITMENT_SIZE_GLOBAL_TREE,
-                    'entries_buffer': [],
-                }
-            }
+            'timestamp': datetime.now().isoformat(),
+            'hashes': last_state['hashes'].extend(list_entries)
+        } | last_state
+    else: 
+        # create state
+        state = {
+            'timestamp': datetime.now().isoformat(),
+            'tree_name': tree.tree_name,
+            'commitment_size': tree.commitment_size,
+            'tree_size': 0,
+            'hashes': []
         }
-        database['state'].insert_one(state)
+        
+    db_update_state(tree.tree_name, state)
 
-    trees = {}
-    for tree_name, tree_state in state['state'].items():
-        tree = MerkleTree()
-        tree.tree_name = tree_name
-        tree.commitment_size = tree_state['commitment_size']
-        tree.entries_buffer = tree_state['entries_buffer']
-        for hash_leaf in tree_state['hashes']:
-            tree.append_entry(hash_leaf, encoding=False)
-        trees[tree_name] = tree
+def load_state():
+    state = db_get_all_state()
+    trees = __init_trees_from_state(state)
     return trees
 
-trees = load_last_state()
+def __init_trees_from_state(state):
+    if not state:
+        return __init_global_tree()
+    
+    trees = {}
+    for tree_state in state:
+        tree = MerkleTree()
+        tree.tree_name = tree_state['tree_name']
+        tree.commitment_size = tree_state['commitment_size']
+        tree.entries_buffer = []
+        for hash_leaf in tree_state['hashes']:
+            print(f'loading tree {tree.tree_name} {tree.length / tree_state["tree_size"] * 100:.2f}%', end='\r')
+            tree.append_entry(hash_leaf, encoding=False)
+        print(f'loading tree {tree.tree_name} {tree.length / tree_state["tree_size"] * 100:.2f}%')
+        trees[tree.tree_name] = tree
+    return trees
+
+def __init_global_tree():
+    global_tree = MerkleTree()
+    global_tree.tree_name = 'global_tree'
+    global_tree.commitment_size = COMMITMENT_SIZE_GLOBAL_TREE
+    save_state(global_tree)
+    return {'global_tree': global_tree}
+
+trees = load_state()
