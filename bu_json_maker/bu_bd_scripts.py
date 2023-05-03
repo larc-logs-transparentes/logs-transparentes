@@ -16,30 +16,36 @@ def get_list_of_dict_bu():
 
 
 # adds separated _id, id, zona, secao to each bu, and returns a list of bu dicts
-def get_candidates_votes_list(bu):
+def get_candidates_votes_list_segundo(bu):
     
     #Talvez tenha que fazer correções para quando houver segundo turno entre governadores e presidente.
-    #votosVotaveisPresidente = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
-    #votosVotaveisGovernador = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][1]["votosVotaveis"]
-    #votosVotaveis = {
-    #     "Governador": votosVotaveisPresidente,
-    #     "Presidente": votosVotaveisGovernador
-    # }
+    if len(bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"]) >1:
+        votosVotaveisGovernador = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][1]["votosVotaveis"]
+        votosVotaveisPresidente = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][1]["totaisVotosCargo"][0]["votosVotaveis"]
+        votosVotaveis = {
+            "Presidente": votosVotaveisPresidente,
+            "Governador": votosVotaveisGovernador,
+        }
+    else:
+        votosVotaveisPresidente = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
+        votosVotaveis = {
+            "Presidente": votosVotaveisPresidente,
+        }
 
-    votosVotaveis = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
     candidatos = []
-   
-    for voto in votosVotaveis:
-        if "identificacaoVotavel" in voto:
-            candidato = {   "cargo": "Presidente",
-                            "partido": voto["identificacaoVotavel"]["partido"],
-                            "codigo": voto["identificacaoVotavel"]["codigo"],
-                            "votos": voto["quantidadeVotos"],
-                            "_id": voto["assinatura"]}
-            candidatos.append(candidato)
-
-            return 0
+    for cargo, votos in votosVotaveis.items():
+        for voto in votos:
+            if "identificacaoVotavel" in voto:
+                candidato = {
+                    "cargo": cargo,
+                    "partido": voto["identificacaoVotavel"]["partido"],
+                    "codigo": voto["identificacaoVotavel"]["codigo"],
+                    "votos": voto["quantidadeVotos"],
+                    "_id": voto["assinatura"]
+                }
+                candidatos.append(candidato)
     return candidatos
+
 
 def get_candidates_votes_list_primeiro(bu):
     votosVotaveisDeputadoFederal = bu["resultadosVotacaoPorEleicao"][0]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
@@ -84,7 +90,7 @@ def get_body_list_with_zona_secao():
         county = get_county_uf_and_city_with_number(cod_municipio)
         uf = county['uf']
         municipio = county['nome_municipio']
-        candidates_votes_list = get_candidates_votes_list_primeiro(bu)
+        candidates_votes_list = get_candidates_votes_list_segundo(bu)
 
         body_dict = {
             "_id": id1,
