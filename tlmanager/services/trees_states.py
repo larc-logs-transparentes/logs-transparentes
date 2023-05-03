@@ -41,9 +41,9 @@ def __init_trees_from_state(state):
         tree.commitment_size = tree_state['commitment_size']
         tree.entries_buffer = []
         for hash_leaf in tree_state['hashes']:
-            print(f'loading tree {tree.tree_name} {tree.length / tree_state["tree_size"] * 100:.2f}%', end='\r')
+            print(f'loading tree "{tree.tree_name}" {tree.length / tree_state["tree_size"] * 100:.2f}%', end='\r')
             tree.append_entry(hash_leaf, encoding=False)
-        print(f'loading tree {tree.tree_name} {tree.length / tree_state["tree_size"] * 100:.2f}%')
+        print(f'loading tree "{tree.tree_name}" 100%')
         trees[tree.tree_name] = tree
     return trees
 
