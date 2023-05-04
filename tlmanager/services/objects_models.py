@@ -14,7 +14,7 @@ def build_global_tree_root_object(global_tree):
         'tree_name': global_tree.tree_name,
         'tree_size': global_tree.length,
         'signature': sign_root(global_tree.root),
-        'timestamp': datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        'timestamp': datetime.now().isoformat()
     }
 
 def build_data_proof_object(global_root_object, local_root_object, local_proof_object, data_proof_object):
@@ -28,4 +28,13 @@ def build_data_proof_object(global_root_object, local_root_object, local_proof_o
         'data': {
             'inclusion_proof': data_proof_object
         }   
+    }
+
+def build_state_object(tree, hashes):
+    return {
+        'timestamp': datetime.now().isoformat(),
+        'tree_name': tree.tree_name,
+        'tree_size': tree.length,
+        'commitment_size': tree.commitment_size,
+        'hashes': hashes
     }
