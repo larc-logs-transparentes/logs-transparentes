@@ -1,7 +1,7 @@
 from controllers.database import db_get_one_state, db_update_state, db_get_all_state
+from services.objects_models import build_state_object
 
 from transparentlogs_pymerkle import MerkleTree 
-from datetime import datetime
 
 COMMITMENT_SIZE_GLOBAL_TREE = 2
 
@@ -9,19 +9,10 @@ def save_state(tree, list_entries=[]):
     last_state = db_get_one_state(tree.tree_name)
     if last_state: 
         # update state
-        state = {
-            'timestamp': datetime.now().isoformat(),
-            'hashes': last_state['hashes'].extend(list_entries)
-        } | last_state
+        state = build_state_object(tree, last_state['hashes'] + list_entries)
     else: 
         # create state
-        state = {
-            'timestamp': datetime.now().isoformat(),
-            'tree_name': tree.tree_name,
-            'commitment_size': tree.commitment_size,
-            'tree_size': 0,
-            'hashes': []
-        }
+        state = build_state_object(tree, list_entries)
         
     db_update_state(tree.tree_name, state)
 
@@ -41,9 +32,9 @@ def __init_trees_from_state(state):
         tree.commitment_size = tree_state['commitment_size']
         tree.entries_buffer = []
         for hash_leaf in tree_state['hashes']:
-            print(f'loading tree "{tree.tree_name}" {tree.length / tree_state["tree_size"] * 100:.2f}%', end='\r')
+            print(f'loading tree "{tree.tree_name}" {tree.length / tree_state["tree_size"] * 100:.0f}%', end='\r')
             tree.append_entry(hash_leaf, encoding=False)
-        print(f'loading tree "{tree.tree_name}" 100%')
+        print(f'loading tree "{tree.tree_name}" 100%', flush=True)
         trees[tree.tree_name] = tree
     return trees
 

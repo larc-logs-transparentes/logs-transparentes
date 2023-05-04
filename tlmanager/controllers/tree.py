@@ -12,7 +12,7 @@ def create_tree(tree_name, commitment_size):
     tree.commitment_size = int(commitment_size)
     tree.entries_buffer = []
     trees[tree_name] = tree
-    save_state(tree, None)
+    save_state(tree)
     return {'status': 'ok', 'message': 'Tree created'}
 
 def insert_leaf(tree_name, data):
