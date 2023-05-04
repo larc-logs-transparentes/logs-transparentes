@@ -63,10 +63,8 @@ def db_update_state(tree_name, state):
     try:
         database['state'].update_one({'tree_name': tree_name}, {'$set': state}, upsert=True)
     except pymongo_errors.DocumentTooLarge:
-        print('Document too large, saving to gridfs')
         gridfs_save(tree_name, state)
         database['state'].update_one({'tree_name': tree_name}, {'$set': {'hashes': []}}, upsert=True)
-        input('Press enter to continue')
 
 def gridfs_save(filename, state):
     try:
