@@ -79,7 +79,7 @@ function retotalizar(BUs){
         console.log(votos)
         for (let j = 0; j < votos.length; j++) {
                 let candidatoIndexInArray = ret.findIndex(voto => voto.codigo === votos[j].codigo && votos[j].cargo===voto.cargo)
-
+                if(votos[j].codigo===19) console.log(BUs[i].id)
                 if (candidatoIndexInArray !== -1) ret[candidatoIndexInArray].votos += votos[j].votos
                 else {
                     let votoVotavel = {

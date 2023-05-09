@@ -60,31 +60,8 @@ class MostrarBUProva extends Component {
   render() {
     var bu = this.state.bu
     var prova = this.state.prova
-//    console.log(this.state.prova)
-//    console.log("fullProof")
-//    console.log(prova.fullproof)
-//    console.log("root")
-//    console.log(prova.root)
+    
 
-console.log(this.state.bu.bu_inteiro)
-  
-    var mostrar = this.state.mostrarProva
-    // var raizArr = (this.state.root===undefined)? [] : Array.from(this.state.root)
-    // var fullproofArr = (this.state.fullproof===undefined)? [] : Array.from(this.state.fullproof)
-
-    var votosArr = (this.state.votos===undefined)? [] : Array.from(this.state.votos)
-
-
-   
-  //    var votos = Array.from(bu.votos)
-  //    console.log(bu.votos)
-  const groupByCargo = votosArr.reduce((acc, curr) => {
-    if (!acc[curr.cargo]) {
-      acc[curr.cargo] = [];
-    }
-    acc[curr.cargo].push(curr);
-    return acc;
-  }, {});
     return (
       <Col>
       <Col style={{width:"40vw"}}>

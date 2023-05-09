@@ -4,11 +4,13 @@ import {
   Col,
   Card,
   CardHeader,
-  CardBody,
+  CardBody,  Button,
   CardText,
   Label,
 
 } from 'reactstrap';
+
+import { Link } from 'react-router-dom';
 //import DeleteIcon from '@mui/icons-material/Delete';
 //import IconButton from '@mui/material/IconButton';
 //import Tooltip from '@mui/material/Tooltip';
@@ -57,6 +59,12 @@ class MostrarBU extends Component {
     this.setState({mostrarProva: !this.state.mostrarProva})
 //      (this.state.mostrarProva)
   }
+  handleConsultar(e) {
+    e.preventDefault()
+    var url = "/elements/mostrarbuprova/" + this.state.id
+    console.log(url)
+    window.location.href =  url
+  }
   
   render() {
     var bu=this.state.bu
@@ -67,7 +75,7 @@ class MostrarBU extends Component {
 //    console.log("root")
 //    console.log(prova.root)
 
-console.log(this.state.bu.bu_inteiro)
+    console.log(this.state.votos)
   
     var mostrar = this.state.mostrarProva
     // var raizArr = (this.state.root===undefined)? [] : Array.from(this.state.root)
@@ -90,10 +98,10 @@ console.log(this.state.bu.bu_inteiro)
       <Col>
       <Col md={6}>
         <Card>
-          <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => this.mostraProva()}>
-            <a href={`/elements/mostrarprovabu/${this.state.id}`} target='_blank'>
+          <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => this.handleConsultar.bind(this)}>
+            <Link to={`/elements/mostrarbuprova/${this.state.id}` } target='_blank'> 
             <img src={(prova.isTrue===true)? cadVerde : cadVermelho} alt="estado"/>
-            </a>
+            </Link>
             </button>
             </CardHeader>
           <CardBody>
