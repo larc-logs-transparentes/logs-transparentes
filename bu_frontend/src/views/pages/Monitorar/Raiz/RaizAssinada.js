@@ -51,7 +51,7 @@ export default function Raizassinada() {
   return (
     <React.Fragment>
       <Card>
-        <CardBody>
+        <CardBody >
           <h4>Histórico da árvore de BUs</h4>
           <div style={{textAlign:'center'}}>
           <button disabled={show} onClick={()=> setVetor(vetorvalidar=>validar(i))} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
@@ -59,8 +59,8 @@ export default function Raizassinada() {
             </button>
           </div>
           <div>
-            <div style={{margin:'auto', textAlign:'center'}}>
-              <div style={{display:'flex-column',margin:'auto', textAlign:'center',position:'static',marginTop:'30vh'}}>
+            <div style={{marginLeft:'20%', textAlign:'center'}}>
+              <div style={{display:'flex-column', textAlign:'center',position:'static',marginTop:'30vh'}}>
               <div style={{display:'flex',position:'relative',gap:'0.5vw',textAlign:'center',fontSize:'30px',padding:'.3vw',marginTop:'-20vh',marginLeft:'auto',marginRight:'auto'}}>
                 <div >
                     <h5>ID</h5>
@@ -94,14 +94,14 @@ export default function Raizassinada() {
                     </h5>)}
                 </div>
               </div>
-              <div style={{display:'inline-block',columnCount:'1',gap:'6vw', marginTop:'10vw',marginRight:'20vw',textAlign:'start',alignContent:'start', width:'100%'}}>
+            </div>
+            <div style={{gap:'6vw', marginTop:'10vw',textAlign:'start',alignContent:'start', width:'100%'}}>
               {/* {rootbaixada.map( ( {_id,tree_size_1,tree_size_2,first_hash,second_hash,consistency_path,log_id,__v} ) => {
                 return <p key={_id}>log_id:{log_id}<br/> tree_size_1 :{tree_size_1}<br/>tree_size_2 :{tree_size_2}<br/>first_hash :{first_hash}<br/>
                 second_hash:{second_hash}<br/>consistency_path:{consistency_path.map(consistency_path => <li>{consistency_path}</li>)}
                 <br/> ----------------------------------------------------<br/></p>})} */}
                 {show?<ReactJson collapsed displayDataTypes={false} src={rootbaixada} />:null}
               </div>
-            </div>
             </div>
           </div>
         </CardBody>
