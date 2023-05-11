@@ -9,9 +9,6 @@ import {
   Label,
 
 } from 'reactstrap';
-//import DeleteIcon from '@mui/icons-material/Delete';
-//import IconButton from '@mui/material/IconButton';
-//import Tooltip from '@mui/material/Tooltip';
 import { verify } from '../../api/merkletree.api'
 import cadVerde from '../../assets/images/cad-verde.png';
 import cadVermelho from '../../assets/images/cad-vermelho.png';
@@ -40,7 +37,6 @@ class MostrarBUProva extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-//    console.log("id=" + id)
     this.axios.get(`${this.bu_api_url}/bu/${id}`)
       .then(response => this.setState({ bu: response.data, votos: response.data.votos }))
     var retVerify = verify(id)
@@ -54,7 +50,6 @@ class MostrarBUProva extends Component {
 
   mostraProva() {
     this.setState({mostrarProva: !this.state.mostrarProva})
-//      (this.state.mostrarProva)
   }
   
   render() {

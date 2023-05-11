@@ -15,9 +15,7 @@ def get_list_of_dict_bu():
     return json.load(file)
 
 
-# adds separated _id, id, zona, secao to each bu, and returns a list of bu dicts
-def get_candidates_votes_list_segundo(bu):
-    cargos=['presidente, governador']
+def candidatos_segundo(bu):
     k=0
     while k<len(bu["resultadosVotacaoPorEleicao"]):
         if bu["resultadosVotacaoPorEleicao"][k]["resultadosVotacao"][0]["totaisVotosCargo"][0]["codigoCargo"][1]=="presidente":
@@ -49,7 +47,7 @@ def get_candidates_votes_list_segundo(bu):
                 candidatos.append(candidato)
     return candidatos
 
-def get_candidates_votes_list_primeiro(bu):
+def candidatos_primeiro(bu):
         votos_votaveis_paths = {
             "deputadoFederal": None,
             "deputadoEstadual": None,
@@ -110,7 +108,7 @@ def get_body_list_with_zona_secao():
         county = get_county_uf_and_city_with_number(cod_municipio)
         uf = county['uf']
         municipio = county['nome_municipio']
-        candidates_votes_list = get_candidates_votes_list_primeiro(bu)
+        candidates_votes_list = candidatos_primeiro(bu)
 
         body_dict = {
             "_id": id1,
