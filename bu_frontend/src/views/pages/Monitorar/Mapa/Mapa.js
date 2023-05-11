@@ -50,11 +50,18 @@ async componentDidUpdate(prevProps, prevState) {
     var url = `/mapa/verificacaoCompleta/${id_inicial}/${id_final}`
     window.location.href =  url
   }
+  redirecionaParaProvaParcial(e) {
+    e.preventDefault()
+    const id_inicial = this.state.id_inicial
+    const id_final = this.state.id_final
+    var url = `/mapa/provaparcial/${id_inicial}/${id_final}`
+    window.location.href =  url
+  }
 
   render() {
       return (
       <Row>
-        <Col md={8}>
+        <Col md={12}>
           <Card>
             <CardHeader>Selecionar Cidade</CardHeader>
             <CardBody>  
@@ -71,20 +78,6 @@ async componentDidUpdate(prevProps, prevState) {
               id_final={this.state.id_final}
             />
           </Card>
-        </Col>
-        
-        <Col md={4}>
-          <Card>
-            <CardHeader>Verificação resumida</CardHeader>
-            <CardBody style={{overflowX:"scroll"}}>
-              <ProvaParcial 
-                mostrarProvaParcial={this.state.mostrarProvaParcial}
-                resultadoProvaParcial={this.state.resultadoProvaParcial}
-                dadosProvaParcial={this.state.dadosProvaParcial}
-              />
-            </CardBody>
-          </Card>
-                  
         </Col>
       </Row>
       
