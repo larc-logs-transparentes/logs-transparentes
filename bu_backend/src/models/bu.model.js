@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const candidato_identificavel = new mongoose.Schema({  //subSchema para os candidatos 
+    cargo: {type: String,},
     partido: {type: Number,},
     codigo: {type: Number,},
     votos: {type: Number,},

@@ -16,8 +16,8 @@ export async function RetotalizacaoDeBus(){
     console.log(verificarbusquantidade)
     const verificarbusinclusao = verificarbus.verificacao_inclusao
     const votosretotalizacao = retotalizar(BUs)
-    const teste = await PegarRoot(BUs)
-    return [numerodebusadicionados,verificarbusquantidade,votosretotalizacao,verificarbusinclusao,teste]
+    const root = await PegarRoot(BUs)
+    return [numerodebusadicionados,verificarbusquantidade,votosretotalizacao,verificarbusinclusao,root]
 }
 
 async function baixarBUs(){
@@ -75,28 +75,28 @@ async function verificarInclusao(BUs){
 function retotalizar(BUs){
     const ret = []
     for (let i = 0; i < BUs.length; i++) {
-        const bu_inteiro = BUs[i].bu_inteiro;
-        const bu_json = JSON.parse(bu_inteiro)
-        const votosVotaveis = bu_json.resultadosVotacaoPorEleicao[0].resultadosVotacao[0].totaisVotosCargo[0].votosVotaveis
-        for (let j = 0; j < votosVotaveis.length; j++) {
-            if (votosVotaveis[j].hasOwnProperty("identificacaoVotavel")) {
-                let candidatoIndexInArray = ret.findIndex(voto => voto.codigo === votosVotaveis[j].identificacaoVotavel.codigo)
-
-                if (candidatoIndexInArray !== -1) ret[candidatoIndexInArray].votos += votosVotaveis[j].quantidadeVotos
+        const votos= BUs[i].votos;
+        console.log(votos)
+        for (let j = 0; j < votos.length; j++) {
+                let candidatoIndexInArray = ret.findIndex(voto => voto.codigo === votos[j].codigo && votos[j].cargo===voto.cargo)
+                if(votos[j].codigo===19) console.log(BUs[i].id)
+                if (candidatoIndexInArray !== -1) ret[candidatoIndexInArray].votos += votos[j].votos
                 else {
                     let votoVotavel = {
-                        partido: votosVotaveis[j].identificacaoVotavel.partido,
-                        codigo: votosVotaveis[j].identificacaoVotavel.codigo,
-                        votos: votosVotaveis[j].quantidadeVotos,
-                    }
-
-                    ret.push(votoVotavel)
-                }
+                        cargo: votos[j].cargo,
+                        partido: votos[j].partido,
+                        codigo: votos[j].codigo,
+                        votos: votos[j].votos,}
+                     ret.push(votoVotavel)
             }
         }
     }
     console.log("votosvotaveis", ret)
-
-    ret.sort((a, b) => b.votos - a.votos) //ordena por qtd de votos
+    ret.sort((a, b) => {
+        // separa os cargos
+        if (a.cargo < b.cargo) return -1
+        if (a.cargo > b.cargo) return 1
+        return b.votos - a.votos
+    }) //ordena por qtd de votos
     return ret
 }

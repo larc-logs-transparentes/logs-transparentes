@@ -63,11 +63,25 @@ const AnimacaoVerificacao = ({stateDownloadInfoBUs, stateVerificationInfoBUs, st
         }
         else return (approval)
     } 
+    function definirColunas(resultadoAgrupado){
+        const numeroDeCargos=resultadoAgrupado.length
+            return `repeat(${numeroDeCargos}, minmax(150px, 1fr))`
+    }	
     /////////////////////////////////////////////////////////////////////
-    
+    const resultadoAgrupado = retotalizacao ? retotalizacao.reduce((acc, { cargo, codigo, votos, partido }) => {
+        const index = acc.findIndex(item => item.cargo === cargo);
+        if (index === -1) {
+            acc.push({ cargo, votosData: [{ codigo, votos }] });
+        } else {
+            acc[index].votosData.push({ codigo, votos });
+            acc[index].votosData.sort((a, b) => b.votos - a.votos);
+        }
+        return acc;
+    }, []) : [];
+
     
     return (
-        <div style={{margin:'auto', width:'23%'}}>
+        <div style={{margin:'auto', width:'50%'}}>
             {stateDownloadInfoBUs !== 'not started' &&
             <div style={{display:'block',textAlign:'justify'}}>
                 <h5>Raiz: {bufferToHex(raiz.leaf)}</h5>
@@ -115,9 +129,16 @@ const AnimacaoVerificacao = ({stateDownloadInfoBUs, stateVerificationInfoBUs, st
                 {stateRetotalizationInfoBUs === 'completed' && 
                 <div>
                     <h5>- Resultado final:</h5>
-                    <h5>{retotalizacao.map(({codigo, votos}) => (
-                        <p key={codigo}>{codigo}: {votos} votos</p>))}
-                    </h5>
+                    <div style={{ display: "grid", gridTemplateColumns:definirColunas(resultadoAgrupado), gap: "1em",columnCount:'5' }}>
+                        {resultadoAgrupado.map(({ cargo, votosData }, index) => (
+                        <div key={index}>
+                            <h4 style={{ fontWeight: 'bold' }}>{cargo}</h4>
+                            {votosData.map(({ codigo, votos }, i) => (
+                            <p key={i}>{codigo}: {votos} votos</p>
+                            ))}
+                        </div>
+                        ))}
+                    </div>
                 </div>}
             </div>}
         </div>

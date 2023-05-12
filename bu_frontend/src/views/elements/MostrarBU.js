@@ -4,14 +4,14 @@ import {
   Col,
   Card,
   CardHeader,
-  CardBody,
+  CardBody,  Button,
   CardText,
   Label,
 
 } from 'reactstrap';
-//import DeleteIcon from '@mui/icons-material/Delete';
-//import IconButton from '@mui/material/IconButton';
-//import Tooltip from '@mui/material/Tooltip';
+
+import { Link } from 'react-router-dom';
+
 import { verify } from '../../api/merkletree.api'
 import cadVerde from '../../assets/images/cad-verde.png';
 import cadVermelho from '../../assets/images/cad-vermelho.png';
@@ -32,6 +32,7 @@ class MostrarBU extends Component {
                   root: [],
                   fullproof: [],
                   mostrarProva: false,
+                  id:[]
                 }
     
     this.mostraProva = this.mostraProva.bind(this);
@@ -42,48 +43,55 @@ class MostrarBU extends Component {
     const { id } = this.props.match.params;
 //    console.log("id=" + id)
     this.axios.get(`${this.bu_api_url}/bu/${id}`)
-      .then(response => this.setState({ bu: response.data, votos: response.data.votos }))
-
+      .then(response => this.setState({ bu: response.data, votos: response.data.votos,id:response.data.id }))
     var retVerify = verify(id)
     retVerify.then( value => {
       this.setState({ prova: value })
       this.setState({ root: this.state.prova.root })
       this.setState({ fullproof: this.state.prova.fullproof })
     })
+    
   }
 
   mostraProva() {
     this.setState({mostrarProva: !this.state.mostrarProva})
 //      (this.state.mostrarProva)
   }
+  handleConsultar(e) {
+    e.preventDefault()
+    var url = "/elements/mostrarbuprova/" + this.state.id
+    console.log(url)
+    window.location.href =  url
+  }
   
   render() {
-    var bu = this.state.bu
+    var bu=this.state.bu
     var prova = this.state.prova
-//    console.log(this.state.prova)
-//    console.log("fullProof")
-//    console.log(prova.fullproof)
-//    console.log("root")
-//    console.log(prova.root)
 
 
-    console.log(JSON.stringify(this.state.prova))
+    console.log(this.state.votos)
+  
     var mostrar = this.state.mostrarProva
-    // var raizArr = (this.state.root===undefined)? [] : Array.from(this.state.root)
-    // var fullproofArr = (this.state.fullproof===undefined)? [] : Array.from(this.state.fullproof)
 
     var votosArr = (this.state.votos===undefined)? [] : Array.from(this.state.votos)
 
-
-   
-  //    var votos = Array.from(bu.votos)
-  //    console.log(bu.votos)
-  
+  const groupByCargo = votosArr.reduce((acc, curr) => {
+    if (!acc[curr.cargo]) {
+      acc[curr.cargo] = [];
+    }
+    acc[curr.cargo].push(curr);
+    return acc;
+  }, {});
     return (
       <Col>
-      <Col md={5}>
+      <Col md={6}>
         <Card>
-          <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => this.mostraProva()}><img src={(prova.isTrue===true)? cadVerde : cadVermelho} alt="estado" /></button></CardHeader>
+          <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => this.handleConsultar.bind(this)}>
+            <Link to={`/elements/mostrarbuprova/${this.state.id}` } target='_blank'> 
+            <img src={(prova.isTrue===true)? cadVerde : cadVermelho} alt="estado"/>
+            </Link>
+            </button>
+            </CardHeader>
           <CardBody>
               <Label>Detalhes</Label>
               <CardBody>
@@ -108,10 +116,23 @@ class MostrarBU extends Component {
               </CardBody>
               <CardBody>
               <Label>Votos</Label>
-              <CardText><ul>
-                {votosArr.map(item => {
-                  return <li>{"Partido: " + item.partido + " ; Código: " + item.codigo + " ; Votos: " + item.votos}</li>
-                })}</ul>
+              <CardText>  
+                <div style={{ display: "flex" }}>
+                  {Object.entries(groupByCargo).map(([cargo, items]) => (
+                    <div style={{ columnCount: 1, marginRight: "30px" }}>
+                      <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+                        {cargo}
+                      </div>
+                      {items.map((item) => (
+                        <div>
+                          <div>Partido: {item.partido}</div>
+                          <div>Código: {item.codigo}</div>
+                          <div>Votos: {item.votos}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </CardText>
               </CardBody>
           </CardBody>
