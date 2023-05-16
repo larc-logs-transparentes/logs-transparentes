@@ -1,23 +1,23 @@
 const { modeloBoletim } = require("../models/bu.model")
 const { modeloroot } = require("../models/root.model")
 
-const merkletree_adapter = require("../adapters/bus_merkletree.adapter")
+const merkletree_adapter = require("../adapters/bus_tlmanager.adapter")
 
 const CONSISTENCY_PROOF_FREQUENCY = 16
 let tree_size_1 = 0, tree_size_2 = 0, log_id = 0
 
 // Create and Save a new BU
-exports.create = (data) => {
+exports.create = (tree_name, data) => {
   buString = JSON.stringify(data.bu_inteiro)
   console.log(typeof buString);
   console.log("Debug BU")
   console.log(buString)
   console.log({"BU": data})
 
-  merkletree_adapter.addLeaf(buString).then((merkletree_data) => {
+  merkletree_adapter.addLeaf(tree_name, buString).then((merkletree_data) => {
     modeloBoletim.create({
-      merkletree_leaf_index: merkletree_data.leaf_index,
-      merkletree_leaf: merkletree_data.added_leaf,
+      merkletree_leaf_index: merkletree_data.index,
+      merkletree_leaf: merkletree_data.value,
       _id: data._id,
       id: data.id,
       turno: data.turno,
@@ -29,12 +29,12 @@ exports.create = (data) => {
       votos: data.votos,
     })
 
-    tree_size_2++ 
+    /* tree_size_2++ 
     if(tree_size_2 % CONSISTENCY_PROOF_FREQUENCY == 0){
       storeConsistencyProof(tree_size_1, tree_size_2, log_id)
       tree_size_1 = tree_size_2
       log_id++
-    }
+    } */
   })
   return
 };
@@ -81,6 +81,11 @@ exports.findById = (id) => {
     return data
   })
 };
+
+exports.createTree = async (tree_name, commitment_size) => {
+  return await merkletree_adapter.createTree(tree_name, commitment_size)
+}
+
 
 /**
 * publishConsistencyProof

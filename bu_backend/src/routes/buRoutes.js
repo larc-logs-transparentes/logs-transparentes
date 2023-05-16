@@ -22,7 +22,7 @@ router.get("/by_id_range", (req, res) => {
 // save new BU
 router.post("/create", (req, res) => {
     console.log("posting on /bu")
-    const result = bu_controller.create(req.body)
+    const result = bu_controller.create("BUs", req.body)
     res.json(result)
 })
   
@@ -37,6 +37,16 @@ router.get("/get_one", (req, res) => {
 // retrieve BU by ID
 router.get("/:id", (req, res) => {
     bu_controller.findById(req.params.id).then((response) => {
+        res.json(response);
+    }).catch((err) => {
+      res.json(err)
+    })
+})
+
+router.post("/create-tree", (req, res) => {
+    let tree_name = req.body["tree-name"]
+    let commitment_tree = req.body["commitment-size"]
+    bu_controller.createTree(tree_name, commitment_tree).then((response) => {
         res.json(response);
     }).catch((err) => {
       res.json(err)

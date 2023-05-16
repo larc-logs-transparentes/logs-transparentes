@@ -44,7 +44,6 @@ def get_body_list_with_zona_secao():
         uf = county['uf']
         municipio = county['nome_municipio']
         candidates_votes_list = get_candidates_votes_list(bu)
-
         body_dict = {
             "_id": id1,
             "id": id2,
@@ -73,6 +72,12 @@ def insert_body_to_db(body_dict):
     return requests.post(f"{BACKEND_URL}/bu/create", json=body_dict, headers=header)
 
 
+def create_tree(tree_name, commitment_size=100):
+    header = {
+        "content-type": "application/json"
+    }
+    return requests.post(f"{BACKEND_URL}/bu/create-tree", json={"tree-name": tree_name, "commitment-size": commitment_size}, headers=header)
+
 def initialize_infoBUs_tree():
     header = {
         "content-type": "application/json"
@@ -87,11 +92,11 @@ def insert_list_bus_to_db():
         res = insert_body_to_db(body)
         print(f'{bodies.index(body)} de {len(bodies)}, {res}', end='\r')
         res_list.append(res)
-        time.sleep(0.1) # sleep between inserts so it won`t flood db and get error
 
     return res_list
 
 
 if __name__ == '__main__':
+    create_tree("BUs") #TODO: isso devia estar aqui?
     insert_list_bus_to_db()
     initialize_infoBUs_tree()
