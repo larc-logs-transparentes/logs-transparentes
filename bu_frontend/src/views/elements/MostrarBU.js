@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 
 import { Link } from 'react-router-dom';
-
+import Pyodide from '../../services/pyodide.js'
 import { verify } from '../../api/merkletree.api'
 import cadVerde from '../../assets/images/cad-verde.png';
 import cadVermelho from '../../assets/images/cad-vermelho.png';
@@ -69,7 +69,7 @@ class MostrarBU extends Component {
     var prova = this.state.prova
 
 
-    console.log(this.state.votos)
+    console.log(this.state.prova)
   
     var mostrar = this.state.mostrarProva
 
@@ -92,6 +92,7 @@ class MostrarBU extends Component {
             </Link>
             </button>
             </CardHeader>
+            <Pyodide script='../../services/main.py' bu_id={this.state.id}/>
           <CardBody>
               <Label>Detalhes</Label>
               <CardBody>
