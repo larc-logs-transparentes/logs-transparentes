@@ -76,15 +76,10 @@ exports.createTree = async (tree_name, commitment_size) => {
   return await merkletree_adapter.createTree(tree_name, commitment_size)
 }
 
-exports.getDataProof = async (leaf_index, data) => {
-  if (leaf_index != undefined)
-    return await merkletree_adapter.getDataProofByIndex("BUs", leaf_index)
-  else if (data != undefined)
-    return await merkletree_adapter.getDataProofByData("BUs", data)
-  else
-    return "Error: leaf_index or data must be provided"
+exports.getDataProof = async (leaf_index) => {
+  return await merkletree_adapter.getDataProof("bu_tree", leaf_index)
 }
 
 exports.getConsistencyProof = async () => {
-  return await merkletree_adapter.getConsistencyProof("BUs")
+  return await merkletree_adapter.getConsistencyProof("bu_tree")
 }

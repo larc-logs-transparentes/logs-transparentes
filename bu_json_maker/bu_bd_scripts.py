@@ -145,6 +145,12 @@ def create_tree(tree_name, commitment_size=100):
     }
     return requests.post(f"{BACKEND_URL}/tree/create-tree", json={"tree-name": tree_name, "commitment-size": commitment_size}, headers=header)
 
+def commit_tree(tree_name):
+    header = {
+        "content-type": "application/json"
+    }
+    return requests.post(f"{BACKEND_URL}/tree/commit", json={"tree-name": tree_name}, headers=header)
+
 def initialize_infoBUs_tree():
     header = {
         "content-type": "application/json"
@@ -164,6 +170,7 @@ def insert_list_bus_to_db():
 
 
 if __name__ == '__main__':
-    create_tree("BUs") #TODO: isso devia estar aqui?
+    create_tree("bu_tree")
     insert_list_bus_to_db()
+    commit_tree("bu_tree")
     initialize_infoBUs_tree()

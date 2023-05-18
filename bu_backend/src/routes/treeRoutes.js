@@ -62,7 +62,7 @@ router.get("/data-proof", (req, res) => {
   })
 })
 
-router.get("/consistency-proof", (req, res) => {
+router.get("/all-consistency-proof", (req, res) => {
   bu_controller.getConsistencyProof().then((response) => {
     res.json(response);
   }).catch((err) => {

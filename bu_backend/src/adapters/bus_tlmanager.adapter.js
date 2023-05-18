@@ -62,19 +62,8 @@ exports.getConsistencyProof = (tree_name) => {
   }) 
 }
 
-exports.getDataProofByIndex = (tree_name, leaf_index) => {
+exports.getDataProof = (tree_name, leaf_index) => {
   return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/data-proof?tree-name=${tree_name}&index=${leaf_index}`)
-  .then(res => {
-    return res.data
-  })
-  .catch(err => {
-    console.log(err)
-  })
-}
-
-exports.getDataProofByData = (tree_name, data) => {
-  axios.default.defaults.maxContentLength = 1000000000
-  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/data-proof?tree-name=${tree_name}&data=${data}`)
   .then(res => {
     return res.data
   })

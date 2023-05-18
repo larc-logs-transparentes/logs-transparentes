@@ -22,7 +22,7 @@ router.get("/by_id_range", (req, res) => {
 // save new BU
 router.post("/create", (req, res) => {
     console.log("posting on /bu")
-    const result = bu_controller.create("BUs", req.body)
+    const result = bu_controller.create("bu_tree", req.body)
     res.json(result)
 })
   
