@@ -1,8 +1,8 @@
 import React from 'react'
-import { FormGroup, Label, Input, FormText } from 'reactstrap';
+import { FormGroup, Label, Input, FormText} from 'reactstrap';
 import cadVerde from '../../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../../assets/images/cad-vermelho.png';
-
+import { Link } from 'react-router-dom';
 const SelecaoCidade = ({state, setState}) => {
     function defineFaixaSaoCarlos(){
         setState( {id_final:102, id_inicial:1});
@@ -32,7 +32,12 @@ const SelecaoCidade = ({state, setState}) => {
         setState({mostrarProvaParcial: !state.mostrarProvaParcial})
     }
     const cidadeArr = ['São Carlos','Campinas', 'Ribeirão Preto', 'Marília']
-    
+
+    function redirecionaParaProvaParcial() {
+        var url = `/mapa/provaparcial/${this.state.id_inicial}/${this.state.id_final}`
+        window.location.href =  url
+      }
+
     return ( 
         <FormGroup>
             <div style={{display:'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
@@ -43,8 +48,11 @@ const SelecaoCidade = ({state, setState}) => {
                     <option value={entry} key={i}>{entry}</option>            
                     ))}
                 </Input>
-                {state.id_inicial && <button className="btn float-right" style={{position: 'relative', bottom: '2px'}} onClick={() => mostraProva()}><img src={(state.resultadoProvaParcial===true)? cadVerde : cadVermelho} alt="estado" /></button>}
+                <Link to={`/mapa/provaparcial/${state.id_inicial}/${state.id_final}`}>
+                {state.id_inicial && <button className="btn float-right" style={{position: 'relative', bottom: '2px'}}>
+                    <img src={(state.resultadoProvaParcial===true)? cadVerde : cadVermelho} alt="estado" /></button>}
                 {!state.id_inicial && <span  style={{width: '65.8px'}} />}
+                </Link>
             </div>
             {!state.id_inicial && !state.id_final && <FormText color="muted">Selecione a cidade para visualizar os BU's</FormText>}
             {state.id_inicial && state.id_final && <FormText color="muted">Faixa de BU's da cidade: {state.id_inicial} a {state.id_final}</FormText>}

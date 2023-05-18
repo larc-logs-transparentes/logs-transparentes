@@ -1,6 +1,6 @@
 import React from "react";
 import { FormGroup, Label, Col, Card, CardHeader, CardBody, CardText } from "reactstrap";
-
+import ReactJson from 'react-json-view'
 const ProvaParcial = ({ mostrarProvaParcial, dadosProvaParcial, resultadoProvaParcial }) => {
     return (
         <FormGroup>
@@ -11,7 +11,7 @@ const ProvaParcial = ({ mostrarProvaParcial, dadosProvaParcial, resultadoProvaPa
                     <CardBody>
                         <Label>Prova</Label>
                         <CardText>Foram verificados {dadosProvaParcial.length} nós da árvore de infoBUs</CardText>                    
-                        <CardText>{JSON.stringify(dadosProvaParcial)}</CardText>
+                        <ReactJson collapsed displayDataTypes={false} src={dadosProvaParcial} />
                     </CardBody>
                 </CardBody>
             </Card>
@@ -23,7 +23,7 @@ const ProvaParcial = ({ mostrarProvaParcial, dadosProvaParcial, resultadoProvaPa
                     <CardBody>
                         <CardBody>
                             <Label>Prova</Label>
-                            <CardText>{JSON.stringify(dadosProvaParcial)}</CardText>
+                            <ReactJson collapsed displayDataTypes={false} src={dadosProvaParcial} />
                         </CardBody>
                     </CardBody>
                 </Card>
