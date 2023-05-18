@@ -21,10 +21,11 @@ def insert_leaf(tree_name, data):
     tree = trees[tree_name]
     hash_leaf = tree.hash_entry(bytes(data, 'utf-8'))
     tree.entries_buffer.append(hash_leaf)
+    index = tree.length + len(tree.entries_buffer) - 1
     if (len(tree.entries_buffer) >= tree.commitment_size):
         commit_local_tree(tree_name)    
-        return {'status': 'ok', 'value': hash_leaf, 'message': 'Commited'}
-    return {'status': 'ok', 'value': hash_leaf, 'message': 'Pending'}
+        return {'status': 'ok', 'value': hash_leaf, 'index': index, 'message': 'Commited'}
+    return {'status': 'ok', 'value': hash_leaf, 'index': index, 'message': 'Pending'}
 
 def commit_local_tree(tree_name):
     if tree_name not in trees:
