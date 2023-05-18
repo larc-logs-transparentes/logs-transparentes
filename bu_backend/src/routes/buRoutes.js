@@ -43,14 +43,4 @@ router.get("/:id", (req, res) => {
     })
 })
 
-router.post("/create-tree", (req, res) => {
-    let tree_name = req.body["tree-name"]
-    let commitment_tree = req.body["commitment-size"]
-    bu_controller.createTree(tree_name, commitment_tree).then((response) => {
-        res.json(response);
-    }).catch((err) => {
-      res.json(err)
-    })
-})
-
 module.exports = router;

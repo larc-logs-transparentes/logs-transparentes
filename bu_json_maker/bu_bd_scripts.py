@@ -76,7 +76,7 @@ def create_tree(tree_name, commitment_size=100):
     header = {
         "content-type": "application/json"
     }
-    return requests.post(f"{BACKEND_URL}/bu/create-tree", json={"tree-name": tree_name, "commitment-size": commitment_size}, headers=header)
+    return requests.post(f"{BACKEND_URL}/tree/create-tree", json={"tree-name": tree_name, "commitment-size": commitment_size}, headers=header)
 
 def initialize_infoBUs_tree():
     header = {

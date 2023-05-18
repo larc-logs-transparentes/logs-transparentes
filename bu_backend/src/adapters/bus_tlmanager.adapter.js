@@ -38,17 +38,6 @@ exports.getTreeRoot = (tree_name) => {
     })
 }
 
-exports.getLeafAndProofByIndex = (index) => {
-  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/inclusion-proof?index=${index}`)
-    .then(res => {
-      console.log(res.data)
-      return res.data
-    })
-    .catch(err => {
-      console.log(err)
-    })
-}
-
 exports.createTree = (tree_name, commitment_size) => {
   return axios.post(`${tlmanagerHostname}:${tlmanagerPort}/tree-create`, {
       "tree-name": tree_name,
@@ -71,4 +60,25 @@ exports.getConsistencyProof = (tree_name) => {
   .catch(err => {
     console.log(err)
   }) 
+}
+
+exports.getDataProofByIndex = (tree_name, leaf_index) => {
+  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/data-proof?tree-name=${tree_name}&index=${leaf_index}`)
+  .then(res => {
+    return res.data
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
+exports.getDataProofByData = (tree_name, data) => {
+  axios.default.defaults.maxContentLength = 1000000000
+  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/data-proof?tree-name=${tree_name}&data=${data}`)
+  .then(res => {
+    return res.data
+  })
+  .catch(err => {
+    console.log(err)
+  })
 }
