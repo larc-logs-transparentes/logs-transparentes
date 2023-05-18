@@ -83,3 +83,7 @@ exports.getDataProof = async (leaf_index) => {
 exports.getConsistencyProof = async () => {
   return await merkletree_adapter.getConsistencyProof("bu_tree")
 }
+
+exports.commit = async () => {
+  return await merkletree_adapter.commit("bu_tree")
+}

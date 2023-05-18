@@ -71,3 +71,15 @@ exports.getDataProof = (tree_name, leaf_index) => {
     console.log(err)
   })
 }
+
+exports.commit = (tree_name) => {
+  return axios.post(`${tlmanagerHostname}:${tlmanagerPort}/tree/commit`, {
+    "tree-name": tree_name
+  })
+  .then(res => {
+    return res.data
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}

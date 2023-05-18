@@ -52,6 +52,15 @@ router.post("/create-tree", (req, res) => {
   })
 })
 
+router.post("/commit", (req, res) => {
+  let tree_name = req.body["tree-name"]
+  bu_controller.commit(tree_name).then((response) => {
+    res.json(response);
+  }).catch((err) => {
+    res.json(err)
+  })
+})
+
 router.get("/data-proof", (req, res) => {
   const index = req.query["index"]  
   const data = req.query["data"]
