@@ -139,6 +139,18 @@ def insert_body_to_db(body_dict):
     return requests.post(f"{BACKEND_URL}/bu/create", json=body_dict, headers=header)
 
 
+def create_tree(tree_name, commitment_size=100):
+    header = {
+        "content-type": "application/json"
+    }
+    return requests.post(f"{BACKEND_URL}/tree/create-tree", json={"tree-name": tree_name, "commitment-size": commitment_size}, headers=header)
+
+def commit_tree(tree_name):
+    header = {
+        "content-type": "application/json"
+    }
+    return requests.post(f"{BACKEND_URL}/tree/commit", json={"tree-name": tree_name}, headers=header)
+
 def initialize_infoBUs_tree():
     header = {
         "content-type": "application/json"
@@ -153,11 +165,12 @@ def insert_list_bus_to_db():
         res = insert_body_to_db(body)
         print(f'{bodies.index(body)} de {len(bodies)}, {res}', end='\r')
         res_list.append(res)
-        time.sleep(0.1) # sleep between inserts so it won`t flood db and get error
 
     return res_list
 
 
 if __name__ == '__main__':
+    create_tree("bu_tree")
     insert_list_bus_to_db()
+    commit_tree("bu_tree")
     initialize_infoBUs_tree()
