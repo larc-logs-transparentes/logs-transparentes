@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import { Card, CardBody, Col, Row, Button,Table } from 'reactstrap'
 import script from './main.py';
-import verify from './services.js';
+import verifyinfo from './services.js';
 
 const runScript = async (code) => {
   const pyodide = await window.loadPyodide({
@@ -13,7 +13,7 @@ const runScript = async (code) => {
     "https://test-files.pythonhosted.org/packages/37/fb/e0cfc7f7cdb8319346dfe8ee93fba1aeaa9e5a2a914b1180a31f5ddb576a/tlverifier-0.0.8-py3-none-any.whl"
   );
   await micropip.install("pymerkle-logsTransparentes");
-  const verificacao=await verify(1);
+  const verificacao=await verifyinfo(1);
   console.log(verificacao.fullproofString)
   const pythonCode = `
   from tlverifier.merkle_functions.tl_functions import verify_inclusion_proof
