@@ -1,10 +1,9 @@
 import json
 import requests
-import time
 
 from constants import BACKEND_URL
 from counties_codes import get_county_uf_and_city_with_number
-
+BU_TREE_NAME = "bu_tree"
 
 # reads bus from file made with bu_json_converter.py
 def get_list_of_dict_bu():
@@ -132,12 +131,11 @@ def get_body_list_with_zona_secao():
 
 
 # sends one bu (dict) to db via post request
-def insert_body_to_db(body_dict):
+def insert_body_to_db(tree_name, body_dict):
     header = {
         "content-type": "application/json"
     }
-    return requests.post(f"{BACKEND_URL}/bu/create", json=body_dict, headers=header)
-
+    return requests.post(f"{BACKEND_URL}/bu/create", json={"tree-name": tree_name, "data": body_dict}, headers=header)
 
 def create_tree(tree_name, commitment_size=100):
     header = {
@@ -162,7 +160,7 @@ def insert_list_bus_to_db():
     bodies = get_body_list_with_zona_secao()
     res_list = []
     for body in bodies:
-        res = insert_body_to_db(body)
+        res = insert_body_to_db(BU_TREE_NAME, body)
         print(f'{bodies.index(body)} de {len(bodies)}, {res}', end='\r')
         res_list.append(res)
 
@@ -170,7 +168,7 @@ def insert_list_bus_to_db():
 
 
 if __name__ == '__main__':
-    create_tree("bu_tree")
+    create_tree(BU_TREE_NAME)
     insert_list_bus_to_db()
-    commit_tree("bu_tree")
+    commit_tree(BU_TREE_NAME)
     initialize_infoBUs_tree()
