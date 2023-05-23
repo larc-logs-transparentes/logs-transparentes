@@ -1,9 +1,9 @@
 const { modeloBoletim } = require("../models/bu.model")
 
-exports.insertBU = (data) => {
+exports.insertBU = (data, merkletree_leaf_data) => {
     modeloBoletim.create({
-        merkletree_leaf_index: data.merkletree_leaf_index,
-        merkletree_leaf: data.merkletree_leaf,
+        merkletree_leaf_index: merkletree_leaf_data.index,
+        merkletree_leaf: merkletree_leaf_data.value,
         _id: data._id,
         id: data.id,
         turno: data.turno,
