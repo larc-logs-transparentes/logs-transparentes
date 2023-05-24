@@ -10,7 +10,7 @@ exports.create = (tree_name, data) => {
   console.log({"BU": data})
 
   this.addLeaf(tree_name, buString).then((merkletree_data) => {
-    insertBU({...merkletree_data, ...data})
+    insertBU(data, merkletree_data)
   })
   return
 };
