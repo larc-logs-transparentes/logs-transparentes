@@ -89,11 +89,12 @@ def get_tree(tree_name):
         return {'status': 'error', 'message': 'Tree does not exist'}
     tree = trees[tree_name]
     metadata = tree.get_metadata()
-
-    length = tree.length
     buffer_length = len(tree.entries_buffer)
 
-    return {'status': 'ok'} | metadata | {'commitment size': tree.commitment_size, 'length': length, 'buffer_length': buffer_length}
+    if tree_name == 'global_tree':
+        return {'status': 'ok'} | metadata | {'length': tree.length}
+    
+    return {'status': 'ok'} | metadata | {'commitment size': tree.commitment_size, 'length': tree.length, 'buffer_length': buffer_length}
 
 def get_tree_root(tree_name):
     if tree_name not in trees:

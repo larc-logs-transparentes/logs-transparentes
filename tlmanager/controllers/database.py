@@ -10,20 +10,20 @@ def db_get_all_global_tree_leaves():
     ]}
 
 def db_get_last_consistency_proof(tree_name):
-    consistency_proof = database['consistency_proofs'].find_one({'root.tree_name': tree_name}, sort=[('timestamp', -1)])
+    consistency_proof = database['consistency_proofs'].find_one({'root.tree_name': tree_name}, sort=[('root.tree_size', -1)])
     if consistency_proof:
         del consistency_proof['_id']
     return consistency_proof
 
 def db_get_all_consistency_proof(tree_name):
-    proofs = database['consistency_proofs'].find({'root.tree_name': tree_name}, sort=[('root.timestamp', -1)])
+    proofs = database['consistency_proofs'].find({'root.tree_name': tree_name}, sort=[('root.tree_size', 1)])
     proofs = list(proofs)
     for proof in proofs:
         del proof['_id']
     return proofs
 
 def db_get_last_global_tree_root():
-    global_tree_root = database['global_tree_roots'].find_one({}, sort=[('timestamp', -1)])
+    global_tree_root = database['global_tree_roots'].find_one({}, sort=[('tree_size', -1)])
     if global_tree_root:
         del global_tree_root['_id']
     return global_tree_root
