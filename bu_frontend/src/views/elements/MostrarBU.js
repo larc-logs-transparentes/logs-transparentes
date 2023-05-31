@@ -88,11 +88,10 @@ class MostrarBU extends Component {
         <Card>
           <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => this.handleConsultar.bind(this)}>
             <Link to={`/elements/mostrarbuprova/${this.state.id}` } target='_blank'> 
-            <img src={(prova.isTrue===true)? cadVerde : cadVermelho} alt="estado"/>
+            <Pyodide id={this.state.id}/>
             </Link>
             </button>
             </CardHeader>
-            <Pyodide script='../../services/main.py' bu_id={this.state.id}/>
           <CardBody>
               <Label>Detalhes</Label>
               <CardBody>
