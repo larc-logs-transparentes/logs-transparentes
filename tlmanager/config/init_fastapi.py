@@ -4,7 +4,11 @@ from .init_database import mongodb_client, database
 from services.keys import check_keys
 import sys
 
-app = FastAPI() # to init: uvicorn main:app --reload
+app = FastAPI(
+    title="TLManager",
+    description="An API to manage multiple Merkle Trees and their proofs",
+    version=1.0,
+) # to init: uvicorn main:app --reload
 
 @app.on_event("startup")
 async def startup_event():

@@ -4,7 +4,7 @@ from controllers.proofs import *
 router = APIRouter()
 
 """ Basic proofs """
-@router.get('/inclusion-proof', tags=["proofs"])
+@router.get('/inclusion-proof', tags=["Proofs"])
 async def inclusion_proof(request: Request):
     tree_name = request.query_params['tree-name']
     data = None
@@ -21,7 +21,7 @@ async def inclusion_proof(request: Request):
         return {'status': 'error', 'message': 'Data or index not specified'}
     return get_inclusion_proof(tree_name, data, index)
 
-@router.get('/global-tree-consistency-proof')
+@router.get('/global-tree-consistency-proof', tags=["Proofs"])
 async def global_tree_consistency_proof(request: Request):
     subroot = request.query_params['subroot']
     sublength = request.query_params['sublength']
@@ -33,7 +33,7 @@ async def global_tree_consistency_proof(request: Request):
     return get_global_tree_consistency_proof(subroot, sublength)
 
 """ Hign level proofs """
-@router.get('/data-proof')
+@router.get('/data-proof', tags=["Proofs"])
 async def data_proof(request: Request):
     tree_name = request.query_params['tree-name']
     data = None
@@ -50,7 +50,7 @@ async def data_proof(request: Request):
         return {'status': 'error', 'message': 'Data or index not specified'}
     return get_data_proof(tree_name, data, index)
 
-@router.get('/all-consistency-proof')
+@router.get('/all-consistency-proof', tags=["Proofs"])
 async def all_consistency_proof(request: Request):
     tree_name = request.query_params['tree-name']
     return get_all_consistency_proof(tree_name)
