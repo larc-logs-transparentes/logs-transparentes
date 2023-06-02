@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import { Card, CardBody, Col, Row, Button,Table } from 'reactstrap'
 import script from './main.py';
-import verify_single_data_info from './services.js';
+import {getRoot,getDataProof,getBuById, getTrustedRoot} from './services.js';
 import cadVerde from '../assets/images/cad-verde.png';
 import cadVermelho from '../assets/images/cad-vermelho.png';
 
@@ -17,21 +17,17 @@ const runScript = async (id) => {
   );
   await micropip.install(["pymerkle-logsTransparentes", "requests"]);
 
-  let verificacao = await verify_single_data_info(id);
-
-  console.log(verificacao)
-
-
-  
   const pythonCode = `
   from tlverifier.merkle_functions.tl_functions import verify_single_data
   import requests
   import json
   def func():
-    #verificacaoproof=(${verificacao.proofString})
-    #verificacaoproof['local_tree']['inclusion_proof']['metadata']['security']=True
-    #verificacaoproof['data']['inclusion_proof']['metadata']['security']=True
-    verifydata = True #verify_single_data(verificacaoproof, ${verificacao.global_root},str(${verificacao.bu_inteiro}))
+    #proofData=(${getDataProof(id)})
+    #Definindo true do javascript como True do python
+    #proofData['local_tree']['inclusion_proof']['metadata']['security']=True
+    #proofData['data']['inclusion_proof']['metadata']['security']=True
+    #bu=${getBuById(id)}
+    verifydata = True #verify_single_data(proofData, ${getTrustedRoot()},str({bu['bu_inteiro']}))
     return str(verifydata)
   func()
 `;

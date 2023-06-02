@@ -7,23 +7,17 @@ import {
   CardBody,  Button,
   CardText,
   Label,
-
 } from 'reactstrap';
-
 import { Link } from 'react-router-dom';
 import Pyodide from '../../services/pyodide.js'
 import { verify } from '../../api/merkletree.api'
 import cadVerde from '../../assets/images/cad-verde.png';
 import cadVermelho from '../../assets/images/cad-vermelho.png';
 import ReactJson from 'react-json-view'
-
 class MostrarBU extends Component {
   axios = require('axios')
   bu_api_url = require('../../config.json').bu_api_url
   // bu_api_url = "http://172.20.11.11:8080"
-
-
-
   constructor(props) {
     super(props)
     this.state = {bu: [],
@@ -36,20 +30,12 @@ class MostrarBU extends Component {
                 }
     
     this.mostraProva = this.mostraProva.bind(this);
-
   }
-
   componentDidMount() {
     const { id } = this.props.match.params;
 //    console.log("id=" + id)
     this.axios.get(`${this.bu_api_url}/bu/${id}`)
       .then(response => this.setState({ bu: response.data, votos: response.data.votos,id:response.data.id }))
-    var retVerify = verify(id)
-    retVerify.then( value => {
-      this.setState({ prova: value })
-      this.setState({ root: this.state.prova.root })
-      this.setState({ fullproof: this.state.prova.fullproof })
-    })
     
   }
 
@@ -67,14 +53,9 @@ class MostrarBU extends Component {
   render() {
     var bu=this.state.bu
     var prova = this.state.prova
-
-
     console.log(this.state.prova)
-  
     var mostrar = this.state.mostrarProva
-
     var votosArr = (this.state.votos===undefined)? [] : Array.from(this.state.votos)
-
   const groupByCargo = votosArr.reduce((acc, curr) => {
     if (!acc[curr.cargo]) {
       acc[curr.cargo] = [];
