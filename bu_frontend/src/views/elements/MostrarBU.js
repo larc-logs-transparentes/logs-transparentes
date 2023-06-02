@@ -9,7 +9,7 @@ import {
   Label,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import Pyodide from '../../services/pyodide.js'
+import Lock from './lock.js'
 import {getBuById} from '../../services/services.js'
 import ReactJson from 'react-json-view'
 
@@ -63,7 +63,7 @@ class MostrarBU extends Component {
           <CardHeader>Consultar Boletins de Urna - Turno
             <button className="btn float-right" onClick={() => this.onClickShowProof.bind(this)}>
               <Link to={`/elements/mostrarbuprova/${this.state.id}` } target='_blank'> 
-              <Pyodide id={this.state.id}/>
+              <Lock id={this.state.id}/>
               </Link>
             </button>
           </CardHeader>
