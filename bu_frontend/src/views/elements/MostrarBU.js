@@ -10,69 +10,63 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Pyodide from '../../services/pyodide.js'
-import { verify } from '../../api/merkletree.api'
-import cadVerde from '../../assets/images/cad-verde.png';
-import cadVermelho from '../../assets/images/cad-vermelho.png';
+import {getBuById} from '../../services/services.js'
 import ReactJson from 'react-json-view'
+
 class MostrarBU extends Component {
   axios = require('axios')
   bu_api_url = require('../../config.json').bu_api_url
-  // bu_api_url = "http://172.20.11.11:8080"
   constructor(props) {
     super(props)
     this.state = {bu: [],
-                  prova: [],
                   votos: [],
-                  root: [],
-                  fullproof: [],
-                  mostrarProva: false,
                   id:[]
                 }
-    
-    this.mostraProva = this.mostraProva.bind(this);
-  }
-  componentDidMount() {
-    const { id } = this.props.match.params;
-//    console.log("id=" + id)
-    this.axios.get(`${this.bu_api_url}/bu/${id}`)
-      .then(response => this.setState({ bu: response.data, votos: response.data.votos,id:response.data.id }))
-    
   }
 
-  mostraProva() {
-    this.setState({mostrarProva: !this.state.mostrarProva})
-//      (this.state.mostrarProva)
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    getBuById(id).then(bu => this.setState(
+      { 
+        bu: bu, 
+        votos: bu.votos, 
+        id: bu.id 
+      }
+    ))
   }
-  handleConsultar(e) {
+
+  onClickShowProof(e) {
     e.preventDefault()
     var url = "/elements/mostrarbuprova/" + this.state.id
-    console.log(url)
     window.location.href =  url
+  }
+
+  groupByPosition(votesArray){
+    return votesArray.reduce((acc, curr) => {
+      if (!acc[curr.cargo]) {
+        acc[curr.cargo] = [];
+      }
+      acc[curr.cargo].push(curr);
+      return acc;
+    }, {});
   }
   
   render() {
-    var bu=this.state.bu
-    var prova = this.state.prova
-    console.log(this.state.prova)
-    var mostrar = this.state.mostrarProva
-    var votosArr = (this.state.votos===undefined)? [] : Array.from(this.state.votos)
-  const groupByCargo = votosArr.reduce((acc, curr) => {
-    if (!acc[curr.cargo]) {
-      acc[curr.cargo] = [];
-    }
-    acc[curr.cargo].push(curr);
-    return acc;
-  }, {});
+    var bu = this.state.bu
+    var votesArray = (this.state.votos===undefined)? [] : Array.from(this.state.votos)
+    const votesOrganizedByPosition = this.groupByPosition(votesArray)
+
     return (
       <Col>
       <Col md={6}>
         <Card>
-          <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => this.handleConsultar.bind(this)}>
-            <Link to={`/elements/mostrarbuprova/${this.state.id}` } target='_blank'> 
-            <Pyodide id={this.state.id}/>
-            </Link>
+          <CardHeader>Consultar Boletins de Urna - Turno
+            <button className="btn float-right" onClick={() => this.onClickShowProof.bind(this)}>
+              <Link to={`/elements/mostrarbuprova/${this.state.id}` } target='_blank'> 
+              <Pyodide id={this.state.id}/>
+              </Link>
             </button>
-            </CardHeader>
+          </CardHeader>
           <CardBody>
               <Label>Detalhes</Label>
               <CardBody>
@@ -99,7 +93,7 @@ class MostrarBU extends Component {
               <Label>Votos</Label>
               <CardText>  
                 <div style={{ display: "flex" }}>
-                  {Object.entries(groupByCargo).map(([cargo, items]) => (
+                  {Object.entries(votesOrganizedByPosition).map(([cargo, items]) => (
                     <div style={{ columnCount: 1, marginRight: "30px" }}>
                       <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
                         {cargo}
@@ -119,30 +113,6 @@ class MostrarBU extends Component {
           </CardBody>
         </Card>
       </Col>
-      <Col style={{width:"40vw"}}>
-      {mostrar === true && prova.isTrue === true && (<Col md={4}>
-      <Card style={{width:"60vw"}}>
-        <CardHeader >Este BU foi devidamente verificado nos sistemas da Justiça Federal</CardHeader>
-        <CardBody style={{overflowX:"scroll"}}>
-            <CardBody>
-            <Label>Prova</Label>
-            <ReactJson collapsed displayDataTypes={false} src={this.state.prova} />
-            </CardBody>
-        </CardBody>
-      </Card>
-    </Col>)}
-    {mostrar === true && prova.isTrue === false && (<Col md={4}>
-      <Card>
-        <CardHeader>ATENÇÃO: Este BU não pode ser verificado ou foi ALTERADO</CardHeader>
-        <CardBody style={{overflowX:"scroll"}}>
-            <CardBody>
-            <Label>Prova</Label>
-            <ReactJson collapsed displayDataTypes={false} src={this.state.prova} />
-            </CardBody>
-        </CardBody>
-      </Card>
-    </Col>)}
-    </Col>
       </Col>
     );
   }
