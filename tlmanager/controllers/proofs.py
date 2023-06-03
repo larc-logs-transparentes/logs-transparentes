@@ -7,7 +7,7 @@ def get_inclusion_proof(tree_name, data=None, index=None):
         return {'status': 'error', 'message': 'Tree does not exist'}
     
     tree = trees[tree_name]
-    if index:
+    if index is not None:
         index = int(index)
         if index >= tree.length:
             return { 'status': 'error', 'message': 'Leaf index out of range' }

@@ -1,12 +1,8 @@
 from fastapi import APIRouter
 from controllers.tree import *
-from pydantic import BaseModel 
+from routers.models.tree import Tree, Leaf, Commit
 
 router = APIRouter()
-
-class Tree(BaseModel):
-    tree_name: str
-    commitment_size: int
 
 @router.post('/tree-create', name="/tree-create", description="Create a new tree")
 async def tree_create(tree: Tree):
@@ -20,10 +16,6 @@ async def tree_create(tree: Tree):
     return create_tree(tree_name, commitment_size)
 
 
-class Leaf(BaseModel):
-    tree_name: str
-    data: str
-    
 @router.post('/insert-leaf', name="/insert-leaf", description="Insert a new leaf in a tree")
 async def tree_insert_leaf(leaf: Leaf):
     tree_name = leaf.tree_name
@@ -34,10 +26,6 @@ async def tree_insert_leaf(leaf: Leaf):
     elif not data:
         return {'status': 'error', 'message': 'Data not specified'}
     return insert_leaf(tree_name, data)
-
-
-class Commit(BaseModel):
-    tree_name: str
 
 @router.post('/tree/commit', name="/tree/commit", description="Commit a tree")
 async def tree_publish(commit: Commit):
