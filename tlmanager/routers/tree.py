@@ -4,7 +4,43 @@ from routers.models.tree import Tree, Leaf, Commit
 
 router = APIRouter()
 
-@router.post('/tree-create', name="/tree-create", description="Create a new tree")
+#TODO: error handling, descriptions in other file
+
+@router.post('/tree-create', name="/tree-create", 
+description="""
+Create a new tree with a name key and a commitment size.
+
+### Example
+```json
+{
+    "tree_name": "my-tree",
+    "commitment_size": 10
+}
+```
+
+### Response
+```json
+{ 
+    status: "ok", 
+    message: "Tree created" 
+} // if success
+
+{
+    status: "error",
+    message: "Tree name not specified"
+} // if tree_name is not specified
+
+{
+    status: "error",
+    message: "Commitment size not specified"
+} // if commitment_size is not specified
+
+{
+    status: "error",
+    message: "Tree already exists"
+} // if tree already exists
+```
+""")
 async def tree_create(tree: Tree):
     tree_name = tree.tree_name
     commitment_size = tree.commitment_size
@@ -16,7 +52,43 @@ async def tree_create(tree: Tree):
     return create_tree(tree_name, commitment_size)
 
 
-@router.post('/insert-leaf', name="/insert-leaf", description="Insert a new leaf in a tree")
+@router.post('/insert-leaf', name="/insert-leaf", 
+description="""
+Insert a new leaf in a tree with name 'tree_name' with content 'data'.
+
+### Example
+```json
+{
+    "tree_name": "my-tree",
+    "data": "my-data"
+}
+```
+
+### Response
+```json
+{
+    status: "ok",
+    value: "...", // hash of the leaf
+    index: 0, // index of the leaf
+    message: "Pending" | "Commited"
+} // if success
+
+{
+    status: "error",
+    message: "Tree name not specified"
+} // if tree_name is not specified
+
+{
+    status: "error",    
+    message: "Data not specified"
+} // if data is not specified
+
+{
+    status: "error",
+    message: "Tree does not exist"
+} // if tree does not exist
+```
+""")
 async def tree_insert_leaf(leaf: Leaf):
     tree_name = leaf.tree_name
     data = leaf.data
