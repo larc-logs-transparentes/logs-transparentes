@@ -90,8 +90,7 @@ class MostrarBU extends Component {
               <CardText>{bu.zona}</CardText>
               </CardBody>
               <CardBody>
-              <Label>Votos</Label>
-              <CardText>  
+              <Label>Votos</Label>  
                 <div style={{ display: "flex" }}>
                   {Object.entries(votesOrganizedByPosition).map(([cargo, items]) => (
                     <div style={{ columnCount: 1, marginRight: "30px" }}>
@@ -108,7 +107,6 @@ class MostrarBU extends Component {
                     </div>
                   ))}
                 </div>
-              </CardText>
               </CardBody>
           </CardBody>
         </Card>

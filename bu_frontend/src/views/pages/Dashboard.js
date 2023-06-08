@@ -7,7 +7,7 @@ import { Card, CardBody, Row, Col,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import monitoresImage from '../../assets/images/monitores.png';
-import { getRoot } from '../../api/bu.api';
+import { getTrustedRoot } from '../../services/services.js';
 
 class Dashboard extends Component {
   constructor() {
@@ -18,9 +18,9 @@ class Dashboard extends Component {
   }
 
   async componentDidMount() {
-    const root = await getRoot()
+    const root = await getTrustedRoot()
     console.log(root)
-    this.setState({ root: root })
+    this.setState({ root: root.value })
   }
 
   render() {
