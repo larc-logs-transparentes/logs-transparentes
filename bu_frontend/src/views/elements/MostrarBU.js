@@ -20,7 +20,7 @@ class MostrarBU extends Component {
     super(props)
     this.state = {bu: [],
                   votos: [],
-                  id:[]
+                  id: null
                 }
   }
 
@@ -61,11 +61,13 @@ class MostrarBU extends Component {
       <Col md={6}>
         <Card>
           <CardHeader>Consultar Boletins de Urna - Turno
-            <button className="btn float-right" onClick={() => this.onClickShowProof.bind(this)}>
-              <Link to={`/elements/mostrarbuprova/${this.state.id}` } target='_blank'> 
-              <Lock id={this.state.id}/>
-              </Link>
-            </button>
+          {this.state.id && (
+              <button className="btn float-right" onClick={() => this.onClickShowProof.bind(this)}>
+                <Link to={`/elements/mostrarbuprova/${this.state.id}`} target='_blank'>
+                  <Lock id={this.state.id} />
+                </Link>
+              </button>
+            )}
           </CardHeader>
           <CardBody>
               <Label>Detalhes</Label>
@@ -91,22 +93,22 @@ class MostrarBU extends Component {
               </CardBody>
               <CardBody>
               <Label>Votos</Label>  
-                <div style={{ display: "flex" }}>
-                  {Object.entries(votesOrganizedByPosition).map(([cargo, items]) => (
-                    <div style={{ columnCount: 1, marginRight: "30px" }}>
-                      <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-                        {cargo}
-                      </div>
-                      {items.map((item) => (
-                        <div>
-                          <div>Partido: {item.partido}</div>
-                          <div>Código: {item.codigo}</div>
-                          <div>Votos: {item.votos}</div>
-                        </div>
-                      ))}
+              <div style={{ display: "flex" }}>
+                {Object.entries(votesOrganizedByPosition).map(([cargo, items]) => (
+                  <div key={cargo} style={{ columnCount: 1, marginRight: "30px" }}>
+                    <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+                      {cargo}
                     </div>
-                  ))}
-                </div>
+                    {items.map((item) => (
+                      <div key={item.codigo}>
+                        <div>Partido: {item.partido}</div>
+                        <div>Código: {item.codigo}</div>
+                        <div>Votos: {item.votos}</div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+            </div>
               </CardBody>
           </CardBody>
         </Card>
