@@ -2,7 +2,7 @@ API_DESCRIPTION = """
 An API to manage multiple Merkle Trees and their proofs.
 
 ## Trees
-This system works with a Global Tree and multiple Local Trees. The Global Tree is a Merkle Tree that contains the root of all Local Trees. 
+This system works with a Global Tree and multiple Local Trees. The Global Tree is a Merkle Tree that contains the roots of all Local Trees, that store the data.
 
 Each Local Tree has a commitment size, which is the number of leaves that can be inserted in a "pending" state before the tree is committed to the Global Tree, and the leaves are actually inserted in the tree.
 

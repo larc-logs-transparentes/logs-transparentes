@@ -2,12 +2,16 @@ from config.init_database import database, pymongo_errors, gridfs_errors
 
 def db_get_all_global_tree_leaves():
     leaves = database['global_tree_leaves'].find()
-    return {'leaves': [
-        {
+    leaves_array = []
+    for leaf in leaves:
+        leaf['value']['value'] = leaf['value']['value'].decode('utf-8')
+        leaves_array.append({
             'index': leaf['index'],
             'value': leaf['value']
-        } for leaf in leaves
-    ]}
+        })
+        
+    return {'leaves': leaves_array}
+
 
 def db_get_last_consistency_proof(tree_name):
     consistency_proof = database['consistency_proofs'].find_one({'root.tree_name': tree_name}, sort=[('root.tree_size', -1)])
@@ -19,12 +23,14 @@ def db_get_all_consistency_proof(tree_name):
     proofs = database['consistency_proofs'].find({'root.tree_name': tree_name}, sort=[('root.tree_size', 1)])
     proofs = list(proofs)
     for proof in proofs:
+        proof['root']['value'] = proof['root']['value'].decode('utf-8')
         del proof['_id']
     return proofs
 
 def db_get_last_global_tree_root():
     global_tree_root = database['global_tree_roots'].find_one({}, sort=[('tree_size', -1)])
     if global_tree_root:
+        global_tree_root['value'] = global_tree_root['value'].decode('utf-8')
         del global_tree_root['_id']
     return global_tree_root
 
