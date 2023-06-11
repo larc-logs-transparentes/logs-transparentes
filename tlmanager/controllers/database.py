@@ -27,8 +27,11 @@ def db_get_all_consistency_proof(tree_name):
         del proof['_id']
     return proofs
 
-def db_get_last_global_tree_root():
-    global_tree_root = database['global_tree_roots'].find_one({}, sort=[('tree_size', -1)])
+def db_get_global_tree_root(tree_size=None):
+    if tree_size:
+        global_tree_root = database['global_tree_roots'].find_one({'tree_size': int(tree_size)})
+    else:
+        global_tree_root = database['global_tree_roots'].find_one({}, sort=[('tree_size', -1)])
     if global_tree_root:
         global_tree_root['value'] = global_tree_root['value'].decode('utf-8')
         del global_tree_root['_id']

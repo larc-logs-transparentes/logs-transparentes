@@ -2,7 +2,7 @@ from fastapi.responses import JSONResponse
 import json
 from services.trees_states import trees
 from services.objects_models import build_local_tree_root_object
-from controllers.database import db_get_all_consistency_proof, db_get_last_global_tree_root
+from controllers.database import db_get_all_consistency_proof, db_get_global_tree_root
 
 def get_inclusion_proof(tree_name, data=None, index=None):
     if tree_name not in trees:
@@ -38,7 +38,7 @@ def get_data_proof(tree_name, data=None, index=None):
     global_proof = json.loads(get_inclusion_proof('global_tree', str(local_root_object)).body.decode('utf-8'))
     if global_proof['status'] == 'error':
         return global_proof
-    global_root_object = db_get_last_global_tree_root()
+    global_root_object = db_get_global_tree_root()
     
     data_proof_object = build_data_proof_object(
         global_root_object, 

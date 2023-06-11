@@ -60,6 +60,10 @@ async def leaf(tree_name: str, index: int):
         return JSONResponse({'status': 'error', 'message': 'Index not specified'}, status_code=400)
     return get_leaf(tree_name, index)
 
+@router.get('/global-tree/root', name="/global-tree/root")
+async def global_tree_root(tree_size: int|None = None):
+    return get_global_tree_root(tree_size)
+    
 @router.get('/global-tree/all-leaf-data', name="/global-tree/all-leaf-data", description=descriptions['global_tree_all_leaves'], responses={200: {'model': AllLeavesGlobalTree}})
 async def global_tree_all_leaves():
     return get_global_tree_all_leaves()
