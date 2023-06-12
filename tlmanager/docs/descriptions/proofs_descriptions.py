@@ -42,7 +42,7 @@ localhost:8000/inclusion-proof?tree_name=my-tree&index=0
 """
 
 GLOBAL_TREE_CONSISTENCY_PROOF_DESCRIPTION = """
-Get global tree consistency proof between actual root and subroot with sublength.
+Get global tree consistency proof between current root and subroot.
 
 ### Example
 ```
@@ -142,8 +142,8 @@ localhost:8000/data-proof?tree_name=my-tree&index=0
 """
 
 ALL_CONSISTENCY_PROOF_DESCRIPTION = """
-Get all consistency proofs beetwen each root of a local tree committed on global tree.
-If the tree is the global tree, it returns all consistency proofs beetwen each leaf inserted in the tree.
+For a local tree, get all consistency proofs between the local roots commited on global tree.
+For a global tree, get all consistency proofs for each signed global root.
 
 ### Example
 ```

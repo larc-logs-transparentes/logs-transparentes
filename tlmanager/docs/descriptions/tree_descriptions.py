@@ -1,5 +1,5 @@
 TREE_CREATE_DESCRIPTION = """
-Create a new tree with a name key and a commitment size.
+Create a new local tree
 
 ### Example
 ```json
@@ -34,7 +34,7 @@ Create a new tree with a name key and a commitment size.
 """
 
 INSERT_LEAF_DESCRIPTION = """
-Insert a new leaf in a tree with name 'tree_name' with content 'data'.
+Insert data as a new leaf in a local tree
 
 ### Example
 ```json
@@ -71,7 +71,7 @@ Insert a new leaf in a tree with name 'tree_name' with content 'data'.
 """
 
 TREE_COMMIT_DESCRIPTION = """
-All pending leaves are inserted in the tree and the tree is inserted in the global tree.
+All pending leaves are inserted in the tree, and the tree root is inserted in the global tree.
 
 ### Example
 ```json
@@ -103,7 +103,7 @@ All pending leaves are inserted in the tree and the tree is inserted in the glob
 """
 
 TREE_METADATA_DESCRIPTION = """
-Get the metadata of a tree with name 'tree_name'.
+Get the metadata of a given tree.
 
 ### Example
 ```
@@ -162,7 +162,7 @@ localhost:8000/tree/root?tree_name=my-tree
 """
 
 TREE_LEAF_DESCRIPTION = """
-Get the leaf hash with index 'index' from tree with name 'tree_name'.
+Get a leaf value (hash) from a tree
 
 ### Example
 ```
@@ -199,7 +199,7 @@ localhost:8000/leaf?tree_name=my-tree&index=0
 """
 
 TREE_GLOBAL_ROOT_DESCRIPTION = """
-Get the root of the global tree at a given size or at the current size.
+Get the signed global root. You can get past global roots by specifying tree_size. 
 
 ### Example
 ```
@@ -234,7 +234,7 @@ localhost:8000/global-tree/root?tree_size=10
 """
 
 TREE_ALL_LEAF_DATA_DESCRIPTION = """
-Get all leaves from the global tree ordered by index.
+Get all leaves from the global tree, ordered by index.
 
 ### Example
 ```
