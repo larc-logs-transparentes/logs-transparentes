@@ -1,4 +1,3 @@
-from pydantic import BaseModel
 from docs.DTOs.common.responses import GlobalTreeLeaf, NodeObject, OnlyStatusResponse, BasicResponse, GlobalTreeRootObject
 
 """ /tree-create """
@@ -37,4 +36,4 @@ class DTOAllLeavesGlobalTree(OnlyStatusResponse):
 
 """ / """    
 class TreeList(OnlyStatusResponse):
-    trees: list
+    trees: list[str]

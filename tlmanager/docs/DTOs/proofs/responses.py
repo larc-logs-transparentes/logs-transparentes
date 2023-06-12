@@ -1,35 +1,15 @@
-from pydantic import BaseModel
+from docs.DTOs.common.responses import OnlyStatusResponse, PymerkleProof, GlobalTreeRootObject, InclusionProofLocalTree, ConsistencyProof
 
-from docs.DTOs.common.responses import RootObject, GlobalTreeRootObject
-
-class PymerkleMetadata(BaseModel):
-    timestamp: int
-    algorithm: str
-    encoding: str
-    security: bool
-
-class PymerkleProof(BaseModel):
-    metadata: PymerkleMetadata 
-    offset: int
-    path: list[list[int, str]]
-
-class BasicProof(BaseModel):
-    status: str
+""" /inclusion-proof """
+""" /global-tree-consistency-proof """
+class DTOPymerkleProof(OnlyStatusResponse):
     proof: PymerkleProof
-
-class InclusionProofLocalTree(BaseModel):
-    local_root: RootObject
-    inclusion_proof: PymerkleProof
-
-class DataProof(BaseModel):
-    status: str
+    
+""" /data-proof """
+class DTODataProof(OnlyStatusResponse):
     global_root: GlobalTreeRootObject
     local_tree: InclusionProofLocalTree
 
-class ConsistencyProof(BaseModel):
-    root: RootObject
-    consistency_proof: PymerkleProof
-
-class AllConsistencyProof(BaseModel):
-    status: str
+""" /all-consistency-proof """
+class DTOAllConsistencyProof(OnlyStatusResponse):
     proofs: list[ConsistencyProof]

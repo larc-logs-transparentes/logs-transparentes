@@ -20,3 +20,22 @@ class GlobalTreeRootObject(RootObject):
 class GlobalTreeLeaf(BaseModel):
     index: int
     value: RootObject
+    
+class PymerkleMetadata(BaseModel):
+    timestamp: int
+    algorithm: str
+    encoding: str
+    security: bool
+    
+class PymerkleProof(BaseModel):
+    metadata: PymerkleMetadata 
+    offset: int
+    path: list[list[int, str]]
+
+class InclusionProofLocalTree(BaseModel):
+    local_root: RootObject
+    inclusion_proof: PymerkleProof
+    
+class ConsistencyProof(BaseModel):
+    root: RootObject
+    consistency_proof: PymerkleProof
