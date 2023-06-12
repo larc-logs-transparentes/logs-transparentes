@@ -61,13 +61,13 @@ class MostrarBU extends Component {
       <Col md={6}>
         <Card>
           <CardHeader>Consultar Boletins de Urna - Turno
-          {this.state.id && (
-              <button className="btn float-right" onClick={() => this.onClickShowProof.bind(this)}>
-                <Link to={`/elements/mostrarbuprova/${this.state.id}`} target='_blank'>
-                  <Lock id={this.state.id} />
-                </Link>
-              </button>
-            )}
+          {(this.state.id !== null && this.state.id !== undefined) && (
+            <button className="btn float-right" onClick={() => this.onClickShowProof.bind(this)}>
+              <Link to={`/elements/mostrarbuprova/${this.state.id}`} target='_blank'>
+                <Lock id={this.state.id} />
+              </Link>
+            </button>
+          )}
           </CardHeader>
           <CardBody>
               <Label>Detalhes</Label>

@@ -9,7 +9,9 @@ export default function Lock(props) {
   
   useEffect(() => {
     const run = async () => {
+      console.log(props.id)
       const isProofTrue = await verifySingleData(props.id);
+      console.log(isProofTrue)
       setIsProofTrue(isProofTrue);
     };
     run();

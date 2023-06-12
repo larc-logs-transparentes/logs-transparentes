@@ -5,7 +5,7 @@ export default async function initPyodide(){
   await pyodide.loadPackage("micropip");
   const micropip = pyodide.pyimport("micropip");
   await pyodide.loadPackage([
-    "https://test-files.pythonhosted.org/packages/37/fb/e0cfc7f7cdb8319346dfe8ee93fba1aeaa9e5a2a914b1180a31f5ddb576a/tlverifier-0.0.8-py3-none-any.whl"]
+    "https://test-files.pythonhosted.org/packages/c1/77/9c1b3152c0021a6e16314aca96ab1de5a96568572d90b52aaf545fe88e53/tlverifier-0.0.10-py3-none-any.whl"]
   );
   await micropip.install(["pymerkle-logsTransparentes", "requests"]);
 
