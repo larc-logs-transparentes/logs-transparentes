@@ -21,6 +21,11 @@ def get_inclusion_proof(tree_name, data=None, index=None):
     return {'status': 'ok', 'proof': proof.serialize()}
 
 def get_data_proof(tree_name, data=None, index=None):
+    if tree_name not in trees:
+        return {'status': 'error', 'message': 'Tree does not exist'}
+    if tree_name == 'global_tree':
+        return {'status': 'error', 'message': 'Data proof is available only for local trees'}
+    
     tree = trees[tree_name]
     
     local_proof = get_inclusion_proof(tree_name, data, index)
