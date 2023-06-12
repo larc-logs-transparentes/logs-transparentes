@@ -1,4 +1,4 @@
-export default async function initPyodide(){
+export async function initPyodide(){
   const pyodide = await window.loadPyodide({
     indexURL: "https://cdn.jsdelivr.net/pyodide/v0.21.1/full"
   });
@@ -12,3 +12,17 @@ export default async function initPyodide(){
   return pyodide
 }
 
+export async function formatProofDataToPython(proofData){
+  if (proofData.local_tree.inclusion_proof.metadata.security) {
+    proofData.local_tree.inclusion_proof.metadata.security = 'True';
+  } else {
+    proofData.local_tree.inclusion_proof.metadata.security = 'False';
+  }
+  
+  if (proofData.data.inclusion_proof.metadata.security) {
+    proofData.data.inclusion_proof.metadata.security = 'True';
+  } else {
+    proofData.data.inclusion_proof.metadata.security = 'False';
+  }
+  return proofData
+}
