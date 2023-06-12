@@ -108,6 +108,9 @@ def get_global_tree_all_leaves():
 
 def get_global_tree_root(tree_size=None):
     global_tree = trees['global_tree']
+    if not global_tree.length:
+        return JSONResponse({'status': 'error', 'message': 'Global tree is empty'}, status_code=400)
+    
     if tree_size:
         tree_size = int(tree_size)
         if tree_size > global_tree.length:

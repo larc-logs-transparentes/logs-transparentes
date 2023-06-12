@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+from docs.DTOs.common.responses import RootObject, GlobalTreeRootObject
+
 class PymerkleMetadata(BaseModel):
     timestamp: int
     algorithm: str
@@ -14,15 +16,6 @@ class PymerkleProof(BaseModel):
 class BasicProof(BaseModel):
     status: str
     proof: PymerkleProof
-
-class RootObject(BaseModel):
-    value: str
-    tree_name: str
-    tree_size: int
-
-class GlobalTreeRootObject(RootObject):
-    signature: str
-    timestamp: int
 
 class InclusionProofLocalTree(BaseModel):
     local_root: RootObject

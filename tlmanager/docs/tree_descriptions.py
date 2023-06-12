@@ -198,6 +198,41 @@ localhost:8000/leaf?tree_name=my-tree&index=0
 ```
 """
 
+TREE_GLOBAL_ROOT_DESCRIPTION = """
+Get the root of the global tree at a given size or at the current size.
+
+### Example
+```
+localhost:8000/global-tree/root
+localhost:8000/global-tree/root?tree_size=10
+```
+
+### Response
+```json
+{
+    "status": "ok",
+    "root": {
+        "value": "...", // root hash
+        "tree_name": "global-tree",
+        "tree_size": 10
+        "signature": "..." // signature of the root
+        "timestamp": "..." // timestamp of the root
+    }
+} // if success
+
+{
+    "status": "error",
+    "message": "Tree size out of range"
+} // if tree_size > global tree length
+
+{
+    "status": "error",
+    "message": "Global tree is empty"
+} // if no local tree is commited yet
+```
+
+"""
+
 TREE_ALL_LEAF_DATA_DESCRIPTION = """
 Get all leaves from the global tree ordered by index.
 
@@ -232,5 +267,6 @@ descriptions = {
     'tree_metadata': TREE_METADATA_DESCRIPTION,
     'tree_root': TREE_ROOT_DESCRIPTION,
     'tree_leaf': TREE_LEAF_DESCRIPTION,
+    'global_tree_root': TREE_GLOBAL_ROOT_DESCRIPTION,
     'global_tree_all_leaves': TREE_ALL_LEAF_DATA_DESCRIPTION
 }
