@@ -1,4 +1,4 @@
-from docs.DTOs.common.responses import OnlyStatusResponse, PymerkleProof, GlobalTreeRootObject, InclusionProofLocalTree, ConsistencyProof
+from docs.models.responses import OnlyStatusResponse, PymerkleProof, GlobalTreeRootObject, InclusionProofLocalTree, ConsistencyProof
 
 """ /inclusion-proof """
 """ /global-tree-consistency-proof """

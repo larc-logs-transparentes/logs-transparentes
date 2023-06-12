@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+""" Response models """
 class OnlyStatusResponse(BaseModel):
     status: str
 

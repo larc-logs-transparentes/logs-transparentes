@@ -1,4 +1,4 @@
-from docs.DTOs.common.responses import GlobalTreeLeaf, NodeObject, OnlyStatusResponse, BasicResponse, GlobalTreeRootObject
+from docs.models.responses import GlobalTreeLeaf, NodeObject, OnlyStatusResponse, BasicResponse, GlobalTreeRootObject
 
 """ /tree-create """
 class DTOTreeCreate(BasicResponse):

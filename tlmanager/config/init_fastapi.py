@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from .init_database import mongodb_client, database
 
 from services.keys import check_keys
-from docs.api_description import descriptions
+from docs.descriptions.api_description import descriptions
 import sys
 
 app = FastAPI(

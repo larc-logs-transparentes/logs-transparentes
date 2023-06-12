@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from controllers.tree import *
-from routers.models.tree import Tree, Leaf, Commit
-from docs.tree_descriptions import descriptions
-from docs.DTOs.trees.responses import *
+from docs.models.requests import Tree, Leaf, Commit
+from docs.descriptions.tree_descriptions import descriptions
+from docs.DTOs.tree import *
 
 router = APIRouter()
 

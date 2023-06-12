@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from controllers.proofs import *
-from docs.proofs_descriptions import descriptions
-from docs.DTOs.proofs.responses import *
+from docs.descriptions.proofs_descriptions import descriptions
+from docs.DTOs.proof import *
 
 router = APIRouter()
 
