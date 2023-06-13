@@ -1,67 +1,69 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 from controllers.tree import *
+from docs.models.requests import Tree, Leaf, Commit
+from docs.descriptions.tree_descriptions import descriptions
+from docs.DTOs.tree import *
 
 router = APIRouter()
 
-@router.post('/tree-create', tags=["tree"])
-async def tree_create(request: Request):
-    req_data = await request.json()
-    tree_name = req_data['tree-name']
-    commitment_size = req_data['commitment-size']
+#TODO: error handling, descriptions in other file
+
+@router.post('/tree-create', name="/tree-create", description=descriptions['tree_create'], responses={200: {'model': DTOTreeCreate}})
+async def tree_create(tree: Tree):
+    tree_name = tree.tree_name
+    commitment_size = tree.commitment_size
 
     if not tree_name:
-        return {'status': 'error', 'message': 'Tree name not specified'}
+        return JSONResponse({'status': 'error', 'message': 'Tree name not specified'}, status_code=400)
     elif not commitment_size:
-        return {'status': 'error', 'message': 'Commitment size not specified'}
+        return JSONResponse({'status': 'error', 'message': 'Commitment size not specified'}, status_code=400)
     return create_tree(tree_name, commitment_size)
 
-@router.get('/tree', tags=["tree"])
-async def tree(request: Request):
-    tree_name = request.query_params['tree-name']
+
+@router.post('/insert-leaf', name="/insert-leaf", description=descriptions['insert_leaf'], responses={200: {'model': DTOInsertLeaf}})
+async def tree_insert_leaf(leaf: Leaf):
+    tree_name = leaf.tree_name
+    data = leaf.data
 
     if not tree_name:
-        return {'status': 'error', 'message': 'Tree name not specified'}
-    return get_tree(tree_name)
-
-@router.post('/insert-leaf', tags=["tree"])
-async def tree_insert_leaf(request: Request):
-    req_data = await request.json()
-    tree_name = req_data['tree-name']
-    data = req_data['data']
-
-    if not tree_name:
-        return {'status': 'error', 'message': 'Tree name not specified'}
+        return JSONResponse({'status': 'error', 'message': 'Tree name not specified'}, status_code=400)
     elif not data:
-        return {'status': 'error', 'message': 'Data not specified'}
+        return JSONResponse({'status': 'error', 'message': 'Data not specified'}, status_code=400)
     return insert_leaf(tree_name, data)
 
-@router.get('/leaf', tags=["tree"])
-async def leaf(request: Request):
-    tree_name = request.query_params['tree-name']
-    index = request.query_params['index']
+@router.post('/tree/commit', name="/tree/commit", description=descriptions['tree_commit'], responses={200: {'model': DTOCommit}})
+async def tree_publish(commit: Commit):
+    tree_name = commit.tree_name
 
     if not tree_name:
-        return {'status': 'error', 'message': 'Tree name not specified'}
-    elif not index:
-        return {'status': 'error', 'message': 'Index not specified'}
-    return get_leaf(tree_name, index)
-
-@router.get('/tree/root', tags=["tree"])
-async def tree_root(request: Request):
-    tree_name = request.query_params['tree-name']
-
-    if not tree_name:
-        return {'status': 'error', 'message': 'Tree name not specified'}
-    return get_tree_root(tree_name)
-
-@router.post('/tree/commit', tags=["tree"])
-async def tree_publish(request: Request):
-    req_data = await request.json()
-    tree_name = req_data['tree-name']
-    if not tree_name:
-        return {'status': 'error', 'message': 'Tree name not specified'}
+        return JSONResponse({'status': 'error', 'message': 'Tree name not specified'}, status_code=400)
     return commit_local_tree(tree_name)
 
-@router.get('/global-tree/all-leaf-data', tags=["tree"])
-async def global_tree_all_leaves(request: Request):
+@router.get('/tree', name="/tree", description=descriptions['tree_metadata'], responses={200: {'model': DTOTreeMetadata}})
+async def tree(tree_name: str):
+    if not tree_name:
+        return JSONResponse({'status': 'error', 'message': 'Tree name not specified'}, status_code=400)
+    return get_tree(tree_name)
+
+@router.get('/tree/root', name="/tree/root", description=descriptions['tree_root'], responses={200: {'model': DTONodeHash}})
+async def tree_root(tree_name: str):
+    if not tree_name:
+        return JSONResponse({'status': 'error', 'message': 'Tree name not specified'}, status_code=400)
+    return get_tree_root(tree_name)
+
+@router.get('/leaf', name="/leaf", description=descriptions['tree_leaf'], responses={200: {'model': DTONodeHash}})
+async def leaf(tree_name: str, index: int):
+    if not tree_name:
+        return JSONResponse({'status': 'error', 'message': 'Tree name not specified'}, status_code=400)
+    elif not index:
+        return JSONResponse({'status': 'error', 'message': 'Index not specified'}, status_code=400)
+    return get_leaf(tree_name, index)
+
+@router.get('/global-tree/root', name="/global-tree/root", description=descriptions['global_tree_root'], responses={200: {'model': DTOGlobalTreeRoot}})
+async def global_tree_root(tree_size: int|None = None):
+    return get_global_tree_root(tree_size)
+    
+@router.get('/global-tree/all-leaf-data', name="/global-tree/all-leaf-data", description=descriptions['global_tree_all_leaves'], responses={200: {'model': DTOAllLeavesGlobalTree}})
+async def global_tree_all_leaves():
     return get_global_tree_all_leaves()
