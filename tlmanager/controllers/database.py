@@ -24,6 +24,8 @@ def db_get_all_consistency_proof(tree_name):
     proofs = list(proofs)
     for proof in proofs:
         proof['root']['value'] = proof['root']['value'].decode('utf-8')
+        if proof['root']['_id']:
+            del proof['root']['_id']
         del proof['_id']
     return proofs
 
