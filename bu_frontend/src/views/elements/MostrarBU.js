@@ -7,91 +7,68 @@ import {
   CardBody,  Button,
   CardText,
   Label,
-
 } from 'reactstrap';
-
 import { Link } from 'react-router-dom';
-
-import { verify } from '../../api/merkletree.api'
-import cadVerde from '../../assets/images/cad-verde.png';
-import cadVermelho from '../../assets/images/cad-vermelho.png';
+import Lock from './lock.js'
+import {getBuById} from '../../services/services.js'
 import ReactJson from 'react-json-view'
 
 class MostrarBU extends Component {
   axios = require('axios')
   bu_api_url = require('../../config.json').bu_api_url
-  // bu_api_url = "http://172.20.11.11:8080"
-
-
-
   constructor(props) {
     super(props)
     this.state = {bu: [],
-                  prova: [],
                   votos: [],
-                  root: [],
-                  fullproof: [],
-                  mostrarProva: false,
-                  id:[]
+                  id: null
                 }
-    
-    this.mostraProva = this.mostraProva.bind(this);
-
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
-//    console.log("id=" + id)
-    this.axios.get(`${this.bu_api_url}/bu/${id}`)
-      .then(response => this.setState({ bu: response.data, votos: response.data.votos,id:response.data.id }))
-    var retVerify = verify(id)
-    retVerify.then( value => {
-      this.setState({ prova: value })
-      this.setState({ root: this.state.prova.root })
-      this.setState({ fullproof: this.state.prova.fullproof })
-    })
-    
+    getBuById(id).then(bu => this.setState(
+      { 
+        bu: bu, 
+        votos: bu.votos, 
+        id: bu.id 
+      }
+    ))
   }
 
-  mostraProva() {
-    this.setState({mostrarProva: !this.state.mostrarProva})
-//      (this.state.mostrarProva)
-  }
-  handleConsultar(e) {
+  onClickShowProof(e) {
     e.preventDefault()
     var url = "/elements/mostrarbuprova/" + this.state.id
-    console.log(url)
     window.location.href =  url
+  }
+
+  groupByPosition(votesArray){
+    return votesArray.reduce((acc, curr) => {
+      if (!acc[curr.cargo]) {
+        acc[curr.cargo] = [];
+      }
+      acc[curr.cargo].push(curr);
+      return acc;
+    }, {});
   }
   
   render() {
-    var bu=this.state.bu
-    var prova = this.state.prova
+    var bu = this.state.bu
+    var votesArray = (this.state.votos===undefined)? [] : Array.from(this.state.votos)
+    const votesOrganizedByPosition = this.groupByPosition(votesArray)
 
-
-    console.log(this.state.votos)
-  
-    var mostrar = this.state.mostrarProva
-
-    var votosArr = (this.state.votos===undefined)? [] : Array.from(this.state.votos)
-
-  const groupByCargo = votosArr.reduce((acc, curr) => {
-    if (!acc[curr.cargo]) {
-      acc[curr.cargo] = [];
-    }
-    acc[curr.cargo].push(curr);
-    return acc;
-  }, {});
     return (
       <Col>
       <Col md={6}>
         <Card>
-          <CardHeader>Consultar Boletins de Urna - Turno<button className="btn float-right" onClick={() => this.handleConsultar.bind(this)}>
-            <Link to={`/elements/mostrarbuprova/${this.state.id}` } target='_blank'> 
-            <img src={(prova.isTrue===true)? cadVerde : cadVermelho} alt="estado"/>
-            </Link>
+          <CardHeader>Consultar Boletins de Urna - Turno
+          {(this.state.id !== null && this.state.id !== undefined) && (
+            <button className="btn float-right" onClick={() => this.onClickShowProof.bind(this)}>
+              <Link to={`/elements/mostrarbuprova/${this.state.id}`} target='_blank'>
+                <Lock id={this.state.id} />
+              </Link>
             </button>
-            </CardHeader>
+          )}
+          </CardHeader>
           <CardBody>
               <Label>Detalhes</Label>
               <CardBody>
@@ -115,53 +92,27 @@ class MostrarBU extends Component {
               <CardText>{bu.zona}</CardText>
               </CardBody>
               <CardBody>
-              <Label>Votos</Label>
-              <CardText>  
-                <div style={{ display: "flex" }}>
-                  {Object.entries(groupByCargo).map(([cargo, items]) => (
-                    <div style={{ columnCount: 1, marginRight: "30px" }}>
-                      <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-                        {cargo}
-                      </div>
-                      {items.map((item) => (
-                        <div>
-                          <div>Partido: {item.partido}</div>
-                          <div>Código: {item.codigo}</div>
-                          <div>Votos: {item.votos}</div>
-                        </div>
-                      ))}
+              <Label>Votos</Label>  
+              <div style={{ display: "flex" }}>
+                {Object.entries(votesOrganizedByPosition).map(([cargo, items]) => (
+                  <div key={cargo} style={{ columnCount: 1, marginRight: "30px" }}>
+                    <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+                      {cargo}
                     </div>
-                  ))}
-                </div>
-              </CardText>
+                    {items.map((item) => (
+                      <div key={item.codigo}>
+                        <div>Partido: {item.partido}</div>
+                        <div>Código: {item.codigo}</div>
+                        <div>Votos: {item.votos}</div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+            </div>
               </CardBody>
           </CardBody>
         </Card>
       </Col>
-      <Col style={{width:"40vw"}}>
-      {mostrar === true && prova.isTrue === true && (<Col md={4}>
-      <Card style={{width:"60vw"}}>
-        <CardHeader >Este BU foi devidamente verificado nos sistemas da Justiça Federal</CardHeader>
-        <CardBody style={{overflowX:"scroll"}}>
-            <CardBody>
-            <Label>Prova</Label>
-            <ReactJson collapsed displayDataTypes={false} src={this.state.prova} />
-            </CardBody>
-        </CardBody>
-      </Card>
-    </Col>)}
-    {mostrar === true && prova.isTrue === false && (<Col md={4}>
-      <Card>
-        <CardHeader>ATENÇÃO: Este BU não pode ser verificado ou foi ALTERADO</CardHeader>
-        <CardBody style={{overflowX:"scroll"}}>
-            <CardBody>
-            <Label>Prova</Label>
-            <ReactJson collapsed displayDataTypes={false} src={this.state.prova} />
-            </CardBody>
-        </CardBody>
-      </Card>
-    </Col>)}
-    </Col>
       </Col>
     );
   }

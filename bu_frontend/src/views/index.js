@@ -6,6 +6,7 @@ import Raizassinada from './pages/Monitorar/Raiz/RaizAssinada.js';
 import Mapa from './pages/Monitorar/Mapa/Mapa.js';
 import MapaProva from './pages/Monitorar/Mapa/MapaProva.js';
 import Root from './elements/Root';
+
 import VerificacaoCompleta from './pages/Monitorar/VerificacaoCompleta/VerificacaoCompleta.js';
 import Consultar_BU from './elements/consultar_bu';
 // See React Router documentation for details: https://reacttraining.com/react-router/web/api/Route

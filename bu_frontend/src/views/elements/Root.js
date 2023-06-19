@@ -1,25 +1,22 @@
 import { Component } from 'react';
+import { getTrustedRoot } from '../../services/services.js';
 
 class Root extends Component {
-  
-    axios = require('axios')
-    bu_api_url = require('../../config.json').bu_api_url
-    
-    constructor() {
-        super()
-        this.state = {
-                       lista: []            
-                    }
-      }
-      
-  componentDidMount(){
-    this.axios.get(`${this.bu_api_url}/tree/root`) //partial
-      .then(response => this.setState({ lista: response.data }))
+  constructor() {
+    super()
+    this.state = {
+      root: null,
+    }
+  }
+  async componentDidMount() {
+    const root = await getTrustedRoot()
+    console.log(root)
+    this.setState({ root: root.value })
   }
 
   render() {
-    const { lista } = this.state
-    return (lista)
+    
+    return (this.state.root)
   }
 }
 
