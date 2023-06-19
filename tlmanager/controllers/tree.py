@@ -56,8 +56,8 @@ def append_global_tree(entry):
     global_root = build_global_tree_root_object(global_tree)
     db_insert_global_tree_leaf(global_tree.length - 1, entry, global_root)
 
-    if global_tree.length % global_tree.commitment_size == 0:
-        save_consistency_proof('global_tree', global_root)
+    #if global_tree.length % global_tree.commitment_size == 0: #TODO
+    save_consistency_proof('global_tree', global_root)
 
     return {'status': 'ok'}
 
