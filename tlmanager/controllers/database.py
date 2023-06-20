@@ -24,9 +24,12 @@ def db_get_all_consistency_proof(tree_name):
     proofs = list(proofs)
     for proof in proofs:
         proof['root']['value'] = proof['root']['value'].decode('utf-8')
-        if proof['root']['_id']:
-            del proof['root']['_id']
         del proof['_id']
+        try:
+            if proof['root']['_id']:
+                del proof['root']['_id']
+        except KeyError:
+            """ Is not a global tree """
     return proofs
 
 def db_get_global_tree_root(tree_size=None):
