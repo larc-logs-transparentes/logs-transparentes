@@ -1,5 +1,4 @@
 import React, { useEffect,useState } from 'react';
-import {getRoot,getDataProof,getBuById, getTrustedRoot, initPyodide} from '../../services/services.js';
 import cadVerde from '../../assets/images/cad-verde.png';
 import cadVermelho from '../../assets/images/cad-vermelho.png';
 import { verifySingleData } from '../../services/verifications.js';

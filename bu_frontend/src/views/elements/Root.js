@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { getTrustedRoot } from '../../services/services.js';
+import { getTrustedRoot } from '../../api/merkletree.api.js';
 
 class Root extends Component {
   constructor() {

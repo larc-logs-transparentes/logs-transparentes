@@ -11,7 +11,7 @@ import {
   Input
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext'
+import PageLoaderContext from '../../common/components/PageLoader/PageLoaderContext'
 
 class Consultar_BU extends Component {
   axios = require('axios')

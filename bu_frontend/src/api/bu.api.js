@@ -1,6 +1,17 @@
 const axios = require('axios')
 const bu_api_url = require('../config.json').bu_api_url
 
+export function getBuById(bu_id) {
+  return axios.get(`${bu_api_url}/bu/${bu_id}`)
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
 export const addBu = (data) => {
   return axios.post(`${bu_api_url}/bu`, data)
     .then(res => {
@@ -47,17 +58,6 @@ export function findByIdRange(id_inicial, id_final) {
     .catch(err => {
       console.log(err)
       return []
-    })
-}
-
-export const getBuById = (bu_id) => {
-  return axios.get(`${bu_api_url}/bu/${bu_id}`)
-    .then(res => {
-//      console.log(res.data)
-      return res.data
-    })
-    .catch(err => {
-      console.log(err)
     })
 }
 

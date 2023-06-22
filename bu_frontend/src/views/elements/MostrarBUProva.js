@@ -9,8 +9,7 @@ import {
   Label,
 
 } from 'reactstrap';
-import { verify } from '../../api/merkletree.api'
-import { getDataProof } from '../../services/services.js'
+import { getDataProof } from '../../api/merkletree.api.js'
 import ReactJson from 'react-json-view'
 
 class MostrarBUProva extends Component {

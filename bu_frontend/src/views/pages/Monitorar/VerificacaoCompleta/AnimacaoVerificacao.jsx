@@ -1,6 +1,6 @@
 import React from "react";
 import { Row } from "reactstrap";
-import { Loader } from '../../../../vibe';
+import { Loader } from '../../../../common';
 import { bufferToHex, getRoot } from "../../../../api/merkletree_InfoBUs.api";
 import approval from '../../../../assets/images/Approved.png';
 import error from '../../../../assets/images/Error.png';

@@ -10,7 +10,7 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Lock from './lock.js'
-import {getBuById} from '../../services/services.js'
+import {getBuById} from '../../api/bu.api.js'
 import ReactJson from 'react-json-view'
 
 class MostrarBU extends Component {
