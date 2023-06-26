@@ -96,10 +96,6 @@ export default function Raizassinada() {
               </div>
             </div>
             <div style={{gap:'6vw', marginTop:'10vw',textAlign:'start',alignContent:'start', width:'100%'}}>
-              {/* {rootbaixada.map( ( {_id,tree_size_1,tree_size_2,first_hash,second_hash,consistency_path,log_id,__v} ) => {
-                return <p key={_id}>log_id:{log_id}<br/> tree_size_1 :{tree_size_1}<br/>tree_size_2 :{tree_size_2}<br/>first_hash :{first_hash}<br/>
-                second_hash:{second_hash}<br/>consistency_path:{consistency_path.map(consistency_path => <li>{consistency_path}</li>)}
-                <br/> ----------------------------------------------------<br/></p>})} */}
                 {show?<ReactJson collapsed displayDataTypes={false} src={rootbaixada} />:null}
               </div>
             </div>
