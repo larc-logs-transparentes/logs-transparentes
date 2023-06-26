@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import { Card, CardBody } from 'reactstrap'
 import { provaDeConsistencia } from '../logic/consistencyProof';
-import { getRootAll } from '../../../../api/bu.api';
+import { getRootAll } from '../../../api/bu.api';
 import {baixarRoots} from './Roots.js';
 import ReactJson from 'react-json-view'
 export default function Raizassinada() {
