@@ -90,8 +90,6 @@ convert_to_json() {
 
 mkdir -p assets/bus
 
-pip3 install -r requirements.txt
-
 for link in "${linksToDownload[@]}"
 do 
   download_file $link "assets/bus/$(basename $link)"
