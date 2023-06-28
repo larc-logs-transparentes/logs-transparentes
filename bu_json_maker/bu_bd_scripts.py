@@ -1,18 +1,14 @@
 import json
+import time
 import requests
+import os
 
 from constants import BACKEND_URL
 from counties_codes import get_county_uf_and_city_with_number
 BU_TREE_NAME = "bu_tree"
-
-# reads bus from file made with bu_json_converter.py
-def get_list_of_dict_bu():
-    try:
-        file = open("./results/bus_consolidated.json",encoding="utf8")
-    except FileNotFoundError:
-        file = open("./results/example_bus_consolidated.json",encoding="utf8")
-    return json.load(file)
-
+header = {
+    "content-type": "application/json"
+}
 
 def candidatos_segundo(bu):
     k=0
@@ -91,84 +87,68 @@ def candidatos_primeiro(bu):
                     candidatos.append(candidato)
         return candidatos
 
-
-
-def get_body_list_with_zona_secao():
-    bus = get_list_of_dict_bu()
-    id1 = 0
-    id2 = 0
-    body_dict_list = []
-
-    # zona and secao are in the bu, so we just copy them from there
-    for bu in bus:
-        zona = bu['identificacaoSecao']['municipioZona']['zona']
-        secao = bu['identificacaoSecao']['secao']
-        cod_municipio = bu['identificacaoSecao']['municipioZona']['municipio']
-        county = get_county_uf_and_city_with_number(cod_municipio)
-        uf = county['uf']
-        municipio = county['nome_municipio']
-        candidates_votes_list = candidatos_primeiro(bu)
-
-        body_dict = {
-            "_id": id1,
-            "id": id2,
-            "turno": "2",
-            "UF": uf,
-            "zona": zona,
-            "secao": secao,
-            "cidade": municipio.capitalize(),
-            "bu_inteiro": bu,
-            "__v": 0,
-            "votos": candidates_votes_list,
-            # "votosPrimeiroTurno": candidates_votes_list_primeiro,
-        }
-
-        body_dict_list.append(body_dict)
-        id1 += 1
-        id2 += 1
-
-    return body_dict_list
-
-
+def parse_bu(bu, id, primeiro_turno=True):
+    zona = bu['identificacaoSecao']['municipioZona']['zona']
+    secao = bu['identificacaoSecao']['secao']
+    cod_municipio = bu['identificacaoSecao']['municipioZona']['municipio']
+    county = get_county_uf_and_city_with_number(cod_municipio)
+    uf = county['uf']
+    municipio = county['nome_municipio']
+    candidates_votes_list = candidatos_primeiro(bu) if primeiro_turno else candidatos_segundo(bu)
+    
+    return {
+        "_id": id,
+        "id": id,
+        "turno": "1" if primeiro_turno else "2",
+        "UF": uf,
+        "zona": zona,
+        "secao": secao,
+        "cidade": municipio.capitalize(),
+        "bu_inteiro": bu,
+        "__v": 0,
+        "votos": candidates_votes_list,
+    }
+    
 # sends one bu (dict) to db via post request
 def insert_body_to_db(tree_name, body_dict):
-    header = {
-        "content-type": "application/json"
-    }
-    return requests.post(f"{BACKEND_URL}/bu/create", json={"tree-name": tree_name, "data": body_dict}, headers=header)
+    try:
+        return requests.post(f"{BACKEND_URL}/bu/create", json={"tree-name": tree_name, "data": body_dict}, headers=header)
+    except ConnectionError:
+        time.sleep(5)
+        return insert_body_to_db(tree_name, body_dict)
 
 def create_tree(tree_name, commitment_size=100):
-    header = {
-        "content-type": "application/json"
-    }
     return requests.post(f"{BACKEND_URL}/tree/create-tree", json={"tree-name": tree_name, "commitment-size": commitment_size}, headers=header)
 
 def commit_tree(tree_name):
-    header = {
-        "content-type": "application/json"
-    }
     return requests.post(f"{BACKEND_URL}/tree/commit", json={"tree-name": tree_name}, headers=header)
 
-def initialize_infoBUs_tree():
-    header = {
-        "content-type": "application/json"
-    }
+def initialize_infobus_tree():
     return requests.post(f"{BACKEND_URL}/infobus/create", headers=header)
+
+def read_files():
+    try:
+        files = os.listdir("./results")
+        files = [f"./results/{file}" for file in files]
+    except FileNotFoundError:
+        files = ["./assets/example_bus_consolidated.json"]
+    return files
 
 # sends list of bus (dicts) to db
 def insert_list_bus_to_db():
-    bodies = get_body_list_with_zona_secao()
-    res_list = []
-    for body in bodies:
-        res = insert_body_to_db(BU_TREE_NAME, body)
-        print(f'{bodies.index(body)} de {len(bodies)}, {res}', end='\r')
-        res_list.append(res)
-
-    return res_list
-
+    _id = 0
+    for file in read_files():
+        if file.endswith(".json"):
+            json_bus = json.load(open(f"{file}"))
+            for bu in json_bus:
+                res = insert_body_to_db(BU_TREE_NAME, parse_bu(bu, _id))
+                print(f'{file} - {json_bus.index(bu)} of {len(json_bus)}, {res}', end='\r')
+                _id += 1
+            print(f'{file} - {len(json_bus)} of {len(json_bus)}, {res}', end='\r')
+            print()
 
 if __name__ == '__main__':
     create_tree(BU_TREE_NAME)
     insert_list_bus_to_db()
     commit_tree(BU_TREE_NAME)
-    initialize_infoBUs_tree()
+    initialize_infobus_tree()
