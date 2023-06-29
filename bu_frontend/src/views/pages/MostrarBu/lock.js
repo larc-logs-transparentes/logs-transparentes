@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
-import cadVerde from '../../assets/images/cad-verde.png';
-import cadVermelho from '../../assets/images/cad-vermelho.png';
-import { verifySingleData } from '../../services/verifications.js';
+import cadVerde from '../../../assets/images/cad-verde.png';
+import cadVermelho from '../../../assets/images/cad-vermelho.png';
+import { verifySingleData } from '../../../services/verifications.js';
 
 export default function Lock(props) {
   const [isProofTrue, setIsProofTrue] = useState("(loading...)");

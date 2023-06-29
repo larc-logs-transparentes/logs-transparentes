@@ -71,7 +71,7 @@ class Dashboard extends Component {
                     Universidade de São Paulo
                   </CardText>
 
-                  <Link to="tree/root">
+                  <Link to="pages/RootPage/Root.jsx">
                   <Button>Detalhes</Button>
                   </Link>
                 </CardBody>

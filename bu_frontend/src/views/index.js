@@ -1,14 +1,14 @@
 import Dashboard from './pages/Dashboard';
-import MostrarBU from './elements/MostrarBU';
-import MostrarBUProva from './elements/MostrarBUProva';
+import MostrarBU from './pages/MostrarBu/MostrarBU.jsx';
+import MostrarBUProva from './pages/MostrarBuProva/MostrarBUProva.jsx';
 import Retotalizar from './pages/Recontabilizar/Retotalizar.jsx';
-import Raizassinada from './pages/Raiz/RaizAssinada.js';
+import Raizassinada from './pages/RaizAssinada/RaizAssinada.jsx';
 import Mapa from './pages/Mapa/Mapa.js';
 import MapaProva from './pages/Mapa/MapaProva.js';
-import Root from './elements/Root';
+import Root from './pages/RootPage/Root.jsx';
 
 import VerificacaoCompleta from './pages/VerificacaoCompleta/VerificacaoCompleta.js';
-import Consultar_BU from './elements/consultar_bu';
+import ConsultarBU from './pages/ConsultarBu/ConsultarBU.jsx';
 // See React Router documentation for details: https://reacttraining.com/react-router/web/api/Route
 const pageList = [
   {
@@ -26,7 +26,7 @@ const pageList = [
   },
   {
     name: 'Histórico da árvore',
-    path: '/raizassinada',
+    path: '/pages/RaizAssinada/RaizAssinada',
     component: Raizassinada
     //badge: {
     //  text: 'NEW',
@@ -63,26 +63,26 @@ const pageList = [
   },
   {
     name: 'Ver mais',   //Raiz assinada
-    path: '/tree/root',
+    path: '/pages/RootPage/Root.jsx',
     component: Root,
   },
   {
     name: 'Consultar Todos BUs',
     
-    path: '/elements/consultar_bu',
-    component: Consultar_BU,
+    path: '/pages/ConsultarBU/ConsultarBU',
+    component: ConsultarBU,
     //badge: {
     //  text: 'NEW',
     //},
   },
   {
     name:'Boletim de Urna - Resultado da Consulta',
-    path:'/elements/mostrarbu/:id',
+    path:'/pages/MostrarBu/MostrarBu/:id',
     component: MostrarBU,
   },
   {
     name:'Boletim de Urna - Resultado da Consulta',
-    path:'/elements/mostrarbuprova/:id',
+    path:'/pages/MostrarBuProva/MostrarBuProva/:id',
     component: MostrarBUProva,
   },
 ];

@@ -10,12 +10,11 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Lock from './lock.js'
-import {getBuById} from '../../api/bu.api.js'
-import ReactJson from 'react-json-view'
+import {getBuById} from '../../../api/bu.api.js'
 
 class MostrarBU extends Component {
   axios = require('axios')
-  bu_api_url = require('../../config.json').bu_api_url
+  bu_api_url = require('../../../config.json').bu_api_url
   constructor(props) {
     super(props)
     this.state = {bu: [],

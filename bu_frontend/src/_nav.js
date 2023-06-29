@@ -7,7 +7,7 @@ export default {
     },
     {
       name: 'Consultar BU',
-      url: '/elements/consultar_bu',
+      url: '/pages/ConsultarBU/ConsultarBU',
       icon: 'Package',
       //badge: {
       //  text: 'NEW',
@@ -18,20 +18,12 @@ export default {
       url: '/mapa',
       icon: 'Package'
     },
-    // {
-    //   name: 'Auditar BU',
-    //   url: '/elements/auditar',
-    //   icon: 'Package',
-    //   //badge: {
-    //   //  text: 'NEW',
-    //   //},
-    // },
     {
       divider: true,
     },
     {
       name: 'Histórico da árvore',
-      url: '/raizassinada',
+      url: '/pages/RaizAssinada/RaizAssinada',
       icon: 'Package'
     },
     {

@@ -11,11 +11,11 @@ import {
   Input
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import PageLoaderContext from '../../common/components/PageLoader/PageLoaderContext'
+import PageLoaderContext from '../../../common/components/PageLoader/PageLoaderContext'
 
-class Consultar_BU extends Component {
+class ConsultarBU extends Component {
   axios = require('axios')
-  bu_api_url = require('../../config.json').bu_api_url
+  bu_api_url = require('../../../config.json').bu_api_url
 
   constructor() {
     super()
@@ -78,7 +78,7 @@ class Consultar_BU extends Component {
 
   handleConsultar(e) {
     e.preventDefault()
-    var url = "/elements/mostrarbu/" + this.findBu()
+    var url = "/pages/MostrarBu/MostrarBu/" + this.findBu()
     console.log(url)
     window.location.href =  url
   }
@@ -212,7 +212,7 @@ class Consultar_BU extends Component {
             <CardBody>
               <PageLoaderContext.Consumer>
                 {context => (
-                  <Link to={"/elements/mostrarbu/id" }> 
+                  <Link to={"/pages/MostrarBu/MostrarBu/id" }> 
                   <Button onClick={this.handleConsultar.bind(this)}>Consultar</Button>
                   </Link>
                 )}
@@ -226,4 +226,4 @@ class Consultar_BU extends Component {
   }
 }
 
-export default Consultar_BU;
+export default ConsultarBU;
