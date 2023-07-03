@@ -1,4 +1,5 @@
-import {getRoot,getDataProof,getBuById, getTrustedRoot} from './services.js';
+import {getDataProof, getTrustedRoot} from '../api/merkletree.api.js';
+import {getBuById} from '../api/bu.api.js';
 import {initPyodide,formatProofDataToPython} from './pyodide.js';
 export async function verifySingleData(id){
     let bubyid=await getBuById(id);

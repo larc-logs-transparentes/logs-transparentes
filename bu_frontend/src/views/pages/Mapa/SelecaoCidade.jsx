@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormGroup, Label, Input, FormText} from 'reactstrap';
-import cadVerde from '../../../../assets/images/cad-verde.png';
-import cadVermelho from '../../../../assets/images/cad-vermelho.png';
+import cadVerde from '../../../assets/images/cad-verde.png';
+import cadVermelho from '../../../assets/images/cad-vermelho.png';
 import { Link } from 'react-router-dom';
 const SelecaoCidade = ({state, setState}) => {
     function defineFaixaSaoCarlos(){

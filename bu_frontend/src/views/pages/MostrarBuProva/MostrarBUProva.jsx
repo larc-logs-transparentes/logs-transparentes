@@ -9,13 +9,12 @@ import {
   Label,
 
 } from 'reactstrap';
-import { verify } from '../../api/merkletree.api'
-import { getDataProof } from '../../services/services.js'
+import { getDataProof } from '../../../api/merkletree.api.js'
 import ReactJson from 'react-json-view'
 
 class MostrarBUProva extends Component {
   axios = require('axios')
-  bu_api_url = require('../../config.json').bu_api_url
+  bu_api_url = require('../../../config.json').bu_api_url
   constructor(props) {
     super(props)
     this.state = {

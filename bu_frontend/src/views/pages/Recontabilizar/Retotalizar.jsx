@@ -1,11 +1,11 @@
 import React, {useEffect,useState } from 'react';
-import './Retotalizar.css';
+import './css/retotalizar.css';
 import { Card, CardBody, Row, Col} from 'reactstrap';
-import { Loader } from '../../../../vibe';
-import approval from '../../../../assets/images/Approved.png';
-import error from '../../../../assets/images/Error.png';
+import { Loader } from '../../../common';
+import approval from '../../../assets/images/Approved.png';
+import error from '../../../assets/images/Error.png';
 import {RetotalizacaoDeBus} from './LogicaRetotalizacao.js';
-import LoadingSpinner from '../../../elements/LoadingSpinner';
+import LoadingSpinner from './LoadingSpinner';
 
 export default function Retotalizar() {
   const [showbbus, setBbus] = useState(false);

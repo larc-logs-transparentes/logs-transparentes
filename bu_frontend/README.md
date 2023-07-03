@@ -12,9 +12,8 @@ The basic dashboard layout is defined in `./src/views/layouts/DashboardLayout.js
 
 Part | Modification
 --- | ---
-CSS | Sass files can be found in `./src/vibe/scss`. Update `./src/vibe/scss/components/vars.scss` to change global styles.
+CSS | Sass files can be found in `./src/common/scss`. Update `./src/common/scss/components/vars.scss` to change global styles.
 Responsivity | Configure the switch between mobile and desktop layout with the constant `MOBILE_SIZE`
-Logo | Change file `./src/assets/images/vibe-logo.svg` or import a different `Logo`
 Chat | Enable/Disable it by default by setting the initial state of `showChat1`
 Header | Change function component `HeaderNav`.
 Footer | Change the `<Footer>` part in the `render()` function of DashboardLayout.
@@ -46,26 +45,26 @@ Every top level menu entry can either be a top level button or a folder with a s
 Key | Value
 --- | ---
 `name` | Display name of the menu entry
-`icon` | (Optional) Icon prefixed to the display name. The correct item gets autoloaded by Vibe. ([react-feather](https://www.npmjs.com/package/react-feather) is used for icons.
+`icon` | (Optional) Icon prefixed to the display name. The correct item gets autoloaded ([react-feather](https://www.npmjs.com/package/react-feather) is used for icons.
 `url` | (Optional) Either a relative URL to the target page or an absolute URL to an external page (For linked menu entries. Make sure relative URLs start with a slash, i.e. `/home`)
 `external` | (Optional) Set to `true` if the `url` points to an external page.
 `target` | (Optional) Set to `_blank` if you want the link to an external page to open in a new window.
 `children` | (Optional) Child entries as array (For folder menu entries)
 `divider` | (Optional) Inserts a visual divider if set to true (Use this instead of a menu entry)
 
-*Note:* If you wish menus to be expanded by default, you have to change the initial state of `open` in `./src/vibe/components/SidebarNav/components/NavDropdownItem.js`.
+*Note:* If you wish menus to be expanded by default, you have to change the initial state of `open` in `./src/common/components/SidebarNav/components/NavDropdownItem.js`.
 
 ### Using Bootstrap / reactstrap
 
-Vibe is using the Bootstrap-for-React library [reactstrap](https://reactstrap.github.io/). Follow the [components documentation](https://reactstrap.github.io/components/) for using them in a Vibe Dashboard.
+is using the Bootstrap-for-React library [reactstrap](https://reactstrap.github.io/). Follow the [components documentation](https://reactstrap.github.io/components/) for using them in a common Dashboard.
 
-Note that Vibe overwrites the default Bootstrap styles in `./src/vibe/scss/components/`.
+Note that common overwrites the default Bootstrap styles in `./src/common/scss/components/`.
 
-Custom Vibe components are in the `./src/vibe/components/` directory.
+Custom components are in the `./src/common/components/` directory.
 
 ### Using Feather icons
 
-Vibe is using [react-feather](https://www.npmjs.com/package/react-feather) for its icons.
+ using [react-feather](https://www.npmjs.com/package/react-feather) for its icons.
 
 A nice overview over all available icons can be found on <https://feathericons.com/>.
 

@@ -7,7 +7,7 @@ import { Card, CardBody, Row, Col,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import monitoresImage from '../../assets/images/monitores.png';
-import { getTrustedRoot } from '../../services/services.js';
+import { getTrustedRoot } from '../../api/merkletree.api.js';
 
 class Dashboard extends Component {
   constructor() {
@@ -71,7 +71,7 @@ class Dashboard extends Component {
                     Universidade de São Paulo
                   </CardText>
 
-                  <Link to="tree/root">
+                  <Link to="pages/RootPage/Root.jsx">
                   <Button>Detalhes</Button>
                   </Link>
                 </CardBody>

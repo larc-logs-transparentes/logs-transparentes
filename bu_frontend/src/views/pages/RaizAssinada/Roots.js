@@ -1,5 +1,5 @@
 const axios = require('axios')
-const bu_api_url = require('../../../../config.json').bu_api_url
+const bu_api_url = require('../../../config.json').bu_api_url
 
 
 export async function baixarRoots(){

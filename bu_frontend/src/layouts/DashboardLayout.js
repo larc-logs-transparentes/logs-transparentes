@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { Header, SidebarNav, PageContent, PageAlert, Page } from '../vibe';
+import { Header, SidebarNav, PageContent, PageAlert, Page } from '../common';
 import Logo from '../assets/images/favicon.png';
 import nav from '../_nav';
 import routes from '../views';
-import ContextProviders from '../vibe/components/utilities/ContextProviders';
-import handleKeyAccessibility, { handleClickAccessibility } from '../vibe/helpers/handleTabAccessibility';
+import ContextProviders from '../common/components/utilities/ContextProviders';
+import handleKeyAccessibility, { handleClickAccessibility } from '../common/helpers/handleTabAccessibility';
 
 const MOBILE_SIZE = 992;
 

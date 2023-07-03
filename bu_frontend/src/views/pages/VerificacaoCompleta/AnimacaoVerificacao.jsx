@@ -1,9 +1,9 @@
 import React from "react";
 import { Row } from "reactstrap";
-import { Loader } from '../../../../vibe';
-import { bufferToHex, getRoot } from "../../../../api/merkletree_InfoBUs.api";
-import approval from '../../../../assets/images/Approved.png';
-import error from '../../../../assets/images/Error.png';
+import { Loader } from '../../../common';
+import { bufferToHex, getRoot } from "../../../api/merkletree_InfoBUs.api";
+import approval from '../../../assets/images/Approved.png';
+import error from '../../../assets/images/Error.png';
 
 const AnimacaoVerificacao = ({stateDownloadInfoBUs, stateVerificationInfoBUs, stateRetotalizationInfoBUs, infoBUs, id_incosistente, retotalizacao}) => {
     const id_inicial = infoBUs ? infoBUs[0].id : 0
