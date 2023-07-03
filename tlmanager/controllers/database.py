@@ -4,7 +4,6 @@ def db_get_all_global_tree_leaves():
     leaves = database['global_tree_leaves'].find()
     leaves_array = []
     for leaf in leaves:
-        leaf['value']['value'] = leaf['value']['value'].decode('utf-8')
         leaves_array.append({
             'index': leaf['index'],
             'value': leaf['value']
@@ -23,7 +22,6 @@ def db_get_all_consistency_proof(tree_name):
     proofs = database['consistency_proofs'].find({'root.tree_name': tree_name}, sort=[('root.tree_size', 1)])
     proofs = list(proofs)
     for proof in proofs:
-        proof['root']['value'] = proof['root']['value'].decode('utf-8')
         del proof['_id']
         try:
             if proof['root']['_id']:
@@ -38,7 +36,6 @@ def db_get_global_tree_root(tree_size=None):
     else:
         global_tree_root = database['global_tree_roots'].find_one({}, sort=[('tree_size', -1)])
     if global_tree_root:
-        global_tree_root['value'] = global_tree_root['value'].decode('utf-8')
         del global_tree_root['_id']
     return global_tree_root
 
