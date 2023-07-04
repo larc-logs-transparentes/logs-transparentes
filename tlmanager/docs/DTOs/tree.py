@@ -33,6 +33,10 @@ class DTOGlobalTreeRoot(OnlyStatusResponse):
 """ /global-tree/all-leaf-data """
 class DTOAllLeavesGlobalTree(OnlyStatusResponse):
     leaves: list[GlobalTreeLeaf]
+    
+""" /global-tree/all-roots """
+class DTOAllRootsGlobalTree(OnlyStatusResponse):
+    roots: list[GlobalTreeRootObject]
 
 """ / """    
 class TreeList(OnlyStatusResponse):
