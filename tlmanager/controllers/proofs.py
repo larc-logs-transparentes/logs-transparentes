@@ -50,8 +50,6 @@ def get_data_proof(tree_name, data=None, index=None):
     return JSONResponse(data_proof_object, status_code=200)
 
 def build_data_proof_object(global_root_object, local_root_object, local_proof_object, data_proof_object):
-    local_root_object['value'] = local_root_object['value'].decode('utf-8')
-
     return {
         'status': 'ok',
         'global_root': global_root_object,
