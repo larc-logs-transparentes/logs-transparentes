@@ -19,7 +19,6 @@ class Dashboard extends Component {
 
   async componentDidMount() {
     const root = await getTrustedRoot()
-    console.log(root)
     this.setState({ root: root.value })
   }
 
@@ -47,15 +46,6 @@ class Dashboard extends Component {
         </Row>
         <Row>
           <Col md={6} style={cardStyles}>
-              {/* <Card>
-                <Chart/>
-                <CardBody>
-                  <CardTitle>Último resultado parcial</CardTitle>
-                  <Link to="elements/chart_detail">
-                  <Button>Detalhes</Button>
-                  </Link>
-                </CardBody>
-              </Card> */}
           </Col>
         </Row>
         <Row>

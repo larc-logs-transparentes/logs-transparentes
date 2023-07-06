@@ -9,7 +9,7 @@ import {
   Label,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import Lock from './lock.js'
+import Cadeado from './Cadeado.jsx'
 import {getBuById} from '../../../api/bu.api.js'
 
 class MostrarBU extends Component {
@@ -63,7 +63,7 @@ class MostrarBU extends Component {
           {(this.state.id !== null && this.state.id !== undefined) && (
             <button className="btn float-right" onClick={() => this.onClickShowProof.bind(this)}>
               <Link to={`/elements/mostrarbuprova/${this.state.id}`} target='_blank'>
-                <Lock id={this.state.id} />
+                <Cadeado id={this.state.id} />
               </Link>
             </button>
           )}
