@@ -62,7 +62,6 @@ def db_get_all_global_tree_roots():
     roots = database['global_tree_roots'].find({}, sort=[('tree_size', 1)])
     roots = list(roots)
     for root in roots:
-        root['value'] = root['value'].decode('utf-8')
         del root['_id']
     return roots
 
