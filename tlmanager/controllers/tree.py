@@ -1,5 +1,5 @@
 from fastapi.responses import JSONResponse
-from controllers.database import db_get_all_global_tree_leaves, db_get_last_consistency_proof, db_insert_global_tree_leaf, db_insert_consistency_proof, db_get_global_tree_root
+from controllers.database import *
 from services.trees_states import trees, save_state
 from services.objects_models import build_global_tree_root_object, build_local_tree_root_object
 
@@ -56,7 +56,6 @@ def append_global_tree(entry):
     global_root = build_global_tree_root_object(global_tree)
     db_insert_global_tree_leaf(global_tree.length - 1, entry, global_root)
 
-    #if global_tree.length % global_tree.commitment_size == 0: #TODO
     save_consistency_proof('global_tree', global_root)
 
     return {'status': 'ok'}
@@ -117,6 +116,9 @@ def get_global_tree_root(tree_size=None):
             return JSONResponse({'status': 'error', 'message': 'Tree size out of range'}, status_code=400)
         
     return JSONResponse({'status': 'ok', 'root': db_get_global_tree_root(tree_size)}, status_code=200)
+
+def get_global_tree_all_roots():
+    return JSONResponse({'status': 'ok', 'roots': db_get_all_global_tree_roots()}, status_code=200)
 
 def trees_list():
     return JSONResponse({'status': 'ok', 'trees': list(trees)}, status_code=200)
