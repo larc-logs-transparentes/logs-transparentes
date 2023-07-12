@@ -46,3 +46,64 @@ export function getTrustedRootLocal(){
         
     })
 }
+export function getAllRoots(){
+    return new Promise(function (resolve, reject){
+        axios.get(`${bu_api_url}/global-tree/all-roots`)
+        .then((res) => {
+            console.log(res.data)
+            resolve((res.data));
+            //console.log(rootS)
+        },
+        (err) => {
+            console.log(err)
+            reject(err);
+        })
+        
+    })
+}
+export function getAllConsistencyProof(){
+    return new Promise(function (resolve, reject){
+        axios.get(`${bu_api_url}/all-consistency-proof?tree_name=global_tree`)
+        .then((res) => {
+            console.log(res.data)
+            resolve((res.data));
+            //console.log(rootS)
+        },
+        (err) => {
+            console.log(err)
+            reject(err);
+        })
+        
+    })
+}
+export function getAllLeafData(){
+    return new Promise(function (resolve, reject){
+        axios.get(`${bu_api_url}//global-tree/all-leaf-data`)
+        .then((res) => {
+            console.log(res.data)
+            resolve((res.data));
+            //console.log(rootS)
+        },
+        (err) => {
+            console.log(err)
+            reject(err);
+        })
+        
+    })
+}
+
+export function getLocalTreeList(){
+    return new Promise(function (resolve, reject){
+        axios.get(`${bu_api_url}//global-tree/all-leaf-data`)
+        .then((res) => {
+            console.log(res.data)
+            resolve((res.data));
+            //console.log(rootS)
+        },
+        (err) => {
+            console.log(err)
+            reject(err);
+        })
+        
+    })
+}
