@@ -260,6 +260,32 @@ localhost:8000/global-tree/all-leaf-data
 ```
 """
 
+TREE_ALL_ROOT_GLOBAL_TREE_DESCRIPTION = """
+Get the history of all the roots of the global tree, sorted by tree size.
+
+### Example
+```
+localhost:8000/global-tree/all-roots
+```
+
+### Response
+```json
+{
+    "status": "ok",
+    "roots": [
+        {
+           "value": "...", // root hash
+            "tree_name": "global-tree",
+            "tree_size": 10
+            "signature": "..." // signature of the root
+            "timestamp": "..." // timestamp of the root
+        }, 
+        ...
+    ]
+}
+```
+"""
+
 descriptions = {
     'tree_create': TREE_CREATE_DESCRIPTION,
     'insert_leaf': INSERT_LEAF_DESCRIPTION,
@@ -268,5 +294,6 @@ descriptions = {
     'tree_root': TREE_ROOT_DESCRIPTION,
     'tree_leaf': TREE_LEAF_DESCRIPTION,
     'global_tree_root': TREE_GLOBAL_ROOT_DESCRIPTION,
-    'global_tree_all_leaves': TREE_ALL_LEAF_DATA_DESCRIPTION
+    'global_tree_all_leaves': TREE_ALL_LEAF_DATA_DESCRIPTION,
+    'global_tree_all_roots': TREE_ALL_ROOT_GLOBAL_TREE_DESCRIPTION
 }

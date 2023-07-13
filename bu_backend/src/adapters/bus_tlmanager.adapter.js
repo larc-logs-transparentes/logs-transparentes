@@ -5,7 +5,7 @@ const tlmanagerPort = require('../config/config').tlmanagerPort
 /* admin routes */
 exports.addLeaf = (tree_name, data) => {
   return axios.post(`${tlmanagerHostname}:${tlmanagerPort}/insert-leaf`, {
-      "tree-name": tree_name,
+      "tree_name": tree_name,
       "data": data
     })
     .then(res => {
@@ -19,8 +19,8 @@ exports.addLeaf = (tree_name, data) => {
 
 exports.createTree = (tree_name, commitment_size) => {
   return axios.post(`${tlmanagerHostname}:${tlmanagerPort}/tree-create`, {
-      "tree-name": tree_name,
-      "commitment-size": commitment_size
+      "tree_name": tree_name,
+      "commitment_size": commitment_size
     })
     .then(res => {
       console.log(res.data)
@@ -33,7 +33,7 @@ exports.createTree = (tree_name, commitment_size) => {
 
 exports.commit = (tree_name) => {
   return axios.post(`${tlmanagerHostname}:${tlmanagerPort}/tree/commit`, {
-    "tree-name": tree_name
+    "tree_name": tree_name
   })
   .then(res => {
     return res.data
@@ -45,7 +45,7 @@ exports.commit = (tree_name) => {
 
 /* Tree routes */
 exports.getTree = (tree_name) => {
-  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/tree?tree-name=${tree_name}`)
+  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/tree?tree_name=${tree_name}`)
   .then(res => {
     console.log(res.data)
       return res.data
@@ -56,7 +56,7 @@ exports.getTree = (tree_name) => {
 }
 
 exports.getTreeRoot = (tree_name) => {
-  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/tree/root?tree-name=${tree_name}`)
+  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/tree/root?tree_name=${tree_name}`)
     .then(res => {
       console.log(res.data)
       return res.data
@@ -69,7 +69,7 @@ exports.getTreeRoot = (tree_name) => {
 
 /* Proofs routes */
 exports.getConsistencyProof = (tree_name) => {
-  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/all-consistency-proof?tree-name=${tree_name}`)
+  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/all-consistency-proof?tree_name=${tree_name}`)
   .then(res => {
     return res.data
   })
@@ -79,7 +79,7 @@ exports.getConsistencyProof = (tree_name) => {
 }
 
 exports.getDataProof = (tree_name, leaf_index) => {
-  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/data-proof?tree-name=${tree_name}&index=${leaf_index}`)
+  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/data-proof?tree_name=${tree_name}&index=${leaf_index}`)
   .then(res => {
     return res.data
   })
@@ -89,7 +89,7 @@ exports.getDataProof = (tree_name, leaf_index) => {
 }
 
 exports.getInclusionProof = (tree_name, leaf_index) => {
-  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/inclusion-proof?tree-name=${tree_name}&index=${leaf_index}`)
+  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/inclusion-proof?tree_name=${tree_name}&index=${leaf_index}`)
   .then(res => {
     return res.data
   })

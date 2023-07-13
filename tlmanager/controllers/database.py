@@ -25,6 +25,11 @@ def db_get_all_consistency_proof(tree_name):
     for proof in proofs:
         proof['root']['value'] = proof['root']['value'].decode('utf-8')
         del proof['_id']
+        try:
+            if proof['root']['_id']:
+                del proof['root']['_id']
+        except KeyError:
+            """ Is not a global tree """
     return proofs
 
 def db_get_global_tree_root(tree_size=None):
@@ -51,10 +56,18 @@ def db_get_all_state():
     if state:
         for s in state:
             del s['_id']
-            file = gridfs_load(s['tree_name'])
-            if file:
-                s['hashes'] = file['hashes'] + s['hashes']
+            _file = gridfs_load(s['tree_name'])
+            if _file:
+                s['hashes'] = _file['hashes'] + s['hashes']
     return state
+
+def db_get_all_global_tree_roots():
+    roots = database['global_tree_roots'].find({}, sort=[('tree_size', 1)])
+    roots = list(roots)
+    for root in roots:
+        root['value'] = root['value'].decode('utf-8')
+        del root['_id']
+    return roots
 
 def db_insert_global_tree_leaf(index, value,  global_tree_root_object):
     database['global_tree_leaves'].insert_one({
