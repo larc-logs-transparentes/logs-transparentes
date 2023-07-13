@@ -3,12 +3,11 @@ import cadVerde from '../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../assets/images/cad-vermelho.png';
 import { verifySingleData } from '../../../services/verifications.js';
 
-export default function Lock(props) {
+export default function Cadeado(props) {
   const [isProofTrue, setIsProofTrue] = useState("(loading...)");
   
   useEffect(() => {
     const run = async () => {
-      console.log(props.id)
       const isProofTrue = await verifySingleData(props.id);
       console.log(isProofTrue)
       setIsProofTrue(isProofTrue);
