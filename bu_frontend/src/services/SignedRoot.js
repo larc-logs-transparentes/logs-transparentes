@@ -1,4 +1,4 @@
-import {getDataProof, getTrustedRoot,getAllRoots,getAllConsistencyProof,getAllLeafData,getLocalTreeList} from '../api/merkletree.api.js';
+import {getDataProof, getTrustedRoot,getAllRoots,getAllConsistencyProof,getAllLeafData,getLocalTreeList,getTreeResponse} from '../api/merkletree.api.js';
 import {getBuById} from '../api/bu.api.js';
 import {initPyodide,formatProofDataToPython} from './pyodide.js';
 export async function SingedRoot(id) {
@@ -9,6 +9,7 @@ export async function SingedRoot(id) {
     let allLeafData = await getAllLeafData();
     let proofData = await getDataProof(id);
     let localTreeList = await getLocalTreeList();
+    let treeResponse = await getTreeResponse();
 
     // Some formatation necessary for pyodide
     formatProofDataToPython(proofData)
@@ -18,6 +19,7 @@ export async function SingedRoot(id) {
     proofData = JSON.stringify(proofData)
     localTreeList = JSON.stringify(localTreeList)
     let buInteiro = JSON.stringify(bu["bu_inteiro"])
+    treeResponse = JSON.stringify(treeResponse)
     
 
     const pyodide = await initPyodide(); 
@@ -57,9 +59,7 @@ export async function SingedRoot(id) {
 
     def remove_empty_trees(tree_list):
         for tree in tree_list:
-            tree_response = requests.get(URL + "/tree", params={
-                "tree_name": tree
-            })
+            tree_response = str(${treeResponse})}
             tree_info = json.loads(tree_response.text)
 
             if (tree_info["length"] == 0):
