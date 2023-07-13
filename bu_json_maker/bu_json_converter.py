@@ -4,7 +4,7 @@ import os
 import json
 
 
-from constants import ASN1_SPECS_PATH, RESULT_JSON_PATH, RESULT_FOLDER, ALL_BU_FOLDERS_PATH
+from constants import ASN1_SPECS_PATH, RESULT_FOLDER, ALL_BU_FOLDERS_PATH
 
 
 # Helper class to encode BU to JSON
@@ -53,9 +53,12 @@ def get_list_all_bus_json_from_path(path):
 
     for file in files_list:
         bu_list.append(convert_bu_to_json(file))
-        print(f"{path.rsplit('/', 1)[-1]} {files_list.index(file)} de {len(files_list)}", end='\r')
+        print(f"{path.rsplit('/', 1)[-1]} {files_list.index(file)} of {len(files_list)}", end='\r')
         # if files_list.index(file) == 1:   # Stops at only 2 items from each list, for testing purposes
         #     break
+    print(f"{path.rsplit('/', 1)[-1]} {len(files_list)} of {len(files_list)}")
+    print();
+    
     return bu_list
 
 
@@ -74,12 +77,13 @@ def write_bus_as_json_to_file(all_bus_path):
     if not os.path.exists(RESULT_FOLDER):
         os.makedirs(RESULT_FOLDER)
 
-    hard_file = open(RESULT_JSON_PATH, 'w')
-    hard_file.write('[')
-
     # Iterate directories in path
-    bus_json_text = ''
     for bus_dir in bus_dirs:
+        print(bus_dir)
+        hard_file = open(f'{RESULT_FOLDER}/{bus_dir.rsplit("/", 1)[-1]}.json', 'w')
+        hard_file.write('[')
+
+        bus_json_text = ''
         bus_json = get_list_all_bus_json_from_path(bus_dir)
 
         # Iterate BUs in directory
@@ -89,16 +93,16 @@ def write_bus_as_json_to_file(all_bus_path):
         # Write data from dir to file
         hard_file.write(bus_json_text)
         bus_json_text = ''  # clean variable before starting next dir
+        
+        # Close file after writing content from every directory
+        hard_file.close()
 
-    # Close file after writing content from every directory
-    hard_file.close()
-
-    # Open file with bytes writing permissions
-    with open(RESULT_JSON_PATH, 'rb+') as f:
-        f.seek(-1, 2)
-        f.truncate()    # removes last comma
-        f.write(bytearray(b']'))    # inserts last closing bracket
-        f.close()
+        # Open file with bytes writing permissions
+        with open(f'{RESULT_FOLDER}/{bus_dir.rsplit("/", 1)[-1]}.json', 'rb+') as f:
+            f.seek(-1, 2)
+            f.truncate()    # removes last comma
+            f.write(bytearray(b']'))    # inserts last closing bracket
+            f.close()
 
 
 # Function to test decoding of generated JSON

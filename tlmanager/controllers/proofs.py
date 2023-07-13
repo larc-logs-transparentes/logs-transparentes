@@ -43,8 +43,8 @@ def get_data_proof(tree_name, data=None, index=None):
     data_proof_object = build_data_proof_object(
         global_root_object, 
         local_root_object, 
-        local_proof['proof'], 
-        global_proof['proof']
+        global_proof['proof'],
+        local_proof['proof']
     )
 
     return JSONResponse(data_proof_object, status_code=200)

@@ -3,8 +3,6 @@ from services.objects_models import build_state_object
 
 from transparentlogs_pymerkle import MerkleTree 
 
-COMMITMENT_SIZE_GLOBAL_TREE = 2
-
 def save_state(tree, list_entries=[]):
     last_state = db_get_one_state(tree.tree_name)
     if last_state: 
@@ -41,7 +39,7 @@ def __init_trees_from_state(state):
 def __init_global_tree():
     global_tree = MerkleTree()
     global_tree.tree_name = 'global_tree'
-    global_tree.commitment_size = COMMITMENT_SIZE_GLOBAL_TREE
+    global_tree.commitment_size = 1
     save_state(global_tree)
     return {'global_tree': global_tree}
 
