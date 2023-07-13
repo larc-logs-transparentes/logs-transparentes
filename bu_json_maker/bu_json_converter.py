@@ -56,6 +56,7 @@ def get_list_all_bus_json_from_path(path):
         print(f"{path.rsplit('/', 1)[-1]} {files_list.index(file)} of {len(files_list)}", end='\r')
         # if files_list.index(file) == 1:   # Stops at only 2 items from each list, for testing purposes
         #     break
+    print(f"{path.rsplit('/', 1)[-1]} {len(files_list)} of {len(files_list)}")
     print();
     
     return bu_list
