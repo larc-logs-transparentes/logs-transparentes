@@ -20,7 +20,7 @@ export async function verifySingleData(id) {
     import json
     def func():
       proofData=str(${proofData})
-      proofData=proofData.replace("'",'"') # isso realmente é necessário?
+      proofData=proofData.replace("'",'"')
       proofData=json.loads(proofData)
 
       # Definindo true do javascript como True do python
@@ -35,7 +35,7 @@ export async function verifySingleData(id) {
 
       bu=str(${buInteiro})
       root=str(${root})
-      root=root.replace("'",'"') # isso realmente é necessário?
+      root=root.replace("'",'"')
       root=json.loads(root)
       verifyresult =verify_single_data(proofData, root['value'],bytes(bu,'utf-8'))
       return str(verifyresult["success"])
