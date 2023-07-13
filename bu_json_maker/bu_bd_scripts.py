@@ -143,6 +143,9 @@ def insert_list_bus_to_db():
             for bu in json_bus:
                 res = insert_body_to_db(BU_TREE_NAME, parse_bu(bu, _id))
                 print(f'{file} - {json_bus.index(bu)} of {len(json_bus)}, {res}', end='\r')
+                if res.status_code != 200:
+                    print(f"Error: {res.text}")
+                    return
                 _id += 1
             print(f'{file} - {len(json_bus)} of {len(json_bus)}, {res}', end='\r')
             print()

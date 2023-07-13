@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({limit: '5000mb'}));
+app.use(express.urlencoded({limit: '5000mb', extended: true}));
 
 const cors = require("cors");
 const cors_origin_url = require('./src/config/config').cors_origin_url

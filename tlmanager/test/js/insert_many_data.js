@@ -2,8 +2,8 @@ const axios = require('axios');
 
 const createTree = async (tree_name, commitment_size) => {
     return axios.post('http://localhost:8000/tree-create', {
-        "tree-name": tree_name,
-        "commitment-size": commitment_size
+        "tree_name": tree_name,
+        "commitment_size": commitment_size
     }).then((res) => {
         console.log(res.data);
     }).catch((err) => {
@@ -13,7 +13,7 @@ const createTree = async (tree_name, commitment_size) => {
 
 const insertLeaf = (tree_name, data) => {
     return axios.post('http://localhost:8000/insert-leaf', {
-        "tree-name": tree_name,
+        "tree_name": tree_name,
         "data": data
     }).then((res) => {
         //console.log(res.data);
@@ -24,7 +24,7 @@ const insertLeaf = (tree_name, data) => {
 
 const commitTree = (tree_name) => {
     return axios.post('http://localhost:8000/tree/commit', {
-        "tree-name": tree_name
+        "tree_name": tree_name
     })
     .then((res) => {
         console.log(res.data);
