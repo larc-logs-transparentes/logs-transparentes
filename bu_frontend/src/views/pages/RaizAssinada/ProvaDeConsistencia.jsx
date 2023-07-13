@@ -1,14 +1,14 @@
 import React, { useEffect,useState } from 'react';
 import cadVerde from '../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../assets/images/cad-vermelho.png';
-import { verifySingleData } from '../../../services/verifications.js';
+import { SignedRoot } from '../../../services/SignedRoot';
 
-export default function Cadeado(props) {
+export default function provaDeConsistencia(props) {
   const [isProofTrue, setIsProofTrue] = useState("(loading...)");
   
   useEffect(() => {
     const run = async () => {
-      const isProofTrue = await verifySingleData(props.id);
+      const isProofTrue = await SignedRoot();
       console.log(isProofTrue)
       setIsProofTrue(isProofTrue);
     };
@@ -18,10 +18,7 @@ export default function Cadeado(props) {
   return (
     <div>
       <p>
-        <img
-          src={ isProofTrue === 'True' ? cadVerde : cadVermelho }
-          alt="estado"
-        />
+          {isProofTrue}
       </p>
     </div>
   );

@@ -1,7 +1,7 @@
 import {getDataProof, getTrustedRoot,getAllRoots,getAllConsistencyProof,getAllLeafData,getLocalTreeList,getTreeResponse} from '../api/merkletree.api.js';
 import {getBuById} from '../api/bu.api.js';
 import {initPyodide,formatProofDataToPython} from './pyodide.js';
-export async function SingedRoot(id) {
+export async function SignedRoot(id) {
     let bu = await getBuById(id);
     let root = await getTrustedRoot(); // get from trusted souce (e.g., monitor)
     let allGlobalRoots = await getAllRoots(); 
@@ -10,7 +10,6 @@ export async function SingedRoot(id) {
     let proofData = await getDataProof(id);
     let localTreeList = await getLocalTreeList();
     let treeResponse = await getTreeResponse();
-
     // Some formatation necessary for pyodide
     formatProofDataToPython(proofData)
     root = JSON.stringify(root)

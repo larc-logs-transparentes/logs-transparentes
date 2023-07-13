@@ -48,7 +48,7 @@ export function getTrustedRootLocal(){
 }
 export function getAllRoots(){
     return new Promise(function (resolve, reject){
-        axios.get(`${bu_api_url}/global-tree/all-roots`)
+        axios.get(`${bu_api_url}/global_tree/all-roots`)
         .then((res) => {
             console.log(res.data)
             resolve((res.data));
@@ -78,7 +78,7 @@ export function getAllConsistencyProof(){
 }
 export function getAllLeafData(){
     return new Promise(function (resolve, reject){
-        axios.get(`${bu_api_url}/global-tree/all-leaf-data`)
+        axios.get(`${bu_api_url}/global_tree/all-leaf-data`)
         .then((res) => {
             console.log(res.data)
             resolve((res.data));
@@ -109,7 +109,7 @@ export function getLocalTreeList(){
 }
 export function getTreeResponse(){
     return new Promise(function (resolve, reject){
-        axios.get(`${bu_api_url}/tree/?tree-name=tree`)
+        axios.get(`${bu_api_url}/tree/?tree_name=tree`)
         .then((res) => {
             console.log(res.data)
             resolve((res.data));

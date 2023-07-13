@@ -1,11 +1,11 @@
 import React, { useEffect,useState } from 'react';
 import { Card, CardBody } from 'reactstrap'
-import { provaDeConsistencia } from '../logic/consistencyProof';
 import { getRootAll } from '../../../api/bu.api';
+import { getAllRoots } from '../../../api/merkletree.api';
 import {baixarRoots} from './Roots.js';
 import ReactJson from 'react-json-view'
 export default function Raizassinada() {
-  getRootAll()
+  getAllRoots()
   const [vetorvalidar,setVetor] = useState([]);
   const [rootsbaixadas,setRootsBaixadas] = useState([]);
   const [rootbaixada,setRootBaixada] = useState([]);
@@ -15,17 +15,17 @@ export default function Raizassinada() {
   useEffect(() => {
     baixarRoots().then((z) => {
       setRootsBaixadas(z);
-      setHashVector(
-        z.map((root) => {
-          let hash = '';
-          const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-          for (let i = 0; i < 26; i++) {
-            const randomIndex = Math.floor(Math.random() * characters.length);
-            hash += characters[randomIndex];
-          }
-          return hash;
-        })
-      );
+      // setHashVector(
+      //   z.map((root) => {
+      //     let hash = '';
+      //     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      //     for (let i = 0; i < 26; i++) {
+      //       const randomIndex = Math.floor(Math.random() * characters.length);
+      //       hash += characters[randomIndex];
+      //     }
+      //     return hash;
+      //   })
+      // );
     });
   }, []);
 
@@ -34,7 +34,8 @@ export default function Raizassinada() {
     let saveRootBaixada=[]
     while(i < rootsbaixadas.length){
       saveRootBaixada.push(rootsbaixadas[i])
-      let resultadoProva=provaDeConsistencia(rootsbaixadas[i])
+      let resultadoProva=1
+      // let resultadoProva=provaDeConsistencia(rootsbaixadas[i])
       if (resultadoProva===true){
         vetorvalidar[i]='Correta'}
       if ( resultadoProva === false ){
@@ -86,13 +87,13 @@ export default function Raizassinada() {
                       <small>{hashVector}</small>
                     </h5>)}
                 </div>
-                <div>
+                {/* <div>
                 <h5>Validação</h5>
                   {vetorvalidar.map((vetorvalidar, i)=> 
                     <h5 key={i} style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw'}}>
                       {vetorvalidar}
                     </h5>)}
-                </div>
+                </div> */}
               </div>
             </div>
             <div style={{gap:'6vw', marginTop:'10vw',textAlign:'start',alignContent:'start', width:'100%'}}>
