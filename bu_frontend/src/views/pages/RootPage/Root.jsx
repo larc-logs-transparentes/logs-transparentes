@@ -10,7 +10,7 @@ class Root extends Component {
   }
   async componentDidMount() {
     const root = await getTrustedRoot()
-    console.log(root)
+
     this.setState({ root: root.value })
   }
 
