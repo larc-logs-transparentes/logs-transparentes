@@ -3,14 +3,14 @@ from services.keys import sign_root
 
 def build_local_tree_root_object(tree):
     return {
-        'value': tree.root,
+        'value': tree.root.decode('utf-8'),
         'tree_name': tree.tree_name,
         'tree_size': tree.length,
     }
 
 def build_global_tree_root_object(global_tree):
     return {
-        'value': global_tree.root,
+        'value': global_tree.root.decode('utf-8'),
         'tree_name': global_tree.tree_name,
         'tree_size': global_tree.length,
         'signature': sign_root(global_tree.root),
