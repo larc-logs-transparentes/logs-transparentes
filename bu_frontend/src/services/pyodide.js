@@ -5,9 +5,9 @@ export async function initPyodide(){
   await pyodide.loadPackage("micropip");
   const micropip = pyodide.pyimport("micropip");
   await pyodide.loadPackage([
-    "https://test-files.pythonhosted.org/packages/c1/77/9c1b3152c0021a6e16314aca96ab1de5a96568572d90b52aaf545fe88e53/tlverifier-0.0.10-py3-none-any.whl"]
+    "https://test-files.pythonhosted.org/packages/40/c5/59ea5c707b79a81ef357dd311c79c74eb5059c1b0d143c9ea65dc5d4699c/tlverifier-0.0.25-py3-none-any.whl"]
   );
-  await micropip.install(["pymerkle-logsTransparentes", "requests"]);
+  await micropip.install(["pymerkle-logsTransparentes", "requests","setuptools"]);
 
   return pyodide
 }

@@ -3,7 +3,7 @@ const bu_api_url = require('../config.json').bu_api_url
 
 export function getDataProof(id){
     return new Promise(function (resolve, reject){
-        axios.get(`${bu_api_url}/data-proof?tree_name=bu_tree&index=${id}`)
+        axios.get(`${bu_api_url}/tree/data-proof?tree-name=bu_tree&index=${id}`)
         .then((res) => {
             console.log(res.data)
             resolve((res.data));
@@ -18,7 +18,7 @@ export function getDataProof(id){
 }
 export function getTrustedRoot(){
     return new Promise(function (resolve, reject){
-        axios.get(`${bu_api_url}/global-tree/root`)
+        axios.get(`${bu_api_url}/tree/tree-root?tree-name=global_tree`)
         .then((res) => {
             console.log(res.data)
             resolve((res.data));
