@@ -4,7 +4,6 @@ def db_get_all_global_tree_leaves():
     leaves = database['global_tree_leaves'].find()
     leaves_array = []
     for leaf in leaves:
-        leaf['value']['value'] = leaf['value']['value'].decode('utf-8')
         leaves_array.append({
             'index': leaf['index'],
             'value': leaf['value']
@@ -23,7 +22,6 @@ def db_get_all_consistency_proof(tree_name):
     proofs = database['consistency_proofs'].find({'root.tree_name': tree_name}, sort=[('root.tree_size', 1)])
     proofs = list(proofs)
     for proof in proofs:
-        proof['root']['value'] = proof['root']['value'].decode('utf-8')
         del proof['_id']
         try:
             if proof['root']['_id']:
@@ -38,7 +36,6 @@ def db_get_global_tree_root(tree_size=None):
     else:
         global_tree_root = database['global_tree_roots'].find_one({}, sort=[('tree_size', -1)])
     if global_tree_root:
-        global_tree_root['value'] = global_tree_root['value'].decode('utf-8')
         del global_tree_root['_id']
     return global_tree_root
 
@@ -65,7 +62,6 @@ def db_get_all_global_tree_roots():
     roots = database['global_tree_roots'].find({}, sort=[('tree_size', 1)])
     roots = list(roots)
     for root in roots:
-        root['value'] = root['value'].decode('utf-8')
         del root['_id']
     return roots
 
@@ -85,6 +81,9 @@ def db_update_state(tree_name, state):
     try:
         database['state'].update_one({'tree_name': tree_name}, {'$set': state}, upsert=True)
     except pymongo_errors.DocumentTooLarge:
+        gridfs_save(tree_name, state)
+        database['state'].update_one({'tree_name': tree_name}, {'$set': {'hashes': []}}, upsert=True)
+    except pymongo_errors.WriteError:
         gridfs_save(tree_name, state)
         database['state'].update_one({'tree_name': tree_name}, {'$set': {'hashes': []}}, upsert=True)
 
