@@ -36,9 +36,9 @@ export async function SignedRoot(id) {
         global_tree_proofs = get_all_consistency_proof("global_tree")
         result = verify_global_tree_history_consistency(global_tree_proofs, trusted_global_roots)
         if(result["success"] == True):
-            return "Verify consistency on global tree: ok"
+            return str("Verify consistency on global tree: ok")
         else:
-            return "Verify consistency on global tree: Failed"
+            return str("Verify consistency on global tree: Failed")
     
     
         global_tree_data = get_all_global_tree_leaf()

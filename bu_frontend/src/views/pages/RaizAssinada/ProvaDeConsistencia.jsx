@@ -3,7 +3,7 @@ import cadVerde from '../../../assets/images/cad-verde.png';
 import cadVermelho from '../../../assets/images/cad-vermelho.png';
 import { SignedRoot } from '../../../services/SignedRoot';
 
-export default function provaDeConsistencia(props) {
+export default function ProvaDeConsistencia(props) {
   const [isProofTrue, setIsProofTrue] = useState("(loading...)");
   
   useEffect(() => {

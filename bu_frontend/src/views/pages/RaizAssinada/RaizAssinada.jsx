@@ -1,104 +1,67 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardBody } from 'reactstrap'
-import { getRootAll } from '../../../api/bu.api';
 import { getAllRoots } from '../../../api/merkletree.api';
-import {baixarRoots} from './Roots.js';
 import ReactJson from 'react-json-view'
+import ProvaDeConsistencia from './ProvaDeConsistencia.jsx'
 export default function Raizassinada() {
-  getAllRoots()
-  const [vetorvalidar,setVetor] = useState([]);
-  const [rootsbaixadas,setRootsBaixadas] = useState([]);
-  const [rootbaixada,setRootBaixada] = useState([]);
-  const [hashVector,setHashVector] = useState([]);
-  const i=0
+  const [vetorvalidar, setVetor] = useState([]);
+  const [rootsbaixadas, setRootsBaixadas] = useState([]);
+  const [rootbaixada, setRootBaixada] = useState([]);
+  const [hashVector, setHashVector] = useState([]);
   const [show, setShow] = useState(false);
+
   useEffect(() => {
-    baixarRoots().then((z) => {
-      setRootsBaixadas(z);
-      // setHashVector(
-      //   z.map((root) => {
-      //     let hash = '';
-      //     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      //     for (let i = 0; i < 26; i++) {
-      //       const randomIndex = Math.floor(Math.random() * characters.length);
-      //       hash += characters[randomIndex];
-      //     }
-      //     return hash;
-      //   })
-      // );
+    getAllRoots().then((z) => {
+      console.log('rootsbaixadas:', z);
+      setRootsBaixadas(z.roots);
     });
   }, []);
-
-  function validar(i){
-    let vetorvalidar=[]
-    let saveRootBaixada=[]
-    while(i < rootsbaixadas.length){
-      saveRootBaixada.push(rootsbaixadas[i])
-      let resultadoProva=1
-      // let resultadoProva=provaDeConsistencia(rootsbaixadas[i])
-      if (resultadoProva===true){
-        vetorvalidar[i]='Correta'}
-      if ( resultadoProva === false ){
-        vetorvalidar[i]='#ERRO#'
-        resultadoProva=0}
-      i++
-      setShow(true)
-      setRootBaixada(rootbaixada=>saveRootBaixada)}
-    return vetorvalidar
-  }
-
-
+  
 
   return (
     <React.Fragment>
       <Card>
-        <CardBody >
+        <CardBody>
           <h4>Histórico da árvore de BUs</h4>
-          <div style={{textAlign:'center'}}>
-          <button disabled={show} onClick={()=> setVetor(vetorvalidar=>validar(i))} style={{backgroundColor:'#81bf73',borderWidth:'.2px',height:'7vh',borderRadius:'.2rem'}}>
-                Verificar integridade 
+          <div style={{ textAlign: 'center' }}>
+            <button disabled={show} onClick={() => setVetor(vetorvalidar => 1)} style={{ backgroundColor: '#81bf73', borderWidth: '.2px', height: '7vh', borderRadius: '.2rem' }}>
+              Verificar integridade
             </button>
+            <ProvaDeConsistencia/>
           </div>
           <div>
-            <div style={{marginLeft:'20%', textAlign:'center'}}>
-              <div style={{display:'flex-column', textAlign:'center',position:'static',marginTop:'30vh'}}>
-              <div style={{display:'flex',position:'relative',gap:'0.5vw',textAlign:'center',fontSize:'30px',padding:'.3vw',marginTop:'-20vh',marginLeft:'auto',marginRight:'auto'}}>
-                <div >
-                    <h5>ID</h5>
-                    {rootsbaixadas.map((rootsbaixadas, i) => <h5 key={i} style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px'}}>{rootsbaixadas._id}</h5>)}
-                </div>
-                <div>
-                    <h5>Raiz parcial da árvore</h5>
-                    {rootsbaixadas.map((rootsbaixadas, i)=> <h5 key={i} style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',borderRadius:'2px',textAlign:'justify'}}>
-                     <small>{rootsbaixadas.second_hash}</small>
-                     </h5>)}
-                </div>
-                <div>
-                  <h5>Tamanho</h5>
-                  {rootsbaixadas.map((rootsbaixadas, i) => 
-                    <h5 key={i} style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw',position:'flex'}}>
-                      {rootsbaixadas.tree_size_2}
-                    </h5>)}
-                </div> 
-                <div>
+            <div style={{ overflowX: 'scroll', textAlign: 'center', padding:'4rem'}}>
+            <div style={{ marginTop: '30vh', textAlign: 'center' }}>
+              <div style={{ display: 'flex', gap: '0.5vw', fontSize: '30px', padding: '.3vw', marginTop: '-20vh', marginRight: 'auto' }}>
+              <div style={{ width: '40%' }}>
                 <h5>Assinatura</h5>
-                  {hashVector.map((hashVector, i)=> 
-                    <h5 key={i} style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw'}}>
-                      <small>{hashVector}</small>
-                    </h5>)}
+                {rootsbaixadas && rootsbaixadas.map((root, i) => (
+                  <h5 key={i} style={{ color: 'black', backgroundColor: '#c4c4c4', padding: '.4vw', borderRadius: '2px', overflowX: 'scroll', whiteSpace: 'nowrap' }}>
+                    {root.signature}
+                  </h5>
+                ))}
+              </div>
+                <div style={{ width: '45%' }}>
+                  <h5>Raiz</h5>
+                  {rootsbaixadas && rootsbaixadas.map((root, i) => (
+                    <h5 key={i} style={{ color: 'black', backgroundColor: '#c4c4c4', padding: '.4vw', overflowX: 'scroll', whiteSpace: 'nowrap' }}>
+                      {root.value}
+                    </h5>
+                  ))}
                 </div>
-                {/* <div>
-                <h5>Validação</h5>
-                  {vetorvalidar.map((vetorvalidar, i)=> 
-                    <h5 key={i} style={{color:'black',backgroundColor:'#c4c4c4',padding:'.4vw'}}>
-                      {vetorvalidar}
-                    </h5>)}
-                </div> */}
+                <div style={{ width: '5%' }}>
+                  <h5>Tamanho</h5>
+                  {rootsbaixadas && rootsbaixadas.map((root, i) => (
+                    <h5 key={i} style={{ color: 'black', backgroundColor: '#c4c4c4', padding: '.4vw', borderRadius: '2px', overflowX: 'scroll', whiteSpace: 'nowrap' }}>
+                      <small>{root.tree_size}</small>
+                    </h5>
+                  ))}
+                </div>
               </div>
             </div>
             <div style={{gap:'6vw', marginTop:'10vw',textAlign:'start',alignContent:'start', width:'100%'}}>
                 {show?<ReactJson collapsed displayDataTypes={false} src={rootbaixada} />:null}
-              </div>
+            </div> 
             </div>
           </div>
         </CardBody>
