@@ -1,4 +1,4 @@
-import json
+import ijson
 import time
 import requests
 import os
@@ -139,16 +139,16 @@ def insert_list_bus_to_db():
     _id = 0
     for file in read_files():
         if file.endswith(".json"):
-            json_bus = json.load(open(f"{file}"))
-            for bu in json_bus:
+            print(f"Reading {file}", end=' ', flush=True)
+            json_bus = ijson.items(open(file, "rb"), "item")
+            jsons = (o for o in json_bus)
+            for bu in jsons:                
                 res = insert_body_to_db(BU_TREE_NAME, parse_bu(bu, _id))
-                print(f'{file} - {json_bus.index(bu)} of {len(json_bus)}, {res}', end='\r')
                 if res.status_code != 200:
                     print(f"Error: {res.text}")
                     return
                 _id += 1
-            print(f'{file} - {len(json_bus)} of {len(json_bus)}, {res}', end='\r')
-            print()
+            print("---- Finished")
 
 if __name__ == '__main__':
     create_tree(BU_TREE_NAME)

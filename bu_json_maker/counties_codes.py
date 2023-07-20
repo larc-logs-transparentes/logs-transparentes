@@ -13,5 +13,6 @@ def get_county_codes_json():
 def get_county_uf_and_city_with_number(number):
     counties = get_county_codes_json()
     county = [c for c in counties if c["codigo_tse"] == number]
-
+    if len(county) == 0:
+        return {"codigo_tse":number,"uf":"ZZ","nome_municipio":"Externo","capital":0,"codigo_ibge":0}
     return county[0]
