@@ -9,8 +9,11 @@ const cors_origin_url = require('./src/config/config').cors_origin_url
 app.use(cors({origin: cors_origin_url}));
 
 const { connect } = require("./src/config/mongodb.config");
-mongoose = connect("mongodb://localhost:27017/bu", ["bus", "infobus", "roots"]);
 
+if (process.argv[2] == "reset")
+  mongoose = connect("mongodb://localhost:27017/bu", ["bus", "infobus", "roots"]);
+else
+  mongoose = connect("mongodb://localhost:27017/bu", []);
 // ##############################################################
 // ########################## ROUTES ############################
 // ##############################################################
