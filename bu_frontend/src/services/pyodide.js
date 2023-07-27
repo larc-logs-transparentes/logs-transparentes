@@ -26,3 +26,14 @@ export async function formatProofDataToPython(proofData){
   }
   return proofData
 }
+export async function formatConsistencyProofToPython(allConsistencyProof) {
+  for (let index = 0; index < allConsistencyProof.proofs.length; index++) {
+    const proof = allConsistencyProof.proofs[index];
+    if (proof.consistency_proof.metadata.security === true) {
+      proof.consistency_proof.metadata.security = 'True';
+    } else {
+      proof.consistency_proof.metadata.security = 'False';
+    }
+  }
+  return allConsistencyProof;
+}

@@ -76,21 +76,6 @@ export function getAllConsistencyProof(){
         
     })
 }
-export function getAllLeafData(){
-    return new Promise(function (resolve, reject){
-        axios.get(`${bu_api_url}/tree_global_tree/all-leaf-data`)
-        .then((res) => {
-            console.log(res.data)
-            resolve((res.data));
-            //console.log(rootS)
-        },
-        (err) => {
-            console.log(err)
-            reject(err);
-        })
-        
-    })
-}
 
 export function getLocalTreeList(){
     return new Promise(function (resolve, reject){
