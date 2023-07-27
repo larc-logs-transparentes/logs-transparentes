@@ -137,3 +137,4 @@ Essa funcionalidade permite recalcular os votos da eleição. Ao se iniciar a re
 Se não houver erros, o resultado final será exibido.
 
 ![recontabilizacao](https://user-images.githubusercontent.com/28439483/182241971-d1850ecb-62df-4b38-b32c-a08cb40a7e4d.png)
+

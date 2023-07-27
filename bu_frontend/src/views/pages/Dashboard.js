@@ -7,7 +7,7 @@ import { Card, CardBody, Row, Col,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import monitoresImage from '../../assets/images/monitores.png';
-import { getRoot } from '../../api/bu.api';
+import { getTrustedRoot } from '../../api/merkletree.api.js';
 
 class Dashboard extends Component {
   constructor() {
@@ -18,9 +18,8 @@ class Dashboard extends Component {
   }
 
   async componentDidMount() {
-    const root = await getRoot()
-    console.log(root)
-    this.setState({ root: root })
+    const root = await getTrustedRoot()
+    this.setState({ root: root.value })
   }
 
   render() {
@@ -47,15 +46,6 @@ class Dashboard extends Component {
         </Row>
         <Row>
           <Col md={6} style={cardStyles}>
-              {/* <Card>
-                <Chart/>
-                <CardBody>
-                  <CardTitle>Último resultado parcial</CardTitle>
-                  <Link to="elements/chart_detail">
-                  <Button>Detalhes</Button>
-                  </Link>
-                </CardBody>
-              </Card> */}
           </Col>
         </Row>
         <Row>
@@ -71,7 +61,7 @@ class Dashboard extends Component {
                     Universidade de São Paulo
                   </CardText>
 
-                  <Link to="tree/root">
+                  <Link to="pages/RootPage/Root.jsx">
                   <Button>Detalhes</Button>
                   </Link>
                 </CardBody>

@@ -11,11 +11,11 @@ import {
   Input
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext'
+import PageLoaderContext from '../../../common/components/PageLoader/PageLoaderContext'
 
-class Consultar_BU extends Component {
+class ConsultarBU extends Component {
   axios = require('axios')
-  bu_api_url = require('../../config.json').bu_api_url
+  bu_api_url = require('../../../config.json').bu_api_url
 
   constructor() {
     super()
@@ -34,12 +34,6 @@ class Consultar_BU extends Component {
                   secao_opts: undefined,
                   buSelecionado: undefined,
                 }
-
-    // EXEMPLO DE COMO USAR A FUNÇÃO QUE CHAMA A API
-    // turno, uf, zona, secao
-    /*getBu("1", "SP", 123, "004").then((bu) => {
-      console.log(bu)
-    })*/
     this.findBu = this.findBu.bind(this);
 
   }
@@ -54,8 +48,6 @@ class Consultar_BU extends Component {
     var form  = this.state.formulario
     var len = lista.length
     var i=0
-    console.log(form)
-    console.log(lista)
     while (i<len) {
       if ( form.turno === lista[i].turno && form.uf === lista[i].UF
         && parseInt(form.zona) === lista[i].zona && parseInt(form.secao) === lista[i].secao) {
@@ -64,7 +56,6 @@ class Consultar_BU extends Component {
       i++
     }
 
-    console.log("i=" + i)
     if (i<len) {
       this.setState({buSelecionado: i})
       console.log("buSelecionado=" + this.state.buSelecionado)
@@ -78,7 +69,7 @@ class Consultar_BU extends Component {
 
   handleConsultar(e) {
     e.preventDefault()
-    var url = "/elements/mostrarbu/" + this.findBu()
+    var url = "/pages/MostrarBu/MostrarBu/" + this.findBu()
     console.log(url)
     window.location.href =  url
   }
@@ -95,7 +86,7 @@ class Consultar_BU extends Component {
     var list_bu_with_turn = this.state.lista.filter((item) => item.turno === e.target.value)
     var list_states_filtered = list_bu_with_turn.map((item) => item.UF)
     var list_states_unique = Array.from(new Set(list_states_filtered))
-    this.setState({uf_opts: list_states_unique}, () => console.log("qwer", this.state.uf_opts))
+    this.setState({uf_opts: list_states_unique}, () => console.log( this.state.uf_opts))
   }
   
   handleChangeState(e) {
@@ -106,7 +97,7 @@ class Consultar_BU extends Component {
     var list_zones_filtered = list_bu_with_state.map((item) => item.zona)
     var list_zones_unique = Array.from(new Set(list_zones_filtered))
     list_zones_unique.sort(function(a, b) { return a - b })
-    this.setState({zona_opts: list_zones_unique}, () => console.log("qwer", this.state.zona_opts))
+    this.setState({zona_opts: list_zones_unique}, () => console.log( this.state.zona_opts))
   }
   
   handleChangeZone(e) {
@@ -117,7 +108,7 @@ class Consultar_BU extends Component {
     var list_sections_filtered = list_bu_with_zone.map((item) => item.secao)
     var list_sections_unique = Array.from(new Set(list_sections_filtered))
     list_sections_unique.sort(function(a, b) { return a - b })
-    this.setState({secao_opts: list_sections_unique}, () => console.log("qwer", this.state.secao_opts))
+    this.setState({secao_opts: list_sections_unique}, () => console.log( this.state.secao_opts))
   }
   
 
@@ -212,7 +203,7 @@ class Consultar_BU extends Component {
             <CardBody>
               <PageLoaderContext.Consumer>
                 {context => (
-                  <Link to={"/elements/mostrarbu/id" }> 
+                  <Link to={"/pages/MostrarBu/MostrarBu/id" }> 
                   <Button onClick={this.handleConsultar.bind(this)}>Consultar</Button>
                   </Link>
                 )}
@@ -226,4 +217,4 @@ class Consultar_BU extends Component {
   }
 }
 
-export default Consultar_BU;
+export default ConsultarBU;

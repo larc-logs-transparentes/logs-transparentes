@@ -7,8 +7,8 @@ import {
   CardBody,
 } 
 from 'reactstrap';
-import { getRoot, verifyResultProof, getSumOfVotes_infoBUs } from '../../../../api/merkletree_InfoBUs.api'
-import { getInfoBUsFromIdRange, getResultProofFromIdRange } from '../../../../api/bu.api';
+import { getRoot, verifyResultProof, getSumOfVotes_infoBUs } from '../../../api/merkletree_InfoBUs.api'
+import { getInfoBUsFromIdRange, getResultProofFromIdRange } from '../../../api/bu.api';
 import SelecaoCidade from './SelecaoCidade';
 import ProvaParcial from './ProvaParcial';
 import ResultadoEleicao from './ResultadoEleicao';
@@ -29,8 +29,6 @@ class Mapa extends Component {
   }
 
 async componentDidUpdate(prevProps, prevState) {
-    console.log('---------this.state---------')
-    console.log(this.state)
     if(prevState.id_final !== this.state.id_final) {
       const infoBUs = await getInfoBUsFromIdRange(this.state.id_inicial, this.state.id_final)
       this.setState({ infoBUs: infoBUs })
