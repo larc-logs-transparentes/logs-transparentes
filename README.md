@@ -11,16 +11,14 @@ Esse protótipo é aplicado à eleição brasileira. Assim, armazena de forma tr
 ## Instalação
 Instruções para instalação e utilização [aqui](https://github.com/larc-logs-transparentes/logs-transparentes/install.md)
 
+
 ## Operações
 
-<b>
-Consultar e Verificar BU
-</b>
-
+<b>Consultar e Verificar BU</b>
 
 Permite ao usuário encontrar o BU desejado, selecioná-lo, e acessar informações adicionais sobre ele (e.g., votos registrados na urna).
 
-Também é possível verificar a sua prova de inclusão, atestando a sua integridade. O resultado é evidenciado pelas imagens abaixo:
+Também é possível fazer a sua prova de inclusão, verificando a sua integridade. O resultado é evidenciado pelas imagens abaixo:
 
 <center>
 
@@ -32,15 +30,25 @@ Também é possível verificar a sua prova de inclusão, atestando a sua integri
 
 ![bu_verificar](https://user-images.githubusercontent.com/28439483/182242126-3c9efccb-c449-413d-8b38-ccbb552bec15.png)
 
+<!-- ### Consultar cidade
 
+Permite que o usuário selecione uma cidade de preferência e verifique o resultado da eleição nela.
 
-<b> Monitoração da árvore</b>
+Assim que selecionado, é feita uma verificação parcial cujo resultado é explicitado pela imagem dos cadeados, da mesma forma que em "Consultar e verificar BU". Ao clicar no cadeado, é possível visualizar os dados referentes a prova, como na imagem:
 
-Permite aos monitores que verifiquem as provas de consistência na Merkle Tree, monitorando as alterações na raiz da árvore. 
+![Consultar cidade](https://user-images.githubusercontent.com/77642873/219463256-85962132-aa9b-4f12-a39d-d3a92ae76109.png)
 
+Também é disponível ao usuário um botão que redireciona a uma prova completa dos BUs referente a cidade selecionada. -->
 
-![monitorar](https://user-images.githubusercontent.com/28439483/182241946-667c374f-6dc7-4207-a9fc-a0d2d97cb7ab.png)
+<b> Histórico da árvore </b>
 
+Permite aos monitores que realizem as provas de consistência na Merkle Tree, desse modo monitorando as alterações na raiz da árvore. 
+
+Ao clicar em "Verificar integridade", a aplicação validará todas as provas de consistência publicadas pelo backend. A cada publicação verificada, o resultado será renderizado na tela, como na imagem:
+
+![Histórico da árvore](https://user-images.githubusercontent.com/77642873/219463486-38a39714-b0ec-4205-9c09-1e8f5fd32278.png)
+
+Abaixo da tabela, é mostrado os dados referentes a cada prova de consistência verificada.
 
 <b> Reapuração </b>
 
@@ -52,3 +60,4 @@ Permite recalcular os votos da eleição. Ao se iniciar a recontabilização, to
 Se não houver erros, o resultado final será exibido.
 
 ![recontabilizacao](https://user-images.githubusercontent.com/28439483/182241971-d1850ecb-62df-4b38-b32c-a08cb40a7e4d.png)
+

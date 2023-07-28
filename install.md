@@ -84,22 +84,22 @@ npm start
 ```
 
 
+
 ## Utilização
 Na tela inicial, é possível visualizar o resultado parcial da eleição. É possível também visualizar a raiz atual da árvore de Merkle, utilizada nas provas de inclusão e consistência.
 
 Outras funcionalidades podem ser acessadas no menu lateral
 * Consultar BU
-* Monitorar
+* Consultar Cidade
+* Histórico da árvore
 * Recontabilizar
 
-Entretanto, antes de utiliza-las, é preciso inserir alguns dados na aplicação
+Entretanto, antes de utilizá-las, é preciso inserir alguns dados na aplicação
 
 ### Popular árvore e BD
-
-No diretório raiz do projeto, execute:
+O protótipo oferece suporte a dados reais das eleições brasileiras, para isso, consultar a [documentação para inserção de dados reais](https://github.com/larc-logs-transparentes/logs-transparentes/tree/main/bu_json_maker#readme).
 
 ```
-./populate.sh
+cd bu_json_maker
+python3 bu_bd_scripts.py
 ```
-
-Esse script insere 12 BUs fictícios no DB.
