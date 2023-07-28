@@ -1,5 +1,5 @@
 # Logs Transparentes para transparência dos dados
-#### Sistema baseado em árvores de Merkle para promover maior transparência e auditabilidade dos dados. 
+Sistema baseado em árvores de Merkle para promover maior transparência e auditabilidade dos dados. 
 
 ## Visão geral 
 
