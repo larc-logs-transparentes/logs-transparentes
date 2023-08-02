@@ -1,10 +1,10 @@
 {
-  "name": "vibe-react",
+  "name": "logstransparentes",
   "version": "1.0.2",
-  "description": "Vibe Dashboard React Theme",
-  "author": "Nice Dash",
-  "homepage": "http://nicedash.com",
-  "copyright": "Copyright 2019 Nice Dash",
+  "description": "Novo sistema de logs transparentes",
+  "author": "Universidade De Sao Paulo",
+  "homepage": "null",
+  "copyright": "Copyright 2022 LogsTransparentes",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
