@@ -39,6 +39,11 @@ exports.findTotalVotesByIdRange = (id_inicial, id_final) => {
         return totalizarvotos(data)
     })
 };
+exports.findDistinctUF = async () => {
+    const distinctUFs = await modeloBoletim.distinct('UF');
+    return distinctUFs;
+  };
+
 
 function totalizarvotos(data) {
     const totaldevotos = []

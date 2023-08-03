@@ -45,5 +45,13 @@ router.get("/:id", (req, res) => {
       res.json(err)
     })
 })
+router.get("/distinct_uf", (req, res) => {
+  db_bu_controller.findDistinctUF().then((response) => {
+    res.json(response);
+  }).catch((err) => {
+    console.log(err);
+    res.json(err);
+  });
+});
 
 module.exports = router;
