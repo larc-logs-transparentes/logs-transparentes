@@ -1,16 +1,15 @@
 import {getDataProof, getTrustedRoot,getAllRoots,getAllConsistencyProof,getLocalTreeList,getTreeResponse} from '../api/merkletree.api.js';
 import {getBuById} from '../api/bu.api.js';
 import {initPyodide,formatConsistencyProofToPython} from './pyodide.js';
-export async function SignedRoot() {
+export async function verifyRootHistoryConsistency() {
     let root = await getTrustedRoot(); // get from trusted souce (monitor)
     let allGlobalRoots = await getAllRoots(); 
     let allConsistencyProof = await getAllConsistencyProof();
+    //Adding the second value to the first null value in order for it not to return any errors (the first value is always ignored anyway)
     allConsistencyProof.proofs[0].consistency_proof=allConsistencyProof.proofs[1].consistency_proof
-    //allConsistencyProof = allConsistencyProof.proofs.slice(0);
     console.log(allConsistencyProof)
     allConsistencyProof= await formatConsistencyProofToPython(allConsistencyProof)
     console.log(allConsistencyProof)
-    // Some formatation necessary for pyodide
     root = JSON.stringify(root)
     allGlobalRoots = JSON.stringify(allGlobalRoots)
     allConsistencyProof =JSON.stringify(allConsistencyProof)

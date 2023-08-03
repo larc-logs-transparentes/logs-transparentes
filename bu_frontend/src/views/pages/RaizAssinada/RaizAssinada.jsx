@@ -3,7 +3,7 @@ import { Card, CardBody } from 'reactstrap';
 import { getAllRoots } from '../../../api/merkletree.api';
 import ReactJson from 'react-json-view';
 import ProvaDeConsistencia from './ProvaDeConsistencia.jsx';
-import { SignedRoot } from '../../../services/SignedRoot';
+import {verifyRootHistoryConsistency } from '../../../services/verifyRootHistoryConsistency';
 
 export default function Raizassinada() {
   const [validate, setValidate] = useState(false);
@@ -20,8 +20,7 @@ export default function Raizassinada() {
 
   // Function to check the result of ProvaDeConsistencia
   async function checkProvaDeConsistencia() {
-    const result = await SignedRoot();
-    console.log('i just ran');
+    const result = await verifyRootHistoryConsistency();
     if (result === 'success') {
       setValidate(true);
       setShow(true);
