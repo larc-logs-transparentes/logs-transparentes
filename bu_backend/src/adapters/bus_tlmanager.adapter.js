@@ -65,6 +65,16 @@ exports.getTreeRoot = (tree_name) => {
       console.log(err)
     })
 }
+exports.getAllRoots = (tree_name) => {
+  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/global-tree/all-roots`)
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
 
 
 /* Proofs routes */

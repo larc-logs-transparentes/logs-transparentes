@@ -62,7 +62,7 @@ class MostrarBU extends Component {
           <CardHeader>Consultar Boletins de Urna - Turno
           {(this.state.id !== null && this.state.id !== undefined) && (
             <button className="btn float-right" onClick={() => this.onClickShowProof.bind(this)}>
-              <Link to={`/elements/mostrarbuprova/${this.state.id}`} target='_blank'>
+              <Link to={`/pages/MostrarBuProva/MostrarBuProva/${this.state.id}`} target='_blank'>
                 <Cadeado id={this.state.id} />
               </Link>
             </button>

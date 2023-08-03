@@ -37,6 +37,9 @@ exports.getTree = async (tree_name) => {
 exports.getTreeRoot = async (tree_name) => {
   return await merkletree_adapter.getTreeRoot(tree_name)
 }
+exports.getAllRoots = async () => {
+  return await merkletree_adapter.getAllRoots()
+}
 
 /* Proofs routes */
 exports.getConsistencyProof = async (tree_name) => {
