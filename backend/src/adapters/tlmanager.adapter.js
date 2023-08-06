@@ -1,33 +1,32 @@
 const axios = require('axios')
-const tlmanagerHostname = require('../config/config').tlmanagerHostname
-const tlmanagerPort = require('../config/config').tlmanagerPort
+const tlmanager_config = require('../config.json').tlmanager_config
+const tlmanagerHostname = tlmanager_config.hostname
+const tlmanagerPort = tlmanager_config.port
 
 /* admin routes */
-exports.addLeaf = (tree_name, data) => {
-  return axios.post(`${tlmanagerHostname}:${tlmanagerPort}/insert-leaf`, {
-      "tree_name": tree_name,
-      "data": data
+exports.addLeaf = async (tree_name, data) => {
+  return await axios.post(`${tlmanagerHostname}:${tlmanagerPort}/insert-leaf`, {
+      tree_name: tree_name,
+      data: JSON.stringify(data)
     })
     .then(res => {
-      console.log(res.data)
       return res.data
     })
     .catch(err => {
-      console.log(err)
+      console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
     })
 }
 
-exports.createTree = (tree_name, commitment_size) => {
-  return axios.post(`${tlmanagerHostname}:${tlmanagerPort}/tree-create`, {
+exports.createTree = async (tree_name, commitment_size) => {
+  return await axios.post(`${tlmanagerHostname}:${tlmanagerPort}/tree-create`, {
       "tree_name": tree_name,
       "commitment_size": commitment_size
     })
     .then(res => {
-      console.log(res.data)
       return res.data
     })
     .catch(err => {
-      console.log(err)
+      console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
     })
 }
 
@@ -39,7 +38,7 @@ exports.commit = (tree_name) => {
     return res.data
   })
   .catch(err => {
-    console.log(err)
+    console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
   })
 }
 
@@ -47,22 +46,20 @@ exports.commit = (tree_name) => {
 exports.getTree = (tree_name) => {
   return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/tree?tree_name=${tree_name}`)
   .then(res => {
-    console.log(res.data)
-      return res.data
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    return res.data
+  })
+  .catch(err => {
+    console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
+  })
 }
 
 exports.getTreeRoot = (tree_name) => {
   return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/tree/root?tree_name=${tree_name}`)
     .then(res => {
-      console.log(res.data)
       return res.data
     })
     .catch(err => {
-      console.log(err)
+      console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
     })
 }
 
@@ -74,7 +71,7 @@ exports.getConsistencyProof = (tree_name) => {
     return res.data
   })
   .catch(err => {
-    console.log(err)
+    console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
   }) 
 }
 
@@ -84,7 +81,7 @@ exports.getDataProof = (tree_name, leaf_index) => {
     return res.data
   })
   .catch(err => {
-    console.log(err)
+    console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
   })
 }
 
@@ -94,6 +91,6 @@ exports.getInclusionProof = (tree_name, leaf_index) => {
     return res.data
   })
   .catch(err => {
-    console.log(err)
+    console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
   })
 }

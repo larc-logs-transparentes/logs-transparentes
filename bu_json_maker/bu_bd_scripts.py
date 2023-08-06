@@ -111,20 +111,14 @@ def parse_bu(bu, id, primeiro_turno=True):
     
 # sends one bu (dict) to db via post request
 def insert_body_to_db(tree_name, body_dict):
-    try:
-        return requests.post(f"{BACKEND_URL}/bu/create", json={"tree-name": tree_name, "data": body_dict}, headers=header)
-    except ConnectionError:
-        time.sleep(5)
-        return insert_body_to_db(tree_name, body_dict)
+    return requests.post(f"{BACKEND_URL}/bu/create", json={"tree_name": tree_name, "data": body_dict}, headers=header)
 
 def create_tree(tree_name, commitment_size=100):
-    return requests.post(f"{BACKEND_URL}/tree/create-tree", json={"tree-name": tree_name, "commitment-size": commitment_size}, headers=header)
+    return requests.post(f"{BACKEND_URL}/tree/create-tree", json={"tree_name": tree_name, "commitment_size": commitment_size}, headers=header)
 
 def commit_tree(tree_name):
-    return requests.post(f"{BACKEND_URL}/tree/commit", json={"tree-name": tree_name}, headers=header)
+    return requests.post(f"{BACKEND_URL}/tree/commit", json={"tree_name": tree_name}, headers=header)
 
-def initialize_infobus_tree():
-    return requests.post(f"{BACKEND_URL}/infobus/create", headers=header)
 
 def read_files():
     try:
@@ -154,4 +148,3 @@ if __name__ == '__main__':
     create_tree(BU_TREE_NAME)
     insert_list_bus_to_db()
     commit_tree(BU_TREE_NAME)
-    initialize_infobus_tree()
