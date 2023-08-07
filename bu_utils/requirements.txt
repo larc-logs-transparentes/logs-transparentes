@@ -1,4 +1,4 @@
 asn1tools~=0.164.0
 asn1crypto~=1.5.1
-requests~=2.28.1
-ijson~=3.2.3
+requests>=2.31.0
+ijson>=3.2.3

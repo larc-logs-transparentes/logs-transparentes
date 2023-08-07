@@ -1,0 +1,6 @@
+assets/bus/*
+assets/bus_1/*
+results*
+.idea/*
+
+!results/example_bus_consolidated.json

@@ -1,10 +1,10 @@
 import ijson
-import time
 import requests
 import os
 
 from constants import BACKEND_URL
-from counties_codes import get_county_uf_and_city_with_number
+from assets.counties_codes import get_county_uf_and_city_with_number
+
 BU_TREE_NAME = "bu_tree"
 header = {
     "content-type": "application/json"
@@ -14,7 +14,7 @@ def candidatos_segundo(bu):
     k=0
     while k<len(bu["resultadosVotacaoPorEleicao"]):
         if bu["resultadosVotacaoPorEleicao"][k]["resultadosVotacao"][0]["totaisVotosCargo"][0]["codigoCargo"][1]=="presidente":
-            votosVotaveisPresidente =bu["resultadosVotacaoPorEleicao"][k]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
+            votosVotaveisPresidente = bu["resultadosVotacaoPorEleicao"][k]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
         if bu["resultadosVotacaoPorEleicao"][k]["resultadosVotacao"][0]["totaisVotosCargo"][0]["codigoCargo"][1]=="governador":
             votosVotaveisGovernador = bu["resultadosVotacaoPorEleicao"][k]["resultadosVotacao"][0]["totaisVotosCargo"][0]["votosVotaveis"]
         k+=1

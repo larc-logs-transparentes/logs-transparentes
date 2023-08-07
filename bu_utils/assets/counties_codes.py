@@ -4,7 +4,7 @@ import json
 
 # Gets list counties info from file
 def get_county_codes_json():
-    file = open("./assets/counties_codes/county_codes.json", "r+",encoding="utf8")
+    file = open("./assets/county_codes.json", "r+",encoding="utf8")
     county_list = json.load(file)
     file.close()
     return county_list
