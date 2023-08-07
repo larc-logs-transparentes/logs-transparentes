@@ -39,7 +39,7 @@ class ConsultarBU extends Component {
   }
 
   componentDidMount() {
-    this.axios.get(`${this.bu_api_url}/bu/get_all`) 
+    this.axios.get(`${this.bu_api_url}/bu/find_all`) 
       .then(response => this.setState({ lista: response.data }))
   }
 

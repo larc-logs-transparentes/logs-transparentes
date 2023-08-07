@@ -1,15 +1,15 @@
-# Logs Transparentes para transparência dos dados
-Sistema baseado em árvores de Merkle para promover maior transparência e auditabilidade dos dados. 
+# TL-Elections - Transparent Logs for data transparency
+Merkle tree-based system to improve transparency and auditability of data.
 
-## Visão geral 
+## Overview
 
-Esse protótipo é aplicado à eleição brasileira. Assim, armazena de forma transparente os Boletins de Urna (resultado dos votos registrados na urna), e permite verificar a sua integridade. Também permite recontabilizar o resultado da eleição.
+This prototype is applied to the Brazilian election. It transparently stores the "Boletins de Urna" (the result of the votes recorded in the ballot box) and allows their integrity to be verified.
 
-* Publicação na SBSeg 2022 ([Artigo](https://sol.sbc.org.br/index.php/sbseg_estendido/article/view/21696/21520)) ([Vídeo](https://youtu.be/gRLXQXpbc5s "SBSeg"))
+* Publication in SBSeg 2022 ([Article](https://sol.sbc.org.br/index.php/sbseg_estendido/article/view/21696/21520)) ([Video](https://youtu.be/gRLXQXpbc5s "SBSeg"))
 
 
-## Instalação
-Instruções para instalação e utilização [aqui](https://github.com/larc-logs-transparentes/logs-transparentes/install.md)
+## Setup
+Instructions for installation and use [here](https://github.com/larc-logs-transparentes/logs-transparentes/install.md)
 
 
 ## Operações

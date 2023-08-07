@@ -21,8 +21,8 @@ export async function RetotalizacaoDeBus(){
 }
 
 async function baixarBUs(){
-    console.log(`${bu_api_url}/bu/get_all`)
-    return await axios.get(`${bu_api_url}/bu/get_all`)
+    console.log(`${bu_api_url}/bu/find_all`)
+    return await axios.get(`${bu_api_url}/bu/find_all`)
     .then(res => {
         return res.data
     })

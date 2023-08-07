@@ -24,7 +24,7 @@ export const addBu = (data) => {
 }
 
 export function getBuAll() {
-  axios.get(`${bu_api_url}/bu/get_all`)
+  axios.get(`${bu_api_url}/bu/find_all`)
     .then(response => {
 //      console.log(response.data)
      return response.data
