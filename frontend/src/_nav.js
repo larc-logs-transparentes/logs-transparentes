@@ -1,4 +1,4 @@
-export default {
+const _nav = {
   top: [
     {
       name: 'Página Inicial',
@@ -9,9 +9,6 @@ export default {
       name: 'Consultar BU',
       url: '/pages/ConsultarBU/ConsultarBU',
       icon: 'Package',
-      //badge: {
-      //  text: 'NEW',
-      //},
     },
     {
       name: 'Consultar Cidade',
@@ -42,4 +39,6 @@ export default {
       icon: 'User'
     },
   ],
-};
+}
+
+export default  _nav

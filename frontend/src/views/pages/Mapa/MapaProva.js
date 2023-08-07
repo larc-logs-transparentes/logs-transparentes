@@ -9,9 +9,7 @@ import {
 from 'reactstrap';
 import { getRoot, verifyResultProof, getSumOfVotes_infoBUs } from '../../../api/merkletree_InfoBUs.api'
 import { getInfoBUsFromIdRange, getResultProofFromIdRange } from '../../../api/bu.api';
-import SelecaoCidade from './SelecaoCidade';
 import ProvaParcial from './ProvaParcial';
-import ResultadoEleicao from './ResultadoEleicao';
 
 class MapaProva extends Component {
     constructor(props) {

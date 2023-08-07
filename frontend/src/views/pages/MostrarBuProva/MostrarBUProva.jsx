@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Row,
   Col,
   Card,
   CardHeader,
   CardBody,
-  CardText,
   Label,
 
 } from 'reactstrap';
@@ -34,7 +32,7 @@ class MostrarBUProva extends Component {
     return (
       <Col>
       <Col style={{width:"60vw"}}>
-      {prova['status'] == 'ok' && (<Col> 
+      {prova['status'] === 'ok' && (<Col> 
       <Card style={{width:"60vw"}}>
         <CardHeader >Este BU foi devidamente verificado nos sistemas da Justiça Federal</CardHeader>
         <CardBody style={{overflowX:"scroll"}}>
@@ -45,7 +43,7 @@ class MostrarBUProva extends Component {
         </CardBody>
       </Card>
     </Col>)}
-    {prova['status'] != 'ok' && (<Col>
+    {prova['status'] !== 'ok' && (<Col>
       <Card>
         <CardHeader>ATENÇÃO: Este BU não pode ser verificado ou foi ALTERADO</CardHeader>
         <CardBody style={{overflowX:"scroll"}}>

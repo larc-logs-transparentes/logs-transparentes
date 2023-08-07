@@ -1,6 +1,4 @@
 import React, { useEffect,useState } from 'react';
-import cadVerde from '../../../assets/images/cad-verde.png';
-import cadVermelho from '../../../assets/images/cad-vermelho.png';
 import { verifyRootHistoryConsistency } from '../../../services/verifyRootHistoryConsistency';
 
 export default function ProvaDeConsistencia() {

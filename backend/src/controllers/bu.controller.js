@@ -28,7 +28,6 @@ router.get("/find_by_id", async (req, res) => {
 
   const data = await bu_repository.findById(id)
   
-  console.info(`[bu.controller] GET /find_by_id ${JSON.stringify(data)}`)
   res.json(data)
 })
 

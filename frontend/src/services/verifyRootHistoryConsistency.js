@@ -1,5 +1,4 @@
-import {getDataProof, getTrustedRoot,getAllRoots,getAllConsistencyProof,getLocalTreeList,getTreeResponse} from '../api/merkletree.api.js';
-import {getBuById} from '../api/bu.api.js';
+import {getTrustedRoot,getAllRoots,getAllConsistencyProof} from '../api/merkletree.api.js';
 import {initPyodide,formatConsistencyProofToPython} from './pyodide.js';
 export async function verifyRootHistoryConsistency() {
     let root = await getTrustedRoot(); // get from trusted souce (monitor)

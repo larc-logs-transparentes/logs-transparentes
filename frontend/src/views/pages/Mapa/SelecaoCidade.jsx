@@ -28,15 +28,7 @@ const SelecaoCidade = ({state, setState}) => {
           defineFaixaMarilia();}
     }
 
-    function mostraProva() {
-        setState({mostrarProvaParcial: !state.mostrarProvaParcial})
-    }
     const cidadeArr = ['São Carlos','Campinas', 'Ribeirão Preto', 'Marília']
-
-    function redirecionaParaProvaParcial() {
-        var url = `/mapa/provaparcial/${this.state.id_inicial}/${this.state.id_final}`
-        window.location.href =  url
-      }
 
     return ( 
         <FormGroup>
