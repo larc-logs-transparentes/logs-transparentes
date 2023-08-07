@@ -51,6 +51,13 @@ router.get("/tree-root", async (req, res) => {
   res.json(response)
 })
 
+router.get("/all-roots-global-tree", async (req, res) => {
+  console.info(`[tree.controller] GET all-roots-global-tree`)
+
+  const response = await tlmanager_adapter.getAllRoots()
+  res.json(response)
+})
+
 /* Proofs routes */
 router.get("/all-consistency-proof", async (req, res) => {
   const tree_name = req.query.tree_name

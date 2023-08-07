@@ -63,6 +63,17 @@ exports.getTreeRoot = (tree_name) => {
     })
 }
 
+exports.getAllRoots = () => {
+  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/global-tree/all-roots`)
+    .then(res => {
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
+    })
+}
+
 
 /* Proofs routes */
 exports.getConsistencyProof = (tree_name) => {

@@ -2,7 +2,7 @@ const axios = require('axios')
 const bu_api_url = require('../config.json').bu_api_url
 
 export function getBuById(bu_id) {
-  return axios.get(`${bu_api_url}/bu/${bu_id}`)
+  return axios.get(`${bu_api_url}/bu/find_by_id?id=${bu_id}`)
     .then(res => {
       console.log(res.data)
       return res.data
@@ -36,7 +36,7 @@ export function getBuAll() {
     })
 }
 export function getRootAll() {
-  axios.get(`${bu_api_url}/root/get_all`)
+  axios.get(`${bu_api_url}/tree/all-roots-global-tree`)
     .then(response => {
 //      console.log(response.data)
      return response.data
