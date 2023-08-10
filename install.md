@@ -55,5 +55,5 @@ cd frontend/
 npm install
 npm start
 ```
-### Popular árvore e BD
+### Populate tree and DB
 The prototype supports real data from the Brazilian elections, for that, consult the [documentation for real data entry](./bu_utils/ReadMe.md).
