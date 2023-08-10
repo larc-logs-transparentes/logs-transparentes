@@ -23,15 +23,15 @@ export async function verifySingleData(id) {
       proofData=proofData.replace("'",'"')
       proofData=json.loads(proofData)
 
-
-
       bu=str(${buInteiro})
       root=str(${root})
       root=root.replace("'",'"')
       root=json.loads(root)
-      verifyresult =verify_single_data(proofData, root['value'],bytes(bu,'utf-8'))
+
+      verifyresult=verify_single_data(proofData, root['value'],bytes(bu,'utf-8'))
       return str(verifyresult["success"])
     func()
   `;
     return await pyodide.runPythonAsync(pythonCode);
+
 }

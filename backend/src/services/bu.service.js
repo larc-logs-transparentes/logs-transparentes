@@ -5,7 +5,7 @@ const config = require("../config.json");
 exports.create = async (tree_name, data) => {
     console.debug(`[bu.service] Inserting bu with id: ${data.id}`)
 
-    const merkletree_leaf_data = await tlmanager_adapter.addLeaf(tree_name, data)
+    const merkletree_leaf_data = await tlmanager_adapter.addLeaf(tree_name, data.bu_inteiro)
     console.debug(`[bu.service] merkletree_leaf_data: ${JSON.stringify(merkletree_leaf_data)}`)
 
     bu_repository.create({
