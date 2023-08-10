@@ -48,10 +48,6 @@ To init the module, follow the instruction in [README](./tlmanager/readme.md).
 
 #### 4. Front-end
 
-Depends version 14.x of node;
-
-<b>Initialization</b>
-
 In terminal, run:
 
 ```bash
@@ -59,22 +55,5 @@ cd frontend/
 npm install
 npm start
 ```
-
-## Utilização
-Na tela inicial, é possível visualizar o resultado parcial da eleição. É possível também visualizar a raiz atual da árvore de Merkle, utilizada nas provas de inclusão e consistência.
-
-Outras funcionalidades podem ser acessadas no menu lateral
-* Consultar BU
-* Consultar Cidade
-* Histórico da árvore
-* Recontabilizar
-
-Entretanto, antes de utilizá-las, é preciso inserir alguns dados na aplicação
-
 ### Popular árvore e BD
-O protótipo oferece suporte a dados reais das eleições brasileiras, para isso, consultar a [documentação para inserção de dados reais](https://github.com/larc-logs-transparentes/logs-transparentes/tree/main/bu_json_maker#readme).
-
-```
-cd bu_json_maker
-python3 bu_bd_scripts.py
-```
+The prototype supports real data from the Brazilian elections, for that, consult the [documentation for real data entry](./bu_utils/ReadMe.md).

@@ -2,5 +2,6 @@ assets/bus/*
 assets/bus_1/*
 results*
 .idea/*
+__pycache__
 
 !results/example_bus_consolidated.json
