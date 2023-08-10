@@ -1,0 +1,48 @@
+{
+  "name": "logstransparentes",
+  "version": "1.0.2",
+  "description": "Novo sistema de logs transparentes",
+  "author": "Universidade De Sao Paulo",
+  "homepage": "null",
+  "copyright": "Copyright 2022 LogsTransparentes",
+  "private": true,
+  "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "axios": "^1.4.0",
+    "bootstrap": "^5.3.1",
+    "buffer": "^6.0.3",
+    "crypto-js": "^4.1.1",
+    "merkletreejs": "^0.3.10",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-feather": "^2.0.10",
+    "react-fontawesome": "^1.7.1",
+    "react-json-view": "^1.21.3",
+    "react-scripts": "^5.0.1",
+    "reactstrap": "^9.2.0",
+    "sass": "^1.64.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@mui/material": "^5.6.3",
+    "axios": "^0.26.1",
+    "react-circular-progressbar": "^2.0.4",
+    "react-dropzone": "^12.0.5",
+    "react-router-dom": "^5.1.2",
+    "styled-components": "^5.3.5"
+  }
+}
