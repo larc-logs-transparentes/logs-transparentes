@@ -22,7 +22,7 @@ It is also possible to make your proof of inclusion, verifying its integrity. Th
 
 <center>
 
-| Prova válida | Prova Inválida |
+| Valid Proof | Invalid Proof |
 | :-------------: |:-------------:|
 |![cad-verde](https://user-images.githubusercontent.com/77642873/180626237-60dc5438-43f3-436a-8374-c0d685b5d4a6.png)|![cad-vermelho](https://user-images.githubusercontent.com/77642873/180626247-1b7bfdee-68e1-4130-84de-d566fe12fafe.png)|
 
