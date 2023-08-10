@@ -39,11 +39,60 @@ exports.findTotalVotesByIdRange = (id_inicial, id_final) => {
         return totalizarvotos(data)
     })
 };
-exports.findDistinctUF = async () => {
-    const distinctUFs = await modeloBoletim.distinct('UF');
-    return distinctUFs;
+exports.findDistinctTurno = async () => {
+  const turno = await modeloBoletim.find().distinct("turno");
+  console.log('certeza')
+  return turno;
+};
+exports.findDistinctUF = async (turno) => {
+  const distinctUFs = await modeloBoletim.find({ 'turno': turno }).distinct("UF");
+  return distinctUFs;
+};
+
+exports.findDistinctZona = async (turno, uf) => {
+  const distinctZonas = await modeloBoletim.find({ 'turno': turno, 'UF': uf }).distinct("zona");
+  return distinctZonas;
+};
+
+exports.findDistinctSecao = async (turno, uf, zona) => {
+  const distinctSecoes = await modeloBoletim.find({ 'turno': turno, 'UF': uf, 'zona': zona }).distinct("secao");
+  return distinctSecoes;
+};
+
+
+
+  exports.findByUF = async (UF) => {
+    try {
+      const BUS = await modeloBoletim.find({ 'UF': UF,'turno': turno } && { 'turno': turno});
+      return BUS;
+    } catch (error) {
+      throw error;
+    }
+  };
+  exports.findByTurno = async (turno) => {
+    try {
+      const BUS = await modeloBoletim.find({ 'turno': turno});
+      return BUS;
+    } catch (error) {
+      throw error;
+    }
+  };
+  exports.consultBU = async (turno, UF, zona, secao) => {
+    try {
+      const buses = await modeloBoletim.find({
+        'turno': turno,
+        'UF': UF,
+        'zona': zona,
+        'secao': secao
+      });
+  
+      return buses;
+    } catch (error) {
+      throw error;
+    }
   };
 
+  
 
 function totalizarvotos(data) {
     const totaldevotos = []

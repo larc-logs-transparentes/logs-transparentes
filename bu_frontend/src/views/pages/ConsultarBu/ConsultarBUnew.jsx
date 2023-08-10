@@ -12,7 +12,6 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import PageLoaderContext from '../../../common/components/PageLoader/PageLoaderContext'
-import { getUFs,getTurno } from '../../../api/bu.api';
 
 class ConsultarBU extends Component {
   axios = require('axios')
@@ -21,15 +20,17 @@ class ConsultarBU extends Component {
   constructor() {
     super()
     this.state = {
-                  turno_opts: [],
+                  lista: [],
+                  formulario :undefined,
+                  turno_opts: undefined,
                   uf_opts: undefined,
                   zona_opts: undefined,
                   secao_opts: undefined,
-                  turno_selection: [],
-                  uf_selection: undefined,
-                  zona_selection: undefined,
-                  secao_selection: undefined,
-                  buselection: undefined,
+                  buSelecionado: undefined,
+                  turno_selected: undefined,
+                  uf_selected: undefined,
+                  zona_selected: undefined,
+                  secao_selected: undefined,
                 }
     this.findBu = this.findBu.bind(this);
 
@@ -39,25 +40,9 @@ class ConsultarBU extends Component {
     this.axios.get(`${this.bu_api_url}/bu/distinct_turno`)
       .then(response => {
         this.setState({ turno_opts: response.data });
-        console.log(response.data);
       })
-      .catch(error => {
-        console.error(error);
-      });
   }
 
-  findBu(turno_selection, uf_selection, zona_selection, secao_selection) {
-    this.axios.get(`${this.bu_api_url}/bu/electioninfo?turno=${turno_selection}&UF=${uf_selection}&zona=${zona_selection}&secao=${secao_selection}`)
-      .then(response => {
-        console.log(response.data); // Log the entire response to inspect its structure
-        // ...
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-  
-  
 
   handleConsultar(e) {
     e.preventDefault()
@@ -65,69 +50,53 @@ class ConsultarBU extends Component {
     console.log(url)
     window.location.href =  url
   }
-  
+
 
   handleChangeTurn(e) {
-    var selectedTurno = e.target.value; // Get the selected value from the event
-    this.setState({ turno_selection: selectedTurno }, () => {
-      console.log(this.state.turno_selection);
+    this.axios.get(`${this.bu_api_url}/bu/distinct_uf?turno=${this.state.turno_selected}`) 
+    .then(response => this.setState({ lista: response.data }))
   
-      // Now that the state is updated, make the network request
-      this.axios.get(`${this.bu_api_url}/bu/distinct_uf?turno=${this.state.turno_selection}`)
-        .then(response => {
-          this.setState({ uf_opts: response.data });
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    });
+    this.setState({uf_opts: list_states_unique}, () => console.log( this.state.uf_opts))
   }
   
   handleChangeUF(e) {
-    var selectedUF = e.target.value; 
-    this.setState({ uf_selection: selectedUF }, () => {
-      console.log(this.state.uf_selection);
-      this.axios.get(`${this.bu_api_url}/bu/distinct_zona?turno=${this.state.turno_selection}&uf=${this.state.uf_selection}`)	
-        .then(response => {
-          this.setState({ zona_opts: response.data });
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    });
+
   }
   
   handleChangeZona(e) {
-    var selectedZona = e.target.value;
-    this.setState({ zona_selection: selectedZona }, () => {
-      console.log(this.state.zona_selection);
-      this.axios.get(`${this.bu_api_url}/bu/distinct_secao?turno=${this.state.turno_selection}&uf=${this.state.uf_selection}&zona=${this.state.zona_selection}`)	
-        .then(response => {
-          this.setState({ secao_opts: response.data });
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    });
-  }
-  handleChangeSecao(e) {
-    var selectedSecao = e.target.value;
-    this.setState({ secao_selection: selectedSecao }, () => {
-      console.log(this.state.secao_selection);
-    });
-  }
 
+  }
+  
 
   render() {
+    const { lista } = this.state
+    
+    var len = lista.length
+    var turno = new Map()
+    var uf = new Map()
+    var zona = new Map()
+    var secao = new Map()
 
-    var turnoArr = this.state.turno_opts || []; 
-    var ufArr = this.state.uf_opts || [];       
-    var zonaArr = this.state.zona_opts || [];    
-    var secaoArr = this.state.secao_opts || []; 
+    for (var i=0; i<len; i++) {
+      turno.set(lista[i].turno, lista[i].turno)
+    }
 
+    for (i in this.state.uf_opts) {
+      uf.set(this.state.uf_opts[i], this.state.uf_opts[i])
+    }
+    
+    for (i in this.state.zona_opts) {
+      zona.set(this.state.zona_opts[i], this.state.zona_opts[i])
+    }
+    
+    for (i in this.state.secao_opts) {
+      secao.set(this.state.secao_opts[i], this.state.secao_opts[i])
+    }
+    
+    let turnoArr = Array.from(turno.keys())
+    let ufArr = Array.from(uf.keys())
+    let zonaArr = Array.from(zona.keys())
+    let secaoArr = Array.from(secao.keys()) 
 
 
       return (
@@ -153,7 +122,7 @@ class ConsultarBU extends Component {
             <CardBody>
               <FormGroup>
                 <Label for="UFSelect">UF</Label>
-                <Input type="select" name="uf" id="uf" onChange={this.handleChangeUF.bind(this)}>
+                <Input type="select" name="uf" id="uf" onChange={this.handleChangeState.bind(this)}>
                 <option value=""></option>
                 {ufArr.map((entry) => (
                     <option value={entry}>{entry}</option>
@@ -164,7 +133,7 @@ class ConsultarBU extends Component {
             <CardBody>
               <FormGroup>
                 <Label for="zonaSelect">Zona</Label>
-                <Input type="select" name="zona" id="zona" onChange={this.handleChangeZona.bind(this)}>
+                <Input type="select" name="zona" id="zona" onChange={this.handleChangeZone.bind(this)}>
                 <option value=""></option>
                 {zonaArr.map((entry) => (
                     <option value={entry}>{entry}</option>

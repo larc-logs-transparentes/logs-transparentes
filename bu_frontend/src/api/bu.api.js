@@ -144,3 +144,20 @@ export const getResultProofFromIdRange = (initial_id, final_id) => {
       console.log(err)
     })
 }
+export const consultBU = (turno, estado, zona, secao) => {
+  console.log("consultBU")
+  console.log("turno=" + turno)
+  console.log("uf=" + estado)
+  console.log("zona=" + zona)
+  console.log("secao=" + secao)
+  
+  return axios.get(`${bu_api_url}/bu/consult/?turno=${turno}&uf=${estado}&zona=${zona}&secao=${secao}`)
+    .then(res => {
+
+      console.log(res.data)
+      return res.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}

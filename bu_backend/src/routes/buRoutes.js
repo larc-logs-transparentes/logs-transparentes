@@ -36,6 +36,64 @@ router.get("/get_one", (req, res) => {
         res.json(err)
     })
 })
+
+router.get("/distinct_turno", (req, res) => {
+  db_bu_controller.findDistinctTurno()
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+});
+router.get("/distinct_uf", (req, res) => {
+  const { turno } = req.query;
+
+  db_bu_controller.findDistinctUF(turno)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+});
+
+router.get("/distinct_zona", (req, res) => {
+  const { turno, uf } = req.query;
+
+  db_bu_controller.findDistinctZona(turno, uf)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+});
+
+router.get("/distinct_secao", (req, res) => {
+  const { turno, uf, zona } = req.query;
+
+  db_bu_controller.findDistinctSecao(turno, uf, zona)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+});
+router.get("/electioninfo", (req, res) => {
+  const { turno, UF, zona, secao } = req.query;
+
+  db_bu_controller.consultBU(turno, UF, zona, secao).then((response) => {
+    res.json(response);
+  }).catch((err) => {
+    res.json(err);
+  });
+});
   
 // retrieve BU by ID
 router.get("/:id", (req, res) => {
@@ -45,13 +103,5 @@ router.get("/:id", (req, res) => {
       res.json(err)
     })
 })
-router.get("/distinct_uf", (req, res) => {
-  db_bu_controller.findDistinctUF().then((response) => {
-    res.json(response);
-  }).catch((err) => {
-    console.log(err);
-    res.json(err);
-  });
-});
 
 module.exports = router;
