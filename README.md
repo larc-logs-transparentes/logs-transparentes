@@ -1,4 +1,4 @@
-# TL-Election - Transparent Logs for election
+# TL-Election - Transparent Logs for Elections Monitoring
 Merkle tree-based system to improve transparency and auditability of elections.
 
 ## Overview
