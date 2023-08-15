@@ -31,7 +31,7 @@ class PymerkleMetadata(BaseModel):
 class PymerkleProof(BaseModel):
     metadata: PymerkleMetadata 
     offset: int
-    path: list[list[int, str]]
+    path: object
 
 class InclusionProofLocalTree(BaseModel):
     local_root: RootObject
