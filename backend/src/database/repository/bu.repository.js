@@ -52,4 +52,39 @@ exports.findByInfo = async (turno, UF, zona, secao) => {
         console.error(`[ERROR][bu.repository] ${err}`)
     })
 }
-
+exports.findDistinctTurno = async () => {
+    return await repository.find().distinct("turno")
+    .then((data) => {
+        return data
+    })
+    .catch((err) => {
+        console.error(`[ERROR][bu.repository] ${err}`)
+    })
+}
+exports.findDistinctUF = async (turno) => {
+    return await repository.find({ 'turno': turno }).distinct("UF")
+    .then((data) => {
+        return data
+    })
+    .catch((err) => {
+        console.error(`[ERROR][bu.repository] ${err}`)
+    })
+}
+exports.findDistinctZona = async (turno, uf) => {
+    return await repository.find({ 'turno': turno, 'UF': uf }).distinct("zona")
+    .then((data) => {
+        return data
+    })
+    .catch((err) => {
+        console.error(`[ERROR][bu.repository] ${err}`)
+    })
+}
+exports.findDistinctSecao = async (turno, uf, zona) => {
+    return await repository.find({ 'turno': turno, 'UF': uf, 'zona': zona }).distinct("secao")
+    .then((data) => {
+        return data
+    })
+    .catch((err) => {
+        console.error(`[ERROR][bu.repository] ${err}`)
+    })
+}
