@@ -1,7 +1,7 @@
 from pymongo import MongoClient, errors as pymongo_errors
 from gridfs import GridFS, errors as gridfs_errors
 
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     RESET: bool = False

@@ -1,5 +1,6 @@
 cryptography<40
-fastapi[all]==0.95.1
+fastapi[all]>=0.95.1
+pydantic-settings>= 2.0.3
+uvicorn[standard]>=0.23.2
 transparentlogs_pymerkle>=0.0.3
-pymongo==4.3.3
-cffi>=1.15.1
+pymongo>=4.4.1
