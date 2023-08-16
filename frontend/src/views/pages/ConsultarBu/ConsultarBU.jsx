@@ -49,7 +49,6 @@ class ConsultarBU extends Component {
       
       const buselection = response.data; // Use response.data directly
       this.setState({ buselection }, () => {
-        console.log(response.data);
         // Perform additional actions or state updates if needed
       });
   
@@ -69,7 +68,6 @@ class ConsultarBU extends Component {
   
       // Now that the network request is completed, you can access the buselectionId
       const buselectionId = this.state.buselection.id; // Use id here
-      console.log(buselectionId);
   
       var url = `/pages/MostrarBu/MostrarBu/${buselectionId}`;
       window.location.href = url;
@@ -123,13 +121,12 @@ class ConsultarBU extends Component {
   }
 
   render() {
-
-    var turnoArr = this.state.turno_opts || []; 
-    var ufArr = this.state.uf_opts || [];       
-    var zonaArr = this.state.zona_opts || [];    
-    var secaoArr = this.state.secao_opts || []; 
-
-      return (
+    var turnoArr = this.state.turno_opts || [];
+    var ufArr = this.state.uf_opts || [];
+    var zonaArr = this.state.zona_opts || [];
+    var secaoArr = this.state.secao_opts || [];
+  
+    return (
       <Row>
         <Col md={12}>
           <Card>
@@ -138,67 +135,73 @@ class ConsultarBU extends Component {
               <FormGroup>
                 <Label for="turnoSelect">Turno</Label>
                 <Input type="select" name="turno" id="turnoSelect" onChange={this.handleChangeTurn.bind(this)}>
-                <option value=""></option>
-                 {turnoArr.map((entry) => (
-                    <option value={entry}>{entry}º</option>
-                ))}
+                  <option value=""></option>
+                  {turnoArr.map((entry, index) => (
+                    <option key={index} value={entry}>
+                      {entry}º
+                    </option>
+                  ))}
                 </Input>
-            </FormGroup>
+              </FormGroup>
             </CardBody>
           </Card>
-
+  
           <Card>
             <CardHeader>Consultar Boletins de Urna - Estado</CardHeader>
             <CardBody>
               <FormGroup>
-                <Label for="UFSelect">UF</Label>
+                <Label for="uf">UF</Label>
                 <Input type="select" name="uf" id="uf" onChange={this.handleChangeUF.bind(this)}>
-                <option value=""></option>
-                {ufArr.map((entry) => (
-                    <option value={entry}>{entry}</option>
-                ))}
+                  <option value=""></option>
+                  {ufArr.map((entry, index) => (
+                    <option key={index} value={entry}>
+                      {entry}
+                    </option>
+                  ))}
                 </Input>
-            </FormGroup>
-            </CardBody>
-            <CardBody>
+              </FormGroup>
               <FormGroup>
-                <Label for="zonaSelect">Zona</Label>
+                <Label for="zona">Zona</Label>
                 <Input type="select" name="zona" id="zona" onChange={this.handleChangeZona.bind(this)}>
-                <option value=""></option>
-                {zonaArr.map((entry) => (
-                    <option value={entry}>{entry}</option>
-                ))}
+                  <option value=""></option>
+                  {zonaArr.map((entry, index) => (
+                    <option key={index} value={entry}>
+                      {entry}
+                    </option>
+                  ))}
                 </Input>
-            </FormGroup>
-            </CardBody>
-            <CardBody>
+              </FormGroup>
               <FormGroup>
-                <Label for="secaoSelect">Seção</Label>
+                <Label for="secao">Seção</Label>
                 <Input type="select" name="secao" id="secao" onChange={this.handleChangeSecao.bind(this)}>
-                <option value=""></option>
-                {secaoArr.map((entry) => (
-                    <option value={entry}>{entry}</option>
-                ))}
+                  <option value=""></option>
+                  {secaoArr.map((entry, index) => (
+                    <option key={index} value={entry}>
+                      {entry}
+                    </option>
+                  ))}
                 </Input>
-            </FormGroup>
+              </FormGroup>
             </CardBody>
           </Card>
+  
           <Card>
             <CardHeader>Consultar Boletins de Urna - Consulta</CardHeader>
             <CardBody>
               <PageLoaderContext.Consumer>
                 {context => (
-                  <Link to={"/pages/MostrarBu/MostrarBu/id" }> 
-                  <Button onClick={this.handleConsultar.bind(this)}>Consultar</Button>
+                  <Link to={`/pages/MostrarBu/MostrarBu/${this.state.buselection.id}`}>
+                    <Button onClick={this.handleConsultar.bind(this)}>Consultar</Button>
                   </Link>
                 )}
               </PageLoaderContext.Consumer>
             </CardBody>
           </Card>
-        </Col> 
+        </Col>
       </Row>
     );
   }
+  
 }
 
 export default ConsultarBU;
