@@ -46,10 +46,15 @@ class ConsultarBU extends Component {
   async findBu(turno_selection, uf_selection, zona_selection, secao_selection) {
     try {
       const response = await this.axios.get(`${this.bu_api_url}/bu/find_by_info?turno=${turno_selection}&UF=${uf_selection}&zona=${zona_selection}&secao=${secao_selection}`);
-      this.setState({ buselection: response.data[0].id }, () => {
+      
+      const buselection = response.data; // Use response.data directly
+      this.setState({ buselection }, () => {
+        console.log(response.data);
+        // Perform additional actions or state updates if needed
       });
   
     } catch (error) {
+      console.error(error);
       throw error; // Rethrow the error to be caught in handleConsultar
     }
   }
@@ -58,16 +63,18 @@ class ConsultarBU extends Component {
     e.preventDefault();
   
     const { turno_selection, uf_selection, zona_selection, secao_selection } = this.state;
-  
+    
     try {
       await this.findBu(turno_selection, uf_selection, zona_selection, secao_selection);
-      
+  
       // Now that the network request is completed, you can access the buselectionId
-      const buselectionId = this.state.buselection;
-      
+      const buselectionId = this.state.buselection.id; // Use id here
+      console.log(buselectionId);
+  
       var url = `/pages/MostrarBu/MostrarBu/${buselectionId}`;
       window.location.href = url;
     } catch (error) {
+      console.error(error);
     }
   }
   
@@ -87,7 +94,7 @@ class ConsultarBU extends Component {
   handleChangeUF(e) {
     var selectedUF = e.target.value; 
     this.setState({ uf_selection: selectedUF }, () => {
-      this.axios.get(`${this.bu_api_url}/bu/distinct_zona?turno=${this.state.turno_selection}&uf=${this.state.uf_selection}`)	
+      this.axios.get(`${this.bu_api_url}/bu/distinct_zona?turno=${this.state.turno_selection}&UF=${this.state.uf_selection}`)	
         .then(response => {
           this.setState({ zona_opts: response.data });
         })
@@ -99,7 +106,7 @@ class ConsultarBU extends Component {
   handleChangeZona(e) {
     var selectedZona = e.target.value;
     this.setState({ zona_selection: selectedZona }, () => {
-      this.axios.get(`${this.bu_api_url}/bu/distinct_secao?turno=${this.state.turno_selection}&uf=${this.state.uf_selection}&zona=${this.state.zona_selection}`)	
+      this.axios.get(`${this.bu_api_url}/bu/distinct_secao?turno=${this.state.turno_selection}&UF=${this.state.uf_selection}&zona=${this.state.zona_selection}`)	
         .then(response => {
           this.setState({ secao_opts: response.data });
         })
