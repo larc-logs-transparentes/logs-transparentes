@@ -20,130 +20,113 @@ class ConsultarBU extends Component {
   constructor() {
     super()
     this.state = {
-                  lista: [],
-                  formulario :
-                    {
-                      turno: undefined,
-                      uf: undefined,
-                      zona: undefined,
-                      secao: undefined,
-                    }, 
-                  turno_opts: undefined,
+                  turno_opts: [],
                   uf_opts: undefined,
                   zona_opts: undefined,
                   secao_opts: undefined,
-                  buSelecionado: undefined,
+                  turno_selection: [],
+                  uf_selection: undefined,
+                  zona_selection: undefined,
+                  secao_selection: undefined,
+                  buselection: [],
                 }
     this.findBu = this.findBu.bind(this);
 
   }
 
   componentDidMount() {
-    this.axios.get(`${this.bu_api_url}/bu/find_all`) 
-      .then(response => this.setState({ lista: response.data }))
-  }
-
-  findBu() {
-    const { lista } = this.state
-    var form  = this.state.formulario
-    var len = lista.length
-    var i=0
-    while (i<len) {
-      if ( form.turno === lista[i].turno && form.uf === lista[i].UF
-        && parseInt(form.zona) === lista[i].zona && parseInt(form.secao) === lista[i].secao) {
-          break
-      }
-      i++
-    }
-
-    if (i<len) {
-      this.setState({buSelecionado: i})
-      console.log("buSelecionado=" + this.state.buSelecionado)
-      console.log(lista[i])
-      return lista[i].id
-    }
-    else {
-      return 0
-    }
-  }
-
-  handleConsultar(e) {
-    e.preventDefault()
-    var url = "/pages/MostrarBu/MostrarBu/" + this.findBu()
-    console.log(url)
-    window.location.href =  url
+    this.axios.get(`${this.bu_api_url}/bu/distinct_turno`)
+      .then(response => {
+        this.setState({ turno_opts: response.data });
+      })
+      .catch(error => {
+      });
   }
   
-  handleChange(e) {
-    var formulario  = this.state.formulario
-    formulario[e.target.name] = e.target.value  
+  async findBu(turno_selection, uf_selection, zona_selection, secao_selection) {
+    try {
+      const response = await this.axios.get(`${this.bu_api_url}/bu/find_by_info?turno=${turno_selection}&UF=${uf_selection}&zona=${zona_selection}&secao=${secao_selection}`);
+      
+      const buselection = response.data; // Use response.data directly
+      this.setState({ buselection }, () => {
+        // Perform additional actions or state updates if needed
+      });
+  
+    } catch (error) {
+      console.error(error);
+      throw error; // Rethrow the error to be caught in handleConsultar
+    }
   }
-
+  
+  async handleConsultar(e) {
+    e.preventDefault();
+  
+    const { turno_selection, uf_selection, zona_selection, secao_selection } = this.state;
+    
+    try {
+      await this.findBu(turno_selection, uf_selection, zona_selection, secao_selection);
+  
+      // Now that the network request is completed, you can access the buselectionId
+      const buselectionId = this.state.buselection.id; // Use id here
+  
+      var url = `/pages/MostrarBu/MostrarBu/${buselectionId}`;
+      window.location.href = url;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
   handleChangeTurn(e) {
-    var formulario  = this.state.formulario
-    formulario[e.target.name] = e.target.value
-    
-    var list_bu_with_turn = this.state.lista.filter((item) => item.turno === e.target.value)
-    var list_states_filtered = list_bu_with_turn.map((item) => item.UF)
-    var list_states_unique = Array.from(new Set(list_states_filtered))
-    this.setState({uf_opts: list_states_unique}, () => console.log( this.state.uf_opts))
+    var selectedTurno = e.target.value;
+    this.setState({ turno_selection: selectedTurno }, () => {
+      this.axios.get(`${this.bu_api_url}/bu/distinct_uf?turno=${this.state.turno_selection}`)
+        .then(response => {
+          this.setState({ uf_opts: response.data });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    });
   }
   
-  handleChangeState(e) {
-    var formulario  = this.state.formulario
-    formulario[e.target.name] = e.target.value
-    
-    var list_bu_with_state = this.state.lista.filter((item) => item.UF === e.target.value && item.turno === formulario.turno)
-    var list_zones_filtered = list_bu_with_state.map((item) => item.zona)
-    var list_zones_unique = Array.from(new Set(list_zones_filtered))
-    list_zones_unique.sort(function(a, b) { return a - b })
-    this.setState({zona_opts: list_zones_unique}, () => console.log( this.state.zona_opts))
+  handleChangeUF(e) {
+    var selectedUF = e.target.value; 
+    this.setState({ uf_selection: selectedUF }, () => {
+      this.axios.get(`${this.bu_api_url}/bu/distinct_zona?turno=${this.state.turno_selection}&UF=${this.state.uf_selection}`)	
+        .then(response => {
+          this.setState({ zona_opts: response.data });
+        })
+        .catch(error => {
+        });
+    });
   }
   
-  handleChangeZone(e) {
-    var formulario  = this.state.formulario
-    formulario[e.target.name] = e.target.value
-    // eslint-disable-next-line
-    var list_bu_with_zone = this.state.lista.filter((item) => item.zona == e.target.value && item.UF == formulario.uf && item.turno == formulario.turno)
-    var list_sections_filtered = list_bu_with_zone.map((item) => item.secao)
-    var list_sections_unique = Array.from(new Set(list_sections_filtered))
-    list_sections_unique.sort(function(a, b) { return a - b })
-    this.setState({secao_opts: list_sections_unique}, () => console.log( this.state.secao_opts))
+  handleChangeZona(e) {
+    var selectedZona = e.target.value;
+    this.setState({ zona_selection: selectedZona }, () => {
+      this.axios.get(`${this.bu_api_url}/bu/distinct_secao?turno=${this.state.turno_selection}&UF=${this.state.uf_selection}&zona=${this.state.zona_selection}`)	
+        .then(response => {
+          this.setState({ secao_opts: response.data });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    });
   }
-  
+
+  handleChangeSecao(e) {
+    var selectedSecao = e.target.value;
+    this.setState({ secao_selection: selectedSecao }, () => {
+    });
+  }
 
   render() {
-    const { lista } = this.state
-    
-    var len = lista.length
-    var turno = new Map()
-    var uf = new Map()
-    var zona = new Map()
-    var secao = new Map()
-
-    for (var i=0; i<len; i++) {
-      turno.set(lista[i].turno, lista[i].turno)
-    }
-
-    for (i in this.state.uf_opts) {
-      uf.set(this.state.uf_opts[i], this.state.uf_opts[i])
-    }
-    
-    for (i in this.state.zona_opts) {
-      zona.set(this.state.zona_opts[i], this.state.zona_opts[i])
-    }
-    
-    for (i in this.state.secao_opts) {
-      secao.set(this.state.secao_opts[i], this.state.secao_opts[i])
-    }
-    
-    let turnoArr = Array.from(turno.keys())
-    let ufArr = Array.from(uf.keys())
-    let zonaArr = Array.from(zona.keys())
-    let secaoArr = Array.from(secao.keys()) 
-
-
-      return (
+    var turnoArr = this.state.turno_opts || [];
+    var ufArr = this.state.uf_opts || [];
+    var zonaArr = this.state.zona_opts || [];
+    var secaoArr = this.state.secao_opts || [];
+  
+    return (
       <Row>
         <Col md={12}>
           <Card>
@@ -152,69 +135,73 @@ class ConsultarBU extends Component {
               <FormGroup>
                 <Label for="turnoSelect">Turno</Label>
                 <Input type="select" name="turno" id="turnoSelect" onChange={this.handleChangeTurn.bind(this)}>
-                <option value=""></option>
-                 {turnoArr.map((entry) => (
-                    <option value={entry}>{entry}º</option>
-                ))}
+                  <option value=""></option>
+                  {turnoArr.map((entry, index) => (
+                    <option key={index} value={entry}>
+                      {entry}º
+                    </option>
+                  ))}
                 </Input>
-            </FormGroup>
+              </FormGroup>
             </CardBody>
           </Card>
-
+  
           <Card>
             <CardHeader>Consultar Boletins de Urna - Estado</CardHeader>
             <CardBody>
               <FormGroup>
-                <Label for="UFSelect">UF</Label>
-                <Input type="select" name="uf" id="uf" onChange={this.handleChangeState.bind(this)}>
-                <option value=""></option>
-                {ufArr.map((entry) => (
-                    <option value={entry}>{entry}</option>
-                ))}
+                <Label for="uf">UF</Label>
+                <Input type="select" name="uf" id="uf" onChange={this.handleChangeUF.bind(this)}>
+                  <option value=""></option>
+                  {ufArr.map((entry, index) => (
+                    <option key={index} value={entry}>
+                      {entry}
+                    </option>
+                  ))}
                 </Input>
-            </FormGroup>
-            </CardBody>
-            <CardBody>
+              </FormGroup>
               <FormGroup>
-                <Label for="zonaSelect">Zona</Label>
-                <Input type="select" name="zona" id="zona" onChange={this.handleChangeZone.bind(this)}>
-                <option value=""></option>
-                {zonaArr.map((entry) => (
-                    <option value={entry}>{entry}</option>
-                ))}
+                <Label for="zona">Zona</Label>
+                <Input type="select" name="zona" id="zona" onChange={this.handleChangeZona.bind(this)}>
+                  <option value=""></option>
+                  {zonaArr.map((entry, index) => (
+                    <option key={index} value={entry}>
+                      {entry}
+                    </option>
+                  ))}
                 </Input>
-            </FormGroup>
-            </CardBody>
-            <CardBody>
+              </FormGroup>
               <FormGroup>
-                <Label for="secaoSelect">Seção</Label>
-                <Input type="select" name="secao" id="secao" onChange={this.handleChange.bind(this)}>
-                <option value=""></option>
-                {secaoArr.map((entry) => (
-                    <option value={entry}>{entry}</option>
-                ))}
+                <Label for="secao">Seção</Label>
+                <Input type="select" name="secao" id="secao" onChange={this.handleChangeSecao.bind(this)}>
+                  <option value=""></option>
+                  {secaoArr.map((entry, index) => (
+                    <option key={index} value={entry}>
+                      {entry}
+                    </option>
+                  ))}
                 </Input>
-            </FormGroup>
+              </FormGroup>
             </CardBody>
           </Card>
-
+  
           <Card>
             <CardHeader>Consultar Boletins de Urna - Consulta</CardHeader>
             <CardBody>
               <PageLoaderContext.Consumer>
                 {context => (
-                  <Link to={"/pages/MostrarBu/MostrarBu/id" }> 
-                  <Button onClick={this.handleConsultar.bind(this)}>Consultar</Button>
+                  <Link to={`/pages/MostrarBu/MostrarBu/${this.state.buselection.id}`}>
+                    <Button onClick={this.handleConsultar.bind(this)}>Consultar</Button>
                   </Link>
                 )}
               </PageLoaderContext.Consumer>
             </CardBody>
           </Card>
         </Col>
-        
       </Row>
     );
   }
+  
 }
 
 export default ConsultarBU;
