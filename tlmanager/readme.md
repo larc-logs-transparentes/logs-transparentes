@@ -7,7 +7,7 @@ Transparent log service based on a multi-layer tree structure.
 
 <b> Pre-requisites </b>
 
-- Python 3.9
+- Python 3.11
 - MongoDB
 
 
