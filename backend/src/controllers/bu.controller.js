@@ -30,7 +30,13 @@ router.get("/find_by_id", async (req, res) => {
   
   res.json(data)
 })
-
+router.get("/find_by_index_range", async  (req, res) => {
+  const initial_index = req.query.initial_index
+  const final_index = req.query.final_index
+  console.info(`[bu.controller] GET /find_by_id_range ${initial_index} ${final_index}`)
+  const data = await bu_repository.findByIndexRange(initial_index, final_index)
+  res.json(data)
+})
 router.get("/find_by_info", async (req, res) => {
   const turno = req.query.turno
   const UF = req.query.UF
