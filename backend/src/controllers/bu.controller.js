@@ -20,7 +20,7 @@ router.get("/find_by_id_range", async  (req, res) => {
 
   res.json(data)
 })
-  
+ 
 router.get("/find_by_id", async (req, res) => {
   const id = req.query.id
   
