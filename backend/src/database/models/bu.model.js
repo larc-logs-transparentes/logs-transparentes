@@ -17,8 +17,12 @@ const schema_bu = new mongoose.Schema({
     cidade: String,
     bu_inteiro: String,
     votos: [schema_candidato],
-    merkletree_leaf_index: String,
+    merkletree_leaf_index: Number,
     merkletree_leaf: String,
 });
-
-module.exports = { schema_bu }
+schema_bu.index({ merkletree_leaf_index:1});
+schema_bu.index({ UF:1});
+schema_bu.index({ zona:1});
+schema_bu.index({ secao:1});
+schema_bu.index({ turno:1});
+module.exports = { schema_bu } 
