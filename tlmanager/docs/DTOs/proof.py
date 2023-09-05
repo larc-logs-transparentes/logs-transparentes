@@ -9,6 +9,7 @@ class DTOPymerkleProof(OnlyStatusResponse):
 class DTODataProof(OnlyStatusResponse):
     global_root: GlobalTreeRootObject
     local_tree: InclusionProofLocalTree
+    data: PymerkleProof
 
 """ /all-consistency-proof """
 class DTOAllConsistencyProof(OnlyStatusResponse):
