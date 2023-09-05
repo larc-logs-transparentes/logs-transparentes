@@ -42,6 +42,15 @@ exports.findByIdRange = async (initial_id, final_id) => {
         console.error(`[ERROR][bu.repository] ${err}`)
     })
 }
+exports.findByIndexRange = async (initial_index, final_index) => {
+    return await repository.find({merkletree_leaf_index:{ $gte:initial_index, $lte:final_index}})
+    .then((data) => {
+        return data
+    })
+    .catch((err) => {
+        console.error(`[ERROR][bu.repository] ${err}`)
+    })
+}
 
 exports.findByInfo = async (turno, UF, zona, secao) => {
     return await repository.findOne({ turno: turno, UF: UF, zona: zona, secao: secao })
