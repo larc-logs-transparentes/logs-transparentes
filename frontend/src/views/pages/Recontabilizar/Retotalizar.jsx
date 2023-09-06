@@ -5,7 +5,7 @@ import { Loader } from '../../../common';
 import approval from '../../../assets/images/Approved.png';
 import error from '../../../assets/images/Error.png';
 import {RetotalizacaoDeBus} from './LogicaRetotalizacao.js';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingSpinner from '../../../common/components/Spinner/LoadingSpinner';
 
 export default function Retotalizar() {
   const [showbbus, setBbus] = useState(false);

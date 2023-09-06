@@ -10,11 +10,11 @@ const _nav = {
       url: '/pages/ConsultarBU/ConsultarBU',
       icon: 'Package',
     },
-    {
-      name: 'Consultar Cidade',
-      url: '/mapa',
-      icon: 'Package'
-    },
+    // {
+    //   name: 'Consultar Cidade',
+    //   url: '/mapa',
+    //   icon: 'Package'
+    // },
     {
       divider: true,
     },
@@ -23,21 +23,18 @@ const _nav = {
       url: '/pages/RaizAssinada/RaizAssinada',
       icon: 'Package'
     },
-    {
-      name: 'Recontabilizar',
-      url: '/recontabilizar',
-      icon: 'Package'
-    },{
+    // {
+    //   name: 'Recontabilizar',
+    //   url: '/recontabilizar',
+    //   icon: 'Package'
+    // }
+    ,{
       divider: true,
     },
   ],
   bottom: [
-    
-    {
-      name: 'Account',
-      url: '/dashboard',
-      icon: 'User'
-    },
+
+  
   ],
 }
 

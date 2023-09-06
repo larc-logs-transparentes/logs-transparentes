@@ -15,9 +15,6 @@ export default function ProvaDeConsistencia() {
 
   return (
     <div>
-      <p>
-          {isProofTrue}
-      </p>
     </div>
   );
 }

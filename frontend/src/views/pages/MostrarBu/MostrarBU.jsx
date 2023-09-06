@@ -10,6 +10,8 @@ import {
 import { Link } from 'react-router-dom';
 import Cadeado from './Cadeado.jsx'
 import {getBuById} from '../../../api/bu.api.js'
+import { getDataProof } from '../../../api/merkletree.api.js'
+import ReactJson from 'react-json-view'
 
 class MostrarBU extends Component {
   axios = require('axios')
@@ -17,12 +19,14 @@ class MostrarBU extends Component {
   constructor(props) {
     super(props)
     this.state = {bu: [],
+                  prova: [],
+                  mostrarProva: false,
                   votos: [],
                   id: null
                 }
   }
 
-  componentDidMount() {
+ async componentDidMount() {
     const { id } = this.props.match.params;
     getBuById(id).then(bu => this.setState(
       { 
@@ -30,7 +34,10 @@ class MostrarBU extends Component {
         votos: bu.votos, 
         id: bu.id 
       }
+      
     ))
+    const prova = await getDataProof(id);
+    this.setState({ prova });
   }
 
   onClickShowProof(e) {
@@ -53,10 +60,10 @@ class MostrarBU extends Component {
     var bu = this.state.bu
     var votesArray = (this.state.votos===undefined)? [] : Array.from(this.state.votos)
     const votesOrganizedByPosition = this.groupByPosition(votesArray)
-
+    var prova = this.state.prova
     return (
       <Col>
-      <Col md={6}>
+      <Col style={{ display: 'flex' }}>
         <Card>
           <CardHeader>Consultar Boletins de Urna - Turno
           {(this.state.id !== null && this.state.id !== undefined) && (
@@ -110,8 +117,13 @@ class MostrarBU extends Component {
               </CardBody>
           </CardBody>
         </Card>
+        <Card style={{ flex: 1, width:'100%',gap:'10%', marginLeft:'5%'}}>
+        <ReactJson collapsed displayDataTypes={false} src={this.state.prova} style={{ flex: 1, gap:'10%',overflowX:'scroll'}} />
+        </Card>
+        </Col>
+        
       </Col>
-      </Col>
+      
     );
   }
 }
