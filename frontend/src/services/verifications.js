@@ -15,7 +15,7 @@ export async function verifySingleData(id) {
 
     const pyodide = await initPyodide(); 
     const pythonCode = `
-    from tlverifier.merkle_functions.tl_functions import verify_single_data
+    from tlverifier.merkle_functions.tl_functions import verify_data_entry
     import requests
     import json
     def func():
@@ -28,7 +28,7 @@ export async function verifySingleData(id) {
       root=root.replace("'",'"')
       root=json.loads(root)
 
-      verifyresult=verify_single_data(proofData, root['value'],bytes(bu,'utf-8'))
+      verifyresult=verify_data_entry(proofData, root['value'],bytes(bu,'utf-8'))
       return str(verifyresult["success"])
     func()
   `;
