@@ -20,7 +20,7 @@ router.get("/find_by_id_range", async  (req, res) => {
 
   res.json(data)
 })
-  
+ 
 router.get("/find_by_id", async (req, res) => {
   const id = req.query.id
   
@@ -30,7 +30,13 @@ router.get("/find_by_id", async (req, res) => {
   
   res.json(data)
 })
-
+router.get("/find_by_index_range", async  (req, res) => {
+  const initial_index = req.query.initial_index
+  const final_index = req.query.final_index
+  console.info(`[bu.controller] GET /find_by_id_range ${initial_index} ${final_index}`)
+  const data = await bu_repository.findByIndexRange(initial_index, final_index)
+  res.json(data)
+})
 router.get("/find_by_info", async (req, res) => {
   const turno = req.query.turno
   const UF = req.query.UF
@@ -43,22 +49,26 @@ router.get("/find_by_info", async (req, res) => {
 
   res.json(data)
 })
+
 router.get("/distinct_turno", async (req, res) => {
   console.info(`[bu.controller] GET /distinct_turno`)
   const data = await bu_repository.findDistinctTurno()
   res.json(data)
 })
+
 router.get("/distinct_uf", async (req, res) => {
   const turno = req.query.turno
   const data = await bu_repository.findDistinctUF(turno)
   res.json(data)
 })
+
 router.get("/distinct_zona", async (req, res) => {
   const turno = req.query.turno
   const UF = req.query.UF
   const data = await bu_repository.findDistinctZona(turno, UF)
   res.json(data)
 })
+
 router.get("/distinct_secao", async (req, res) => {
   const turno = req.query.turno
   const UF = req.query.UF
@@ -66,7 +76,6 @@ router.get("/distinct_secao", async (req, res) => {
   const data = await bu_repository.findDistinctSecao(turno, UF, zona)
   res.json(data)
 })
-
 
 router.post("/create", async (req, res) => {
   const tree_name = req.body.tree_name

@@ -8,7 +8,7 @@ import sys
 app = FastAPI(
     title="TLManager",
     description=descriptions['API_description'],
-    version=1.0,
+    version="1.0",
 ) # to init: uvicorn main:app --reload
 
 @app.on_event("startup")
