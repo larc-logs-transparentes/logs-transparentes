@@ -49,13 +49,12 @@ def get_list_files_with_extension_in_directory(extension, path):
 # Get all BUs from directory (in JSON form)
 def get_list_all_bus_json_from_path(path):
     files_list = get_list_files_with_extension_in_directory("bu", path)
+    files_list.extend(get_list_files_with_extension_in_directory("busa", path))
     bu_list = []
 
     for file in files_list:
         bu_list.append(convert_bu_to_json(file))
         print(f"{path.rsplit('/', 1)[-1]} {files_list.index(file)} of {len(files_list)}", end='\r')
-        # if files_list.index(file) == 1:   # Stops at only 2 items from each list, for testing purposes
-        #     break
     print(f"{path.rsplit('/', 1)[-1]} {len(files_list)} of {len(files_list)}")
     print();
     
@@ -80,7 +79,10 @@ def write_bus_as_json_to_file(all_bus_path):
     # Iterate directories in path
     for bus_dir in bus_dirs:
         print(bus_dir)
-        hard_file = open(f'{RESULT_FOLDER}/{bus_dir.rsplit("/", 1)[-1]}.json', 'w')
+        if os.path.exists(f'{RESULT_FOLDER}/{bus_dir.rsplit("/", 1)[-1]}.json'):
+            os.remove(f'{RESULT_FOLDER}/{bus_dir.rsplit("/", 1)[-1]}.json')
+            
+        hard_file = open(f'{RESULT_FOLDER}/{bus_dir.rsplit("/", 1)[-1]}.json', 'a')
         hard_file.write('[')
 
         bus_json_text = ''
@@ -90,32 +92,14 @@ def write_bus_as_json_to_file(all_bus_path):
         for bu in bus_json:
             bus_json_text += bu + ','
 
+        bus_json_text = bus_json_text[:-1] + ']'
+    
         # Write data from dir to file
         hard_file.write(bus_json_text)
-        bus_json_text = ''  # clean variable before starting next dir
-        
         # Close file after writing content from every directory
         hard_file.close()
 
-        # Open file with bytes writing permissions
-        with open(f'{RESULT_FOLDER}/{bus_dir.rsplit("/", 1)[-1]}.json', 'rb+') as f:
-            f.seek(-1, 2)
-            f.truncate()    # removes last comma
-            f.write(bytearray(b']'))    # inserts last closing bracket
-            f.close()
-
-
-# Function to test decoding of generated JSON
-def decode_test():
-    file = open(RESULT_JSON_PATH, 'r')
-    json_obj = json.load(file)
-
-    for item in json_obj:
-        print(item)
-
-    print(len(json_obj))
-
-
+        bus_json_text = ''  # clean variable before starting next dir
+        
 if __name__ == '__main__':
     write_bus_as_json_to_file(ALL_BU_FOLDERS_PATH)
-    # decode_test()
