@@ -64,8 +64,8 @@ class Dashboard extends Component {
                     <DropdownToggle caret>{this.state.selectedOption}</DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem onClick={() => this.selectOption('Exército Brasileiro')}>Exército Brasileiro</DropdownItem>
-                      <DropdownItem onClick={() => this.selectOption('Clube de Regatas Vasco da Gama')}>Clube de Regatas Vasco da Gama</DropdownItem>
-                      <DropdownItem onClick={() => this.selectOption('Universidade Federal de São Carlos')}>Universidade Federal de São Carlos</DropdownItem>
+                      <DropdownItem onClick={() => this.selectOption('Universidade de São Paulo - USP')}>Universidade de São Paulo - USP</DropdownItem>
+                      <DropdownItem onClick={() => this.selectOption('Universidade Federal de São Carlos - UFSCAR')}>Universidade Federal de São Carlos - UFSCAR</DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
                 </CardText>
