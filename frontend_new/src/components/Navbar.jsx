@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Logs from '../assets/Logs.svg';
+import { Link } from 'react-router-dom';  // Import the Link component
 
 function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -13,17 +14,17 @@ function Navbar() {
       <div className='bg-yellow h-[8px]'></div>
       <div className='bg-blue-light h-[8px]'></div>
       <div className='bg-blue h-[37px]'></div>
-
-
-      <div className="flex lg:gap-[50vw] gap-[10vw] p-2 font-semibold relative">
-        <div className="flex gap-2 ml-20">
-          <img src={Logs} className="w-[160px] h-[38px]" alt="logo" />
+      <div className="flex xl:gap-[50vw] gap-[10vw] md:gap-[30vw]  p-2 font-semibold relative">
+        <div className="flex ml-20">
+          <Link to="/">  
+            <img src={Logs} className="w-[160px] h-[38px]" alt="logo" />
+          </Link>
         </div>
-        <ul className='flex ml-1 gap-10 z-30'>
+        <ul className='flex ml-1 gap-[15px] z-30'>
           <li className=' mt-[5px]'>
-            <a href="#" className='h-[21px]'>
+            <Link to="/" className='h-[21px]'>  {/* Replace the a tag with Link component */}
               Home
-            </a>
+            </Link>
             <div className='bg-yellow h-[3px]'></div>
           </li>
           <li className=' mt-[5px]'>
@@ -43,7 +44,7 @@ function Navbar() {
               </ul>
             )}
           </li>
-          <button class="rounded-full bg-yellow px-2 h-[37px] w-[91px]">Verificar</button>
+          <button className="rounded-full bg-yellow px-2 h-[37px] w-[91px]">Verificar</button>
         </ul>
       </div>
     </div>

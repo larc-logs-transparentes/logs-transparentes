@@ -1,17 +1,17 @@
 // ./components/HomePage.jsx
 import React from 'react';
-import Header from './components/Header'; 
 import SearchBar from '../../components/SearchBar';  
+import ShowBu from './components/ShowBu';
 import Footer from '../../components/Footer';
 
-function HomePage() {
+function SearchBu() {
   return (
     <div>
-      <Header />
       <SearchBar />
+      <ShowBu />
       <Footer />
     </div>
   );
 }
 
-export default HomePage;
+export default SearchBu;
