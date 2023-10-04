@@ -8,7 +8,7 @@
         "http://ts-logt-reais.larc2.usp:3000"
     ],
     "tlmanager_config": {
-        "hostname": "http://localhost",
+        "hostname": "http://127.0.0.1",
         "port": 8000
     },
     "mongodb_config": {

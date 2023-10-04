@@ -5,4 +5,5 @@ bu_json_maker/__pycache__
 bu_backend/package-lock.json
 merkleTree/package-lock.json
 
+.vscode
 venv

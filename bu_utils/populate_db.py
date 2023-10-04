@@ -5,7 +5,7 @@ import os
 from constants import BACKEND_URL
 from assets.counties_codes import get_county_uf_and_city_with_number
 
-BU_TREE_NAME = "bu_tree"
+BU_TREE_NAME_PREFIX = "bu_tree_election_"
 header = {
     "content-type": "application/json"
 }
@@ -54,21 +54,20 @@ def read_files():
 
 # sends list of bus (dicts) to db
 def insert_list_bus_to_db():
-    _id = 0
     for file in read_files():
         if file.endswith(".json"):
             print(f"Reading {file}", end=' ', flush=True)
             json_bus = ijson.items(open(file, "rb"), "item")
             jsons = (o for o in json_bus)
             for bu in jsons:                
-                res = insert_body_to_db(BU_TREE_NAME, parse_bu(bu, _id))
-                if res.status_code != 200:
-                    print(f"Error: {res.text}")
-                    return
-                _id += 1
+                leaves = parse_bu(bu)
+                for leaf in leaves:
+                    create_tree(f"{BU_TREE_NAME_PREFIX}{leaf['id_eleicao']}")
+                    res = insert_body_to_db(f"{BU_TREE_NAME_PREFIX}{leaf['id_eleicao']}", leaf)
+                    if res.status_code != 200:
+                        print(f"Error: {res.text}")
+                        return
             print("---- Finished")
 
 if __name__ == '__main__':
-    create_tree(BU_TREE_NAME)
     insert_list_bus_to_db()
-    commit_tree(BU_TREE_NAME)
