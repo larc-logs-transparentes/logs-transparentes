@@ -26,6 +26,7 @@ module.exports = {
       'yellow': '#FFB500',
       'black': '#030619',
       'white': '#FFFFFF',
+      'gray': '#979797',
 
     },
     backgroundPosition: {
