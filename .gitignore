@@ -6,3 +6,4 @@ bu_backend/package-lock.json
 merkleTree/package-lock.json
 
 venv
+.venv
