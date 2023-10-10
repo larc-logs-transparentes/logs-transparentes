@@ -35,11 +35,10 @@ module.exports = {
       center: 'center',
     },
     extend: {
-      rotate180: {
-        transform: 'rotate(180deg)',
-      },
-      rotate0: {
-        transform: 'rotate(0)',
+      backdropFilter: {
+        'none': 'none',
+        'blur': 'blur(5px)',
+        // ...you can add other backdrop-filter values as needed...
       },
     },
   },
