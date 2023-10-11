@@ -22,7 +22,7 @@ This module is responsible for receiving the BUs, storing them in a database, an
 
 <b>Configuration</b>
 
-In [config.json](./backend/src/config.json) file, it is possible to configure the address and port of MongoDB and TLManager,
+In [config.json](backend/public/src/config.json) file, it is possible to configure the address and port of MongoDB and TLManager,
 
 <b>Initialization</b>
 

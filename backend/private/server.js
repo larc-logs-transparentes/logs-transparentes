@@ -1,5 +1,6 @@
 
 const { app } = require("./src/init");
+const application_config = require("./src/config.json").application_config
 
 app.get("/", (req, res) => {
   res.json({ message: "Backend Executando" });
@@ -11,11 +12,7 @@ app.use("/bu", bu_controller);
 const tree_controller = require("./src/controllers/tree.controller");
 app.use("/tree", tree_controller);
 
-const global_tree_controller = require("./src/controllers/global_tree.controller");
-app.use("/global_tree", global_tree_controller);
-
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+app.listen(application_config.port, () => {
+  console.log(`Server is running on port ${application_config.port}.`);
 });

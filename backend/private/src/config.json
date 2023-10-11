@@ -15,5 +15,8 @@
         "hostname": "mongodb://localhost",
         "port": 27017,
         "database": "logsT"
+    },
+    "application_config": {
+        "port": 9090
     }
 }

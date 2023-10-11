@@ -6,7 +6,7 @@ const tlmanager_adapter = require("../adapters/tlmanager.adapter")
 router.post("/insert-leaf", async (req, res) => {
   const tree_name = req.body.tree_name
   const data = req.body.data
-  
+
   console.info(`[tree.controller] POST insert-leaf: ${tree_name} ${data}`)
 
   const response = await tlmanager_adapter.addLeaf(tree_name, data)
@@ -16,7 +16,7 @@ router.post("/insert-leaf", async (req, res) => {
 router.post("/create-tree", async (req, res) => {
   const tree_name = req.body.tree_name
   const commitment_size = req.body.commitment_size
-  
+
   console.info(`[tree.controller] POST create-tree: ${tree_name} ${commitment_size}`)
 
   const response = await tlmanager_adapter.createTree(tree_name, commitment_size)
@@ -56,6 +56,13 @@ router.get("/all-roots-global-tree", async (req, res) => {
 
   const response = await tlmanager_adapter.getAllRoots()
   res.json(response)
+})
+
+router.get("/global-tree/all-leaf-data", async (req, res) => {
+    console.info(`[tree.controller] GET global-tree/all-leaf-data`)
+
+    const response = await tlmanager_adapter.getGlobalTreeAllLeafData()
+    res.json(response)
 })
 
 /* Proofs routes */
