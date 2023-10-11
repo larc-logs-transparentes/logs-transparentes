@@ -14,7 +14,7 @@ function Navbar() {
       <div className='bg-yellow h-[8px]'></div>
       <div className='bg-blue-light h-[8px]'></div>
       <div className='bg-blue h-[37px]'></div>
-      <div className="flex xl:gap-[45vw] gap-[10vw] md:gap-[30vw]  p-2 font-semibold relative">
+      <div className="flex xl:gap-[45vw] gap-[10vw] md:gap-[30vw]  p-2 font-semibold relative bg-white">
         <div className="flex ml-20">
           <Link to="/">  
             <img src={Logs} className="w-[160px] h-[38px]" alt="logo" />

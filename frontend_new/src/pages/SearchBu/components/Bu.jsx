@@ -25,62 +25,57 @@ function Bu() {
                 <img src={Correto} className='h-[60px] w-[62.4px] ml-[32px]' alt='Mascara' />
             </div>
             <h1 className='text-black text-base font-bold p-[5px]'>Identificação</h1>
+            <div className='flex gap-[100px]'>
+                    <div className='flex-col'>
+                        <h1 className='text-gray text-xs font-bold p-[5px] truncate'>Eleitores Aptos:</h1>
+                        <h1 className='text-blue-light text-xs font-bold p-[5px] truncate'>12492</h1>
+                    </div>  
+                    <div className='flex-col'>
+                        <h1 className='text-gray text-xs font-bold p-[5px] truncate'>Comparecimento:</h1>
+                        <h1 className='text-blue-light text-xs font-bold p-[5px] truncate'>12222</h1>
+                    </div>  
+                    <div className='flex-col'>
+                        <h1 className='text-gray text-xs font-bold p-[5px] truncate'>Eleitores Faltosos:</h1>
+                        <h1 className='text-blue-light text-xs font-bold p-[5px] truncate'>190</h1>
+                    </div>  
+                    <div className='flex-col'>
+                        <h1 className='text-gray text-xs font-bold p-[5px] truncate'>Habitados por ano de Nascimento:</h1>
+                        <h1 className='text-blue-light text-xs font-bold p-[5px] truncate'>0.000</h1>
+                    </div>  
+                </div>
+                <h1 className='text-black text-base font-bold p-[5px] truncate'>Urna Eletrônica - Correspondência Efetivada</h1>
                 <div className='flex gap-[100px]'>
-                <div className='flex-col'>
-                    <h1 className='text-gray text-xs font-bold p-[5px]'>Eleição:</h1>
-                    <h1 className='text-blue-light text-xs font-bold p-[5px]'>0.000</h1>
-                
-                </div>  
-                <div className='flex-col'>
-                    <h1 className='text-gray text-xs font-bold p-[5px]'>Eleição:</h1>
-                    <h1 className='text-blue-light text-xs font-bold p-[5px]'>0.000</h1>
-                </div>  
-                <div className='flex-col'>
-                    <h1 className='text-gray text-xs font-bold p-[5px]'>Eleição:</h1>
-                    <h1 className='text-blue-light text-xs font-bold p-[5px]'>0.000</h1>
-                </div>  
-                <div className='flex-col'>
-                    <h1 className='text-gray text-xs font-bold p-[5px]'>Eleição:</h1>
-                    <h1 className='text-blue-light text-xs font-bold p-[5px]'>0.000</h1>
-                </div>  
-            </div>
-
-            <h1 className='text-black text-base font-bold p-[5px] mt-[50px]'>Urna Eletrônica - Correspondência Efetivada</h1>
-            <div className='flex gap-[160px]'>
-                <div className='flex-col'>
-                    <h1 className='text-gray text-xs font-bold p-[5px]'>Eleição:</h1>
-                    <h1 className='text-blue-light text-xs font-bold p-[5px]'>0.000</h1>
-                
-                </div> 
-                <div className='flex-col'>
-                    <h1 className='text-gray text-xs font-bold p-[5px]'>Eleição:</h1>
-                    <h1 className='text-blue-light text-xs font-bold p-[5px] '>0.000</h1>
-                </div>  
-                <div className='flex-col'>
-                    <h1 className='text-gray text-xs font-bold p-[5px]'>Eleição:</h1>
-                    <h1 className='text-blue-light text-xs font-bold p-[5px] '>0.000</h1>
-                </div>  
-                <div className='flex-col'>
-                    <h1 className='text-gray text-xs font-bold p-[5px]'>Eleição:</h1>
-                    <h1 className='text-blue-light text-xs font-bold p-[5px]'>a0</h1>
-                </div>  
-            </div>
-            <div className='flex gap-[160px]'>
-                <div className='flex-col'>
-                    <h1 className='text-gray text-xs font-bold p-[5px]'>Eleição:</h1>
-                    <h1 className='text-blue-light text-xs font-bold p-[5px] '>0.000</h1>
-                
-                </div>  
-                <div className='flex-col '>
-                    <h1 className='text-gray text-xs font-bold p-[5px]'>Eleição:</h1>
-                    <h1 className='text-blue-light text-xs font-bold p-[5px] '>0.0000000000000000000000000</h1>
-                </div>  
-
-                <div className='flex-col'>
-                    <h1 className='text-gray text-xs font-bold p-[5px]'>Eleição:</h1>
-                    <h1 className='text-blue-light text-xs font-bold p-[5px] '>0.000</h1>
-                </div>  
-            </div>
+                    <div className='flex-col'>
+                        <h1 className='text-gray text-xs font-bold p-[5px] truncate'>Tipo de Arquivo:</h1>
+                        <h1 className='text-blue-light text-xs font-bold p-[5px] truncate'>Urna Eletrônica</h1>
+                    </div> 
+                    <div className='flex-col'>
+                        <h1 className='text-gray text-xs font-bold p-[5px] truncate'>Código de Identificação:</h1>
+                        <h1 className='text-blue-light text-xs font-bold p-[5px] truncate'>012312352331515120</h1>
+                    </div>  
+                    <div className='flex-col'>
+                        <h1 className='text-gray text-xs font-bold p-[5px] truncate'>Data da Abertura UE:</h1>
+                        <h1 className='text-blue-light text-xs font-bold p-[5px] truncate'>30/10/2022 08:00:01</h1>
+                    </div>  
+                    <div className='flex-col'>
+                        <h1 className='text-gray text-xs font-bold p-[5px] truncate'>Data de fechamento UE:</h1>
+                        <h1 className='text-blue-light text-xs font-bold p-[5px] truncate'>30/10/2022 17:01:22</h1>
+                    </div>  
+                </div>
+                <div className='flex gap-[100px]'>
+                    <div className='flex-col'>
+                        <h1 className='text-gray text-xs font-bold p-[5px] truncate'>Código de identificacão da carga:</h1>
+                        <h1 className='text-blue-light text-xs font-bold p-[5px] truncate'>220.344.551.362.368.805.077.296</h1>
+                    </div>  
+                    <div className='flex-col '>
+                        <h1 className='text-gray text-xs font-bold p-[5px] truncate'>Código de identificacão MC</h1>
+                        <h1 className='text-blue-light text-xs font-bold p-[5px] truncate'>04.A43.331</h1>
+                    </div>  
+                    <div className='flex-col'>
+                        <h1 className='text-gray text-xs font-bold p-[5px] truncate'>Resumo da correspondência:</h1>
+                        <h1 className='text-blue-light text-xs font-bold p-[5px] truncate'>077.296</h1>
+                    </div>  
+                </div>
         </div>
     </div>
   );

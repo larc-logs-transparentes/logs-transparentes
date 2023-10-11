@@ -38,7 +38,6 @@ module.exports = {
       backdropFilter: {
         'none': 'none',
         'blur': 'blur(5px)',
-        // ...you can add other backdrop-filter values as needed...
       },
     },
   },
