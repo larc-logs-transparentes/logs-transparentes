@@ -1,9 +1,7 @@
 const tlmanager_adapter = require("../adapters/tlmanager.adapter");
 const bu_repository = require("../database/repository/bu.repository");
-const config = require("../config.json");
 const county_codes = require("../assets/county_codes.json");
-
-const BU_TREE_NAME_PREFIX = "bu_tree_election_"
+const bu_tree_info = require("../config.json").tlmanager_config.bu_tree_info
 
 /*
 * This function search for the county in the county_codes.json file and returns if it is found
@@ -15,7 +13,7 @@ const getUfAndMunicipioFromCod = (cod_municipio) => {
             return county
     }
 
-     return {
+    return {
         codigo_tse: cod_municipio,
         uf: 'ZZ',
         nome_municipio: 'Externo'
@@ -53,7 +51,7 @@ exports.create = async (bu) => {
     for (const eleicao of eleicoes) {
         let merkle_tree_leaf_data = await tlmanager_adapter.addLeaf(BU_TREE_NAME_PREFIX + eleicao.id_eleicao, eleicao.bu_inteiro)
         if (merkle_tree_leaf_data === undefined) {
-            await tlmanager_adapter.createTree(BU_TREE_NAME_PREFIX + eleicao['id_eleicao'], 2048)
+            await tlmanager_adapter.createTree(bu_tree_info.prefix + eleicao['id_eleicao'], bu_tree_info.commitment_size)
             merkle_tree_leaf_data = await tlmanager_adapter.addLeaf(BU_TREE_NAME_PREFIX + eleicao.id_eleicao, eleicao.bu_inteiro)
         }
         console.debug(`[bu.service] merkle_tree_leaf_data: ${JSON.stringify(merkle_tree_leaf_data)}`)
