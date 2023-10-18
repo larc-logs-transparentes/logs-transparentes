@@ -9,9 +9,6 @@ app.get("/", (req, res) => {
 const bu_controller = require("./src/controllers/bu.controller");
 app.use("/bu", bu_controller);
 
-const tree_controller = require("./src/controllers/tree.controller");
-app.use("/tree", tree_controller);
-
 // set port, listen for requests
 app.listen(application_config.port, () => {
   console.log(`Server is running on port ${application_config.port}.`);

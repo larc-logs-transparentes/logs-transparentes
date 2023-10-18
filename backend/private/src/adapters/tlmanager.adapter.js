@@ -18,6 +18,7 @@ exports.addLeaf = async (tree_name, data) => {
 }
 
 exports.createTree = async (tree_name, commitment_size) => {
+  console.log(`[tlmanager.adapter] createTree(${tree_name}, ${commitment_size})`)
   return await axios.post(`${tlmanagerHostname}:${tlmanagerPort}/tree-create`, {
       "tree_name": tree_name,
       "commitment_size": commitment_size
