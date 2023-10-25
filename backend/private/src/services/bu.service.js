@@ -49,10 +49,10 @@ const retrieveElectionObjectFromBu = (bu) => {
 exports.create = async (bu) => {
     const eleicoes = retrieveElectionObjectFromBu(bu)
     for (const eleicao of eleicoes) {
-        let merkle_tree_leaf_data = await tlmanager_adapter.addLeaf(BU_TREE_NAME_PREFIX + eleicao.id_eleicao, eleicao.bu_inteiro)
+        let merkle_tree_leaf_data = await tlmanager_adapter.addLeaf(bu_tree_info.prefix + eleicao['id_eleicao'], eleicao.bu_inteiro)
         if (merkle_tree_leaf_data === undefined) {
             await tlmanager_adapter.createTree(bu_tree_info.prefix + eleicao['id_eleicao'], bu_tree_info.commitment_size)
-            merkle_tree_leaf_data = await tlmanager_adapter.addLeaf(BU_TREE_NAME_PREFIX + eleicao.id_eleicao, eleicao.bu_inteiro)
+            merkle_tree_leaf_data = await tlmanager_adapter.addLeaf(bu_tree_info.prefix + eleicao['id_eleicao'], eleicao.bu_inteiro)
         }
         console.debug(`[bu.service] merkle_tree_leaf_data: ${JSON.stringify(merkle_tree_leaf_data)}`)
 
