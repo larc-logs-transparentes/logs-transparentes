@@ -7,3 +7,6 @@ merkleTree/package-lock.json
 
 venv
 .venv
+
+.idea
+.vscode
