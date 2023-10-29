@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const bu_repository = require('../database/repository/bu.repository');
-const bu_service = require('../services/bu.service');
 
 router.get("/find_by_merkletree_index_range", async  (req, res) => {
   const election_id = req.query.election_id

@@ -28,7 +28,7 @@ router.get("/all-roots-global-tree", async (req, res) => {
   res.json(response)
 })
 
-router.get("/global-tree/all-leaf-data", async (req, res) => {
+router.get("/all-leaf-data-global-tree", async (req, res) => {
     console.info(`[tree.controller] GET global-tree/all-leaf-data`)
 
     const response = await tlmanager_adapter.getGlobalTreeAllLeafData()
