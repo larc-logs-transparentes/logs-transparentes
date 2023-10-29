@@ -1,6 +1,6 @@
 const tlmanager_adapter = require("../adapters/tlmanager.adapter");
 const bu_repository = require("../database/repository/bu.repository");
-const county_codes = require("../assets/county_codes.json");
+const county_codes = require("../assets/county_codes_hash.json");
 const bu_tree_info = require("../config.json").tlmanager_config.bu_tree_info
 
 /*
@@ -8,16 +8,17 @@ const bu_tree_info = require("../config.json").tlmanager_config.bu_tree_info
 * If it is not found, it returns a default object with uf = 'ZZ' and municipio = 'Externo'
 */
 const getUfAndMunicipioFromCod = (cod_municipio) => {
-    for (const county of county_codes) {
-        if (county.codigo_tse === cod_municipio)
-            return county
+
+    try {
+        return county_codes[cod_municipio]
+    } catch (error) {
+        return {
+            codigo_tse: cod_municipio,
+            uf: 'ZZ',
+            nome_municipio: 'Externo'
+        }
     }
 
-    return {
-        codigo_tse: cod_municipio,
-        uf: 'ZZ',
-        nome_municipio: 'Externo'
-    }
 }
 
 /*
