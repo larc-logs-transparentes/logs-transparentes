@@ -8,8 +8,9 @@ import SendBu from './pages/SendBu/SendBu.jsx';
 
 function App() {
   return (
-    <Router>
-      <div>
+    <Router >
+      <div className='overflow-x-hidden'>
+
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} /> 

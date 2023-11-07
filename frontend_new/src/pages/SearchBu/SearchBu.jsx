@@ -19,7 +19,6 @@ function SearchBu() {
           <Bu />
           <Result />
           <Result />
-          {/* Adding buttons here below the last Result component */}
           <button onClick={toggleModal} className="rounded-full bg-yellow px-2 h-[37px] w-[194px] ml-[256px] font-bold">Enviar para o Monitor</button>
           <button onClick={toggleModal} className="rounded-full bg-yellow px-2 h-[37px] w-[102px] ml-[16px] font-bold">Baixar Bu</button>
         </div>

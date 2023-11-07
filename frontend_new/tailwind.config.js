@@ -39,6 +39,7 @@ module.exports = {
         'none': 'none',
         'blur': 'blur(5px)',
       },
+      
     },
   },
   plugins: [],
