@@ -23,7 +23,8 @@ const getUfAndMunicipioFromCod = (cod_municipio) => {
 
 /*
 * This function receives a bu and returns an array of objects containing one object for each election
-* An election object contains the id of the election, informations that identify the bu ("zona", "secao" and "municipio") and the bu itself
+* An election object contains the id of the election, informations that identify the bu ("zona", "secao"
+*  and "municipio") and the bu itself
 */
 const retrieveElectionObjectFromBu = (bu) => {
     const zona = bu['identificacaoSecao']['municipioZona']['zona']

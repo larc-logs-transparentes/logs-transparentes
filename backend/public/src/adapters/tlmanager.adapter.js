@@ -35,6 +35,15 @@ exports.getAllRoots = () => {
     })
 }
 
+exports.getGlobalTreeAllLeafData = () => {
+  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/global-tree/all-leaf-data`)
+      .then(res => {
+        return res.data
+      })
+      .catch(err => {
+        console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
+      })
+}
 
 /* Proofs routes */
 exports.getConsistencyProof = (tree_name) => {
@@ -59,16 +68,6 @@ exports.getDataProof = (tree_name, leaf_index) => {
 
 exports.getInclusionProof = (tree_name, leaf_index) => {
   return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/inclusion-proof?tree_name=${tree_name}&index=${leaf_index}`)
-  .then(res => {
-    return res.data
-  })
-  .catch(err => {
-    console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
-  })
-}
-
-exports.getGlobalTreeAllLeafData = () => {
-  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/global-tree/all-leaf-data`)
   .then(res => {
     return res.data
   })

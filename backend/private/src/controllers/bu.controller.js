@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const bu_repository = require('../database/repository/bu.repository');
 const bu_service = require('../services/bu.service');
 
 /**
