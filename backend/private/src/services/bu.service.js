@@ -8,17 +8,15 @@ const bu_tree_info = require("../config.json").tlmanager_config.bu_tree_info
 * If it is not found, it returns a default object with uf = 'ZZ' and municipio = 'Externo'
 */
 const getUfAndMunicipioFromCod = (cod_municipio) => {
-
-    try {
-        return county_codes[cod_municipio]
-    } catch (error) {
+    county = county_codes[cod_municipio]
+    if (county == undefined) {
         return {
             codigo_tse: cod_municipio,
             uf: 'ZZ',
             nome_municipio: 'Externo'
         }
     }
-
+    return county
 }
 
 /*
