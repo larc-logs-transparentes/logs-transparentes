@@ -15,12 +15,11 @@ function SearchBu() {
       <SearchBar />
       {isModalOpen && <SendBu closeModal={closeModal} />}
       <div className='flex place-content-center p-[20px]'>
-        <div className='flex-col space-y-[20px]'>     
+        <div className='flex-col items-center space-y-[20px]'>     
           <Bu />
           <Result />
           <Result />
-          <button onClick={toggleModal} className="rounded-full bg-yellow px-2 h-[37px] w-[194px] ml-[256px] font-bold">Enviar para o Monitor</button>
-          <button onClick={toggleModal} className="rounded-full bg-yellow px-2 h-[37px] w-[102px] ml-[16px] font-bold">Baixar Bu</button>
+          <button onClick={toggleModal} className="rounded-full bg-yellow px-2 h-[37px] md2:ml-[40%] md2:w-[20%] font-bold ml-[1%]">Enviar para o Monitor</button>
         </div>
       </div>
       <Footer />

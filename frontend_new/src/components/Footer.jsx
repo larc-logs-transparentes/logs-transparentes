@@ -16,7 +16,7 @@ function Footer() {
   };
 
   return (
-    <div className='font-sans relative z-30 bg-black h-[363px] md:h-[25vh] w-full'>
+    <div className='font-sans relative bg-black h-[363px] md:h-[25vh] w-full'>
       <div className="flex flex-col items-center text-center p-2 font-semibold text-white absolute w-full md:flex-row md:ml-[138px]">
         <div className="w-[160px] flex flex-col items-center gap-2 md:mt-[36px] mt-[15px]">
           <img src={Logs} className="h-[38px]" alt="logo" />
@@ -40,7 +40,7 @@ function Footer() {
               <ExpandMoreIcon className='ml-4' style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0)' }}/>
             </div>
             {isDropdownOpen && (
-              <ul className="absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white p-2 border border-gray-300 rounded-xl z-40 text-black w-[80px]">
+              <ul className="absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white p-2 border border-gray-300 rounded-xl text-black w-[80px]">
                 <li>1° turno</li>
                 <li>2° turno</li>
               </ul>

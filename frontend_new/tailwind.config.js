@@ -28,6 +28,15 @@ module.exports = {
       'white': '#FFFFFF',
       'gray': '#979797',
 
+    },  
+      screens: {
+      'xs': '321px',
+      'sm': '640px',
+      'md': '768px',
+      'md2': '884px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
     },
     backgroundPosition: {
       bottom: 'bottom',
@@ -39,7 +48,6 @@ module.exports = {
         'none': 'none',
         'blur': 'blur(5px)',
       },
-      
     },
   },
   plugins: [],

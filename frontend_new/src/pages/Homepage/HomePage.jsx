@@ -6,9 +6,9 @@ import Footer from '../../components/Footer';
 
 function HomePage() {
   return (
-    <div className=''>
+    <div className='flex flex-col'>
       <Header />
-      <SearchBar />
+        <SearchBar/>
       <Footer/>
     </div>
   );
