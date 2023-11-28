@@ -1,5 +1,5 @@
-const axios = require('axios')
-const bu_api_url = require('../config.json').bu_api_url
+import axios from 'axios';
+const bu_api_url = 'http://localhost:8080';
 
 export function getBuById(bu_id) {
   return axios.get(`${bu_api_url}/bu/find_by_id?id=${bu_id}`)

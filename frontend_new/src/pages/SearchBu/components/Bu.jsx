@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Correto from '../../../assets/Correto.svg';
 import SendBu from './SendBu';
+import { getBuById } from '../../../endpoints/bu.api';
 
-function Bu() {
+function Bu(id) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -11,6 +12,14 @@ function Bu() {
   const closeModal = () => {
     setIsModalOpen(false);
   }
+  // useEffect(() => {
+  //   const fetchBu = async () => {
+  //     const res = await getBuById(id);
+  //     console.log(res);
+  //   };
+
+  //   fetchBu();
+  // }, []);
 
   return (
     <div className="flex items-center justify-center">
@@ -18,11 +27,12 @@ function Bu() {
 
         <div className='flex flex-col items-center gap-[20px] md2:flex-row md2:items-center md2:justify-between'>
           <h1 className='text-blue text-base font-bold'>Boletim de Urna</h1>
-          <div className='flex items-center gap-[20px]'>
-          <button onClick={toggleModal} className="hidden md2:inline-block rounded-full bg-yellow px-2 h-[37px] w-[194px] font-bold">Enviar para o Monitor</button>
-            <button onClick={toggleModal} className="rounded-full bg-yellow px-2 h-[37px] w-[194px] font-bold">Baixar BU</button>
-            <img src={Correto} className='h-[60px] w-[62.4px]' alt='Correto' />
-          </div>
+          <div className='flex items-center md2:flex-row flex-col gap-6'>
+          {isModalOpen && <SendBu closeModal={closeModal} />}
+          <button onClick={toggleModal} className="rounded-full bg-yellow px-2 h-[37px] w-[194px] font-bold ml-4 hidden md2:block">Enviar para o Monitor</button>
+          <button onClick={toggleModal} className="rounded-full bg-yellow px-2 h-[37px] w-[102px] font-bold ml-4">Baixar Bu</button>
+          <img src={Correto} className='h-[60px] w-[62.4px] ml-4' alt='Mascara' />
+        </div>
         </div>
 
         <div className='space-y-4'>

@@ -13,7 +13,7 @@ function Navbar() {
   };
 
   const handleVerifyClick = () => {
-    navigate('/search');
+    navigate('/');
   };
 
   return (

@@ -14,7 +14,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} /> 
-          <Route path="/search" element={<SearchBu />} />
+          <Route path="/search/:id" element={<SearchBu />} />
           {/* <Route path="/new" element={<NewPage />} /> */}
           <Route path="/sendBu" element={<SendBu />} />
         </Routes>

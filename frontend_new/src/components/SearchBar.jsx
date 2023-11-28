@@ -9,10 +9,11 @@ function SearchBar() {
     cidade: false,
     zona: false,
     secao: false,
+    id:1
   });
 
   const handleSearchClick = () => {
-    navigate('/search');
+    navigate(`/search/${dropdownStates.id}`);
   };
 
   const toggleDropdown = (key) => {
