@@ -4,9 +4,6 @@ const mongodb_config = require("./config.json").mongodb_config;
 const express = require("express");
 const app = express().use(express.json({limit: '5mb'}));
 
-/*const compression = require('compression')
-app.use(compression)*/
-
 const cors = require("cors");
 app.use(cors({origin: cors_origin_urls}));
 
