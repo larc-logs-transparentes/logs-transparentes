@@ -11,7 +11,7 @@ const mongoose = require("mongoose");
 const mongo_url = `${mongodb_config.hostname}:${mongodb_config.port}/${mongodb_config.database}`;
 mongoose.set('strictQuery', false)
 
-if (process.argv[2] == "reset")
+if (process.argv[2] === "reset")
     mongoose.connect(mongo_url, function() {
         mongoose.connection.db.dropDatabase();
         console.info("Database reseted");
