@@ -17,12 +17,11 @@ function SearchBu() {
     const fetchBu = async () => {
       if (id) {
         const res = await getBuById(id);
-        console.log(res);
       }
     };
 
     fetchBu();
-  }, [id]); // Rerun when id changes
+  }, [id]);
 
   return (
     <div>
