@@ -3,16 +3,6 @@ const { schema_bu } = require("../models/bu.model")
 
 const repository = mongoose.model("bu", schema_bu) //"bu" = collection of database
 
-exports.create = async (bu) => {
-    return await repository.create(bu)
-    .then(() => {
-        console.info(`[bu.repository] bu with id ${bu.id} saved`)
-    })
-    .catch((err) => {
-        console.error(`[ERROR][bu.repository] ${err}`)
-    })
-}
-
 exports.findAll = async () => {
     return await repository.find()
     .then((data) => {
@@ -24,7 +14,7 @@ exports.findAll = async () => {
 }
 
 exports.findById = async (id) => {    
-    return await repository.findOne({ id: id })
+    return await repository.findOne({ _id: id })
     .then((data) => {
         return data
     })
@@ -33,8 +23,8 @@ exports.findById = async (id) => {
     })
 }
 
-exports.findByIdRange = async (initial_id, final_id) => {
-    return await repository.find({id:{ $gte:initial_id, $lte:final_id}})
+exports.findByMerkletreeIndexRange = async (id_eleicao, initial_index, final_index) => {
+    return await repository.find({id_eleicao: id_eleicao, merkletree_leaf_index:{ $gte:initial_index, $lte:final_index}})
     .then((data) => {
         return data
     })
@@ -52,8 +42,8 @@ exports.findByIndexRange = async (initial_index, final_index) => {
     })
 }
 
-exports.findByInfo = async (turno, UF, zona, secao) => {
-    return await repository.findOne({ turno: turno, UF: UF, zona: zona, secao: secao })
+exports.findByInfo = async (id_eleicao, UF, zona, secao) => {
+    return await repository.findOne({ id_eleicao: id_eleicao, UF: UF, zona: zona, secao: secao })
     .then((data) => {
         return data
     })
@@ -61,8 +51,9 @@ exports.findByInfo = async (turno, UF, zona, secao) => {
         console.error(`[ERROR][bu.repository] ${err}`)
     })
 }
-exports.findDistinctTurno = async () => {
-    return await repository.find().distinct("turno")
+
+exports.findDistinctEleicoes = async () => {
+    return await repository.find().distinct("id_eleicao")
     .then((data) => {
         return data
     })
@@ -70,8 +61,8 @@ exports.findDistinctTurno = async () => {
         console.error(`[ERROR][bu.repository] ${err}`)
     })
 }
-exports.findDistinctUF = async (turno) => {
-    return await repository.find({ 'turno': turno }).distinct("UF")
+exports.findDistinctUF = async (id_eleicao) => {
+    return await repository.find({ 'id_eleicao': id_eleicao }).distinct("UF")
     .then((data) => {
         return data
     })
@@ -79,8 +70,8 @@ exports.findDistinctUF = async (turno) => {
         console.error(`[ERROR][bu.repository] ${err}`)
     })
 }
-exports.findDistinctZona = async (turno, uf) => {
-    return await repository.find({ 'turno': turno, 'UF': uf }).distinct("zona")
+exports.findDistinctZona = async (id_eleicao, uf) => {
+    return await repository.find({ 'id_eleicao': id_eleicao, 'UF': uf }).distinct("zona")
     .then((data) => {
         return data
     })
@@ -88,8 +79,8 @@ exports.findDistinctZona = async (turno, uf) => {
         console.error(`[ERROR][bu.repository] ${err}`)
     })
 }
-exports.findDistinctSecao = async (turno, uf, zona) => {
-    return await repository.find({ 'turno': turno, 'UF': uf, 'zona': zona }).distinct("secao")
+exports.findDistinctSecao = async (id_eleicao, uf, zona) => {
+    return await repository.find({ 'id_eleicao': id_eleicao, 'UF': uf, 'zona': zona }).distinct("secao")
     .then((data) => {
         return data
     })

@@ -9,11 +9,18 @@
   ],
   "tlmanager_config": {
     "hostname": "http://127.0.0.1",
-    "port": 8000
+    "port": 8000,
+    "bu_tree_info": {
+      "prefix": "bu_tree_election_",
+      "commitment_size": 2048
+    }
   },
   "mongodb_config": {
-    "hostname": "mongodb://127.0.0.1",
+    "hostname": "mongodb://localhost",
     "port": 27017,
     "database": "logsT"
+  },
+  "application_config": {
+    "port": 9090
   }
 }
