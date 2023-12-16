@@ -5,6 +5,7 @@ const schema_bu = new mongoose.Schema({
     UF: String,
     zona: Number,
     secao: Number,
+    municipio: String,
     bu_inteiro: String,
     merkletree_leaf_index: Number,
     merkletree_leaf: String,
