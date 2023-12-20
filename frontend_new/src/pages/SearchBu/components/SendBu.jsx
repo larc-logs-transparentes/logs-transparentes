@@ -36,11 +36,11 @@ function SendBu({ closeModal }) {
 
   const handleButtonClick = async () => {
     console.log({ nomeCompleto, url, selectedMonitor, operationStatus });
-    // Here you would typically make an API call or some logic to determine success or failure
-    const isSuccess = true; // Determine if the operation is a success
+
+    const isSuccess = false; // Determine se a opção é fail ou sucesso, deve ser alterado quando a API estiver pronta
     setShowModal(isSuccess ? 'success' : 'fail');
-    // Don't close the modal immediately; let the user see the success or fail message
   };
+  
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   };
