@@ -1,15 +1,13 @@
 const router = require('express').Router();
-const bu_service = require('../services/bu.service');
+const tree_service = require('../services/tree.service');
 
 /**
- * POST that receive a bus parsed in JSON and insert it in the database and in the correct tree
+ * POST to commit all trees
  */
-router.post("/create", async (req, res) => {
-  const bu = req.body.bu
+router.post("/commit-all-trees", async (req, res) => {
+  console.info(`[bu.controller] POST /commit-all-trees`)
 
-  console.info(`[bu.controller] POST /insert`)
-
-  const response = await bu_service.create(bu)
+  const response = await tree_service.commitAllTree()
 
   res.json(response)
 })
