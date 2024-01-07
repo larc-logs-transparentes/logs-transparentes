@@ -4,6 +4,17 @@ const tlmanagerHostname = tlmanager_config.hostname
 const tlmanagerPort = tlmanager_config.port
 
 /* Tree routes */
+exports.getTrees = () => {
+    return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/`)
+    .then(res => {
+        return res.data
+    })
+    .catch(err => {
+        console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
+    })
+
+}
+
 exports.getTree = (tree_name) => {
   return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/tree?tree_name=${tree_name}`)
   .then(res => {

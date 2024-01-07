@@ -6,10 +6,17 @@ const tlmanager_adapter = require("../adapters/tlmanager.adapter")
 router.get("", async (req, res) => {
   const tree_name = req.query.tree_name
 
-  console.info(`[tree.controller] GET tree: ${tree_name}`)
+  if (tree_name) {
+    console.info(`[tree.controller] GET tree: ${tree_name}`)
 
-  const response = await tlmanager_adapter.getTree(tree_name)
-  res.json(response)
+    const response = await tlmanager_adapter.getTree(tree_name)
+    res.json(response)
+  } else {
+    console.info(`[tree.controller] GET trees`)
+
+    const response = await tlmanager_adapter.getTrees()
+    res.json(response)
+  }
 })
 
 router.get("/tree-root", async (req, res) => {
