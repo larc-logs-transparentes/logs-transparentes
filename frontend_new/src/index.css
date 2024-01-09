@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 /* Add this to your global styles.css */
 .scrollbar-hidden::-webkit-scrollbar {
     display: none; /* for Chrome, Safari, and Opera */
@@ -10,4 +11,23 @@
     -ms-overflow-style: none;  /* for Internet Explorer and Edge */
     scrollbar-width: none;  /* for Firefox */
   }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height:5px;
+  }
   
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+  
+  /* Define scrollbar handle */
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #3d3d3d;
+    border-radius: 20px;
+    border: 3px solid #8b8a8a;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #1d1d1d;
+  }

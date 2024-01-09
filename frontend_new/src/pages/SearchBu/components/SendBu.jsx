@@ -37,7 +37,7 @@ function SendBu({ closeModal }) {
   const handleButtonClick = async () => {
     console.log({ nomeCompleto, url, selectedMonitor, operationStatus });
 
-    const isSuccess = false; // Determine se a opção é fail ou sucesso, deve ser alterado quando a API estiver pronta
+    const isSuccess = true; // Determine se a opção é fail ou sucesso, deve ser alterado quando a API estiver pronta
     setShowModal(isSuccess ? 'success' : 'fail');
   };
   
@@ -73,6 +73,8 @@ function SendBu({ closeModal }) {
               className={getMonitorButtonClasses('USP')}>USP</button>
             <button onClick={() => handleMonitorClick('Polícia Federal')} 
               className={getMonitorButtonClasses('Polícia Federal')}>Polícia Federal</button>
+            <button onClick={() => handleMonitorClick('Unioeste')} 
+              className={getMonitorButtonClasses('Unioeste')}>Unioeste</button>
             <button onClick={() => handleMonitorClick('Outro Monitor')} 
               className={getMonitorButtonClasses('Outro Monitor')}>Outro Monitor</button>
           </div>
@@ -92,7 +94,7 @@ function SendBu({ closeModal }) {
             )}
           </div>
           <h2 className='mt-[20px]'>Preencha as informações abaixo para enviar ao monitor</h2>
-          <div className='flex gap-[16px]'>
+          <div className='flex gap-[16px] mt-[20px]'>
             <button onClick={() => handleOperationStatusClick('Success')} 
               className={getStatusButtonClasses('Success')}>Sim</button>
             <button onClick={() => handleOperationStatusClick('Fail')} className={getStatusButtonClasses('Fail')}>Não</button>

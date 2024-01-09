@@ -28,7 +28,7 @@ function Fail({ closeModal }) {
         <WarningAmberIcon  className="text-red cursor-pointer " style={{ width: '64px', height: '64px' }} />
           <h1 className='text-xl font-bold mt-3 mb-6 text-red '>Erro!</h1>
           <p className='text-center mb-8'>Não foi possível enviar a verificação. Por favor, entre em contato com o monitor ou com o responsável pela plataforma.</p>
-          <button onClick={navigateHome} className="mt-[20px] rounded-full bg-yellow  h-[37px] w-[189px] font-bold text-center text-black">Enviar para o Monitor</button>
+          <button onClick={navigateHome} className="mt-[20px] rounded-full bg-yellow  h-[37px] w-[189px] font-bold text-center text-black">Voltar para Home</button>
         </div>
       </div>
     </div>

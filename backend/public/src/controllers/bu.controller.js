@@ -26,12 +26,14 @@ router.get("/find_by_id", async (req, res) => {
 router.get("/find_by_info", async (req, res) => {
   const id = req.query.id_eleicao
   const UF = req.query.UF
+  const municipio = req.query.municipio
   const zona = req.query.zona
   const secao = req.query.secao
-  
-  console.info(`[bu.controller] GET /find_by_info ${id} ${UF} ${zona} ${secao}`)
 
-  const data = await bu_repository.findByInfo(id, UF, zona, secao)
+  
+  console.info(`[bu.controller] GET /find_by_info ${id} ${UF} ${municipio} ${zona} ${secao}`)
+
+  const data = await bu_repository.findByInfo(id, UF, municipio, zona, secao)
 
   res.json(data)
 })
@@ -49,11 +51,20 @@ router.get("/distinct_uf", async (req, res) => {
   res.json(data)
 })
 
+router.get("/distinct_municipio", async (req, res) => {
+  console.info(`[bu.controller] GET /distinct_municipio`)
+  const id = req.query.id_eleicao
+  const UF = req.query.UF
+  const data = await bu_repository.findDistinctMunicipio(id,UF)
+  res.json(data)
+})
+
 router.get("/distinct_zona", async (req, res) => {
   console.info(`[bu.controller] GET /distinct_zona`)
   const id = req.query.id_eleicao
   const UF = req.query.UF
-  const data = await bu_repository.findDistinctZona(id, UF)
+  const municipio = req.query.municipio
+  const data = await bu_repository.findDistinctZona(id, UF, municipio)
   res.json(data)
 })
 
@@ -61,8 +72,9 @@ router.get("/distinct_secao", async (req, res) => {
   console.info(`[bu.controller] GET /distinct_secao`)
   const id = req.query.id_eleicao
   const UF = req.query.UF
+  const municipio= req.query.municipio
   const zona = req.query.zona
-  const data = await bu_repository.findDistinctSecao(id, UF, zona)
+  const data = await bu_repository.findDistinctSecao(id, UF, zona, municipio)
   res.json(data)
 })
   
