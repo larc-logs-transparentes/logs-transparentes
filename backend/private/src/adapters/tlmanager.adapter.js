@@ -42,3 +42,14 @@ exports.commit = (tree_name) => {
     console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
   })
 }
+
+exports.getTrees = () => {
+  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/`)
+      .then(res => {
+        return res.data
+      })
+      .catch(err => {
+        console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
+      })
+
+}
