@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../index.css';
 
 
 function SearchBar() {
+
   const bu_api_url = require('../config.json').bu_api_url;
   const navigate = useNavigate();
+  const { electionId } = useParams();
+
   const [dropdownStates, setDropdownStates] = useState({
     turno: false,
     estado: false,
@@ -29,21 +32,22 @@ function SearchBar() {
   const [secaoOpts, setSecaoOpts] = useState([]);
 
   useEffect(() => {
-    axios.get(`${bu_api_url}/bu/distinct_eleicoes`)
-      .then(response => {
-        setTurnoOpts(response.data);
-      })
-      .catch(error => console.error(error));
-  }, []);
-
-  const handleChangeTurn = (e) => {
-    const selectedTurno = e.target.value;
-    setTurnoSelection(selectedTurno);
-
-    axios.get(`${bu_api_url}/bu/distinct_uf?id_eleicao=${selectedTurno}`)
+    if (electionId) {
+      setTurnoSelection(electionId);
+      fetchUFOptions(electionId);
+    } else {
+      axios.get(`${bu_api_url}/bu/distinct_eleicoes`)
+        .then(response => {
+          setTurnoOpts(response.data);
+        })
+        .catch(error => console.error(error));
+    }
+  }, [electionId]);
+  
+  const fetchUFOptions = (id) => {
+    axios.get(`${bu_api_url}/bu/distinct_uf?id_eleicao=${id}`)
       .then(response => {
         setUfOpts(response.data);
-        setDropdownStates(prev => ({ ...prev, estado: true }));
       })
       .catch(error => console.error(error));
   };
@@ -99,30 +103,17 @@ function SearchBar() {
   };
 
   return (
-    <div className='font-sans relative z-10 font-bold'>
+    <div className='font-sans relative z-10 font-bold '>
       <div className='flex flex-col bg-blue md2:min-h-[134px] min-h-[329px] h-[13.5vh] place-content-center '>
         <p className='text-white mt-[22px] text-center'>Escolha o local que deseja verificar</p>
         <ul className='flex flex-col md2:flex-row md2:gap-4 mt-[16px] gap-4 items-center justify-center text-base'>
-          <li className='bg-white md2:mt-[0px] mt-[32px] p-[12px] rounded-xl md2:text-base text-sm' onClick={() => setDropdownStates({ ...dropdownStates, turno: !dropdownStates.turno })}>
-          Eleição
-          <ExpandMoreIcon className='ml-16 md2:ml-4' style={{ transform: dropdownStates.turno ? 'rotate(180deg)' : 'rotate(0)' }} />
-          {dropdownStates.turno && (
-            <ul className='absolute bg-white border rounded max-h-[100%] overflow-scroll custom-scrollbar'>
-              {turnoOpts.map((turno, index) => (
-                <li key={index} className='p-2 hover:bg-gray-200' onClick={() => handleChangeTurn({ target: { value: turno } })}>
-                  {turno}
-                </li>
-              ))}
-            </ul>
-          )}
-        </li>
           <li className='bg-white md2:mt-[0px] mt-[32px]  p-[12px] rounded-xl md2:text-base text-sm' onClick={() => toggleDropdown('estado')}>
-            Estado
+            {ufSelection || 'Estado'}
             <ExpandMoreIcon className='ml-16 md2:ml-4' style={{ transform: dropdownStates.estado ? 'rotate(180deg)' : 'rotate(0)' }} />
             {dropdownStates.estado && (
-              <ul className='absolute bg-white border rounded max-h-[100%] overflow-scroll custom-scrollbar'>
+              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar'>
                 {ufOpts.map((uf, index) => (
-                  <li key={index} className='p-2 hover:bg-gray-200' onClick={() => handleChangeUF({ target: { value: uf } })}>
+                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer' onClick={() => handleChangeUF({ target: { value: uf } })}>
                     {uf}
                   </li>
                 ))}
@@ -130,12 +121,12 @@ function SearchBar() {
             )}
           </li>
           <li className='bg-white md2:mt-[0px] mt-[32px]  p-[12px] rounded-xl md2:text-base text-sm' onClick={() => toggleDropdown('cidade')}>
-            Cidade
+            {citySelection || 'Cidade'}
             <ExpandMoreIcon className='ml-16 md2:ml-4' style={{ transform: dropdownStates.cidade ? 'rotate(180deg)' : 'rotate(0)' }} />
             {dropdownStates.cidade && (
-              <ul className='absolute bg-white border rounded max-h-[100%] overflow-scroll custom-scrollbar'>
+              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar'>
                 {cityOpts.map((city, index) => (
-                  <li key={index} className='p-2 hover:bg-gray-200' onClick={() => handleChangeCity({ target: { value: city } })}>
+                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer' onClick={() => handleChangeCity({ target: { value: city } })}>
                     {city}
                   </li>
                 ))}
@@ -143,25 +134,25 @@ function SearchBar() {
             )}
           </li>
           <li className='bg-white md2:mt-[0px] mt-[32px]  p-[12px] rounded-xl md2:text-base text-sm' onClick={() => toggleDropdown('zona')}>
-            Zona Eleitoral
+            {zonaSelection || 'Zona'}
             <ExpandMoreIcon className='ml-16 md2:ml-4' style={{ transform: dropdownStates.zona ? 'rotate(180deg)' : 'rotate(0)' }} />
             {dropdownStates.zona && (
-              <ul className='absolute bg-white border rounded max-h-[100%] overflow-scroll custom-scrollbar'>
+              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar'>
                 {zonaOpts.map((zona, index) => (
-                  <li key={index} className='p-2 hover:bg-gray-200' onClick={() => handleChangeZona({ target: { value: zona } })}>
+                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer' onClick={() => handleChangeZona({ target: { value: zona } })}>
                     {zona}
                   </li>
                 ))}
               </ul>
             )}
           </li>
-          <li className='bg-white md2:mt-[0px] mt-[32px]  p-[12px] rounded-xl md2:text-base text-sm' onClick={() => toggleDropdown('secao')}>
-            Seção Eleitoral
+          <li className='bg-white md2:mt-[0px] mt-[32px] p-[12px] rounded-xl md2:text-base text-sm' onClick={() => toggleDropdown('secao')}>
+            {secaoSelection || 'Seção'}
             <ExpandMoreIcon className='ml-16 md2:ml-4' style={{ transform: dropdownStates.secao ? 'rotate(180deg)' : 'rotate(0)' }} />
             {dropdownStates.secao && (
-              <ul className='absolute bg-white border rounded max-h-[100%] overflow-scroll custom-scrollbar'>
+              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar'>
                 {secaoOpts.map((secao, index) => (
-                  <li key={index} className='p-2 hover:bg-gray-200' onClick={(e) => handleChangeSecao({ target: { value: secao } })}>
+                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer' onClick={(e) => handleChangeSecao({ target: { value: secao } })}>
                     {secao}
                   </li>
                 ))}

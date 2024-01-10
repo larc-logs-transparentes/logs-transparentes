@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuIcon from '@mui/icons-material/Menu';
 import Logs from '../assets/Logs.svg';
 import { Link, useNavigate } from 'react-router-dom';
+import '../index.css';
 
 function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [electionOptions, setElectionOptions] = useState([]);
   const navigate = useNavigate();
+
+  const bu_api_url = require('../config.json').bu_api_url; // assuming you have a similar API setup
+
+  useEffect(() => {
+    axios.get(`${bu_api_url}/bu/distinct_eleicoes`)
+      .then(response => {
+        setElectionOptions(response.data);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -14,6 +28,11 @@ function Navbar() {
 
   const handleVerifyClick = () => {
     navigate('/');
+  };
+
+  const handleElectionClick = (electionId) => {
+    navigate(`/${electionId}`);
+    setIsDropdownOpen(false);
   };
 
   return (
@@ -39,15 +58,18 @@ function Navbar() {
               Dados da Urna
             </a>
           </li>
-          <li className='mt-[5px]'>
+          <li className='mt-[5px] relative'>
             <div onClick={toggleDropdown} className='cursor-pointer flex items-center h-[21px] mt-[2px]'>
               Eleições
               <ExpandMoreIcon className='ml-4' style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0)' }}/>
             </div>
             {isDropdownOpen && (
-              <ul className="absolute grid gap-2 mt-2 bg-white p-2 border border-gray-300 z-40 rounded-xl">
-                <li>1° turno</li>
-                <li>2° turno</li>
+              <ul className="absolute bg-white border rounded max-h-[300%] overflow-auto custom-scrollbar z-30">
+                {electionOptions.map((option, index) => (
+                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer' onClick={() => handleElectionClick(option)}>
+                    {option}
+                  </li>
+                ))}
               </ul>
             )}
           </li>
