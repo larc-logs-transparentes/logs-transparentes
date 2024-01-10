@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../index.css';
 
@@ -30,6 +30,7 @@ function SearchBar() {
   const [cityOpts, setCityOpts] = useState([]);
   const [zonaOpts, setZonaOpts] = useState([]);
   const [secaoOpts, setSecaoOpts] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     if (electionId) {
@@ -43,6 +44,17 @@ function SearchBar() {
         .catch(error => console.error(error));
     }
   }, [electionId]);
+
+  useEffect(() => {
+    const searchState = location.state;
+    if (searchState) {
+      setTurnoSelection(searchState.turnoSelection);
+      setUfSelection(searchState.ufSelection);
+      setCitySelection(searchState.citySelection);
+      setZonaSelection(searchState.zonaSelection);
+      setSecaoSelection(searchState.secaoSelection);
+    }
+  }, [location]);
   
   const fetchUFOptions = (id) => {
     axios.get(`${bu_api_url}/bu/distinct_uf?id_eleicao=${id}`)
@@ -95,23 +107,27 @@ function SearchBar() {
   };
 
   const handleSearchClick = () => {
-    console.log(turnoSelection, ufSelection, citySelection, zonaSelection, secaoSelection)
+    console.log(turnoSelection, ufSelection, citySelection, zonaSelection, secaoSelection);
     axios.get(`${bu_api_url}/bu/find_by_info?id_eleicao=${turnoSelection}&UF=${ufSelection}&municipio=${citySelection}&zona=${zonaSelection}&secao=${secaoSelection}`)
     .then(response => {
-      navigate(`/search/${response.data._id}`);
-    })
+      navigate(`/${electionId}/search/${response.data._id}`, {
+        state: { turnoSelection, ufSelection, citySelection, zonaSelection, secaoSelection }
+      });
+    });
   };
-
+  
   return (
+    
     <div className='font-sans relative z-10 font-bold '>
       <div className='flex flex-col bg-blue md2:min-h-[134px] min-h-[329px] h-[13.5vh] place-content-center '>
         <p className='text-white mt-[22px] text-center'>Escolha o local que deseja verificar</p>
         <ul className='flex flex-col md2:flex-row md2:gap-4 mt-[16px] gap-4 items-center justify-center text-base'>
-          <li className='bg-white md2:mt-[0px] mt-[32px]  p-[12px] rounded-xl md2:text-base text-sm' onClick={() => toggleDropdown('estado')}>
-            {ufSelection || 'Estado'}
-            <ExpandMoreIcon className='ml-16 md2:ml-4' style={{ transform: dropdownStates.estado ? 'rotate(180deg)' : 'rotate(0)' }} />
+          <li className='bg-white md2:mt-[0px] mt-[32px]  p-[12px] rounded-xl md2:text-base text-sm w-[12vw] flex' onClick={() => toggleDropdown('estado')}>
+            <p className='whitespace-nowrap overflow-hidden w-[90%]'>
+            {'Estado de  ' + ufSelection || 'Estado'}</p>
+            <ExpandMoreIcon className='' style={{ transform: dropdownStates.estado ? 'rotate(180deg)' : 'rotate(0)' }} />
             {dropdownStates.estado && (
-              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar'>
+              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar mt-[3vh]'>
                 {ufOpts.map((uf, index) => (
                   <li key={index} className='p-2 hover:bg-light-gray cursor-pointer' onClick={() => handleChangeUF({ target: { value: uf } })}>
                     {uf}
@@ -120,11 +136,12 @@ function SearchBar() {
               </ul>
             )}
           </li>
-          <li className='bg-white md2:mt-[0px] mt-[32px]  p-[12px] rounded-xl md2:text-base text-sm' onClick={() => toggleDropdown('cidade')}>
-            {citySelection || 'Cidade'}
-            <ExpandMoreIcon className='ml-16 md2:ml-4' style={{ transform: dropdownStates.cidade ? 'rotate(180deg)' : 'rotate(0)' }} />
+          <li className='bg-white md2:mt-[0px] mt-[32px] p-[12px] rounded-xl md2:text-base text-sm w-[12vw] flex' onClick={() => toggleDropdown('cidade')}>
+          <p className='whitespace-nowrap overflow-hidden custom-scrollbar w-[90%]'>
+            { 'Cidade de  '+citySelection || 'Cidade'} </p>
+            <ExpandMoreIcon className='' style={{ transform: dropdownStates.cidade ? 'rotate(180deg)' : 'rotate(0)' }} />
             {dropdownStates.cidade && (
-              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar'>
+              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar mt-[3vh]'>
                 {cityOpts.map((city, index) => (
                   <li key={index} className='p-2 hover:bg-light-gray cursor-pointer' onClick={() => handleChangeCity({ target: { value: city } })}>
                     {city}
@@ -133,11 +150,12 @@ function SearchBar() {
               </ul>
             )}
           </li>
-          <li className='bg-white md2:mt-[0px] mt-[32px]  p-[12px] rounded-xl md2:text-base text-sm' onClick={() => toggleDropdown('zona')}>
-            {zonaSelection || 'Zona'}
-            <ExpandMoreIcon className='ml-16 md2:ml-4' style={{ transform: dropdownStates.zona ? 'rotate(180deg)' : 'rotate(0)' }} />
+          <li className='bg-white md2:mt-[0px] mt-[32px]  p-[12px] rounded-xl md2:text-base text-sm w-[10vw] flex' onClick={() => toggleDropdown('zona')}>
+          <p className='whitespace-nowrap overflow-hidden w-[90%]'>
+            {'Zona  ' + zonaSelection || 'Zona'} </p>
+            <ExpandMoreIcon className='' style={{ transform: dropdownStates.zona ? 'rotate(180deg)' : 'rotate(0)' }} />
             {dropdownStates.zona && (
-              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar'>
+              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar mt-[3vh]'>
                 {zonaOpts.map((zona, index) => (
                   <li key={index} className='p-2 hover:bg-light-gray cursor-pointer' onClick={() => handleChangeZona({ target: { value: zona } })}>
                     {zona}
@@ -146,11 +164,12 @@ function SearchBar() {
               </ul>
             )}
           </li>
-          <li className='bg-white md2:mt-[0px] mt-[32px] p-[12px] rounded-xl md2:text-base text-sm' onClick={() => toggleDropdown('secao')}>
-            {secaoSelection || 'Seção'}
-            <ExpandMoreIcon className='ml-16 md2:ml-4' style={{ transform: dropdownStates.secao ? 'rotate(180deg)' : 'rotate(0)' }} />
+          <li className='bg-white md2:mt-[0px] mt-[32px] p-[12px] rounded-xl md2:text-base text-sm w-[10vw] flex' onClick={() => toggleDropdown('secao')}>
+          <p className='whitespace-nowrap overflow-hidden w-[90%]'>
+            { 'Seção  ' + secaoSelection || 'Seção'} </p>
+            <ExpandMoreIcon className=' ' style={{ transform: dropdownStates.secao ? 'rotate(180deg)' : 'rotate(0)' }} />
             {dropdownStates.secao && (
-              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar'>
+              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar mt-[3vh]'>
                 {secaoOpts.map((secao, index) => (
                   <li key={index} className='p-2 hover:bg-light-gray cursor-pointer' onClick={(e) => handleChangeSecao({ target: { value: secao } })}>
                     {secao}
