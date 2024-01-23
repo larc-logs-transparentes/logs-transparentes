@@ -4,6 +4,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuIcon from '@mui/icons-material/Menu';
 import Logs from '../assets/Logs.svg';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import '../index.css';
 
 function Navbar() {
@@ -11,7 +12,13 @@ function Navbar() {
   const [electionOptions, setElectionOptions] = useState([]);
   const navigate = useNavigate();
 
-  const bu_api_url = require('../config.json').bu_api_url; // assuming you have a similar API setup
+  const bu_api_url = require('../config.json').bu_api_url; 
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setSelectedElection('');
+    }
+  }, [location]);
 
   useEffect(() => {
     axios.get(`${bu_api_url}/bu/distinct_eleicoes`)
@@ -32,8 +39,12 @@ function Navbar() {
 
   const handleElectionClick = (electionId) => {
     navigate(`/${electionId}`);
+    setSelectedElection(electionId); 
     setIsDropdownOpen(false);
   };
+
+  const [selectedElection, setSelectedElection] = useState('');
+  
 
   return (
     <div className='font-sans relative'>
@@ -59,14 +70,14 @@ function Navbar() {
             </a>
           </li>
           <li className='mt-[5px] relative'>
-            <div onClick={toggleDropdown} className='cursor-pointer flex items-center h-[21px] mt-[2px]'>
-              Eleições
+          <div onClick={toggleDropdown} className='cursor-pointer flex items-center h-[21px] mt-[2px]'>
+              {selectedElection ? `Eleições - ${selectedElection}` : 'Eleições'}
               <ExpandMoreIcon className='ml-4' style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0)' }}/>
             </div>
             {isDropdownOpen && (
               <ul className="absolute bg-white border rounded max-h-[300%] overflow-auto custom-scrollbar z-30">
                 {electionOptions.map((option, index) => (
-                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer' onClick={() => handleElectionClick(option)}>
+                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[6vw]' onClick={() => handleElectionClick(option)}>
                     {option}
                   </li>
                 ))}
@@ -81,7 +92,7 @@ function Navbar() {
         </div>
         <div className="md:hidden flex items-center">
           <button onClick={toggleDropdown} className="p-2 ml-[10vw]">
-          <MenuIcon />
+            <MenuIcon />
           </button>
         </div>
       </div>
@@ -101,10 +112,13 @@ function Navbar() {
             <div className='flex items-center h-[21px] mt-[2px]'>
               Eleições
             </div>
-            <ul className="grid gap-2 mt-2 bg-white p-2 border border-gray-300 rounded-xl">
-              <li>1° turno</li>
-              <li>2° turno</li>
-            </ul>
+            {electionOptions.map((option, index) => (
+              <ul key={index} className="grid gap-2 mt-2 bg-white p-2 border border-gray-300 rounded-xl">
+                <li className='hover:bg-light-gray cursor-pointer' onClick={() => handleElectionClick(option)}>
+                  {option}
+                </li>
+              </ul>
+            ))}
           </li>
           <button className="rounded-full bg-yellow px-2 h-[37px] w-[91px]" onClick={handleVerifyClick}>
             Verificar

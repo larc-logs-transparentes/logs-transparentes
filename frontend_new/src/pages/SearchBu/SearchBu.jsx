@@ -31,7 +31,7 @@ function SearchBu() {
         <div className='flex-col items-center space-y-[20px]'>     
           <Bu isModalOpen={isModalOpen} toggleModal={toggleModal} id={id} />
           <Result />
-          <Result />
+
           <button onClick={toggleModal} className="rounded-full bg-yellow px-2 h-[37px] md2:ml-[40%] md2:w-[25%] font-bold ml-[1%]">Enviar para o Monitor</button>
         </div>
       </div>
