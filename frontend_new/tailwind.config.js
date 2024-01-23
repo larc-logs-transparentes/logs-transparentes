@@ -29,6 +29,7 @@ module.exports = {
       'gray': '#979797',
       'red': '#c01511',
       'light-gray': '#e5e5e5',
+      'neon-green': '#00ff00',
 
     },  
       screens: {

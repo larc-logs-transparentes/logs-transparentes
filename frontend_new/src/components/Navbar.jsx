@@ -48,6 +48,9 @@ function Navbar() {
 
   return (
     <div className='font-sans relative'>
+      <div className='bg-neon-green h-[4vh] absolute font-bold text-blue text-xl place-content-center w-[30%] ml-[35%] text-center rounded-b-lg opacity-70'>
+      ATENÇÃO: ESTE É UM PROTÓTIPO EXPERIMENTAL
+      </div>
       <div className='bg-yellow h-[1vh]'></div>
       <div className='bg-blue-light h-[1vh]'></div>
       <div className='bg-blue h-[5vh]'></div>

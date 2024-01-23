@@ -3,7 +3,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Success from './Success';
 import Fail from './Fail';       
 
-function SendBu({ closeModal }) {
+function SendBu({ closeModal , openSendBu}) {
   const [nomeCompleto, setNomeCompleto] = useState('');
   const [url, setUrl] = useState('');
   const [selectedMonitor, setSelectedMonitor] = useState('');
@@ -34,11 +34,13 @@ function SendBu({ closeModal }) {
     }
   };
 
+
   const handleButtonClick = async () => {
     console.log({ nomeCompleto, url, selectedMonitor, operationStatus });
 
-    const isSuccess = true; // Determine se a opção é fail ou sucesso, deve ser alterado quando a API estiver pronta
+    const isSuccess = true; // Logic to determine success or fail
     setShowModal(isSuccess ? 'success' : 'fail');
+    openSendBu(); // This will close the ManualAutomatic modal
   };
   
   const handleDescriptionChange = (e) => {

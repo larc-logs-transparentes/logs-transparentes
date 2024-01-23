@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import Correto from '../../../assets/Correto.svg';
 import SendBu from './SendBu';
+import ManualAutomatic from './ManualAutomatic';
 import { getBuById } from '../../../endpoints/bu.api';
 import { useParams } from 'react-router-dom';
 import Selo from './Selo';
@@ -71,7 +72,7 @@ function Bu() {
         <div className='flex flex-col items-center gap-[20px] md2:flex-row md2:items-center md2:justify-between'>
           <h1 className='text-blue text-base font-bold'>Boletim de Urna</h1>
           <div className='flex items-center md2:flex-row flex-col gap-6'>
-          {isModalOpen && <SendBu closeModal={closeModal} />}
+          {isModalOpen && <ManualAutomatic closeModal={closeModal} />}
           <button onClick={toggleModal} className="rounded-full bg-yellow px-2 h-[37px] w-[194px] font-bold ml-4 hidden md2:block">Enviar para o Monitor</button>
           <button onClick={downloadJson} className="rounded-full bg-yellow px-2 h-[37px] w-[102px] font-bold ml-4">Baixar Bu</button>
           <Selo id={id} />
