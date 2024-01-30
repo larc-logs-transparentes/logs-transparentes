@@ -39,7 +39,6 @@ export async function verifySingleData(id) {
       except (json.JSONDecodeError, TypeError):
           return "Invalid format for root"
 
-      # Now that inputs are verified, proceed with the main function logic
       verifyresult = verify_data_entry(proofData, root["value"], bu)
       return str(verifyresult)
     func()

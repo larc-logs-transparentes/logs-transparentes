@@ -3,9 +3,10 @@ import { getBuById } from '../../../endpoints/bu.api';
 import { useParams } from 'react-router-dom';
 
 
-function Result() {
-  const { id } = useParams(); // Extract id from URL
+function Result({ cargo }) { 
+  const { id } = useParams(); 
   const [buData, setBuData] = useState(null);
+
   useEffect(() => {
     const fetchBu = async () => {
       if (id) {
@@ -22,25 +23,47 @@ function Result() {
   if (!buData) {
     return <div>Loading...</div>;
   }
-  const comparecimento = buData.resultadosVotacaoPorEleicao[1].resultadosVotacao[0].qtdComparecimento;
-  const cargo= buData.resultadosVotacaoPorEleicao[1].resultadosVotacao[0].totaisVotosCargo[0].codigoCargo[1];
-  const id_eleicao=  buData.resultadosVotacaoPorEleicao[1].idEleicao;
-  const eleitoresAptos=buData.resultadosVotacaoPorEleicao[1].qtdEleitoresAptos;
 
-  const votos = buData.resultadosVotacaoPorEleicao[1].resultadosVotacao[0].totaisVotosCargo[0].votosVotaveis;
+  const getCargoIndexes = (cargo) => {
+    switch (cargo) {
+      case 'presidente':
+        return { resultadoVotacaoPorEleicaoIndex: 1, resultadoVotacaoIndex: 0, totaisvotosCargoIndex: 0 };
+      case 'governador':
+        return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 1,totaisvotosCargoIndex: 1 };
+      case 'senador':
+        return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 1,totaisvotosCargoIndex: 0 };
+      case 'deputado federal':
+        return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0,totaisvotosCargoIndex: 0 };
+      case 'deputado estadual':
+        return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0,totaisvotosCargoIndex: 1 };
+      default:
+        return { resultadoVotacaoPorEleicaoIndex: 1, resultadoVotacaoIndex: 0, totaisvotosCargoIndex: 0 };
+    }
+  };
+
+  const { resultadoVotacaoPorEleicaoIndex, resultadoVotacaoIndex, totaisvotosCargoIndex } = getCargoIndexes(cargo);
+
+  const comparecimento = buData.resultadosVotacaoPorEleicao[resultadoVotacaoPorEleicaoIndex].resultadosVotacao[resultadoVotacaoIndex].qtdComparecimento;
+  const position= buData.resultadosVotacaoPorEleicao[resultadoVotacaoPorEleicaoIndex].resultadosVotacao[resultadoVotacaoIndex].totaisVotosCargo[totaisvotosCargoIndex].codigoCargo[1];
+  const id_eleicao=  buData.resultadosVotacaoPorEleicao[resultadoVotacaoPorEleicaoIndex].idEleicao;
+  const eleitoresAptos=buData.resultadosVotacaoPorEleicao[resultadoVotacaoPorEleicaoIndex].qtdEleitoresAptos;
+
+  const votos = buData.resultadosVotacaoPorEleicao[resultadoVotacaoPorEleicaoIndex].resultadosVotacao[resultadoVotacaoIndex].totaisVotosCargo[totaisvotosCargoIndex].votosVotaveis;
   const votosNominais = votos.filter(voto => voto.tipoVoto === 'nominal');
   const votosBrancos = votos.find(voto => voto.tipoVoto === 'branco')?.quantidadeVotos || 0;
   const votosNulos = votos.find(voto => voto.tipoVoto === 'nulo')?.quantidadeVotos || 0;
   const totalVotos = votosNominais.reduce((acc, voto) => acc + voto.quantidadeVotos, 0);
   const totalVotosNominais = votosNominais.reduce((acc, voto) => acc + voto.quantidadeVotos, 0);
-  console.log(votos)
+  
+
+  console.log(buData)
 
   return (
     <div className="flex items-center justify-center">
       <div className='w-[80vw] md2:w-[892px] md2:min-h-[403px] justify-center border-2 border-blue-light rounded-2xl p-5 space-y-4'> 
 
         <h1 className='text-black text-lg font-bold'>Eleição {id_eleicao}</h1>
-        <h2 className='text-black text-xl font-bold mb-4 capitalize'>{cargo}</h2>
+        <h2 className='text-black text-xl font-bold mb-4 capitalize'>{position}</h2>
 
         <div className='grid md2:grid-cols-3 grid-cols-2  gap-y-12'>
 
