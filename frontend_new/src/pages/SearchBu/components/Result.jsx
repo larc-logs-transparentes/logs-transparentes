@@ -55,15 +55,17 @@ function Result({ cargo }) {
   const totalVotos = votosNominais.reduce((acc, voto) => acc + voto.quantidadeVotos, 0);
   const totalVotosNominais = votosNominais.reduce((acc, voto) => acc + voto.quantidadeVotos, 0);
   
-
-  console.log(buData)
+  const addSpacesToPosition = (position) => {
+    return position.replace(/([A-Z])/g, ' $1').trim();
+}
+  const formattedPosition = addSpacesToPosition(position);
 
   return (
     <div className="flex items-center justify-center">
       <div className='w-[80vw] md2:w-[892px] md2:min-h-[403px] justify-center border-2 border-blue-light rounded-2xl p-5 space-y-4'> 
 
         <h1 className='text-black text-lg font-bold'>Eleição {id_eleicao}</h1>
-        <h2 className='text-black text-xl font-bold mb-4 capitalize'>{position}</h2>
+        <h2 className='text-black text-xl font-bold mb-4 capitalize'>{formattedPosition}</h2>
 
         <div className='grid md2:grid-cols-3 grid-cols-2  gap-y-12'>
 
