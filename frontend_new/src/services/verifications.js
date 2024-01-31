@@ -16,7 +16,7 @@ export async function verifySingleData(id) {
     const pyodide = await initPyodide(); 
     const pythonCode = `
     from tlverifier.merkle_functions.tl_functions import verify_data_entry
-    import requests
+    #import requests
     import json
     def func():
       # Attempt to load and verify proofData
