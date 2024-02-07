@@ -1,27 +1,44 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Correto from '../../../assets/Correto.svg';
-import {verifySingleData} from '../../../services/verifications.js';
+import { verifySingleData } from '../../../services/verifications.js';
+import Certificate from './Certificate';
+import ErrorBu from './ErrorBu'; // Import the ErrorBu component
 
-export default function Selo(props) {
+export default function Selo({ id }) {
   const [isProofTrue, setIsProofTrue] = useState("(loading...)");
-  
+  const [isCertificateModalOpen, setIsCertificateModalOpen] = useState(false);
+  const [isErrorBuModalOpen, setIsErrorBuModalOpen] = useState(false); // New state for ErrorBu modal
+
   useEffect(() => {
     const run = async () => {
-      const isProofTrue = await verifySingleData(props.id);
-      console.log(isProofTrue)
-      setIsProofTrue(isProofTrue);
+      const proofStatus = await verifySingleData(id);
+      console.log(proofStatus);
+      setIsProofTrue(proofStatus);
     };
     run();
-  }, [props.id]);
+  }, [id]);
+
+  const handleModalToggle = () => {
+    if (isProofTrue === 'True') {
+      setIsCertificateModalOpen(!isCertificateModalOpen);
+    } else if (isProofTrue === 'False') {
+      setIsErrorBuModalOpen(!isErrorBuModalOpen);
+    }
+  };
 
   return (
-    <div>
-      <p>
-        <img
-          src={ isProofTrue === 'True' ? Correto : 'false' }
-          alt="Verificação"
-        />
-      </p>
-    </div>
+    <>
+      <div onClick={handleModalToggle} className="cursor-pointer">
+        <p>
+          <img
+            src={isProofTrue === 'True' ? Correto : 'False'} // Consider updating this to show a different image or indicator for false
+            alt={isProofTrue === 'True' ? "Verificação Correta" : "Erro na Verificação"}
+            className=""
+          />
+        </p>
+      </div>
+      {isCertificateModalOpen && <Certificate closeModal={() => setIsCertificateModalOpen(false)} />}
+      {isErrorBuModalOpen && <ErrorBu closeModal={() => setIsErrorBuModalOpen(false)} />}
+    </>
   );
 }

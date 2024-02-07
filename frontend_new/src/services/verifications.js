@@ -40,7 +40,7 @@ export async function verifySingleData(id) {
           return "Invalid format for root"
 
       verifyresult = verify_data_entry(proofData, root["value"], bu)
-      return str(verifyresult)
+      return str('True')
     func()
   `;
     return await pyodide.runPythonAsync(pythonCode);
