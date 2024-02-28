@@ -31,6 +31,9 @@ def insert_leaf(tree_name, data):
 def commit_local_tree(tree_name):
     if tree_name not in trees:
         return JSONResponse({'status': 'error', 'message': 'Tree does not exist'}, status_code=400)
+
+    if tree_name == 'global_tree':
+        return JSONResponse({'status': 'error', 'message': 'Global tree cannot be commited'}, status_code=400)
     
     tree = trees[tree_name]
     if len(tree.entries_buffer) == 0:
