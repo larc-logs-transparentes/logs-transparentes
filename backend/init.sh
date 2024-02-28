@@ -46,9 +46,9 @@ if [ $? -ne 0 ]; then # if npm start returned a non-zero exit code
 fi
 cd ..
 
-# starting private backend
+# starting private_old backend
 echo "Starting private backend..."
-cd private || exit
+cd private_old || exit
 npm install > /dev/null
 npm start > ../private_backend.log &
 if [ $? -ne 0 ]; then # if npm start returned a non-zero exit code
