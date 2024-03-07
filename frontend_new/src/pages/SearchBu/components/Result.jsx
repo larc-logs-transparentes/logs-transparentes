@@ -70,7 +70,7 @@ function Result({ cargo }) {
         <div className='grid md2:grid-cols-3 grid-cols-2  gap-y-12'>
 
         {votosNominais.map((voto, index) => (
-          <div key={index} className='flex gap-x-8 gap-y-4'>
+          <div key={index} className='flex md:gap-x-8 md:gap-y-4'>
             <div className='space-y-2'>
               <h1 className='text-gray text-xs font-bold'>Candidato</h1>
               <h1 className='text-blue-light text-xs font-bold'>{voto.identificacaoVotavel.codigo}</h1>

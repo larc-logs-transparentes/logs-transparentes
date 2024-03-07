@@ -1,9 +1,8 @@
-import React, { useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../../components/SearchBar';  
 import Footer from '../../components/Footer';
 import Bu from './components/Bu';
 import Result from './components/Result';
-import SendBu from './components/SendBu';
 import { getBuById } from '../../endpoints/bu.api';
 import { useParams } from 'react-router-dom';
 import ManualAutomatic from './components/ManualAutomatic';
@@ -12,15 +11,32 @@ import Warning from './components/Warning';
 function SearchBu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWarningVisible, setIsWarningVisible] = useState(false);
+  const [buData, setBuData] = useState(null);
   const { id } = useParams();
 
   const showWarning = () => setIsWarningVisible(true);
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
+  const downloadJson = () => {
+    if (!buData) return;
+    const json = JSON.stringify(buData, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'buData.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   useEffect(() => {
     const fetchBu = async () => {
       if (id) {
-        const res = await getBuById(id);
+        const response = await getBuById(id);
+        if (response) {
+          const buInteiroParsed = JSON.parse(response.bu_inteiro);
+          setBuData(buInteiroParsed);
+        }
       }
     };
 
@@ -28,9 +44,9 @@ function SearchBu() {
   }, [id]);
 
   return (
-    <div className=''>
+    <div>
       <SearchBar />
-      {isModalOpen && <ManualAutomatic className='' closeModal={() => setIsModalOpen(false)} />}
+      {isModalOpen && <ManualAutomatic closeModal={() => setIsModalOpen(false)} />}
       {isWarningVisible && <Warning />}
       <div className='flex place-content-center p-[20px]'>
         <div className='flex-col items-center space-y-[20px]'>     
@@ -40,7 +56,6 @@ function SearchBu() {
           <Result cargo="senador" />
           <Result cargo="deputado federal" />
           <Result cargo="deputado estadual" />
-          <button onClick={toggleModal} className="rounded-full bg-yellow px-2 h-[37px] md2:ml-[40%] md2:w-[25%] font-bold ml-[1%]">Enviar para o Monitor</button>
         </div>
       </div>
       <Footer />
