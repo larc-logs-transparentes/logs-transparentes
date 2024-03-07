@@ -17,8 +17,6 @@ const ErrorBu = ({ closeModal }) => {
           <p className="font-bold text-blue">Mensagem de erro:</p>
           
         </div> 
-        
-        {/* ... Rest of your code for displaying the error details ... */}
       </div>
     </div>
   );

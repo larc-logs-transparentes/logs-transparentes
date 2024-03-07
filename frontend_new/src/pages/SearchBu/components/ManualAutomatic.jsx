@@ -3,7 +3,7 @@ import { ReactComponent as ManualIcon } from '../../../assets/manual-icon.svg';
 import { ReactComponent as AutomaticIcon } from '../../../assets/automatic-icon.svg';
 import { useParams } from 'react-router-dom';
 import SendBu from './SendBu';
-import SendBuAutomatic from './SendBuAutomatic'; // Import SendBuAutomatic
+import SendBuAutomatic from './SendBuAutomatic';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 function ManualAutomatic({ closeModal , selection }) {
