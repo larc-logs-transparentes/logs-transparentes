@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// Removed the import for Certificate since it's no longer used here
 import Correto from '../../../assets/Correto.svg';
 import SendBu from './SendBu';
 import ManualAutomatic from './ManualAutomatic';
@@ -7,7 +6,7 @@ import { getBuById } from '../../../endpoints/bu.api';
 import { useParams } from 'react-router-dom';
 import Selo from './Selo';
 
-function Bu() {
+function Bu({ onSendToMonitor }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id } = useParams();
 
@@ -46,8 +45,6 @@ function Bu() {
   if (!buData) {
     return <div>Loading...</div>;
   }
-
-
   const municipio = buData.identificacaoSecao.municipioZona.municipio;
   const zonaEleitoral = buData.identificacaoSecao.municipioZona.zona;
   const secaoEleitoral = buData.identificacaoSecao.secao;
@@ -71,8 +68,10 @@ function Bu() {
         <div className='flex flex-col items-center gap-[20px] md2:flex-row md2:items-center md2:justify-between'>
           <h1 className='text-blue text-base font-bold'>Boletim de Urna</h1>
           <div className='flex items-center md2:flex-row flex-col gap-6'>
-            {isModalOpen && <ManualAutomatic closeModal={closeModal} />}
-            <button onClick={toggleModal} className="rounded-full bg-yellow px-2 h-[37px] w-[194px] font-bold ml-4 hidden md2:block">Enviar para o Monitor</button>
+            {isModalOpen && <ManualAutomatic closeModal={closeModal} selection={onSendToMonitor} />}
+              <button  onClick={() => {toggleModal();}} className="rounded-full bg-yellow px-2 h-[37px] w-[194px] font-bold ml-4 hidden md2:block">
+                Verificar
+              </button>
             <button onClick={downloadJson} className="rounded-full bg-yellow px-2 h-[37px] w-[102px] font-bold ml-4">Baixar Bu</button>
 
             <Selo id={id} />

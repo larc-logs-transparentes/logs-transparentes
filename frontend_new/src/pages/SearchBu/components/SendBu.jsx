@@ -36,11 +36,8 @@ function SendBu({ closeModal , openSendBu}) {
 
 
   const handleButtonClick = async () => {
-    console.log({ nomeCompleto, url, selectedMonitor, operationStatus });
-
-    const isSuccess = true; // Logic to determine success or fail
-    setShowModal(isSuccess ? 'success' : 'fail');
-    openSendBu(); // This will close the ManualAutomatic modal
+    const isSuccess = true;
+    setShowModal(isSuccess ? 'success' : 'fail'); 
   };
   
   const handleDescriptionChange = (e) => {
@@ -59,7 +56,11 @@ function SendBu({ closeModal , openSendBu}) {
     }`;
   };
   const [showModal, setShowModal] = useState(null);
-
+  
+  const closeAllModals = () => {
+    setShowModal(null);
+    closeModal(); 
+  };
 
   return (
     <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center backdrop-blur z-30'>
@@ -95,7 +96,7 @@ function SendBu({ closeModal , openSendBu}) {
               </div>
             )}
           </div>
-          <h2 className='mt-[20px]'>Preencha as informações abaixo para enviar ao monitor</h2>
+          <h2 className='mt-[20px]'>A verificação foi bem sucedida?</h2>
           <div className='flex gap-[16px] mt-[20px]'>
             <button onClick={() => handleOperationStatusClick('Success')} 
               className={getStatusButtonClasses('Success')}>Sim</button>
@@ -112,8 +113,8 @@ function SendBu({ closeModal , openSendBu}) {
           <button onClick={handleButtonClick} className="mt-[20px] rounded-full bg-yellow  h-[37px] w-[189px] font-bold text-center">Enviar para o Monitor</button>
         </div>
       </div>
-      {showModal === 'success' && <Success closeModal={() => setShowModal(null)} />}
-      {showModal === 'fail' && <Fail closeModal={() => setShowModal(null)} />}
+      {showModal === 'success' && <Success closeModal={() => setShowModal(null)} closeAllModals={closeAllModals} />}
+      {showModal === 'fail' && <Fail closeModal={() => setShowModal(null)} closeAllModals={closeAllModals} />}
     </div>
   );
 }

@@ -3,16 +3,13 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useNavigate } from 'react-router-dom';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-function Success({ closeModal }) {
+function Success({ closeModal, closeAllModals }) {
   const navigate = useNavigate();
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = 'visible'; };
   }, []);
   
-  const navigateHome = () => {
-    navigate('/');
-  };
 
   return (
     <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center backdrop-blur-md z-30 '>
@@ -28,7 +25,7 @@ function Success({ closeModal }) {
         <CheckCircleOutlineIcon  className="text-blue cursor-pointer " style={{ width: '64px', height: '64px' }} />
           <h1 className='text-xl font-bold mt-3 mb-6'>Sucesso!</h1>
           <p className='text-center mb-8'>Verificação enviada com sucesso para o monitor!</p>
-          <button onClick={navigateHome} className="mt-[20px] rounded-full bg-yellow  h-[37px] w-[189px] font-bold text-center text-black">Enviar para o Monitor</button>
+          <button onClick={closeAllModals} className="mt-[20px] rounded-full bg-yellow  h-[37px] w-[189px] font-bold text-center text-black">Voltar para Home</button>
         </div>
       </div>
     </div>

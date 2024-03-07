@@ -6,6 +6,7 @@ import Logs from '../assets/Logs.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import '../index.css';
+import { convertElectionIdToName } from './electionIdConverter';
 
 function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -38,8 +39,9 @@ function Navbar() {
   };
 
   const handleElectionClick = (electionId) => {
+    const electionName = convertElectionIdToName(electionId);
     navigate(`/${electionId}`);
-    setSelectedElection(electionId); 
+    setSelectedElection(electionName); 
     setIsDropdownOpen(false);
   };
 
@@ -48,7 +50,10 @@ function Navbar() {
 
   return (
     <div className='font-sans relative'>
-      <div className='bg-neon-green h-[4vh] absolute font-bold text-blue text-xl place-content-center w-[30%] ml-[35%] text-center rounded-b-lg opacity-70'>
+      <div className='bg-neon-green md2:flex hidden h-[4vh] absolute font-bold text-blue text-xl place-content-center w-[55%] ml-[22.5%] text-center rounded-b-lg opacity-70'>
+      ATENÇÃO: ESTE É UM PROTÓTIPO EXPERIMENTAL
+      </div>
+      <div className='text-sm bg-neon-green md2:hidden flex max-h-[8vh] absolute font-bold text-blue place-content-center w-[50%] ml-[25%] text-center rounded-b-lg opacity-70'>
       ATENÇÃO: ESTE É UM PROTÓTIPO EXPERIMENTAL
       </div>
       <div className='bg-yellow h-[1vh]'></div>
@@ -81,7 +86,7 @@ function Navbar() {
               <ul className="absolute bg-white border rounded max-h-[300%] overflow-auto custom-scrollbar z-30">
                 {electionOptions.map((option, index) => (
                   <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[6vw]' onClick={() => handleElectionClick(option)}>
-                    {option}
+                    {convertElectionIdToName(option)}
                   </li>
                 ))}
               </ul>
@@ -116,12 +121,12 @@ function Navbar() {
               Eleições
             </div>
             {electionOptions.map((option, index) => (
-              <ul key={index} className="grid gap-2 mt-2 bg-white p-2 border border-gray-300 rounded-xl">
-                <li className='hover:bg-light-gray cursor-pointer' onClick={() => handleElectionClick(option)}>
-                  {option}
-                </li>
-              </ul>
-            ))}
+            <ul key={index} className="grid gap-2 mt-2 bg-white p-2 border border-gray-300 rounded-xl">
+              <li className='hover:bg-light-gray cursor-pointer' onClick={() => handleElectionClick(option)}>
+                {convertElectionIdToName(option)}
+              </li>
+            </ul>
+          ))}
           </li>
           <button className="rounded-full bg-yellow px-2 h-[37px] w-[91px]" onClick={handleVerifyClick}>
             Verificar

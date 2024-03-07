@@ -7,11 +7,14 @@ import SendBu from './components/SendBu';
 import { getBuById } from '../../endpoints/bu.api';
 import { useParams } from 'react-router-dom';
 import ManualAutomatic from './components/ManualAutomatic';
+import Warning from './components/Warning';
 
 function SearchBu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { id } = useParams(); // Extract id from URL
+  const [isWarningVisible, setIsWarningVisible] = useState(false);
+  const { id } = useParams();
 
+  const showWarning = () => setIsWarningVisible(true);
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   useEffect(() => {
@@ -25,12 +28,13 @@ function SearchBu() {
   }, [id]);
 
   return (
-    <div>
+    <div className=''>
       <SearchBar />
-      {isModalOpen && <ManualAutomatic className='' closeModal={toggleModal} />}
+      {isModalOpen && <ManualAutomatic className='' closeModal={() => setIsModalOpen(false)} />}
+      {isWarningVisible && <Warning />}
       <div className='flex place-content-center p-[20px]'>
         <div className='flex-col items-center space-y-[20px]'>     
-          <Bu isModalOpen={isModalOpen} toggleModal={toggleModal} id={id} />
+          <Bu onSendToMonitor={showWarning} id={id} />
           <Result cargo="presidente" />
           <Result cargo="governador" />
           <Result cargo="senador" />

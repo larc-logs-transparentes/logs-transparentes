@@ -6,7 +6,7 @@ import SendBu from './SendBu';
 import SendBuAutomatic from './SendBuAutomatic'; // Import SendBuAutomatic
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-function ManualAutomatic({ closeModal }) {
+function ManualAutomatic({ closeModal , selection }) {
   const [isManualModalOpen, setIsManualModalOpen] = useState(false);
   const [isAutomaticModalOpen, setIsAutomaticModalOpen] = useState(false); 
   const { id } = useParams(); 
@@ -25,7 +25,8 @@ function ManualAutomatic({ closeModal }) {
         <p className='mb-8'>Preencha as informações abaixo para enviar para o monitor.</p>
         <div className='flex align-items-center items-center place-content-center gap-[2%]'>
           <div className='flex-col flex'>Manual
-            <div onClick={toggleManualModal} className='cursor-pointer flex flex-col items-center border-blue-light hover:bg-blue-light border-2 p-2 rounded-2xl text-center text-black md2:h-[242px] md2:w-[320px]'>
+            <div onClick={() => { selection(); closeModal();
+    }}  className='cursor-pointer flex flex-col items-center border-blue-light hover:bg-blue-light border-2 p-2 rounded-2xl text-center text-black md2:h-[242px] md2:w-[320px]'>
               <button className="">
                 <ManualIcon className="w-24 h-24" />
               </button>
