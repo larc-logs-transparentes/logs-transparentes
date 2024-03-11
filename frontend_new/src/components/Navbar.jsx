@@ -50,12 +50,10 @@ function Navbar() {
 
   return (
     <div className='font-sans relative'>
-      <div className='bg-neon-green md2:flex hidden h-[4vh] absolute font-bold text-blue text-xl place-content-center w-[55%] ml-[22.5%] text-center rounded-b-lg opacity-70'>
-      ATENÇÃO: ESTE É UM PROTÓTIPO EXPERIMENTAL
+      <div className='bg-neon-green absolute font-bold text-blue text-center rounded-b-lg opacity-70 flex place-content-center w-[50%] md2:w-[55%] ml-[25%] md2:ml-[22.5%] md2:h-[4vh] max-h-[8vh] text-sm md2:text-xl'>
+        ATENÇÃO: ESTE É UM PROTÓTIPO EXPERIMENTAL
       </div>
-      <div className='text-sm bg-neon-green md2:hidden flex max-h-[8vh] absolute font-bold text-blue place-content-center w-[50%] ml-[25%] text-center rounded-b-lg opacity-70'>
-      ATENÇÃO: ESTE É UM PROTÓTIPO EXPERIMENTAL
-      </div>
+
       <div className='bg-yellow h-[1vh]'></div>
       <div className='bg-blue-light h-[1vh]'></div>
       <div className='bg-blue h-[5vh]'></div>
