@@ -12,7 +12,7 @@
         "port": 8000
     },
     "mongodb_config": {
-        "hostname": "mongodb://localhost",
+        "hostname": "mongodb://127.0.0.1",
         "port": 27017,
         "database": "logsT"
     },

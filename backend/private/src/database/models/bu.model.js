@@ -15,4 +15,5 @@ schema_bu.index({ merkletree_leaf_index:1 });
 schema_bu.index({ UF:1 });
 schema_bu.index({ zona:1 });
 schema_bu.index({ secao:1 });
+schema_bu.index({ municipio:1 });
 module.exports = { schema_bu } 

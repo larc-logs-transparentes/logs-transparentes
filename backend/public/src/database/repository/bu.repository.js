@@ -42,8 +42,8 @@ exports.findByIndexRange = async (initial_index, final_index) => {
     })
 }
 
-exports.findByInfo = async (id_eleicao, UF, zona, secao) => {
-    return await repository.findOne({ id_eleicao: id_eleicao, UF: UF, zona: zona, secao: secao })
+exports.findByInfo = async (id_eleicao, UF, municipio, zona, secao) => {
+    return await repository.findOne({ id_eleicao: id_eleicao, UF: UF, zona: zona, municipio:municipio, secao: secao })
     .then((data) => {
         return data
     })
@@ -51,6 +51,7 @@ exports.findByInfo = async (id_eleicao, UF, zona, secao) => {
         console.error(`[ERROR][bu.repository] ${err}`)
     })
 }
+
 
 exports.findDistinctEleicoes = async () => {
     return await repository.find().distinct("id_eleicao")
@@ -70,8 +71,9 @@ exports.findDistinctUF = async (id_eleicao) => {
         console.error(`[ERROR][bu.repository] ${err}`)
     })
 }
-exports.findDistinctZona = async (id_eleicao, uf) => {
-    return await repository.find({ 'id_eleicao': id_eleicao, 'UF': uf }).distinct("zona")
+
+exports.findDistinctMunicipio = async (id_eleicao, uf) => {
+    return await repository.find({ 'id_eleicao': id_eleicao, 'UF': uf }).distinct("municipio")
     .then((data) => {
         return data
     })
@@ -79,8 +81,19 @@ exports.findDistinctZona = async (id_eleicao, uf) => {
         console.error(`[ERROR][bu.repository] ${err}`)
     })
 }
-exports.findDistinctSecao = async (id_eleicao, uf, zona) => {
-    return await repository.find({ 'id_eleicao': id_eleicao, 'UF': uf, 'zona': zona }).distinct("secao")
+
+exports.findDistinctZona = async (id_eleicao, uf, municipio) => {
+    return await repository.find({ 'id_eleicao': id_eleicao, 'UF': uf, 'municipio': municipio }).distinct("zona")
+    .then((data) => {
+        return data
+    })
+    .catch((err) => {
+        console.error(`[ERROR][bu.repository] ${err}`)
+    }
+)}
+
+exports.findDistinctSecao = async (id_eleicao, uf, zona, municipio) => {
+    return await repository.find({ 'id_eleicao': id_eleicao, 'UF': uf,'municipio':municipio, 'zona': zona }).distinct("secao")
     .then((data) => {
         return data
     })
