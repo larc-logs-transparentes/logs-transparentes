@@ -1,35 +1,32 @@
 import os
-
-import ijson
 import requests
 
 from constants import BACKEND_URL
 
 
-# sends one bu (dict) to db via post request
-def insert_body_to_db(body_dict):
-    return requests.post(BACKEND_URL, json={"bu": body_dict}, headers={"content-type": "application/json"})
+def send_file_to_backend(file_path: str):
+    with open(file_path, "rb") as file:
+        response = requests.post(BACKEND_URL, files={"file": (os.path.basename(file_path), file)})
+        print(response.json())
+        return response
 
 
 def read_files():
     try:
-        files = os.listdir("./results")
-        files = [f"./results/{file}" for file in files]
+        files = os.listdir("./assets/bus")
+        files = [f"./assets/bus/{file}" for file in files]
     except FileNotFoundError:
-        files = ["./assets/example_bus_consolidated.json"]
+        files = os.listdir("./assets/bu_2022_2t_AC")
+        files = [f"./assets/bu_2022_2t_AC/{file}" for file in files]
     return files
 
 
-# sends list of bus (dicts) to db
 def insert_list_bus_to_db():
     for file in read_files():
-        if file.endswith(".json"):
-            print(f"Reading {file}", end=' ', flush=True)
-            json_bus = ijson.items(open(file, "rb"), "item")
-            jsons = (o for o in json_bus)
-            for json in jsons:
-                insert_body_to_db(json)
-            print("---- Finished")
+        if file.endswith(".bu") or file.endswith(".busa"):
+            send_file_to_backend(file)
+            break
+    #print("---- Finished")
 
 
 if __name__ == '__main__':
