@@ -70,7 +70,7 @@ def insert(file_content: bytes):
         response = insert_leaf(f'{TREE_NAME_PREFIX}{eleicao}', base64.b64encode(bu_parsed.bu).decode('utf-8'))
         if response.status_code != 200 and response.json().get('message') == "Tree does not exist":
             create_tree(f'{TREE_NAME_PREFIX}{eleicao}', TREE_DEFAULT_COMMITMENT_SIZE)
-            response = insert_leaf(f'eleicao_{eleicao}', base64.b64encode(bu_parsed.bu).decode('utf-8'))
+            response = insert_leaf(f'{TREE_NAME_PREFIX}{eleicao}', base64.b64encode(bu_parsed.bu).decode('utf-8'))
             if response.status_code != 200:
                 raise Exception("Failed to insert leaf")
 

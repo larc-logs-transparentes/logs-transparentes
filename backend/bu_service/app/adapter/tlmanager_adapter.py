@@ -1,5 +1,8 @@
 import requests
 import os
+import dotenv
+
+dotenv.load_dotenv()
 
 TL_MANAGER_URL = os.getenv('TL_MANAGER_URL')
 
