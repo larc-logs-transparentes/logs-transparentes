@@ -34,13 +34,14 @@ Create a new local tree
 """
 
 INSERT_LEAF_DESCRIPTION = """
-Insert data as a new leaf in a local tree
+Insert a base64 encoded data as a new leaf in a local tree.
+This data will be decoded and hashed using the tree's hash algorithm.
 
 ### Example
 ```json
 {
     "tree_name": "my-tree",
-    "data": "my-data"
+    "data": "bXktZGF0YQ=="
 }
 ```
 
