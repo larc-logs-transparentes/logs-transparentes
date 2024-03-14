@@ -1,6 +1,9 @@
+import dotenv
 from fastapi import FastAPI
 
 from app.controllers import tree_controller, bu_controller
+
+dotenv.load_dotenv()
 
 app = FastAPI()
 

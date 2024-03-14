@@ -1,7 +1,7 @@
 import requests
+import os
 
-TL_MANAGER_URL = 'http://127.0.0.1:8000'
-
+TL_MANAGER_URL = os.getenv('TL_MANAGER_URL')
 
 def get_trees():
     return requests.get(f'{TL_MANAGER_URL}/').json()

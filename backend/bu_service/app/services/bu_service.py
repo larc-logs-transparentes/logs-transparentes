@@ -1,11 +1,14 @@
 import asn1tools
 import json
 import base64
+import os
 
 from app.database.models.bu_model import BuModel
 from app.database.repositories.bu_repository import save
 from app.adapter.tlmanager_adapter import *
 
+TREE_NAME_PREFIX = os.getenv('TREE_NAME_PREFIX')
+TREE_DEFAULT_COMMITMENT_SIZE = os.getenv('TREE_DEFAULT_COMMITMENT_SIZE')
 
 conv = asn1tools.compile_files("app/services/bu.asn1")
 county_codes = json.load(open("app/services/static/county_codes.json"))
@@ -64,9 +67,9 @@ def insert(file_content: bytes):
     bu_parsed = parse_bu(bu_decoded, file_content)
 
     for eleicao in bu_parsed.eleicoes:
-        response = insert_leaf(f'eleicao_{eleicao}', base64.b64encode(bu_parsed.bu).decode('utf-8')) # externalize this
+        response = insert_leaf(f'{TREE_NAME_PREFIX}{eleicao}', base64.b64encode(bu_parsed.bu).decode('utf-8'))
         if response.status_code != 200 and response.json().get('message') == "Tree does not exist":
-            create_tree(f'eleicao_{eleicao}', 2048) # externalize this
+            create_tree(f'{TREE_NAME_PREFIX}{eleicao}', TREE_DEFAULT_COMMITMENT_SIZE)
             response = insert_leaf(f'eleicao_{eleicao}', base64.b64encode(bu_parsed.bu).decode('utf-8'))
             if response.status_code != 200:
                 raise Exception("Failed to insert leaf")
