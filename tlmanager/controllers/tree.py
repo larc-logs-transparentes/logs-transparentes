@@ -90,13 +90,14 @@ def get_leaf(tree_name, leaf_index):
 def get_tree(tree_name):
     if tree_name not in trees:
         return JSONResponse({'status': 'error', 'message': 'Tree does not exist'}, status_code=400)
+
     tree = trees[tree_name]
     metadata = tree.get_metadata()
-    buffer_length = len(tree.entries_buffer)
 
     if tree_name == 'global_tree':
         return JSONResponse({'status': 'ok'} | metadata | {'length': tree.length}, status_code=200)
-    
+
+    buffer_length = len(tree.entries_buffer)
     return JSONResponse({'status': 'ok'} | metadata | {'commitment size': tree.commitment_size, 'length': tree.length, 'buffer_length': buffer_length}, status_code=200)
 
 def get_tree_root(tree_name):
