@@ -16,7 +16,7 @@ def commit_tree(tree_name):
 
 
 def insert_leaf(tree_name, data):
-    requests.post(f'{TL_MANAGER_URL}/insert-leaf', json={"tree_name": tree_name, "data": data})
+    return requests.post(f'{TL_MANAGER_URL}/insert-leaf', json={"tree_name": tree_name, "data": data})
 
 
 def get_data_proof(tree_name, index):
