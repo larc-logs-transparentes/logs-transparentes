@@ -44,7 +44,7 @@ def parse_bu(bu: dict, bu_raw: bytes):
     secao = bu['identificacaoSecao']['secao']
 
     uf_municipio_code = bu['identificacaoSecao']['municipioZona']['municipio']
-    county = get_uf_and_municipio_from_code(uf_municipio_code)
+    county = get_uf_and_municipio_from_code(str(uf_municipio_code))
 
     return BuModel(
         eleicoes=[e['idEleicao'] for e in bu['resultadosVotacaoPorEleicao']],
