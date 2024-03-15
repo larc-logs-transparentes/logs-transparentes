@@ -1,5 +1,10 @@
-from pydantic import BaseModel
 from typing import Optional
+from pydantic import BaseModel
+
+
+class MerkleTreeInfo(BaseModel):
+    index: int
+    hash: str
 
 
 class BuModel(BaseModel):
@@ -10,5 +15,4 @@ class BuModel(BaseModel):
     municipio: str
     bu_json: str
     bu: bytes
-    merkletree_leaf_index: Optional[int]
-    merkletree_leaf_hash: Optional[str]
+    merkletree_info: Optional[dict[str, MerkleTreeInfo]] = {}
