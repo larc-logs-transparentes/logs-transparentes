@@ -23,8 +23,8 @@ def read_files():
         files = os.listdir("./assets/bus")
         files = [f"./assets/bus/{file}" for file in files]
     except FileNotFoundError:
-        files = os.listdir("./assets/bu_2022_2t_AC")
-        files = [f"./assets/bu_2022_2t_AC/{file}" for file in files]
+        files = os.listdir("./assets/mocked_bus")
+        files = [f"./assets/mocked_bus/{file}" for file in files]
     return files
 
 
