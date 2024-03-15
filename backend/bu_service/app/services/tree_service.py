@@ -13,7 +13,7 @@ def commit_all_trees():
     for tree in trees:
         request = tlmanager_adapter.commit_tree(tree)
         if request.status_code != 200:
-            logging.error(f"Failed to commit tree {tree}")
+            logging.error(f"Failed to commit tree {tree}: {request.json()}")
         else:
             commited_trees.append(tree)
             logging.debug(f"Tree {tree} commited")
