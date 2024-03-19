@@ -59,7 +59,7 @@ def parse_bu(bu: dict, bu_raw: bytes):
         municipio=county['nome_municipio'],
         bu_json=json.dumps(bu, cls=DictWithBytesToJsonEncoder),
         bu=bu_raw,
-        merkletree_leaf_info={}
+        merkletree_info={}
     )
 
 
@@ -86,7 +86,7 @@ def insert(file_content: bytes):
             logging.info(response.json())
             if response.status_code != 200:
                 raise Exception("Failed to insert leaf")
-        bu_parsed.merkletree_info[f'{TREE_NAME_PREFIX}{eleicao}'] = MerkleTreeInfo(index=response.json()['index'], hash=response.json()['value'])
+        bu_parsed.merkletree_info[str(eleicao)] = MerkleTreeInfo(index=response.json()['index'], hash=response.json()['value'])
 
     logging.debug("Saving BU to database")
     logging.debug(bu_parsed)
