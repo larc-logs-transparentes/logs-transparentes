@@ -1,19 +1,21 @@
 const mongoose = require("mongoose");
 
+const merkletree_info = new mongoose.Schema({
+    tree_name: String,
+    election_id: Number,
+    index: Number,
+    hash: String,
+});
+
 const schema_bu = new mongoose.Schema({
-    id_eleicao: Number,
+    eleicoes: [Number],
     UF: String,
     zona: Number,
     secao: Number,
     municipio: String,
-    bu_inteiro: String,
-    merkletree_leaf_index: Number,
-    merkletree_leaf: String,
+    bu_json: String,
+    bu: Buffer,
+    merkletree_info: [merkletree_info],
 });
 
-schema_bu.index({ merkletree_leaf_index:1 });
-schema_bu.index({ UF:1 });
-schema_bu.index({ zona:1 });
-schema_bu.index({ secao:1 });
-schema_bu.index({ municipio:1 });
-module.exports = { schema_bu } 
+module.exports = { schema_bu }
