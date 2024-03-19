@@ -3,7 +3,7 @@ from controllers.database import *
 from services.trees_states import trees, save_state
 from services.objects_models import build_global_tree_root_object, build_local_tree_root_object
 
-from transparentlogs_pymerkle import MerkleTree
+from pymerkle_logsTransparentes import MerkleTree
 
 def create_tree(tree_name, commitment_size):
     if tree_name in trees:
