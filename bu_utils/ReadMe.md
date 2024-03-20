@@ -1,8 +1,8 @@
 # Entering real data in the application
 
 ### Scripts
-- [bu_json_converter.py](./bu_json_converter.py): Python program that reads multiple "bu" files and turns them into a list (json) and writes to file.
-- [populate_db.py](./populate_db.py): Checks the data present in the "results/" directory, and inserts real data if it exists, or the data available for example if not.
+- [bu_json_converter.py](./bu_json_converter.py): python program that reads many "bu" files and turns them into a list (json) and writes to file.
+- [populate_db.py](./populate_db.py): checks the existence of .bu files in `./assets/bus/` and populates the database with the information in the files.
 
 # How to use
 
@@ -11,10 +11,8 @@
 	- **./assets/bus/bu-ac**
 	- **./assets/bus/bu-sp1**
 	- **./assets/bus/bu-goias** 
-3. Run *"bu_json_converter.py"*: 
-	- In terminal: ```python3 bu_json_converter.py```
-4. Wait for the program to finish running. Progression by directory is displayed during processing
-5. At the end, JSON files are generated in: *"./results/"*. These files can be read by other programs to generate objects representing the BUs.
+3. Run *"bu_json_converter.py" or "populate_db.py"*
+	- In terminal: ```python3 bu_json_converter.py``` or ```python3 populate_db.py```
 
 ## Observations
 
