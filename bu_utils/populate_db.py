@@ -18,10 +18,11 @@ def send_file_to_backend(file_path: str):
         return response
 
 
-def read_files():
+def read_bu_or_busa_files():
     try:
-        files = os.listdir("./assets/bus")
-        files = [f"./assets/bus/{file}" for file in files]
+        files = [os.path.join(root, name)
+                 for root, dirs, files in os.walk("./assets/bus")
+                 for name in files if name.endswith((".bu", ".busa"))]
     except FileNotFoundError:
         files = os.listdir("./assets/mocked_bus")
         files = [f"./assets/mocked_bus/{file}" for file in files]
@@ -29,9 +30,8 @@ def read_files():
 
 
 def insert_list_bus_to_db():
-    for file in read_files():
-        if file.endswith(".bu") or file.endswith(".busa"):
-            send_file_to_backend(file)
+    for file in read_bu_or_busa_files():
+        send_file_to_backend(file)
     print("---- Finished")
 
 
