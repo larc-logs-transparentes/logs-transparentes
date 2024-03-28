@@ -37,6 +37,28 @@ Caso deseje excluir o estado presente no Banco de Dados:
 RESET="true" uvicorn --port 9090 main:app
 ```
 
+#### Docker
+
+Para gerar a imagem Docker:
+
+```bash
+docker build -t bu_service .
+```
+
+Para instanciar a imagem Docker:
+
+```bash
+docker run --network host bu_service
+```
+
+Para instanciar a imagem Docker com a variável de ambiente `RESET`:
+
+```bash
+docker run --network host -e RESET="true" bu_service
+```
+
+OBS: O parâmetro `--network host` deve ser utilizado para que o container possa acessar o MongoDB e o TLManager que estão rodando na máquina local.
+
 ## Funcionamento
 
 ### Inserção de Boletim de Urna
