@@ -6,7 +6,7 @@ class Tree(BaseModel):
 
 class Leaf(BaseModel):
     tree_name: str
-    data: str
+    data: bytes
     
 class Commit(BaseModel):
     tree_name: str

@@ -1,36 +1,40 @@
 import os
-
-import ijson
 import requests
 
 from constants import BACKEND_URL
 
 
-# sends one bu (dict) to db via post request
-def insert_body_to_db(body_dict):
-    return requests.post(BACKEND_URL, json={"bu": body_dict}, headers={"content-type": "application/json"})
+def commit_all_trees():
+    response = requests.post(f'{BACKEND_URL}/tree/commit-all-trees')
+    print(response.json())
+    return response
 
 
-def read_files():
+def send_file_to_backend(file_path: str):
+    print(f"Sending file {file_path} to backend")
+    with open(file_path, "rb") as file:
+        response = requests.post(f'{BACKEND_URL}/bu/create', files={"file": (os.path.basename(file_path), file)})
+        print(response.json())
+        return response
+
+
+def read_bu_or_busa_files():
     try:
-        files = os.listdir("./results")
-        files = [f"./results/{file}" for file in files]
+        files = [os.path.join(root, name)
+                 for root, dirs, files in os.walk("./assets/bus")
+                 for name in files if name.endswith((".bu", ".busa"))]
     except FileNotFoundError:
-        files = ["./assets/example_bus_consolidated.json"]
+        files = os.listdir("./assets/mocked_bus")
+        files = [f"./assets/mocked_bus/{file}" for file in files]
     return files
 
 
-# sends list of bus (dicts) to db
 def insert_list_bus_to_db():
-    for file in read_files():
-        if file.endswith(".json"):
-            print(f"Reading {file}", end=' ', flush=True)
-            json_bus = ijson.items(open(file, "rb"), "item")
-            jsons = (o for o in json_bus)
-            for json in jsons:
-                insert_body_to_db(json)
-            print("---- Finished")
+    for file in read_bu_or_busa_files():
+        send_file_to_backend(file)
+    print("---- Finished")
 
 
 if __name__ == '__main__':
     insert_list_bus_to_db()
+    commit_all_trees()
