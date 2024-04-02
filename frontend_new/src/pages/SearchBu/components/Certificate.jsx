@@ -1,49 +1,85 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { getBuById } from '../../../endpoints/bu.api';
+import { getAllRoots } from '../../../endpoints/merkletree.api'; 
+import { useNavigate } from 'react-router-dom'; 
+const Certificate = ({ closeModal, id }) => {
+  const [buData, setBuData] = useState(null);
+  const [lastRoot, setLastRoot] = useState({ value: '', timestamp: '' }); 
+  const [buHash, setBuHash] = useState('');
+  const navigate = useNavigate(); 
 
-const Certificate = ({ closeModal }) => {
+  useEffect(() => {
+    const fetchBu = async () => {
+      if (id) {
+        const bu = await getBuById(id);
+        const buInteiroParsed = JSON.parse(bu.bu_inteiro);
+        setBuData(buInteiroParsed);
+        setBuHash(bu.merkletree_leaf);
+      }
+    };
+
+    const fetchAllRoots = async () => {
+      const rootsResponse = await getAllRoots();
+      if (rootsResponse.status === 'ok' && rootsResponse.roots.length > 0) {
+        const lastRoot = rootsResponse.roots[rootsResponse.roots.length - 1];
+        setLastRoot({ value: lastRoot.value, timestamp: lastRoot.timestamp });
+      }
+    };
+
+    fetchBu();
+    fetchAllRoots(); 
+  }, [id]);
+
+  function downloadJson() {
+    const json = JSON.stringify(buData, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'buData.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function navigateToInclusion() {
+    navigate(`/inclusion/${id}`);
+  }
+
   return (
     <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center backdrop-blur z-30 justify-center items-center'>
-      <div className='relative w-[714px] min-h-[500px] border-2 border-black rounded-2xl bg-white p-8'> 
+      <div className='relative w-[714px] min-h-[320px] border-2 border-black rounded-2xl bg-white p-8'> 
         <div className="absolute top-3 right-3">
-        <HighlightOffIcon onClick={closeModal} className="text-blue cursor-pointer mr-[16px]" style={{ width: '32px', height: '32px' }}/>
+          <HighlightOffIcon onClick={closeModal} className="text-blue cursor-pointer mr-[16px]" style={{ width: '32px', height: '32px' }}/>
         </div>
 
-        <h2 className="text-lg font-bold mb-4 text-gray-800">Visualizador do certificado: TL Election</h2>
-        <h2 className="font-bold mb-4 text-gray-800">Preencha as informações abaixo para enviar para o Monitor.</h2>
+        <h2 className="text-lg font-bold mb-4 text-gray-800">Verificação de inclusão de BU</h2>
+        <div className='flex gap-8'>
+          
+          <div className="font-bold mb-4 text-blue-light flex items-center gap-2">
+            <CheckCircleIcon style={{ color: '#66FF99' }} />
+            <h2>O bu foi verificado corretamente</h2>
+          </div>
+          <h2 className='text-center  text-md relative font-sans font-bold text-yellow underline cursor-pointer' onClick={navigateToInclusion}>Saiba Mais</h2>
+        </div>
+
+        <div className="text-sm  font-bold text-gray">
+          <div className="mb-3">
+            <strong className='text-blue-light'>Raiz Global:</strong>
+            <div>Hash: {lastRoot.value}</div>
+            <div>Gerado em: {lastRoot.timestamp}</div> 
+          </div>
+
+          <div className="mb-3">
+            <strong className='text-blue-light'>BU:</strong>
+            <div>Hash: {buHash}</div>
+          </div>
+        </div>
+
         <div className="flex gap-4">
-            <button  className="rounded-full bg-yellow px-2 h-[37px] w-[102px] font-bold ml-4">Geral</button>
-            <button  className="rounded-full bg-gray px-2 h-[37px] w-[102px] font-bold ml-4">Detalhe</button>
+            <button onClick={downloadJson} className="rounded-full bg-yellow px-2 h-[37px] w-[132px] font-bold">Baixar Provas</button>
         </div>
-
-        <div className="text-sm p-4 font-bold text-gray">
-          <div className="mb-3">
-            <strong className='text-blue'>Emitido para:</strong>
-            <div>Nome comum (CN): tlelection.com.br</div>
-            <div>O (Organização): TL Election</div>
-            <div>Unidade organizacional (OU): &lt;Não faz parte do certificado&gt;</div>
-          </div>
-
-          <div className="mb-3">
-            <strong className='text-blue'>Emitido por:</strong>
-            <div>Nome comum (CN): DigiCert Global G2 TLS RSA SHA256 2020 CA1</div>
-            <div>O (Organização): DigiCert Inc</div>
-            <div>Unidade organizacional (OU): &lt;Não faz parte do certificado&gt;</div>
-          </div>
-
-          <div className="mb-3">
-            <strong className='text-blue'>Período de validade:</strong>
-            <div>Emitido em: terça-feira, 23 de maio de 2023 às 21:00:00</div>
-            <div>Expira em: domingo, 23 de junho de 2024 às 20:59:59</div>
-          </div>
-
-          <div className="mb-3">
-            <strong className='text-blue'>Impressões digitais SHA 256:</strong>
-            <div>Certificado: a67837797jsh7368274bhada97a498bkjsa9379</div>
-            <div>Chave pública: 347649shksjgs9387fh949937hf949j3d3odfh97</div>
-          </div>
-        </div>
-
       </div>
     </div>
   );

@@ -31,14 +31,15 @@ export default function Selo({ id }) {
       <div onClick={handleModalToggle} className="cursor-pointer">
         <p>
           <img
-            src={isProofTrue === 'True' ? Correto : 'False'} // Consider updating this to show a different image or indicator for false
+            src={isProofTrue === 'True' ? Correto : 'False'} 
             alt={isProofTrue === 'True' ? "Verificação Correta" : "Erro na Verificação"}
             className=""
           />
         </p>
       </div>
-      {isCertificateModalOpen && <Certificate closeModal={() => setIsCertificateModalOpen(false)} />}
-      {isErrorBuModalOpen && <ErrorBu closeModal={() => setIsErrorBuModalOpen(false)} />}
+      {isCertificateModalOpen && <Certificate id={id} closeModal={() => setIsCertificateModalOpen(false)} />}
+      {isErrorBuModalOpen && <ErrorBu id={id} closeModal={() => setIsErrorBuModalOpen(false)} />}
+
     </>
   );
 }

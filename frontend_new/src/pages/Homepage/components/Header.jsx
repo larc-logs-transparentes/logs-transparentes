@@ -19,7 +19,7 @@
     };
 
     return (
-      <div className='overflow-x-hidden h-[70vh] md:h-[65vh] md:min-h-[600px]'>
+      <div className='overflow-x-hidden h-[80vh] md:h-[72vh] md:min-h-[600px]'>
       <div className='relative font-sans'>
         <div className='h-full text-center font-bold flex items-center justify-center relative'>
           <img src={Mascara} className='absolute right-0 h-[105px] w-[909px] top-0 ' alt='Mascara' />
@@ -29,7 +29,8 @@
           </h1>
         </div>
       </div>
-      <div className='w-full bg-white py-4 h-[44vh]'>
+      <div className='w-[90%] h-[55%] absolute ml-[5%] md:h-[55%] mt-16 border-blue-light md:mt-2 rounded-xl border-2 place-content-center'>
+      <div className='w-full  h-[44vh]'>
         <h1 className='text-center md:text-2xl text-lg p-8 relative font-sans font-bold'>
           Como Funciona
         </h1>
@@ -44,7 +45,10 @@
             </div>
           ))}
         </div>
-        <div className='flex justify-center p-2 md:hidden'>
+        <h1 className='text-center  text-md p-8 relative font-sans font-bold text-yellow underline'>
+          Saiba Mais
+        </h1>
+        <div className='flex justify-center md:hidden'>
           {slides.map((_, index) => (
             <div 
               key={index} 
@@ -53,6 +57,7 @@
             />
           ))}
         </div>
+      </div>
       </div>
       </div>
     );

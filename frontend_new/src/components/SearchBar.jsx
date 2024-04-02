@@ -39,7 +39,12 @@ function SearchBar() {
     } else {
       axios.get(`${bu_api_url}/bu/distinct_eleicoes`)
         .then(response => {
-          setTurnoOpts(response.data);
+          if (response.data.length > 0) {
+
+            const highestElectionId = response.data.reduce((max, current) => current > max ? current : max, response.data[0]);
+            setTurnoSelection(highestElectionId);
+            fetchUFOptions(highestElectionId);
+          }
         })
         .catch(error => console.error(error));
     }
@@ -107,13 +112,15 @@ function SearchBar() {
   };
 
   const handleSearchClick = () => {
-    console.log(turnoSelection, ufSelection, citySelection, zonaSelection, secaoSelection);
-    axios.get(`${bu_api_url}/bu/find_by_info?id_eleicao=${turnoSelection}&UF=${ufSelection}&municipio=${citySelection}&zona=${zonaSelection}&secao=${secaoSelection}`)
-    .then(response => {
-      navigate(`/${electionId}/search/${response.data._id}`, {
-        state: { turnoSelection, ufSelection, citySelection, zonaSelection, secaoSelection }
-      });
-    });
+    const effectiveElectionId = electionId || turnoSelection;
+
+    axios.get(`${bu_api_url}/bu/find_by_info?id_eleicao=${effectiveElectionId}&UF=${ufSelection}&municipio=${citySelection}&zona=${zonaSelection}&secao=${secaoSelection}`)
+      .then(response => {
+        navigate(`/${effectiveElectionId}/search/${response.data._id}`, {
+          state: { turnoSelection, ufSelection, citySelection, zonaSelection, secaoSelection }
+        });
+      })
+      .catch(error => console.error(error));
   };
   
   return (
