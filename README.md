@@ -13,7 +13,7 @@ This prototype is applied to the Brazilian election. It transparently stores ele
 Instruction to install and use [here](./install.md).
 
 
-## Pages
+## Pages (in development)
 
 <b>Home Page</b>
 
