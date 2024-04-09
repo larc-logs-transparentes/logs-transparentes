@@ -19,13 +19,14 @@ def send_file_to_backend(file_path: str):
 
 
 def read_bu_or_busa_files():
-    try:
-        files = [os.path.join(root, name)
-                 for root, dirs, files in os.walk("./assets/bus")
-                 for name in files if name.endswith((".bu", ".busa"))]
-    except FileNotFoundError:
+    files = [os.path.join(root, name)
+                for root, dirs, files in os.walk("./assets/bus")
+                for name in files if name.endswith((".bu", ".busa"))]
+    
+    if not files:
         files = os.listdir("./assets/mocked_bus")
         files = [f"./assets/mocked_bus/{file}" for file in files]
+        
     return files
 
 
