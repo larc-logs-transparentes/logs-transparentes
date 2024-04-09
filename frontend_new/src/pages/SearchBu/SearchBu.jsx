@@ -34,7 +34,7 @@ function SearchBu() {
       if (id) {
         const response = await getBuById(id);
         if (response) {
-          const buInteiroParsed = JSON.parse(response.bu_inteiro);
+          const buInteiroParsed = JSON.parse(response.bu_json);
           setBuData(buInteiroParsed);
         }
       }
