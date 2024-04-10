@@ -44,7 +44,7 @@ def get_uf_and_municipio_from_code(uf_municipio_code: str):
         }
 
 
-def parse_bu(bu: dict, bu_raw: bytes):
+def parse_bu(bu: dict, bu_raw: bytes, filename):
     zona = bu['identificacaoSecao']['municipioZona']['zona']
     secao = bu['identificacaoSecao']['secao']
 
@@ -53,6 +53,7 @@ def parse_bu(bu: dict, bu_raw: bytes):
 
     return BuModel(
         eleicoes=[e['idEleicao'] for e in bu['resultadosVotacaoPorEleicao']],
+        filename=filename,
         UF=county['uf'],
         zona=zona,
         secao=secao,
@@ -63,13 +64,13 @@ def parse_bu(bu: dict, bu_raw: bytes):
     )
 
 
-def insert(file_content: bytes):
+def insert(file_content: bytes, filename: str):
     logging.debug("Trying to decode file using bu ASN.1 schema")
     bu_decoded = convert_file_to_bu_dict(file_content)
     logging.debug(bu_decoded)
 
     logging.debug("Parsing BU")
-    bu_parsed = parse_bu(bu_decoded, file_content)
+    bu_parsed = parse_bu(bu_decoded, file_content, filename)
     logging.debug(bu_parsed)
 
     for eleicao in bu_parsed.eleicoes:

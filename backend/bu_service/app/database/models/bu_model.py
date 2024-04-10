@@ -10,6 +10,7 @@ class MerkleTreeInfo(BaseModel):
 
 class BuModel(BaseModel):
     eleicoes: list[int]
+    filename: str
     UF: str
     zona: int
     secao: int
