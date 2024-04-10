@@ -29,14 +29,14 @@
           </h1>
         </div>
       </div>
-      <div className='w-[90%] h-[55%] absolute ml-[5%] md:h-[55%] mt-16 border-blue-light md:mt-2 rounded-xl border-2 place-content-center'>
-      <div className='w-full  h-[44vh]'>
+      
+      <div className='w-full  h-[50vh]'>
         <h1 className='text-center md:text-2xl text-lg p-8 relative font-sans font-bold'>
           Como Funciona
         </h1>
       <div onScroll={handleScroll} className="flex overflow-x-scroll scrollbar-hidden snap-x snap-mandatory md:snap-none md:justify-center md:gap-[5vw] lg:gap-[15vw]">
           {slides.map((item, index) => (
-            <div key={index} className="flex-none w-full snap-start md:snap-none md:w-64 min-w-[140px]">
+            <div key={index} className="flex-none w-full snap-start md:snap-none md:w-64 min-w-[140px] shadow-2xl rounded-xl">
               <div className='flex flex-col items-center w-full '>
                 <img src={item.src} alt='Monitor' className='max-h-[160px] min-h-[120px] h-[40vw] md:h-[20vh] md:w-auto '/>
                 <h2 className='text-blue-500 text-center text-blue font-sans font-bold md:text-xl text-lg mt-8'>{item.title}</h2>
@@ -57,7 +57,6 @@
             />
           ))}
         </div>
-      </div>
       </div>
       </div>
     );

@@ -64,14 +64,15 @@ function Navbar() {
 
   return (
     <div className='font-sans relative'>
-      <div className='bg-neon-green absolute font-bold text-blue text-center rounded-b-lg opacity-70 flex place-content-center w-[50%] md2:w-[55%] ml-[25%] md2:ml-[22.5%] md2:h-[4vh] max-h-[8vh] text-sm md2:text-xl'>
+      <div className='bg-white absolute font-bold text-blue text-center rounded-b-lg  flex place-content-center w-[50%] 
+       md2:w-[44%] ml-[25%] md2:ml-[28%] xl:w-[30%] xl:ml-[35%] md2:h-[4vh] max-h-[8vh] text-sm md:text-base'>
         ATENÇÃO: ESTE É UM PROTÓTIPO EXPERIMENTAL
       </div>
 
       <div className='bg-yellow h-[1vh]'></div>
       <div className='bg-blue-light h-[1vh]'></div>
       <div className='bg-blue h-[5vh]'></div>
-      <div className="flex xl:gap-[45vw] xs:gap-[10vw] md:gap-[15vw] p-2 font-semibold relative bg-white gap-0">
+      <div className="flex xl:gap-[35vw] xs:gap-[10vw] md:gap-[15vw] p-2 font-semibold relative bg-white gap-0">
         <div className="xs:min-w-[160px] xs:min-h-[10px] xs:ml-[10vw] ml-0">
           <Link to="/" onClick={handleLogoClick}>
             <img src={Logs} className="" alt="logo" />
