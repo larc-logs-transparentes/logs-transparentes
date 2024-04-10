@@ -30,6 +30,11 @@ router.get("/download", async (req, res) => {
 
     const data = await bu_repository.findById(id)
 
+    if (!data) {
+      res.status(404).send('Not Found')
+      return
+    }
+
     const buffer = Buffer.from(data.bu, 'base64')
     res.setHeader('Content-Disposition', `attachment; filename=${data.filename}`)
     res.setHeader('Content-Type', 'application/json')
