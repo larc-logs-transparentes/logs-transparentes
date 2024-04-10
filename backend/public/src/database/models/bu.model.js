@@ -8,6 +8,7 @@ const merkletree_info = new mongoose.Schema({
 
 const schema_bu = new mongoose.Schema({
     eleicoes: [Number],
+    filename: String,
     UF: String,
     zona: Number,
     secao: Number,
