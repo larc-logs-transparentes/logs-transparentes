@@ -23,6 +23,20 @@ router.get("/find_by_id", async (req, res) => {
   res.json(data)
 })
 
+router.get("/download", async (req, res) => {
+    const id = req.query.id
+
+    console.info(`[bu.controller] GET /download ${id}`)
+
+    const data = await bu_repository.findById(id)
+
+    const buffer = Buffer.from(data.bu, 'base64')
+    res.setHeader('Content-Disposition', `attachment; filename=${data.filename}`)
+    res.setHeader('Content-Type', 'application/json')
+
+    res.send(buffer)
+})
+
 router.get("/find_by_info", async (req, res) => {
   const UF = req.query.UF
   const zona = req.query.zona
