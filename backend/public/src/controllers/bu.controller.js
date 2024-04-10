@@ -24,16 +24,14 @@ router.get("/find_by_id", async (req, res) => {
 })
 
 router.get("/find_by_info", async (req, res) => {
-  const id = req.query.id_eleicao
   const UF = req.query.UF
-  const municipio = req.query.municipio
   const zona = req.query.zona
   const secao = req.query.secao
 
   
-  console.info(`[bu.controller] GET /find_by_info ${id} ${UF} ${municipio} ${zona} ${secao}`)
+  console.info(`[bu.controller] GET /find_by_info ${UF} ${zona} ${secao}`)
 
-  const data = await bu_repository.findByInfo(id, UF, municipio, zona, secao)
+  const data = await bu_repository.findByInfo(UF, zona, secao)
 
   res.json(data)
 })

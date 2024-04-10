@@ -1,4 +1,4 @@
-cryptography<40
+cryptography>42.0.0
 fastapi[all]>=0.95.1
-transparentlogs_pymerkle>=0.0.3
+pymerkle-logsTransparentes>=0.0.3
 pymongo>=4.4.1

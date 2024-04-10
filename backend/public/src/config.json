@@ -14,7 +14,7 @@
     "mongodb_config": {
         "hostname": "mongodb://127.0.0.1",
         "port": 27017,
-        "database": "logsT"
+        "database": "bu_service"
     },
     "application_config": {
         "port": 8080

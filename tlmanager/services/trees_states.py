@@ -1,7 +1,7 @@
 from controllers.database import db_get_one_state, db_update_state, db_get_all_state
 from services.objects_models import build_state_object
 
-from transparentlogs_pymerkle import MerkleTree 
+from pymerkle_logsTransparentes import MerkleTree 
 
 def save_state(tree, list_entries=[]):
     last_state = db_get_one_state(tree.tree_name)
