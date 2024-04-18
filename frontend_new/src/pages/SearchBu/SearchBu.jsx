@@ -18,7 +18,7 @@ function SearchBu() {
     const fetchBu = async () => {
       if (id) {
         const response = await getBuById(id);
-        if (response ) {
+        if (response) {
           const buInteiroParsed = JSON.parse(response.bu_json);
           setBuData(buInteiroParsed);
         }

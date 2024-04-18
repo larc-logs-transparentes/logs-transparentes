@@ -6,6 +6,7 @@ const repository = mongoose.model("bu", schema_bu)
 exports.findById = async (id) => {    
     return await repository.findOne({ _id: id })
     .then((data) => {
+        data._doc.bu = Buffer.from(data.bu, 'base64').toString('base64')
         return data
     })
     .catch((err) => {
@@ -16,7 +17,10 @@ exports.findById = async (id) => {
 exports.findByMerkletreeIndexRange = async (id_eleicao, initial_index, final_index) => {
     return await repository.find({ [ `merkletree_info.${id_eleicao}.index` ]: { $gte: initial_index, $lte: final_index } } )
         .then((data) => {
-            return data
+            return data.map((bu) => {
+                bu._doc.bu = Buffer.from(bu.bu, 'base64').toString('base64')
+                return bu
+            })
         })
         .catch((err) => {
             console.error(`[ERROR][bu.repository] ${err}`)
@@ -26,6 +30,7 @@ exports.findByMerkletreeIndexRange = async (id_eleicao, initial_index, final_ind
 exports.findByInfo = async (UF, zona, secao) => {
     return await repository.findOne({ UF: UF, zona: zona, secao: secao })
     .then((data) => {
+        data._doc.bu = Buffer.from(data.bu, 'base64').toString('base64')
         return data
     })
     .catch((err) => {

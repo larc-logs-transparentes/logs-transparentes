@@ -37,7 +37,6 @@ router.get("/download", async (req, res) => {
 
     const buffer = Buffer.from(data.bu, 'base64')
     res.setHeader('Content-Disposition', `attachment; filename=${data.filename}`)
-    res.setHeader('Content-Type', 'application/json')
 
     res.send(buffer)
 })
