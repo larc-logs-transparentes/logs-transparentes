@@ -14,7 +14,7 @@ const Certificate = ({ closeModal, id }) => {
     const fetchBu = async () => {
       if (id) {
         const bu = await getBuById(id);
-        const buInteiroParsed = JSON.parse(bu.bu_inteiro);
+        const buInteiroParsed = JSON.parse(bu.bu_json);
         setBuData(buInteiroParsed);
         setBuHash(bu.merkletree_leaf);
       }

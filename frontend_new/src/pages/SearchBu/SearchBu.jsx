@@ -18,8 +18,8 @@ function SearchBu() {
     const fetchBu = async () => {
       if (id) {
         const response = await getBuById(id);
-        if (response) {
-          const buInteiroParsed = JSON.parse(response.bu_inteiro);
+        if (response ) {
+          const buInteiroParsed = JSON.parse(response.bu_json);
           setBuData(buInteiroParsed);
         }
       }
@@ -38,10 +38,10 @@ function SearchBu() {
           <div className='flex-col items-center space-y-[20px]'>     
             <Bu onSendToMonitor={() => setIsWarningVisible(true)} id={id} />
             <Result cargo="presidente" />
-            <Result cargo="governador" />
-            <Result cargo="senador" />
+            <Result cargo="presidente" />
+            {/* <Result cargo="senador" />
             <Result cargo="deputado federal" />
-            <Result cargo="deputado estadual" />
+            <Result cargo="deputado estadual" /> */}
           </div>
         </div>
       ) : (
