@@ -4,9 +4,9 @@ import {initPyodide,formatProofDataToPython} from './pyodide.js';
 
 export async function verifySingleData(id) {
     let bu = await getBuById(id);
-    let root = await getTrustedRoot(); // get from trusted souce (monitor)
+    let root = await getTrustedRoot();
     let proofData = await getDataProof(bu.merkletree_leaf_index,bu.id_eleicao);
-    // Some formatation necessary for pyodide
+
     formatProofDataToPython(proofData)
     root = JSON.stringify(root)
     proofData = JSON.stringify(proofData)

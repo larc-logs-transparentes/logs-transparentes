@@ -24,20 +24,30 @@ function Result({ cargo }) {
     return <div>Loading...</div>;
   }
 
+  // const getCargoIndexes = (cargo) => {
+  //   switch (cargo) {
+  //     case 'presidente':
+  //       return { resultadoVotacaoPorEleicaoIndex: 1, resultadoVotacaoIndex: 0, totaisvotosCargoIndex: 0 };
+  //     case 'governador':
+  //       return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 1,totaisvotosCargoIndex: 1 };
+  //     case 'senador':
+  //       return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 1,totaisvotosCargoIndex: 0 };
+  //     case 'deputado federal':
+  //       return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0,totaisvotosCargoIndex: 0 };
+  //     case 'deputado estadual':
+  //       return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0,totaisvotosCargoIndex: 1 };
+  //     default:
+  //       return { resultadoVotacaoPorEleicaoIndex: 1, resultadoVotacaoIndex: 0, totaisvotosCargoIndex: 0 };
+  //   }
+  // };
   const getCargoIndexes = (cargo) => {
     switch (cargo) {
       case 'presidente':
-        return { resultadoVotacaoPorEleicaoIndex: 1, resultadoVotacaoIndex: 0, totaisvotosCargoIndex: 0 };
+        return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0, totaisvotosCargoIndex: 0 };
       case 'governador':
-        return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 1,totaisvotosCargoIndex: 1 };
-      case 'senador':
-        return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 1,totaisvotosCargoIndex: 0 };
-      case 'deputado federal':
-        return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0,totaisvotosCargoIndex: 0 };
-      case 'deputado estadual':
         return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0,totaisvotosCargoIndex: 1 };
       default:
-        return { resultadoVotacaoPorEleicaoIndex: 1, resultadoVotacaoIndex: 0, totaisvotosCargoIndex: 0 };
+        return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0, totaisvotosCargoIndex: 0 };
     }
   };
 

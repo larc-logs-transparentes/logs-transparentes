@@ -23,7 +23,7 @@ function Footer() {
           <p className="mt-[10px]">Armazenamento transparente dos dados da eleição.</p>
         </div>
 
-        <ul className='mt-[16px] md:mt-0 md:ml-[241px]'>
+        <ul className='mt-[16px] md:mt-0 md:ml-[500px]'>
           <li className='mt-[15px]'>
             <a href="#" className='h-[21px]'>
               Home

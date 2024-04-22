@@ -14,21 +14,6 @@ function SearchBu() {
   const [buData, setBuData] = useState(null);
   const { id } = useParams();
 
-  const showWarning = () => setIsWarningVisible(true);
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
-
-  const downloadJson = () => {
-    if (!buData) return;
-    const json = JSON.stringify(buData, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'buData.json';
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
   useEffect(() => {
     const fetchBu = async () => {
       if (id) {
@@ -48,16 +33,20 @@ function SearchBu() {
       <SearchBar />
       {isModalOpen && <ManualAutomatic closeModal={() => setIsModalOpen(false)} />}
       {isWarningVisible && <Warning />}
-      <div className='flex place-content-center p-[20px]'>
-        <div className='flex-col items-center space-y-[20px]'>     
-          <Bu onSendToMonitor={showWarning} id={id} />
-          <Result cargo="presidente" />
-          <Result cargo="governador" />
-          <Result cargo="senador" />
-          <Result cargo="deputado federal" />
-          <Result cargo="deputado estadual" />
+      {id ? (
+        <div className='flex place-content-center p-[20px]'>
+          <div className='flex-col items-center space-y-[20px]'>     
+            <Bu onSendToMonitor={() => setIsWarningVisible(true)} id={id} />
+            <Result cargo="presidente" />
+            <Result cargo="presidente" />
+            {/* <Result cargo="senador" />
+            <Result cargo="deputado federal" />
+            <Result cargo="deputado estadual" /> */}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className='h-[500px]'></div>
+      )}
       <Footer />
     </div>
   );

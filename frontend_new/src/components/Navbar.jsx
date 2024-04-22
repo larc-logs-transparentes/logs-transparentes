@@ -11,31 +11,45 @@ import { convertElectionIdToName } from './electionIdConverter';
 function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [electionOptions, setElectionOptions] = useState([]);
+  const [selectedElection, setSelectedElection] = useState('');
   const navigate = useNavigate();
-
-  const bu_api_url = require('../config.json').bu_api_url; 
   const location = useLocation();
-  useEffect(() => {
-    if (location.pathname === '/') {
-      setSelectedElection('');
-    }
-  }, [location]);
+  const bu_api_url = require('../config.json').bu_api_url;
+
+
 
   useEffect(() => {
     axios.get(`${bu_api_url}/bu/distinct_eleicoes`)
       .then(response => {
-        setElectionOptions(response.data);
+        const options = response.data;
+        setElectionOptions(options);
+        const pathSegments = location.pathname.split('/');
+        const electionIdFromUrl = pathSegments[1];
+        setHighestElectionAsSelected(options, electionIdFromUrl);
       })
       .catch(error => console.error(error));
-  }, []);
-
+  }, [location.pathname]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   const handleVerifyClick = () => {
-    navigate('/');
+    const electionId = electionOptions.find(option => convertElectionIdToName(option) === selectedElection);
+    navigate(`/${electionId}/search`);
+  };
+
+  const setHighestElectionAsSelected = (options, currentId = '') => {
+    if (options.length > 0) {
+      let selectedID;
+      if (currentId && options.includes(parseInt(currentId))) {
+        selectedID = currentId;
+      } else {
+        selectedID = options[options.length - 1];
+      }
+      const selectedElectionName = convertElectionIdToName(selectedID);
+      setSelectedElection(selectedElectionName);
+    }
   };
 
   const handleElectionClick = (electionId) => {
@@ -44,22 +58,23 @@ function Navbar() {
     setSelectedElection(electionName); 
     setIsDropdownOpen(false);
   };
-
-  const [selectedElection, setSelectedElection] = useState('');
-  
+  const handleLogoClick = () => {
+    setHighestElectionAsSelected(electionOptions);
+  };
 
   return (
     <div className='font-sans relative'>
-      <div className='bg-neon-green absolute font-bold text-blue text-center rounded-b-lg opacity-70 flex place-content-center w-[50%] md2:w-[55%] ml-[25%] md2:ml-[22.5%] md2:h-[4vh] max-h-[8vh] text-sm md2:text-xl'>
+      <div className='bg-white absolute font-bold text-blue text-center rounded-b-lg  flex place-content-center w-[50%] 
+       md2:w-[44%] ml-[25%] md2:ml-[28%] xl:w-[30%] xl:ml-[35%] md2:h-[4vh] max-h-[8vh] text-sm md:text-base'>
         ATENÇÃO: ESTE É UM PROTÓTIPO EXPERIMENTAL
       </div>
 
       <div className='bg-yellow h-[1vh]'></div>
       <div className='bg-blue-light h-[1vh]'></div>
       <div className='bg-blue h-[5vh]'></div>
-      <div className="flex xl:gap-[45vw] xs:gap-[10vw] md:gap-[15vw] p-2 font-semibold relative bg-white gap-0">
+      <div className="flex xl:gap-[35vw] xs:gap-[10vw] md:gap-[15vw] p-2 font-semibold relative bg-white gap-0">
         <div className="xs:min-w-[160px] xs:min-h-[10px] xs:ml-[10vw] ml-0">
-          <Link to="/">
+          <Link to="/" onClick={handleLogoClick}>
             <img src={Logs} className="" alt="logo" />
           </Link>
         </div>

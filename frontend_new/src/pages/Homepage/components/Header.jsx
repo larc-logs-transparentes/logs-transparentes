@@ -19,7 +19,7 @@
     };
 
     return (
-      <div className='overflow-x-hidden h-[70vh] md:h-[65vh] md:min-h-[600px]'>
+      <div className='overflow-x-hidden h-[80vh] md:h-[72vh] md:min-h-[750px]'>
       <div className='relative font-sans'>
         <div className='h-full text-center font-bold flex items-center justify-center relative'>
           <img src={Mascara} className='absolute right-0 h-[105px] w-[909px] top-0 ' alt='Mascara' />
@@ -29,13 +29,14 @@
           </h1>
         </div>
       </div>
-      <div className='w-full bg-white py-4 h-[44vh]'>
+      
+      <div className='w-full  h-[50vh]'>
         <h1 className='text-center md:text-2xl text-lg p-8 relative font-sans font-bold'>
           Como Funciona
         </h1>
-      <div onScroll={handleScroll} className="flex overflow-x-scroll scrollbar-hidden snap-x snap-mandatory md:snap-none md:justify-center md:gap-[5vw] lg:gap-[15vw]">
+      <div onScroll={handleScroll} className="flex overflow-x-scroll scrollbar-hidden snap-x snap-mandatory md:snap-none md:justify-center md:gap-[5vw] lg:gap-[10vw]">
           {slides.map((item, index) => (
-            <div key={index} className="flex-none w-full snap-start md:snap-none md:w-64 min-w-[140px]">
+            <div key={index} className="flex-none w-full snap-start md:snap-none md:w-[20%] min-w-[140px] shadow-2xl rounded-xl mb-12">
               <div className='flex flex-col items-center w-full '>
                 <img src={item.src} alt='Monitor' className='max-h-[160px] min-h-[120px] h-[40vw] md:h-[20vh] md:w-auto '/>
                 <h2 className='text-blue-500 text-center text-blue font-sans font-bold md:text-xl text-lg mt-8'>{item.title}</h2>
@@ -44,7 +45,10 @@
             </div>
           ))}
         </div>
-        <div className='flex justify-center p-2 md:hidden'>
+        <h1 className='text-center  text-md p-8 mt-8 relative font-sans font-bold text-yellow underline'>
+          Saiba Mais
+        </h1>
+        <div className='flex justify-center md:hidden'>
           {slides.map((_, index) => (
             <div 
               key={index} 
