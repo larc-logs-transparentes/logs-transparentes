@@ -85,13 +85,23 @@ jobs:
         docker push ghcr.io/larc-logs-transparentes/tlmanager
 
     - name: Tag Repository logs-transparentes
-      run: |
-        cd logs-transparentes
-        git tag ${{env.IMAGE_TAG}}
-        git push origin ${{env.IMAGE_TAG}}
-
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: 'logs-transparentes',
+              ref: 'refs/tags/${{env.IMAGE_TAG}}',
+              sha: context.sha
+          })
+      
     - name: Tag Repository config
-      run: |
-        cd config
-        git tag ${{env.IMAGE_TAG}}
-        git push origin ${{env.IMAGE_TAG}}
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: 'config',
+              ref: 'refs/tags/${{env.IMAGE_TAG}}',
+              sha: context.sha
+          })
