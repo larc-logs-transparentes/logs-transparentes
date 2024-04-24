@@ -1,0 +1,37 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Docker Image - BU Service
+      run: |
+        cd backend/bu_service
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/bu-service:$(date +%s)
+
+    - name: Docker Image - Backend Public
+      run: |
+        cd backend/public
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/back-pub:$(date +%s)
+
+    - name: Docker Image - Frontend
+      run: |
+        cd frontend_new
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/frontend:$(date +%s)
+
+    - name: Docker Image - TL Manager
+      run: |
+        cd tlmanager
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/tlmanager:$(date +%s)
+
