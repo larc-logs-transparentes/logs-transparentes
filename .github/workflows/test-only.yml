@@ -1,4 +1,4 @@
-name: Generate Tested Images
+name: Test Only
 
 on:
   push:
