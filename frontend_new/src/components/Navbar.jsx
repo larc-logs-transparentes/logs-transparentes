@@ -72,42 +72,55 @@ function Navbar() {
       <div className='bg-yellow h-[1vh]'></div>
       <div className='bg-blue-light h-[1vh]'></div>
       <div className='bg-blue h-[5vh]'></div>
-      <div className="flex xl:gap-[35vw] xs:gap-[10vw] md:gap-[15vw] p-2 font-semibold relative bg-white gap-0">
-        <div className="xs:min-w-[160px] xs:min-h-[10px] xs:ml-[10vw] ml-0">
+      <div className="flex xl:gap-[35vw] xs:gap-[10vw] md:gap-[15vw] p-2 relative bg-white font-bold items-center">
+        <div className="xs:min-w-[160px] xs:min-h-[50px] xs:ml-[10vw]">
           <Link to="/" onClick={handleLogoClick}>
             <img src={Logs} className="" alt="logo" />
           </Link>
         </div>
-        <ul className='hidden md:flex ml-1 gap-[15px] '>
+        <ul className='hidden md:flex gap-[1vw] max-h-[10px] items-center justify-center'>
           <li className='mt-[5px]'>
-            <Link to="/" className='h-[21px]'>
+            <Link to="/" className=''>
               Home
             </Link>
-            <div className='bg-yellow h-[3px]'></div>
           </li>
-          <li className='mt-[5px]  min-w-[120px]'>
-            <a href="#" className='h-[21px]'>
+          <li className='mt-[5px]  overflow-clip '>
+            <a href="#" className=''>
               Dados da Urna
             </a>
           </li>
+          <li className='mt-[5px]  overflow-clip  '>
+            <a className=" cursor-pointer " onClick={handleVerifyClick}>
+              Verificar
+            </a>
+          </li>
+          <li className='mt-[5px] overflow-clip '>
+            <a href="#" className=''>
+              Dados por Sessões
+            </a>
+          </li>
+          <li className='mt-[5px]  overflow-clip '>
+            <a href="#" className=''>
+              Resultados USP
+            </a>
+          </li>
           <li className='mt-[5px] relative'>
-          <div onClick={toggleDropdown} className='cursor-pointer flex items-center h-[21px] mt-[2px]'>
+
+          <div onClick={toggleDropdown} className='cursor-pointer flex items-center max-h-[50px]'>
               {selectedElection ? `Eleições - ${selectedElection}` : 'Eleições'}
               <ExpandMoreIcon className='ml-4' style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0)' }}/>
             </div>
             {isDropdownOpen && (
               <ul className="absolute bg-white border rounded max-h-[300%] overflow-auto custom-scrollbar z-30">
                 {electionOptions.map((option, index) => (
-                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[6vw]' onClick={() => handleElectionClick(option)}>
+                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[12vw]' onClick={() => handleElectionClick(option)}>
                     {convertElectionIdToName(option)}
                   </li>
                 ))}
               </ul>
             )}
           </li>
-          <button className="rounded-full bg-yellow px-2 h-[37px] w-[91px]" onClick={handleVerifyClick}>
-            Verificar
-          </button>
+
         </ul>
         <div className="md:hidden w-[10vw]">
         </div>

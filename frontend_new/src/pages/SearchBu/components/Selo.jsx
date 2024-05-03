@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Correto from '../../../assets/Correto.svg';
+import Incorreto from '../../../assets/Incorreto.svg';
 import { verifySingleData } from '../../../services/verifications.js';
 import Certificate from './Certificate';
-import ErrorBu from './ErrorBu'; // Import the ErrorBu component
+import ErrorBu from './ErrorBu'; 
 
 export default function Selo({ id }) {
   const [isProofTrue, setIsProofTrue] = useState("(loading...)");
   const [isCertificateModalOpen, setIsCertificateModalOpen] = useState(false);
-  const [isErrorBuModalOpen, setIsErrorBuModalOpen] = useState(false); // New state for ErrorBu modal
+  const [isErrorBuModalOpen, setIsErrorBuModalOpen] = useState(false); 
 
   useEffect(() => {
     const run = async () => {
@@ -31,7 +32,7 @@ export default function Selo({ id }) {
       <div onClick={handleModalToggle} className="cursor-pointer">
         <p>
           <img
-            src={isProofTrue === 'True' ? Correto : 'False'} 
+            src={isProofTrue === 'True' ? Correto : Incorreto} 
             alt={isProofTrue === 'True' ? "Verificação Correta" : "Erro na Verificação"}
             className=""
           />

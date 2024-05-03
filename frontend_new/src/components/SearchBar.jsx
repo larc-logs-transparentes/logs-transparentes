@@ -124,12 +124,16 @@ function SearchBar() {
       .catch(error => console.error(error));
   };
   
+  const isHomepage = location.pathname === '/' || /^\d+$/.test(location.pathname.substring(1));
+  
   return (
     
-    <div className='font-sans relative z-10 '>
-      <div className='flex flex-col bg-blue md2:min-h-[234px] min-h-[429px] h-[13.5vh] place-content-center '>
-        <p className='text-white mt-[22px] text-center text-2xl'>Buscar dados por seções</p>
-        <p className='text-white mt-[22px] text-center text-2xl '>Confira os dados eleitorais armazenados pela USP.</p>
+    <div className='font-sans relative z-20 '>
+      <div className='flex flex-col bg-blue md2:min-h-[254px] min-h-[429px] h-[13.5vh] place-content-center '>
+        <p className='text-white mt-[22px] text-center text-3xl'>Buscar dados por seções</p>
+        {isHomepage && (
+          <p className='text-white mt-[22px] text-center text-2xl'>Confira os dados eleitorais armazenados pela USP.</p>
+        )}
         <ul className='flex flex-col md2:flex-row md2:gap-4 mt-[16px] gap-4 items-center justify-center text-base'>
         <div>
             <p className='text-white text-sm'>Estado</p>

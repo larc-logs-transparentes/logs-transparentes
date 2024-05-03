@@ -84,7 +84,7 @@ function SearchBarUSP() {
   };
 
   return (
-    <div className='font-sans relative bg-white z-10 '>
+    <div className='font-sans relative z-10 bg-white '>
       <div className='flex flex-col md2:min-h-[234px] min-h-[429px] h-[13.5vh] place-content-center '>
         <p className='text-blue mt-[22px] text-center text-2xl font-bold'>Conferir o resultado usando BUs verificados pela USP </p>
         <p className='text-blue mt-[22px] text-center text-2xl '>Calcule você mesmo o resultado da eleição.</p>

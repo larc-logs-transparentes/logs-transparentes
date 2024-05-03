@@ -8,9 +8,9 @@
   function Header() {
     const [activeSlide, setActiveSlide] = useState(0);
     const slides = [
-      { src: Imutavel, title: 'Imutável', desc: 'Armazenamos os dados da eleição em logs transparentes, uma estrutura à prova de manipulações' },
-      { src: Verificacao, title: 'Verificável', desc: 'Os eleitores verificam os dados individualmente, e os monitores verificam os dados como um todo' },
-      { src: Distribuido, title: 'Distribuído', desc: 'Você pode escolher qualquer monitor para enviar suas verificações' }
+      { src: Imutavel, title: 'Imutável', desc: 'rmazenamos dos dados das eleições em logs imutáveis e transparentes, à prova de manipulações' },
+      { src: Verificacao, title: 'Verificável', desc: 'Confira você mesmo os dados do TSE e calcule o resultado da eleição' },
+      { src: Distribuido, title: 'Distribuído', desc: 'Qualquer entidade pode monitorar o nosso trabalho e o do TSE' }
     ];
 
     const handleScroll = (e) => {
@@ -45,9 +45,10 @@
             </div>
           ))}
         </div>
-        <h1 className='text-center  text-md p-8 mt-8 relative font-sans font-bold text-yellow underline'>
-          Saiba Mais
-        </h1>
+        <div className='text-center  text-md p-8 mt-8 relative font-sans font-bold text-black underline'>
+        <button className="rounded-full bg-yellow px-2 h-[40px] w-[130px]">Saiba Mais</button>
+        </div>
+        
         <div className='flex justify-center md:hidden'>
           {slides.map((_, index) => (
             <div 
