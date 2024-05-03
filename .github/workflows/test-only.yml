@@ -1,0 +1,70 @@
+name: Test Only
+
+on:
+  push:
+    branches-ignore: [ "main" ]
+
+env:
+  IMAGE_TAG: gh-${{github.run_number}}
+
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download logs-transparentes source 
+      uses: actions/checkout@v4
+      with:
+        repository: 'larc-logs-transparentes/logs-transparentes'
+        path: 'logs-transparentes'
+
+    - name: Docker Image - BU Service
+      run: |
+        cd logs-transparentes/backend/bu_service
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}}
+
+    - name: Docker Image - Backend Public
+      run: |
+        cd logs-transparentes/backend/public
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}}
+
+    - name: Docker Image - Frontend
+      run: |
+        cd logs-transparentes/frontend_new
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}}
+
+    - name: Docker Image - TL Manager
+      run: |
+        cd logs-transparentes/tlmanager
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}}
+
+    - name: Download config source
+      uses: actions/checkout@v4
+      with:
+        repository: 'larc-logs-transparentes/config'
+        path: 'config'
+
+    - name: Run Docker containers
+      run: |
+        cd config
+        docker network rm -f logst
+        docker network create logst
+        docker run --rm -d -p 27017:27017 -v ./hom/mongo.init.js:/docker-entrypoint-initdb.d/mongo.init.js -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=1234 --name mongo-logst --hostname mongo-logst --network logst mongo:6.0.14
+        docker run --rm -d -p 9090:9090 --network logst --name bu-service -e MONGO_URL="mongodb://buuser:bupassword@mongo-logst/bu_service" -e TL_MANAGER_URL="http://tlmanager:8000" -e TREE_NAME_PREFIX="eleicao_" -e TREE_DEFAULT_COMMITMENT_SIZE=8 --hostname bu-service ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}}
+        docker run --rm -d -p 8080:8080 --network logst --name back-pub -v ./hom/backend.public.config.json:/app/src/config.json --hostname back-pub ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}}
+        docker run --rm -d -p 8000:8000 --network logst --name tlmanager -e URL="mongodb://tluser:tlpassword@mongo-logst:27017/tlmanager" --hostname tlmanager ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}}
+
+    - name: Await system start ...
+      run: sleep 10
+      
+    - name: Run tests
+      run: |
+        cd config/hom/tests
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/tests:${{env.IMAGE_TAG}}
+        docker run --rm --name logst-test --network host ghcr.io/larc-logs-transparentes/tests:${{env.IMAGE_TAG}} pytest
+
+    - name: Stop containers
+      run: docker container stop tlmanager back-pub bu-service mongo-logst

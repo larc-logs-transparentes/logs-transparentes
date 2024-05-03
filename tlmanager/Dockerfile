@@ -16,6 +16,6 @@ COPY config /app/config
 COPY main.py /app
 COPY requirements.txt /app
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 ENTRYPOINT [ "uvicorn", "main:app", "--host", "0.0.0.0" ]
