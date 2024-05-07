@@ -58,8 +58,16 @@ def db_get_all_state():
                 s['hashes'] = _file['hashes'] + s['hashes']
     return state
 
-def db_get_all_global_tree_roots():
-    roots = database['global_tree_roots'].find({}, sort=[('tree_size', 1)])
+def db_get_all_global_tree_roots(initial_root_value=None):
+    if initial_root_value:
+        root = database['global_tree_roots'].find_one({'value': initial_root_value})
+        if not root:
+            return None
+        initial_tree_size = root['tree_size']
+    else:
+        initial_tree_size = 0
+
+    roots = database['global_tree_roots'].find({'tree_size': {'$gte': initial_tree_size}}, sort=[('tree_size', 1)])
     roots = list(roots)
     for root in roots:
         del root['_id']
