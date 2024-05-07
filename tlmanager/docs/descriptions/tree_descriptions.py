@@ -263,10 +263,12 @@ localhost:8000/global-tree/all-leaf-data
 
 TREE_ALL_ROOT_GLOBAL_TREE_DESCRIPTION = """
 Get the history of all the roots of the global tree, sorted by tree size.
+If an initial root value is specified, the roots will be returned starting from the root with the specified value.
 
 ### Example
 ```
 localhost:8000/global-tree/all-roots
+localhost:8000/global-tree/all-roots?initial_root_value=c0cd15d758e87172bee43b4706bbf80dc364084216a9bccfea92b9cc00543d35
 ```
 
 ### Response
@@ -283,7 +285,12 @@ localhost:8000/global-tree/all-roots
         }, 
         ...
     ]
-}
+} // if success
+
+{
+    "status": "error",
+    "message": "No roots found"
+} // if no roots are found
 ```
 """
 
