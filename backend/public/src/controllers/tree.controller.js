@@ -29,9 +29,11 @@ router.get("/tree-root", async (req, res) => {
 })
 
 router.get("/all-roots-global-tree", async (req, res) => {
+  const initial_root_value = req.query.initial_root_value
+
   console.info(`[tree.controller] GET all-roots-global-tree`)
 
-  const response = await tlmanager_adapter.getAllRoots()
+  const response = await tlmanager_adapter.getAllRoots(initial_root_value)
   res.json(response)
 })
 

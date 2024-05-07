@@ -35,8 +35,11 @@ exports.getTreeRoot = (tree_name) => {
     })
 }
 
-exports.getAllRoots = () => {
-  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/global-tree/all-roots`)
+exports.getAllRoots = (initial_root_value) => {
+  let url = `${tlmanagerHostname}:${tlmanagerPort}/global-tree/all-roots`
+  url = initial_root_value ? url.concat(`?initial_root_value=${initial_root_value}`) : url
+
+  return axios.get(url)
     .then(res => {
       console.log(res.data)
       return res.data
