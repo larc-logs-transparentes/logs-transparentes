@@ -43,7 +43,7 @@ jobs:
         cd logs-transparentes/frontend_new
         docker buildx build --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} \
         --output "type=image,push=false" \
-        --platform linux/amd64,linux/arm64 .
+        --platform linux/amd64 .
 
     - name: Docker Image - TL Manager
       run: |
