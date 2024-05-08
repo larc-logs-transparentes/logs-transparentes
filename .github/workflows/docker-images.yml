@@ -87,6 +87,38 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Generate other images for BU Service
+      run: |
+        cd logs-transparentes/backend/bu_service
+        docker buildx build \
+        --tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}} \
+        --platform linux/amd64,linux/arm64 \
+        --output "type=image,push=false" .
+
+    - name: Generate other images for Backend Public
+      run: |
+        cd logs-transparentes/backend/public
+        docker buildx build \
+        --tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}} \
+        --platform linux/amd64 \
+        --output "type=image,push=false" .
+
+    - name: Generate other images for Frontend
+      run: |
+        cd logs-transparentes/frontend_new
+        docker buildx build \
+        --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} \
+        --platform linux/amd64 \
+        --output "type=image,push=false" .
+
+    - name: Generate other images for TL Manager
+      run: |
+        cd logs-transparentes/tlmanager
+        docker buildx build \
+        --tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}} \
+        --platform linux/amd64,linux/arm64 \
+        --output "type=image,push=false" .
+
     - name: Publish BU Service
       run: |
         cd logs-transparentes/backend/bu_service
@@ -95,7 +127,7 @@ jobs:
         --tag ghcr.io/larc-logs-transparentes/bu-service:latest \
         --platform linux/amd64,linux/arm64 \
         --push .
-
+  
     - name: Publish Backend Public
       run: |
         cd logs-transparentes/backend/public
@@ -104,7 +136,7 @@ jobs:
         --tag ghcr.io/larc-logs-transparentes/back-pub:latest \
         --platform linux/amd64 \
         --push .
-
+  
     - name: Publish Frontend
       run: |
         cd logs-transparentes/frontend_new
@@ -113,7 +145,7 @@ jobs:
         --tag ghcr.io/larc-logs-transparentes/frontend:latest \
         --platform linux/amd64 \
         --push .
-
+  
     - name: Publish TL Manager
       run: |
         cd logs-transparentes/tlmanager
@@ -122,7 +154,7 @@ jobs:
         --tag ghcr.io/larc-logs-transparentes/tlmanager:latest \
         --platform linux/amd64,linux/arm64 \
         --push .
-
+  
     - name: Tag Repository logs-transparentes
       uses: actions/github-script@v6
       with:
