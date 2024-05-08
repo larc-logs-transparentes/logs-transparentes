@@ -21,25 +21,35 @@ jobs:
         repository: 'larc-logs-transparentes/logs-transparentes'
         path: 'logs-transparentes'
 
+    - name: install buildx
+      id: buildx
+      uses: crazy-max/ghaction-docker-buildx@v3
+      with:
+        buildx-version: latest
+
     - name: Docker Image - BU Service
       run: |
         cd logs-transparentes/backend/bu_service
-        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}}
+        docker buildx build --tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}} \
+        --platform linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64 .
 
     - name: Docker Image - Backend Public
       run: |
         cd logs-transparentes/backend/public
-        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}}
+        docker buildx build --tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}} \
+        --platform linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64 .
 
     - name: Docker Image - Frontend
       run: |
         cd logs-transparentes/frontend_new
-        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}}
+        docker buildx build --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} \
+        --platform linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64 .
 
     - name: Docker Image - TL Manager
       run: |
         cd logs-transparentes/tlmanager
-        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}}
+        docker buildx build --tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}} \
+        --platform linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64 .
 
     - name: Download config source
       uses: actions/checkout@v4
