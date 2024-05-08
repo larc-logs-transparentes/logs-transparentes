@@ -28,28 +28,28 @@ jobs:
       run: |
         cd logs-transparentes/backend/bu_service
         docker buildx build --tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}} \
-        --output "type=image,push=false" \
+        --output "type=docker,push=false" \
         --platform linux/amd64,linux/arm64 .
 
     - name: Docker Image - Backend Public
       run: |
         cd logs-transparentes/backend/public
         docker buildx build --tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}} \
-        --output "type=image,push=false" \
+        --output "type=docker,push=false" \
         --platform linux/amd64 .
 
     - name: Docker Image - Frontend
       run: |
         cd logs-transparentes/frontend_new
         docker buildx build --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} \
-        --output "type=image,push=false" \
+        --output "type=docker,push=false" \
         --platform linux/amd64 .
 
     - name: Docker Image - TL Manager
       run: |
         cd logs-transparentes/tlmanager
         docker buildx build --tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}} \
-        --output "type=image,push=false" \
+        --output "type=docker,push=false" \
         --platform linux/amd64,linux/arm64 .
 
     - name: Download config source
