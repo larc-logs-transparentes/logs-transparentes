@@ -87,20 +87,29 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Generate and Publish all images
+    - name: Publish BU Service
       run: |
         cd logs-transparentes/backend/bu_service
         docker buildx build --tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}} \
         --output "type=image,push=true" \
         --platform linux/amd64,linux/arm64 .
+
+    - name: Publish Backend Public
+      run: |
         cd logs-transparentes/backend/public
         docker buildx build --tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}} \
         --output "type=image,push=true" \
         --platform linux/amd64 .
+
+    - name: Publish Frontend
+      run: |
         cd logs-transparentes/frontend_new
         docker buildx build --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} \
         --output "type=image,push=true" \
         --platform linux/amd64 .
+
+    - name: Publish TL Manager
+      run: |
         cd logs-transparentes/tlmanager
         docker buildx build --tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}} \
         --output "type=image,push=true" \
