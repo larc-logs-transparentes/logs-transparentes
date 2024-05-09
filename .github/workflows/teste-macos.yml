@@ -1,4 +1,4 @@
-name: Generate Tested Images
+name: Teste-MacOS
 
 on:
   push:
@@ -25,7 +25,7 @@ jobs:
           brew install colima
           brew install --cask docker
           brew services start colima
-          #export DOCKER_HOST=unix:///$HOME/.colima/docker.sock
+          export DOCKER_HOST=unix:///$HOME/.colima/docker.sock
           #brew install --cask docker
           #brew services restart colima
           # For testcontainers to find the Colima socket
