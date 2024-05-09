@@ -24,8 +24,9 @@ jobs:
         run: |
           brew install colima
           brew install docker
+          brew install --cask virtualbox
           brew services start colima
-          export DOCKER_HOST=unix:///$HOME/.colima/docker.sock
+          #export DOCKER_HOST=unix:///$HOME/.colima/docker.sock
           #brew install --cask docker
           #brew services restart colima
           # For testcontainers to find the Colima socket
