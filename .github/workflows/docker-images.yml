@@ -21,36 +21,25 @@ jobs:
         repository: 'larc-logs-transparentes/logs-transparentes'
         path: 'logs-transparentes'
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-
     - name: Docker Image - BU Service
       run: |
         cd logs-transparentes/backend/bu_service
-        docker buildx build --tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}} \
-        --output "type=docker" \
-        --platform linux/amd64 .
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}}
 
     - name: Docker Image - Backend Public
       run: |
         cd logs-transparentes/backend/public
-        docker buildx build --tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}} \
-        --output "type=docker" \
-        --platform linux/amd64 .
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}}
 
     - name: Docker Image - Frontend
       run: |
         cd logs-transparentes/frontend_new
-        docker buildx build --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} \
-        --output "type=docker" \
-        --platform linux/amd64 .
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}}
 
     - name: Docker Image - TL Manager
       run: |
         cd logs-transparentes/tlmanager
-        docker buildx build --tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}} \
-        --output "type=docker" \
-        --platform linux/amd64 .
+        docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}}
 
     - name: Download config source
       uses: actions/checkout@v4
@@ -87,74 +76,17 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Generate other images for BU Service
+    - name: Publish images to ghcr.io
       run: |
-        cd logs-transparentes/backend/bu_service
-        docker buildx build \
-        --tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}} \
-        --platform linux/amd64,linux/arm64 \
-        --output "type=image,push=false" .
+        docker tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/bu-service:latest
+        docker push ghcr.io/larc-logs-transparentes/bu-service
+        docker tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/back-pub:latest
+        docker push ghcr.io/larc-logs-transparentes/back-pub
+        docker tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/frontend:latest
+        docker push ghcr.io/larc-logs-transparentes/frontend
+        docker tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/tlmanager:latest
+        docker push ghcr.io/larc-logs-transparentes/tlmanager
 
-    - name: Generate other images for Backend Public
-      run: |
-        cd logs-transparentes/backend/public
-        docker buildx build \
-        --tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}} \
-        --platform linux/amd64 \
-        --output "type=image,push=false" .
-
-    - name: Generate other images for Frontend
-      run: |
-        cd logs-transparentes/frontend_new
-        docker buildx build \
-        --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} \
-        --platform linux/amd64 \
-        --output "type=image,push=false" .
-
-    - name: Generate other images for TL Manager
-      run: |
-        cd logs-transparentes/tlmanager
-        docker buildx build \
-        --tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}} \
-        --platform linux/amd64,linux/arm64 \
-        --output "type=image,push=false" .
-
-    - name: Publish BU Service
-      run: |
-        cd logs-transparentes/backend/bu_service
-        docker buildx build \
-        --tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}} \
-        --tag ghcr.io/larc-logs-transparentes/bu-service:latest \
-        --platform linux/amd64,linux/arm64 \
-        --push .
-  
-    - name: Publish Backend Public
-      run: |
-        cd logs-transparentes/backend/public
-        docker buildx build \
-        --tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}} \
-        --tag ghcr.io/larc-logs-transparentes/back-pub:latest \
-        --platform linux/amd64 \
-        --push .
-  
-    - name: Publish Frontend
-      run: |
-        cd logs-transparentes/frontend_new
-        docker buildx build \
-        --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} \
-        --tag ghcr.io/larc-logs-transparentes/frontend:latest \
-        --platform linux/amd64 \
-        --push .
-  
-    - name: Publish TL Manager
-      run: |
-        cd logs-transparentes/tlmanager
-        docker buildx build \
-        --tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}} \
-        --tag ghcr.io/larc-logs-transparentes/tlmanager:latest \
-        --platform linux/amd64,linux/arm64 \
-        --push .
-  
     - name: Tag Repository logs-transparentes
       uses: actions/github-script@v6
       with:
@@ -165,4 +97,53 @@ jobs:
               ref: 'refs/tags/${{env.IMAGE_TAG}}',
               sha: context.sha
           })
-      
+  
+
+  publish-macos:
+    runs-on: macOS-latest
+    needs: build
+    
+    steps:
+      - name: Download logs-transparentes source 
+        uses: actions/checkout@v4
+        with:
+          repository: 'larc-logs-transparentes/logs-transparentes'
+          path: 'logs-transparentes'
+  
+      - name: Docker MacOS Image - BU Service
+        run: |
+          cd logs-transparentes/backend/bu_service
+          docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}}
+  
+      - name: Docker MacOS Image - Backend Public
+        run: |
+          cd logs-transparentes/backend/public
+          docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}}
+  
+      - name: Docker MacOS Image - Frontend
+        run: |
+          cd logs-transparentes/frontend_new
+          docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}}
+  
+      - name: Docker MacOS Image - TL Manager
+        run: |
+          cd logs-transparentes/tlmanager
+          docker build . --file Dockerfile --tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish MacOS images to ghcr.io
+        run: |
+          docker tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/bu-service:latest
+          docker push ghcr.io/larc-logs-transparentes/bu-service
+          docker tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/back-pub:latest
+          docker push ghcr.io/larc-logs-transparentes/back-pub
+          docker tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/frontend:latest
+          docker push ghcr.io/larc-logs-transparentes/frontend
+          docker tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/tlmanager:latest
+          docker push ghcr.io/larc-logs-transparentes/tlmanager
