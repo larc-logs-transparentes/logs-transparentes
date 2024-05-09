@@ -23,8 +23,7 @@ jobs:
       - name: Install Docker
         run: |
           brew install colima
-          brew install docker
-          brew install --cask virtualbox
+          brew install --cask docker
           brew services start colima
           #export DOCKER_HOST=unix:///$HOME/.colima/docker.sock
           #brew install --cask docker
