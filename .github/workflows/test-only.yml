@@ -2,7 +2,7 @@ name: Test Only
 
 on:
   push:
-    branches-ignore: [ "main" ]
+    branches-ignore: [ "main", "docker-macos" ]
 
 env:
   IMAGE_TAG: gh-${{github.run_number}}
