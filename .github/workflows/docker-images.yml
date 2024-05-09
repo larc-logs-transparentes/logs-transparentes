@@ -118,8 +118,8 @@ jobs:
           #brew services restart colima
           # For testcontainers to find the Colima socket
           # https://github.com/abiosoft/colima/blob/main/docs/FAQ.md#cannot-connect-to-the-docker-daemon-at-unixvarrundockersock-is-the-docker-daemon-running
-          #sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
-          docker context use colima
+          sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
+          #docker context use colima
     
       - name: Docker MacOS Image - BU Service
         run: |
