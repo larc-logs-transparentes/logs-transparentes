@@ -79,13 +79,13 @@ jobs:
     - name: Publish images to ghcr.io
       run: |
         docker tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/bu-service:latest
-        docker push ghcr.io/larc-logs-transparentes/bu-service
+        docker push --all-tags ghcr.io/larc-logs-transparentes/bu-service
         docker tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/back-pub:latest
-        docker push ghcr.io/larc-logs-transparentes/back-pub
+        docker push --all-tags ghcr.io/larc-logs-transparentes/back-pub
         docker tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/frontend:latest
-        docker push ghcr.io/larc-logs-transparentes/frontend
+        docker push --all-tags ghcr.io/larc-logs-transparentes/frontend
         docker tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/tlmanager:latest
-        docker push ghcr.io/larc-logs-transparentes/tlmanager
+        docker push --all-tags ghcr.io/larc-logs-transparentes/tlmanager
 
     - name: Tag Repository logs-transparentes
       uses: actions/github-script@v6
@@ -115,11 +115,11 @@ jobs:
           brew install colima
           brew services start colima
           brew install --cask docker
-          brew services restart colima
+          #brew services restart colima
           # For testcontainers to find the Colima socket
           # https://github.com/abiosoft/colima/blob/main/docs/FAQ.md#cannot-connect-to-the-docker-daemon-at-unixvarrundockersock-is-the-docker-daemon-running
           #sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
-          #docker context use colima
+          docker context use colima
     
       - name: Docker MacOS Image - BU Service
         run: |
@@ -151,10 +151,10 @@ jobs:
       - name: Publish MacOS images to ghcr.io
         run: |
           docker tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/bu-service:latest
-          docker push ghcr.io/larc-logs-transparentes/bu-service
+          docker push --all-tags ghcr.io/larc-logs-transparentes/bu-service
           docker tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/back-pub:latest
-          docker push ghcr.io/larc-logs-transparentes/back-pub
+          docker push --all-tags ghcr.io/larc-logs-transparentes/back-pub
           docker tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/frontend:latest
-          docker push ghcr.io/larc-logs-transparentes/frontend
+          docker push --all-tags ghcr.io/larc-logs-transparentes/frontend
           docker tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}} ghcr.io/larc-logs-transparentes/tlmanager:latest
-          docker push ghcr.io/larc-logs-transparentes/tlmanager
+          docker push --all-tags ghcr.io/larc-logs-transparentes/tlmanager
