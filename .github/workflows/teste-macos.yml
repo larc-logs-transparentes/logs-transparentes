@@ -25,12 +25,12 @@ jobs:
           brew install colima
           brew install --cask docker
           brew services start colima
-          export DOCKER_HOST=unix:///$HOME/.colima/docker.sock
+          #export DOCKER_HOST=unix:///$HOME/.colima/docker.sock
           #brew install --cask docker
           #brew services restart colima
           # For testcontainers to find the Colima socket
           # https://github.com/abiosoft/colima/blob/main/docs/FAQ.md#cannot-connect-to-the-docker-daemon-at-unixvarrundockersock-is-the-docker-daemon-running
-          #sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
+          sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
           #docker context use colima
           docker ps -a
           docker info
