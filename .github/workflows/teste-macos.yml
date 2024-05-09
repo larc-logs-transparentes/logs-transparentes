@@ -11,7 +11,7 @@ env:
 jobs:
 
   publish-macos:
-    runs-on: macOS-latest
+    runs-on: macOS-13
     
     steps:
       - name: Download logs-transparentes source 
@@ -19,22 +19,10 @@ jobs:
         with:
           repository: 'larc-logs-transparentes/logs-transparentes'
           path: 'logs-transparentes'
-  
-      - name: Install Docker
-        run: |
-          brew install colima
-          brew install --cask docker
-          brew services start colima
-          #export DOCKER_HOST=unix:///$HOME/.colima/docker.sock
-          #brew install --cask docker
-          #brew services restart colima
-          # For testcontainers to find the Colima socket
-          # https://github.com/abiosoft/colima/blob/main/docs/FAQ.md#cannot-connect-to-the-docker-daemon-at-unixvarrundockersock-is-the-docker-daemon-running
-          sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
-          #docker context use colima
-          docker ps -a
-          docker info
-    
+
+      - name: Setup Docker on macOS
+        uses: douglascamata/setup-docker-macos-action@v1-alpha
+         
       - name: Docker MacOS Image - BU Service
         run: |
           cd logs-transparentes/backend/bu_service
