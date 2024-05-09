@@ -79,13 +79,9 @@ jobs:
 
     - name: Publish images to ghcr.io
       run: |
-        docker manifest annotate --arch amd64 --os linux ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}}
         docker push ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}}
-        docker manifest annotate --arch amd64 --os linux ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}}
         docker push ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}}
-        docker manifest annotate --arch amd64 --os linux ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}}
         docker push ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}}
-        docker manifest annotate --arch amd64 --os linux ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}}
         docker push ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}}
 
     - name: Tag Repository logs-transparentes
@@ -143,13 +139,9 @@ jobs:
 
       - name: Publish MacOS images to ghcr.io
         run: |
-          docker manifest annotate --arch arm64 --os linux ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_ARM_TAG}}
           docker push ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_ARM_TAG}}
-          docker manifest annotate --arch arm64 --os linux ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_ARM_TAG}}
           docker push ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_ARM_TAG}}
-          docker manifest annotate --arch arm64 --os linux ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_ARM_TAG}}
           docker push ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_ARM_TAG}}
-          docker manifest annotate --arch arm64 --os linux ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_ARM_TAG}}
           docker push ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_ARM_TAG}}
 
 
@@ -171,6 +163,8 @@ jobs:
           ghcr.io/larc-logs-transparentes/bu-service:latest \
           --amend ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_ARM_TAG}} \
           --amend ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}}
+          docker manifest annotate --arch amd64 --os linux ghcr.io/larc-logs-transparentes/bu-service:latest ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}}
+          docker manifest annotate --arch arm64 --os linux ghcr.io/larc-logs-transparentes/bu-service:latest ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_ARM_TAG}}
           docker manifest push ghcr.io/larc-logs-transparentes/bu-service:latest
 
       - name: Create Docker manifest - Backend Public
@@ -179,6 +173,8 @@ jobs:
           ghcr.io/larc-logs-transparentes/back-pub:latest \
           --amend ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_ARM_TAG}} \
           --amend ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}}
+          docker manifest annotate --arch amd64 --os linux ghcr.io/larc-logs-transparentes/back-pub:latest ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}}
+          docker manifest annotate --arch arm64 --os linux ghcr.io/larc-logs-transparentes/back-pub:latest ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_ARM_TAG}}
           docker manifest push ghcr.io/larc-logs-transparentes/back-pub:latest
 
       - name: Create Docker manifest - Frontend
@@ -187,6 +183,8 @@ jobs:
           ghcr.io/larc-logs-transparentes/frontend:latest \
           --amend ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_ARM_TAG}} \
           --amend ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}}
+          docker manifest annotate --arch amd64 --os linux ghcr.io/larc-logs-transparentes/frontend:latest ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}}
+          docker manifest annotate --arch arm64 --os linux ghcr.io/larc-logs-transparentes/frontend:latest ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_ARM_TAG}}
           docker manifest push ghcr.io/larc-logs-transparentes/frontend:latest
 
       - name: Create Docker manifest - TL Manager
@@ -195,5 +193,7 @@ jobs:
           ghcr.io/larc-logs-transparentes/tlmanager:latest \
           --amend ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_ARM_TAG}} \
           --amend ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}}
+          docker manifest annotate --arch amd64 --os linux ghcr.io/larc-logs-transparentes/tlmanager:latest ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}}
+          docker manifest annotate --arch arm64 --os linux ghcr.io/larc-logs-transparentes/tlmanager:latest ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_ARM_TAG}}
           docker manifest push ghcr.io/larc-logs-transparentes/tlmanager:latest
   
