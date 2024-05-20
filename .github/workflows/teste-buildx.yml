@@ -2,7 +2,7 @@ name: Teste Buildx
 
 on:
   push:
-    branches: [ "versao-demo" ]
+    branches: [ "teste-buildx" ]
 
 env:
   IMAGE_TAG: gh-${{github.run_number}}
