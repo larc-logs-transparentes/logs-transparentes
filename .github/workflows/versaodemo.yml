@@ -2,7 +2,7 @@ name: Generate Versao Demo (exp)
 
 on:
   push:
-    branches: [ "versao-demo" ]
+    branches: [ "versao-demo-OLD" ]
 
 env:
   IMAGE_TAG: amd64-gh-${{github.run_number}}
@@ -209,11 +209,11 @@ jobs:
           docker manifest annotate --arch arm64 --os linux --variant v8 ghcr.io/larc-logs-transparentes/tlmanager:latest ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_ARM_TAG}}
           docker manifest push ghcr.io/larc-logs-transparentes/tlmanager:latest
 
-      - name: Create Docker manifest - TL Manager
+      - name: Create Docker manifest - Mongo-Demo
         run: |
           docker manifest create \
-          ghcr.io/larc-logs-transparentes/mongo-dump:latest \
-          --amend ghcr.io/larc-logs-transparentes/mongo-dump:${{env.IMAGE_TAG}}
-          docker manifest annotate --arch amd64 --os linux ghcr.io/larc-logs-transparentes/mongo-dump:latest ghcr.io/larc-logs-transparentes/mongo-dump:${{env.IMAGE_TAG}}
-          docker manifest push ghcr.io/larc-logs-transparentes/mongo-dump:latest
+          ghcr.io/larc-logs-transparentes/mongo-demo:latest \
+          --amend ghcr.io/larc-logs-transparentes/mongo-demo:${{env.IMAGE_TAG}}
+          docker manifest annotate --arch amd64 --os linux ghcr.io/larc-logs-transparentes/mongo-demo:latest ghcr.io/larc-logs-transparentes/mongo-demo:${{env.IMAGE_TAG}}
+          docker manifest push ghcr.io/larc-logs-transparentes/mongo-demo:latest
   
