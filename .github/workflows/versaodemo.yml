@@ -69,8 +69,8 @@ jobs:
 
     - name: Dump Mongo Data to file
       run: |
-        docker exec -it mongo-logst mongodump -u root -p 1234
-        docker cp mongo-logst:/dump /tmp/dump
+        docker exec mongo-logst mongodump -u root -p 1234
+        docker cp mongo-logst:/dump .
 
     - name: Stop containers
       run: docker container stop tlmanager back-pub bu-service mongo-logst
@@ -94,4 +94,4 @@ jobs:
       with:
         name: mongo-dump:${{env.IMAGE_TAG}}
         compression-level: 9
-        path: /tmp/dump
+        path: ./dump
