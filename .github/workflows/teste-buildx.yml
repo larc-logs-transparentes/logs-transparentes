@@ -21,11 +21,14 @@ jobs:
         repository: 'larc-logs-transparentes/logs-transparentes'
         path: 'logs-transparentes'
 
+    - name: Set up QEMU for Docker
+      uses: docker/setup-qemu-action@v3
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Add Multi platform support for Docker buildx
-      run: docker run --privileged --rm tonistiigi/binfmt --install all
+    #- name: Add Multi platform support for Docker buildx
+    #  run: docker run --privileged --rm tonistiigi/binfmt --install all
 
     - name: Docker Image - BU Service
       run: |
