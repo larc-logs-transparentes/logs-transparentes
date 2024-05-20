@@ -92,6 +92,6 @@ jobs:
     - name: Publish mongo db dump to ghcr.io
       uses: actions/upload-artifact@v4
       with:
-        name: mongo-dump:${{env.IMAGE_TAG}}
+        name: mongo-dump
         compression-level: 9
         path: ./dump
