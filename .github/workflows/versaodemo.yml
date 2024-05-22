@@ -2,7 +2,7 @@ name: Generate Versao Demo (exp)
 
 on:
   push:
-    branches: [ "versao-demo" ]
+    branches: [ "versao-demo-teste" ]
 
 env:
   IMAGE_TAG: amd64-gh-${{github.run_number}}
