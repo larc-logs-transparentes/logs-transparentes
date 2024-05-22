@@ -211,6 +211,7 @@ jobs:
 
       - name: Create Docker manifest - BU Utils
         run: |
+          docker manifest create \
           ghcr.io/larc-logs-transparentes/bu-utils:latest \
           --amend ghcr.io/larc-logs-transparentes/bu-utils:${{env.IMAGE_ARM_TAG}} \
           --amend ghcr.io/larc-logs-transparentes/bu-utils:${{env.IMAGE_TAG}}
