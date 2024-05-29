@@ -7,6 +7,7 @@ COPY public /app/public
 COPY package* /app/
 COPY tailwind.config.js /app/
 
+RUN npm install -g npm
 RUN npm install
 RUN npm cache clean --force
 
