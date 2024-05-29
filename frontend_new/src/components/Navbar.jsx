@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuIcon from '@mui/icons-material/Menu';
-import Logs from '../assets/Logs.svg';
+import Logs from '../assets/LogoPTBR.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import '../index.css';
@@ -73,7 +73,7 @@ function Navbar() {
       <div className='bg-blue-light h-[1vh]'></div>
       <div className='bg-blue h-[5vh]'></div>
       <div className="flex xl:gap-[35vw] xs:gap-[10vw] md:gap-[15vw] p-2 relative bg-white font-bold items-center">
-        <div className="xs:min-w-[160px] xs:min-h-[50px] xs:ml-[10vw]">
+        <div className="xs:min-w-[160px] xs:min-h-[50px] xs:ml-[10vw] mt-[1vh]">
           <Link to="/" onClick={handleLogoClick}>
             <img src={Logs} className="" alt="logo" />
           </Link>

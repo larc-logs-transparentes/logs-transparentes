@@ -7,7 +7,7 @@ export async function initPyodide(){
   await pyodide.loadPackage("micropip");
   const micropip = pyodide.pyimport("micropip");
   await pyodide.loadPackage(urls.pyodidePackages);
-  await micropip.install(["pymerkle-logsTransparentes", "requests","setuptools"]);
+  await micropip.install(["pymerkle-logsTransparentes", "requests","setuptools","asn1tools"]);
 
   return pyodide
 }

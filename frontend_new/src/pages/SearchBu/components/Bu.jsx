@@ -66,7 +66,7 @@ function Bu({ onSendToMonitor }) {
       <div className='w-[100%] md2:w-[90vw] md2:min-h-[60vh] justify-center border-2 border-blue-light rounded-2xl p-5 space-y-16'> 
 
         <div className='flex flex-col items-center gap-[20px] md2:flex-row md2:items-center md2:justify-between '>
-          <h1 className='text-blue text-base font-bold'>Boletim de Urna</h1>
+          <h1 className='text-blue text-2xl font-medium'>Boletim de Urna</h1>
           <div className='flex items-center md2:flex-row flex-col gap-6'>
 
             <button onClick={downloadJson} className="rounded-full bg-yellow px-2 h-[37px] w-[102px] font-bold ml-4">Baixar Bu</button>
@@ -140,10 +140,7 @@ function Bu({ onSendToMonitor }) {
           <h1 className='text-gray  text-base font-bold'>Código de identificação MC:</h1>
           <h1 className='text-blue-light  text-base font-bold'>não achei</h1>
         </div>
-        <div className='sm:col-span-1 space-y-2 border-[1px] rounded-xl p-2 border-gray'>
-          <h1 className='text-gray  text-base font-bold'>Resumo da correspondência:</h1>
-          <h1 className='text-blue-light  text-base font-bold'>não achei</h1>
-        </div>
+
       </div>
     </div>
 

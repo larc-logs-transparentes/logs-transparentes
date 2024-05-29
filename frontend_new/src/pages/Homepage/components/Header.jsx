@@ -19,7 +19,7 @@
     };
 
     return (
-      <div className='overflow-x-hidden h-[80vh] md:h-[72vh] md:min-h-[750px]'>
+      <div className='overflow-x-hidden h-[80vh] md:h-[72vh] md:min-h-[780px]'>
       <div className='relative font-sans'>
         <div className='h-full text-center font-bold flex items-center justify-center relative'>
           <img src={Mascara} className='absolute right-0 h-[105px] w-[909px] top-0 ' alt='Mascara' />
@@ -36,7 +36,7 @@
         </h1>
       <div onScroll={handleScroll} className="flex overflow-x-scroll scrollbar-hidden snap-x snap-mandatory md:snap-none md:justify-center md:gap-[5vw] lg:gap-[10vw]">
           {slides.map((item, index) => (
-            <div key={index} className="flex-none w-full snap-start md:snap-none md:w-[20%] min-w-[140px] shadow-2xl rounded-xl mb-12">
+            <div key={index} className="flex-none w-full snap-start md:snap-none md:w-[20%] min-w-[140px] shadow-2xl rounded-xl mb-12 border-bordergray border-[2px] p-6">
               <div className='flex flex-col items-center w-full '>
                 <img src={item.src} alt='Monitor' className='max-h-[160px] min-h-[120px] h-[40vw] md:h-[20vh] md:w-auto '/>
                 <h2 className='text-blue-500 text-center text-blue font-sans font-bold md:text-xl text-lg mt-8'>{item.title}</h2>
