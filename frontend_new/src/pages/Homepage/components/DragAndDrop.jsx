@@ -36,14 +36,13 @@ const DragAndDrop = () => {
     const reader = new FileReader();
     reader.onload = async (event) => {
       const content = event.target.result;
-      const buteste =  await  buParser(content);
+      const buteste = await buParser(content);
       console.log(buteste);
-
     };
     reader.onerror = (error) => {
       console.error('Error reading file:', error);
     };
-    reader.readAsText(file);
+    reader.readAsArrayBuffer(file);
   };
 
   const handleClick = () => { 
