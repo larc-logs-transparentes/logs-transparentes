@@ -58,6 +58,8 @@ function Navbar() {
     setSelectedElection(electionName); 
     setIsDropdownOpen(false);
   };
+
+
   const handleLogoClick = () => {
     setHighestElectionAsSelected(electionOptions);
   };
@@ -82,6 +84,11 @@ function Navbar() {
           <li className='mt-[5px]'>
             <Link to="/" className=''>
               Home
+            </Link>
+          </li>
+          <li className='mt-[5px]  overflow-clip  '>
+            <Link to="/dashboard" className=''>
+              Dashboard
             </Link>
           </li>
           <li className='mt-[5px]  overflow-clip '>
