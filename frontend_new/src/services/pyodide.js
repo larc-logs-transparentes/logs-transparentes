@@ -37,3 +37,10 @@ export async function formatConsistencyProofToPython(allConsistencyProof) {
   }
   return allConsistencyProof;
 }
+export async function PythonTruetoJavascriptTrue(pythonTrue){
+  if (pythonTrue === 'True') {
+    return true;
+  } else {
+    return false;
+  }
+}

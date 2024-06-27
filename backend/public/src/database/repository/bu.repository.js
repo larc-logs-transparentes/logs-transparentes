@@ -30,7 +30,6 @@ exports.findByMerkletreeIndexRange = async (id_eleicao, initial_index, final_ind
 exports.findByInfo = async (UF, zona, secao) => {
     return await repository.findOne({ UF: UF, zona: zona, secao: secao })
     .then((data) => {
-        data._doc.bu = Buffer.from(data.bu, 'base64').toString('base64')
         return data
     })
     .catch((err) => {
