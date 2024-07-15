@@ -6,7 +6,6 @@ def build_local_tree_root_object(tree):
         'value': tree.root.decode('utf-8'),
         'tree_name': tree.tree_name,
         'tree_size': tree.length,
-        'timestamp': datetime.now().isoformat()
     }
 
 def build_global_tree_root_object(global_tree):
