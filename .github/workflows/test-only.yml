@@ -2,7 +2,7 @@ name: Test Only
 
 on:
   push:
-    branches-ignore: [ "main" ]
+    branches-ignore: [ "main", "versao-demo", "teste-buildx" ]
 
 env:
   IMAGE_TAG: gh-${{github.run_number}}

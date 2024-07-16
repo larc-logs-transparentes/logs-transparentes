@@ -74,5 +74,5 @@ async def global_tree_all_leaves():
     return get_global_tree_all_leaves()
 
 @router.get('/global-tree/all-roots', name="/global-tree/all-roots", description=descriptions['global_tree_all_roots'], responses={200: {'model': DTOAllRootsGlobalTree}})
-async def global_tree_all_roots():
-    return get_global_tree_all_roots()
+async def global_tree_all_roots(initial_root_value: str|None = None):
+    return get_global_tree_all_roots(initial_root_value)

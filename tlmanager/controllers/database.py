@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from config.init_database import database, pymongo_errors, gridfs_errors
 
 def db_get_all_global_tree_leaves():
@@ -6,6 +8,7 @@ def db_get_all_global_tree_leaves():
     for leaf in leaves:
         leaves_array.append({
             'index': leaf['index'],
+            'timestamp': leaf['timestamp'],
             'value': leaf['value']
         })
         
@@ -58,8 +61,16 @@ def db_get_all_state():
                 s['hashes'] = _file['hashes'] + s['hashes']
     return state
 
-def db_get_all_global_tree_roots():
-    roots = database['global_tree_roots'].find({}, sort=[('tree_size', 1)])
+def db_get_all_global_tree_roots(initial_root_value=None):
+    if initial_root_value:
+        root = database['global_tree_roots'].find_one({'value': initial_root_value})
+        if not root:
+            return None
+        initial_tree_size = root['tree_size']
+    else:
+        initial_tree_size = 0
+
+    roots = database['global_tree_roots'].find({'tree_size': {'$gte': initial_tree_size}}, sort=[('tree_size', 1)])
     roots = list(roots)
     for root in roots:
         del root['_id']
@@ -68,6 +79,7 @@ def db_get_all_global_tree_roots():
 def db_insert_global_tree_leaf(index, value,  global_tree_root_object):
     database['global_tree_leaves'].insert_one({
         'index': int(index),
+        'timestamp': datetime.now().isoformat(),
         'value': value
     })
     database['global_tree_roots'].insert_one(global_tree_root_object)

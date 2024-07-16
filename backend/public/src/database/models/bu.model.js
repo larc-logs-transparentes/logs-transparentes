@@ -18,4 +18,12 @@ const schema_bu = new mongoose.Schema({
     merkletree_info: { type: Map, of: merkletree_info }
 });
 
+schema_bu.index({ UF:1, zona:1, secao:1 });
+
+schema_bu.index({ eleicoes:1 });
+schema_bu.index({ eleicoes:1, UF:1 });
+schema_bu.index({ eleicoes:1, UF:1, municipio:1 });
+
+schema_bu.index({ "merkletree_info.$**": 1 });
+
 module.exports = { schema_bu }

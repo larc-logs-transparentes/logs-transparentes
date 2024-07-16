@@ -121,8 +121,12 @@ def get_global_tree_root(tree_size=None):
         
     return JSONResponse({'status': 'ok', 'root': db_get_global_tree_root(tree_size)}, status_code=200)
 
-def get_global_tree_all_roots():
-    return JSONResponse({'status': 'ok', 'roots': db_get_all_global_tree_roots()}, status_code=200)
+def get_global_tree_all_roots(initial_root_value=None):
+    roots = db_get_all_global_tree_roots(initial_root_value)
+    if not roots:
+        return JSONResponse({'status': 'error', 'message': 'No roots found'}, status_code=400)
+
+    return JSONResponse({'status': 'ok', 'roots': roots}, status_code=200)
 
 def trees_list():
     return JSONResponse({'status': 'ok', 'trees': list(trees)}, status_code=200)

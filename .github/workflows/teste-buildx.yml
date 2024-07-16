@@ -1,8 +1,8 @@
-name: Generate Tested Images
+name: Teste Buildx
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "teste-buildx" ]
 
 env:
   IMAGE_TAG: gh-${{github.run_number}}
@@ -58,13 +58,6 @@ jobs:
         --output "type=docker" \
         --platform linux/amd64 .
 
-    - name: Docker Image - BU Utils
-      run: |
-        cd logs-transparentes/bu_utils
-        docker buildx build --tag ghcr.io/larc-logs-transparentes/bu-utils:${{env.IMAGE_TAG}} \
-        --output "type=docker" \
-        --platform linux/amd64 .
-  
     - name: Download config source
       uses: actions/checkout@v4
       with:
@@ -132,14 +125,6 @@ jobs:
         --platform linux/amd64,linux/arm64 \
         --output "type=image,push=false" .
 
-    - name: Generate other images for BU Utils
-      run: |
-        cd logs-transparentes/bu_utils
-        docker buildx build \
-        --tag ghcr.io/larc-logs-transparentes/bu-utils:${{env.IMAGE_TAG}} \
-        --platform linux/amd64,linux/arm64 \
-        --output "type=image,push=false" .
-  
     - name: Publish BU Service
       run: |
         cd logs-transparentes/backend/bu_service
@@ -176,15 +161,6 @@ jobs:
         --platform linux/amd64,linux/arm64 \
         --push .
   
-    - name: Publish BU Utils
-      run: |
-        cd logs-transparentes/bu_utils
-        docker buildx build \
-        --tag ghcr.io/larc-logs-transparentes/bu-utils:${{env.IMAGE_TAG}} \
-        --tag ghcr.io/larc-logs-transparentes/bu-utils:latest \
-        --platform linux/amd64,linux/arm64 \
-        --push .
-            
     - name: Tag Repository logs-transparentes
       uses: actions/github-script@v6
       with:

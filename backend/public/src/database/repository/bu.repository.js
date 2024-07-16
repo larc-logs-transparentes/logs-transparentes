@@ -15,7 +15,7 @@ exports.findById = async (id) => {
 }
 
 exports.findByMerkletreeIndexRange = async (id_eleicao, initial_index, final_index) => {
-    return await repository.find({ [ `merkletree_info.${id_eleicao}.index` ]: { $gte: initial_index, $lte: final_index } } )
+    return await repository.find({ [ `merkletree_info.${id_eleicao}.index` ]: { $gte: initial_index, $lte: final_index } }, { _id: 1, UF: 1, zona: 1, secao: 1, bu: 1,  merkletree_info: 1 })
         .then((data) => {
             return data.map((bu) => {
                 bu._doc.bu = Buffer.from(bu.bu, 'base64').toString('base64')
@@ -27,8 +27,8 @@ exports.findByMerkletreeIndexRange = async (id_eleicao, initial_index, final_ind
         })
 }
 
-exports.findByInfo = async (UF, zona, secao) => {
-    return await repository.findOne({ UF: UF, zona: zona, secao: secao })
+exports.findByInfo = async (id_eleicao, UF, zona, secao) => {
+    return await repository.findOne({ UF: UF, zona: zona, secao: secao, eleicoes: id_eleicao })
     .then((data) => {
         data._doc.bu = Buffer.from(data.bu, 'base64').toString('base64')
         return data
