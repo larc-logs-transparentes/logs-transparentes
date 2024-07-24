@@ -15,7 +15,6 @@ FROM python:3.12.2-slim-bullseye
 WORKDIR /app
 
 COPY --from=build-stage /app /app
-COPY --from=build-stage /usr/local/bin/uvicorn /usr/local/bin/uvicorn
 COPY --from=build-stage /usr/local/lib/python3.12 /usr/local/lib/python3.12
 
 ENTRYPOINT [ "python", "populate_db.py"]
