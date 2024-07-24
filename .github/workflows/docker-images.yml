@@ -145,6 +145,7 @@ jobs:
         cd logs-transparentes/backend/bu_service
         docker buildx build \
         --tag ghcr.io/larc-logs-transparentes/bu-service:${{env.IMAGE_TAG}} \
+        --tag ghcr.io/larc-logs-transparentes/bu-service:latest \
         --platform linux/amd64,linux/arm64 \
         --push .
   
@@ -153,6 +154,7 @@ jobs:
         cd logs-transparentes/backend/public
         docker buildx build \
         --tag ghcr.io/larc-logs-transparentes/back-pub:${{env.IMAGE_TAG}} \
+        --tag ghcr.io/larc-logs-transparentes/back-pub:latest \
         --platform linux/amd64,linux/arm64 \
         --push .
   
@@ -161,6 +163,7 @@ jobs:
         cd logs-transparentes/frontend_new
         docker buildx build \
         --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} \
+        --tag ghcr.io/larc-logs-transparentes/frontend:latest \
         --platform linux/amd64,linux/arm64 \
         --push .
   
@@ -169,6 +172,7 @@ jobs:
         cd logs-transparentes/tlmanager
         docker buildx build \
         --tag ghcr.io/larc-logs-transparentes/tlmanager:${{env.IMAGE_TAG}} \
+        --tag ghcr.io/larc-logs-transparentes/tlmanager:latest \
         --platform linux/amd64,linux/arm64 \
         --push .
   
@@ -177,6 +181,7 @@ jobs:
         cd logs-transparentes/bu_utils
         docker buildx build \
         --tag ghcr.io/larc-logs-transparentes/bu-utils:${{env.IMAGE_TAG}} \
+        --tag ghcr.io/larc-logs-transparentes/bu-utils:latest \
         --platform linux/amd64,linux/arm64 \
         --push .
             
