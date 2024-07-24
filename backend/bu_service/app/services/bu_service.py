@@ -12,7 +12,7 @@ from app.adapter.tlmanager_adapter import *
 TREE_NAME_PREFIX = os.getenv('TREE_NAME_PREFIX')
 TREE_DEFAULT_COMMITMENT_SIZE = os.getenv('TREE_DEFAULT_COMMITMENT_SIZE')
 
-conv = asn1tools.compile_files("app/services/bu.asn1")
+conv = asn1tools.compile_files("app/services/static/bu.asn1")
 county_codes = json.load(open("app/services/static/county_codes.json", encoding='utf-8'))
 
 
