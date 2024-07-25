@@ -24,13 +24,11 @@ const FileVerify = ({ closeModal, bu, isTrue, assinaturaHW, assinaturaSW }) => {
         const buInteiroParsed = JSON.parse(bu.bu_json);
         setBuData(buInteiroParsed);
         console.log(assinaturaHW, assinaturaSW);
-        // Extract the desired fields
         setEstado(bu.UF);
         setCidade(bu.municipio);
         setZona(bu.zona);
         setSessao(bu.secao);
 
-        // Correctly access the hash value
         if (bu.merkletree_info && bu.merkletree_info['545']) {
           setBuHash(bu.merkletree_info['545'].hash);
         }

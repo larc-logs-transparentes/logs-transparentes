@@ -112,19 +112,15 @@ const DragAndDrop = () => {
       try {
         const content = event.target.result;
         const assinatura_file = await assinaturaParser(content);
-  
-        // Debugging: Log the entire object and its keys
         console.log("Parsed assinatura file:", assinatura_file);
         console.log("Keys:", Object.keys(assinatura_file));
-  
-        // Attempt to access the fields using correct keys and check for existence
         if (assinatura_file["Assinatura HW"] && assinatura_file["Assinatura HW"].conteudoAutoAssinado) {
           const assinaturaHW = assinatura_file["Assinatura HW"].conteudoAutoAssinado;
           setAssinaturaHW(assinaturaHW);
           console.log("assinaturaHW set:", assinaturaHW);
         } else {
           console.error("Assinatura HW or its conteudoAutoAssinado is undefined or missing");
-          setAssinaturaHW(''); // Handle the absence of this field
+          setAssinaturaHW(''); 
         }
   
         if (assinatura_file["Assinatura SW"] && assinatura_file["Assinatura SW"].conteudoAutoAssinado) {
@@ -133,7 +129,7 @@ const DragAndDrop = () => {
           console.log("assinaturaSW set:", assinaturaSW);
         } else {
           console.error("Assinatura SW or its conteudoAutoAssinado is undefined or missing");
-          setAssinaturaSW(''); // Handle the absence of this field
+          setAssinaturaSW(''); 
         }
   
       } catch (error) {
