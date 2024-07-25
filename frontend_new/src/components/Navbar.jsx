@@ -78,7 +78,7 @@ function Navbar() {
             <img src={Logs} className="" alt="logo" />
           </Link>
         </div>
-        <ul className='hidden md:flex gap-[2vw] max-h-[10px] items-center justify-center'>
+        <ul className='hidden md:flex gap-[2vw] max-h-[10px] items-center justify-center text-center'>
           <li className='mt-[5px]'>
             <Link to="/" className=''>
               Home

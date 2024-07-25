@@ -129,7 +129,7 @@ function SearchBar() {
   return (
     
     <div className='font-sans relative z-20 '>
-      <div className='flex flex-col bg-blue md2:min-h-[254px] min-h-[429px] h-[13.5vh] place-content-center '>
+      <div className='flex flex-col bg-blue md2:min-h-[254px] min-h-[500px] h-[13.5vh] place-content-center '>
         <p className='text-white mt-[22px] text-center text-3xl'>Buscar dados por seções</p>
         {isHomepage && (
           <p className='text-white mt-[22px] text-center text-2xl'>Confira os dados eleitorais armazenados pela USP.</p>

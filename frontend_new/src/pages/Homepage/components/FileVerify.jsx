@@ -5,7 +5,7 @@ import { getBuById } from '../../../endpoints/bu.api';
 import { getAllRoots } from '../../../endpoints/merkletree.api';
 import { useNavigate } from 'react-router-dom';
 
-const FileVerify = ({ closeModal, bu, isTrue }) => {
+const FileVerify = ({ closeModal, bu, isTrue, assinaturaHW, assinaturaSW }) => {
   const [buData, setBuData] = useState(null);
   const [lastRoot, setLastRoot] = useState({ value: '', timestamp: '' });
   const [buHash, setBuHash] = useState('');
@@ -23,7 +23,7 @@ const FileVerify = ({ closeModal, bu, isTrue }) => {
         console.log(bu);
         const buInteiroParsed = JSON.parse(bu.bu_json);
         setBuData(buInteiroParsed);
-
+        console.log(assinaturaHW, assinaturaSW);
         // Extract the desired fields
         setEstado(bu.UF);
         setCidade(bu.municipio);
@@ -111,7 +111,6 @@ const FileVerify = ({ closeModal, bu, isTrue }) => {
             <h1 className='text-blue'>Status:</h1>
             <ul>
               <div>Assinatura:</div>
-              <div>Hash: </div>
               <div>Inclusão: <span className={isTrue ? 'text-neon-green' : 'text-red'}>{isTrue ? 'Verificação Bem Sucedida' : 'Erro'}</span></div>
             </ul>
           </div>
@@ -131,17 +130,13 @@ const FileVerify = ({ closeModal, bu, isTrue }) => {
 
         <div className="">
           <div className="mb-3 border-gray text-gray border-[1px] rounded-2xl p-2 font-medium">
-            <ul className='flex col gap-4'>
-              <h1 className='text-blue'>Assinatura:</h1>
-              <div>0xd034c98af3274ad93f3c8ce944bbc17b11b6aa170c5f097ed98687fa0d</div>
+            <ul className='flex flex-col gap-4'>
+              <h1 className='text-blue'>Assinatura SW:</h1>
+              <div>{assinaturaSW}</div>
+              <h1 className='text-blue'>Assinatura HW:</h1>
+              <div>{assinaturaHW}</div>
             </ul>
             <div>AC Raiz: AC Urna</div>
-          </div>
-
-          <div className="mb-3 text-gray font-medium border-gray border-[1px] rounded-2xl p-2">
-            <h1 className='text-blue'>Hash:</h1>
-            <div>Arquivo enviado: 0xd034c98af3274ad93f3c8ce944bbc17b11b6aa170c5f097ed98687fa0d</div>
-            <div>Arquivo armazenado por nós: 0xd034c98af3274ad93f3c8ce944bbc17b11b6aa170c5f097ed98687fa0d</div>
           </div>
 
           <div className="mb-3 text-gray font-medium border-gray border-[1px] rounded-2xl p-2">

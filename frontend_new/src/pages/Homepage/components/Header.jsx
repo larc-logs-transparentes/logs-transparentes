@@ -19,7 +19,7 @@
     };
 
     return (
-      <div className='overflow-x-hidden h-[80vh] md:h-[72vh] md:min-h-[780px]'>
+      <div className='overflow-x-hidden h-[90vh] md:h-[72vh] md:min-h-[780px]'>
       <div className='relative font-sans'>
         <div className='h-full text-center font-bold flex items-center justify-center relative'>
           <img src={Mascara} className='absolute right-0 h-[105px] w-[909px] top-0 ' alt='Mascara' />
@@ -30,7 +30,7 @@
         </div>
       </div>
       
-      <div className='w-full  h-[50vh]'>
+      <div className='w-full md:h-[50vh]'>
         <h1 className='text-center md:text-2xl text-lg p-8 relative font-sans font-bold'>
           Como Funciona
         </h1>
