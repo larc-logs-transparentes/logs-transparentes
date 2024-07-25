@@ -4,6 +4,8 @@ from docs.models.requests import Tree, Leaf, Commit
 from docs.descriptions.tree_descriptions import descriptions
 from docs.DTOs.tree import *
 import base64
+import os
+from controllers.public_key import *
 
 router = APIRouter()
 

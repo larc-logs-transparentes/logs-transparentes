@@ -12,7 +12,7 @@
         "port": 8000
     },
     "mongodb_config": {
-        "hostname": "mongodb://127.0.0.1",
+        "hostname": "mongodb://buuser:bupassword@127.0.0.1",
         "port": 27017,
         "database": "bu_service"
     },

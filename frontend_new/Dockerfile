@@ -1,4 +1,4 @@
-FROM node:18.19.1-bullseye-slim as build-stage
+FROM node:18.19.1-bullseye-slim
 
 WORKDIR /app
 
@@ -9,9 +9,6 @@ COPY tailwind.config.js /app/
 
 RUN npm install -g npm
 RUN npm install
-RUN npm run build
+RUN npm cache clean --force
 
-
-FROM nginx:1.27-bookworm
-
-COPY --from=build-stage /app/build /usr/share/nginx/html
+ENTRYPOINT [ "npm", "start" ]

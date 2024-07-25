@@ -89,3 +89,14 @@ exports.getInclusionProof = (tree_name, leaf_index) => {
     console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
   })
 }
+
+/* Public Key routes */
+exports.get_public_key = () => {
+  return axios.get(`${tlmanagerHostname}:${tlmanagerPort}/public_key`)
+    .then(res => {
+      return res.data
+    })
+    .catch(err => {
+      console.error(`[ERROR][tlmanager.adapter]${JSON.stringify(err)}`)
+    })
+}

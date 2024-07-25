@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const bu_repository = require('../database/repository/bu.repository');
+const path = require('path');
 
 router.get("/find_by_merkletree_index_range", async  (req, res) => {
   const election_id = req.query.election_id
@@ -42,15 +43,14 @@ router.get("/download", async (req, res) => {
 })
 
 router.get("/find_by_info", async (req, res) => {
-  const id_eleicao = req.query.id_eleicao
   const UF = req.query.UF
   const zona = req.query.zona
   const secao = req.query.secao
 
   
-  console.info(`[bu.controller] GET /find_by_info ${id_eleicao} ${UF} ${zona} ${secao}`)
+  console.info(`[bu.controller] GET /find_by_info ${UF} ${zona} ${secao}`)
 
-  const data = await bu_repository.findByInfo(id_eleicao, UF, zona, secao)
+  const data = await bu_repository.findByInfo(UF, zona, secao)
 
   res.json(data)
 })
@@ -94,5 +94,21 @@ router.get("/distinct_secao", async (req, res) => {
   const data = await bu_repository.findDistinctSecao(id, UF, zona, municipio)
   res.json(data)
 })
-  
+ 
+router.get("/bu_file", async (req, res) => {
+  console.info('[bu.controller] GET /bu_file')
+  const filesDirectory = path.join(__dirname, '../../res/eleicao_564teste.json');
+
+  try {
+    const filePath = path.join(filesDirectory);
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        res.status(404).send('Arquivo não encontrado');
+      }
+    });
+  } catch (error) {
+    res.status(500).send('Erro ao fornecer o arquivo');
+  }
+})
+
 module.exports = router;

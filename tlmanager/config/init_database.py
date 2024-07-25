@@ -9,7 +9,7 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-URL:str = os.environ.get(key= "URL", default="mongodb://localhost:27017")
+URL:str = os.environ.get(key= "URL", default="mongodb://root:1234@localhost:27017")
 COLLECTION = "tlmanager"
 
 mongodb_client = MongoClient(URL)
