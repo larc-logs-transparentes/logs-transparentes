@@ -1,16 +1,13 @@
+import base64
+import json
 import logging
 
 import asn1tools
-import json
-import base64
-import os
 
+from app.config.environment import BU_TREE_NAME_TEMPLATE
 from app.database.models.bu_model import BuModel, MerkleTreeInfo
 from app.database.repositories.bu_repository import save
-from app.adapter.tlmanager_adapter import *
-
-TREE_NAME_PREFIX = os.getenv('TREE_NAME_PREFIX')
-TREE_DEFAULT_COMMITMENT_SIZE = os.getenv('TREE_DEFAULT_COMMITMENT_SIZE')
+from app.services.tlmanager_service import insert_creating_tree_if_not_exists
 
 conv = asn1tools.compile_files("app/services/static/bu.asn1")
 county_codes = json.load(open("app/services/static/county_codes.json", encoding='utf-8'))
@@ -20,7 +17,6 @@ class DictWithBytesToJsonEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, (bytes, bytearray)):
             return obj.hex()
-        # Let the base class default method raise the TypeError
         return json.JSONEncoder.default(self, obj)
 
 
@@ -73,27 +69,16 @@ def insert(file_content: bytes, filename: str):
     bu_parsed = parse_bu(bu_decoded, file_content, filename)
     logging.debug(bu_parsed)
 
-    for eleicao in bu_parsed.eleicoes:
-        logging.info(f"Inserting leaf for election {eleicao}")
-        response = insert_leaf(f'{TREE_NAME_PREFIX}{eleicao}', base64.b64encode(bu_parsed.bu).decode('utf-8'))
-        logging.info(response.json())
-        if response.status_code != 200 and response.json().get('message') == "Tree does not exist":
-            logging.info(f"Creating tree for election {eleicao}")
-            create_tree(f'{TREE_NAME_PREFIX}{eleicao}', TREE_DEFAULT_COMMITMENT_SIZE)
-            logging.info(response.json())
-
-            logging.info(f"Trying to insert leaf for election {eleicao} again")
-            response = insert_leaf(f'{TREE_NAME_PREFIX}{eleicao}', base64.b64encode(bu_parsed.bu).decode('utf-8'))
-            logging.info(response.json())
-            if response.status_code != 200:
-                raise Exception("Failed to insert leaf")
-        bu_parsed.merkletree_info[str(eleicao)] = MerkleTreeInfo(
-            tree_name=f'{TREE_NAME_PREFIX}{eleicao}',
+    for id_eleicao in bu_parsed.eleicoes:
+        tree_name = BU_TREE_NAME_TEMPLATE.replace('${ELECTION_ID}', str(id_eleicao))
+        logging.info(f"Inserting leaf for election {id_eleicao}")
+        response = insert_creating_tree_if_not_exists(tree_name, base64.b64encode(bu_parsed.bu).decode('utf-8'))
+        bu_parsed.merkletree_info[str(id_eleicao)] = MerkleTreeInfo(
+            tree_name=tree_name,
             index=response.json()['index'],
             hash=response.json()['value'])
 
     logging.debug("Saving BU to database")
     logging.debug(bu_parsed)
     save(bu_parsed)
-
-
+    return bu_parsed
