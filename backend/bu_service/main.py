@@ -1,8 +1,7 @@
-import dotenv
-import logging
 from fastapi import FastAPI
 
-from app.controllers import tree_controller, bu_controller
+from app.config.environment import *
+from app.controllers import tree_controller, bu_controller, metadata_controller
 
 dotenv.load_dotenv()
 logging.basicConfig(level=logging.INFO)
