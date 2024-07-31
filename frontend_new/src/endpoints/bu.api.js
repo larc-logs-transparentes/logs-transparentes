@@ -62,20 +62,22 @@ export function findByIdRange(id_inicial, id_final) {
 }
 
 export const getBuByInfo = async (estado, zona, secao) => {
-  console.log("getBuByInfo")
-  console.log( estado)
-  console.log(zona)
-  console.log(secao)
+  console.log("getBuByInfo");
+  console.log(estado);
+  console.log(zona);
+  console.log(secao);
   
-  return axios.get(`${bu_api_url}/bu/find_by_info/?UF=${estado}&zona=${zona}&secao=${secao}`)
+  // ID fixo da eleição
+  const idEleicao = 545;
+  
+  return axios.get(`${bu_api_url}/bu/find_by_info/?UF=${estado}&zona=${zona}&secao=${secao}&id_eleicao=545`)
     .then(res => {
-
-      console.log(res.data)
-      return res.data
+      console.log(res.data);
+      return res.data;
     })
     .catch(err => {
-      console.log(err)
-    })
+      console.log(err);
+    });
 }
 
 export const getLeafAndProof = (leaf_id) => {
