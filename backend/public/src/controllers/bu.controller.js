@@ -43,14 +43,15 @@ router.get("/download", async (req, res) => {
 })
 
 router.get("/find_by_info", async (req, res) => {
+  const id_eleicao = req.query.id_eleicao
   const UF = req.query.UF
   const zona = req.query.zona
   const secao = req.query.secao
 
   
-  console.info(`[bu.controller] GET /find_by_info ${UF} ${zona} ${secao}`)
+  console.info(`[bu.controller] GET /find_by_info ${id_eleicao} ${UF} ${zona} ${secao}`)
 
-  const data = await bu_repository.findByInfo(UF, zona, secao)
+  const data = await bu_repository.findByInfo(id_eleicao, UF, zona, secao)
 
   res.json(data)
 })
