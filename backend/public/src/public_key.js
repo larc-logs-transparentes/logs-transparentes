@@ -8,6 +8,6 @@ router.get("", async (req, res) => {
     res.json(response)
 })
   
-  module.exports = router;
+module.exports = router;
 
 

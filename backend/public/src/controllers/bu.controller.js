@@ -95,20 +95,4 @@ router.get("/distinct_secao", async (req, res) => {
   res.json(data)
 })
  
-router.get("/bu_file", async (req, res) => {
-  console.info('[bu.controller] GET /bu_file')
-  const filesDirectory = path.join(__dirname, '../../res/eleicao_564teste.json');
-
-  try {
-    const filePath = path.join(filesDirectory);
-    res.sendFile(filePath, (err) => {
-      if (err) {
-        res.status(404).send('Arquivo não encontrado');
-      }
-    });
-  } catch (error) {
-    res.status(500).send('Erro ao fornecer o arquivo');
-  }
-})
-
 module.exports = router;
