@@ -72,8 +72,9 @@ function SearchBarUSP() {
   };
 
   const handleSearchClick = () => {
-    const effectiveElectionId = electionId || turnoSelection;
-
+    // Deixei hard coded pra tentar resolver o bo, tem que arrumar
+    const effectiveElectionId = 545;
+  
     axios.get(`${bu_api_url}/bu/find_by_info?id_eleicao=${effectiveElectionId}&UF=${ufSelection}&municipio=${citySelection}&zona=${zonaSelection}&secao=${secaoSelection}`)
       .then(response => {
         navigate(`/${effectiveElectionId}/search/${response.data._id}`, {
@@ -82,6 +83,7 @@ function SearchBarUSP() {
       })
       .catch(error => console.error(error));
   };
+  
 
   return (
     <div className='font-sans relative z-10 bg-white '>
