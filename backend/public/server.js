@@ -12,6 +12,9 @@ app.use("/bu", bu_controller);
 const tree_controller = require("./src/controllers/tree.controller");
 app.use("/tree", tree_controller);
 
+const public_key_controller = require("./src/controllers/public_key.controller");
+app.use("/public_key", public_key_controller);
+
 // set port, listen for requests
 app.listen(application_config.port, () => {
   console.log(`Server is running on port ${application_config.port}.`);
