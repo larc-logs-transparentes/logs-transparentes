@@ -2,18 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-
-class MerkleTreeInfo(BaseModel):
-    tree_name: str
-    index: int
-    hash: str
-
-
-class Metadata(BaseModel):
-    data_name: str
-    file_name: str
-    data: bytes
-    merkletree_info: Optional[dict[str, MerkleTreeInfo]] = {}
+from app.database.models.merkle_tree_info_model import MerkleTreeInfo
 
 
 class BuModel(BaseModel):
@@ -26,4 +15,3 @@ class BuModel(BaseModel):
     bu_json: str
     bu: bytes
     merkletree_info: Optional[dict[str, MerkleTreeInfo]] = {}
-    metadata: list[Metadata] = []
