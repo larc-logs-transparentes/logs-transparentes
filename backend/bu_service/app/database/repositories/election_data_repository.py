@@ -5,4 +5,4 @@ db = get_db()
 
 
 def save(data: ElectionData):
-    db[data.data_name].insert_one(data.model_dump())
+    db[data.merkletree_info.tree_name].insert_one(data.model_dump())
