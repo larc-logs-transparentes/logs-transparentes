@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict, Union
 
 from pydantic import BaseModel
 
@@ -9,7 +9,7 @@ class ElectionData(BaseModel):
     data_name: str
     file_name: str
     data: bytes
-    merkletree_info: Optional[dict[str, MerkleTreeInfo]] = {}
+    merkletree_info: Union[Dict[str, MerkleTreeInfo], MerkleTreeInfo] = None
     zona: Optional[int] = None
     secao: Optional[int] = None
     eleicoes: Optional[list[int]] = None

@@ -26,7 +26,7 @@ def insert(file_content: bytes, filename: str, metadata_name: str, id_eleicao: L
     else:
         tree_name = ELECTION_DATA_TREE_NAME_TEMPLATE.replace('${ELECTION_DATA_NAME}', metadata_name)
         response = insert_creating_tree_if_not_exists(tree_name, base64.b64encode(file_content).decode('utf-8'))
-        responses['metadata'] = MerkleTreeInfo(
+        responses = MerkleTreeInfo(
             tree_name=tree_name,
             index=response.json()['index'],
             hash=response.json()['value']
