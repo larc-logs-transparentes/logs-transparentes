@@ -2,7 +2,7 @@ import { getDataProof, getTrustedRoot } from '../endpoints/merkletree.api.js';
 import { getBuById } from '../endpoints/bu.api.js';
 import { initPyodide, formatProofDataToPython } from './pyodide.js';
 
-export async function verifySingleData(id) {
+export async function VerificationDragAndDrop(id,bu_teste) {
 
     let bu = await getBuById(id);
     console.log(bu)
@@ -18,7 +18,8 @@ export async function verifySingleData(id) {
     formatProofDataToPython(proofData);
     root = JSON.stringify(root);
     proofData = JSON.stringify(proofData);
-    const buInteiro = JSON.stringify(bu["bu"]);
+    const buInteiro = JSON.stringify(bu_teste);
+    console.log(buInteiro)
     const pyodide = await initPyodide();
     const pythonCode = `
     import json
@@ -33,7 +34,6 @@ export async function verifySingleData(id) {
             proofData = json.loads(proofData)
         except (json.JSONDecodeError, TypeError):
             return "Invalid format for proofData"
-
         try:
             bu = str(${buInteiro})
             bu = base64.b64decode(bu)

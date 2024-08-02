@@ -87,13 +87,13 @@ function Result({ cargo }) {
     <div className="flex items-center justify-center">
     <div className='w-[90vw] md2:w-[90vw] md2:min-h-[60vh] justify-center border-2 border-blue-light rounded-2xl p-5 space-y-8'> 
 
-      <h1 className='text-black text-lg font-bold'>Eleição {id_eleicao}</h1>
-      <h2 className='text-black text-xl font-bold mb-4 capitalize'>{formattedPosition}</h2>
+      <h1 className='text-black text-lg font-medium'>Eleição {id_eleicao}</h1>
+      <h2 className='text-blue text-2xl font-medium mb-4 capitalize'>{formattedPosition}</h2>
 
       <div className='grid md2:grid-cols-2 grid-cols-2  gap-y-12 gap-12'>
 
       {votosNominais.map((voto, index) => (
-        <div key={index} className={`flex md:gap-x-40 md:gap-y-4 border-[1px] rounded-xl p-4 border-gray ${getColor(index)} `}>
+        <div key={index} className={`flex md:gap-x-40 md:gap-y-4  rounded-xl p-4 border-gray ${getColor(index)} `}>
           <div className='flex gap-8'>
             <img src={Candidato} alt="Candidato" className='h-8'/>
             <div>
