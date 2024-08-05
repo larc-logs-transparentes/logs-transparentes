@@ -36,6 +36,8 @@ module.exports = {
       'black-30': 'rgba(3, 6, 25, 0.2)',
       'red-30': 'rgba(192, 21, 17, 0.2)',
       'neon-green-30': 'rgba(0, 255, 0, 0.2)',
+      'bordergray':'#F2F2F2',
+      'lighter-gray':'#F2F5F7',
     },  
       screens: {
       'xs': '321px',

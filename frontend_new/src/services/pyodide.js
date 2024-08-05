@@ -7,7 +7,7 @@ export async function initPyodide(){
   await pyodide.loadPackage("micropip");
   const micropip = pyodide.pyimport("micropip");
   await pyodide.loadPackage(urls.pyodidePackages);
-  await micropip.install(["pymerkle-logsTransparentes", "requests","setuptools"]);
+  await micropip.install(["pymerkle-logsTransparentes", "requests","setuptools","asn1tools"]);
 
   return pyodide
 }
@@ -36,4 +36,11 @@ export async function formatConsistencyProofToPython(allConsistencyProof) {
     }
   }
   return allConsistencyProof;
+}
+export async function PythonTruetoJavascriptTrue(pythonTrue){
+  if (pythonTrue === 'True') {
+    return true;
+  } else {
+    return false;
+  }
 }
