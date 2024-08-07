@@ -11,6 +11,7 @@ export function getBuById(bu_id) {
     })
 }
 
+
 export const addBu = (data) => {
   return axios.post(`${bu_api_url}/bu`, data)
     .then(res => {
@@ -60,14 +61,13 @@ export function findByIdRange(id_inicial, id_final) {
     })
 }
 
-export const getBu = async (turno, estado, zona, secao) => {
-  console.log("getBu")
-  console.log("turno=" + turno)
-  console.log("uf=" + estado)
-  console.log("zona=" + zona)
-  console.log("secao=" + secao)
+export const getBuByInfo = async (estado, zona, secao) => {
+  console.log("getBuByInfo")
+  console.log( estado)
+  console.log(zona)
+  console.log(secao)
   
-  return axios.get(`${bu_api_url}/bu/get_one/?turno=${turno}&uf=${estado}&zona=${zona}&secao=${secao}`)
+  return axios.get(`${bu_api_url}/bu/find_by_info/?UF=${estado}&zona=${zona}&secao=${secao}`)
     .then(res => {
 
       console.log(res.data)

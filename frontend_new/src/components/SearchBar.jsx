@@ -129,7 +129,7 @@ function SearchBar() {
   return (
     
     <div className='font-sans relative z-20 '>
-      <div className='flex flex-col bg-blue md2:min-h-[254px] min-h-[429px] h-[13.5vh] place-content-center '>
+      <div className='flex flex-col bg-blue md2:min-h-[254px] min-h-[500px] h-[13.5vh] place-content-center '>
         <p className='text-white mt-[22px] text-center text-3xl'>Buscar dados por seções</p>
         {isHomepage && (
           <p className='text-white mt-[22px] text-center text-2xl'>Confira os dados eleitorais armazenados pela USP.</p>
@@ -142,9 +142,9 @@ function SearchBar() {
             { ufSelection || 'São Paulo'}</p>
             <ExpandMoreIcon className='' style={{ transform: dropdownStates.estado ? 'rotate(180deg)' : 'rotate(0)' }} />
             {dropdownStates.estado && (
-              <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar mt-[3vh]'>
+              <ul className='absolute bg-white border-[1px] border-gray rounded max-h-[100%] overflow-auto custom-scrollbar mt-[4vh]'>
                 {ufOpts.map((uf, index) => (
-                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[10vw]' onClick={() => handleChangeUF({ target: { value: uf } })}>
+                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[7vw]' onClick={() => handleChangeUF({ target: { value: uf } })}>
                     {uf}
                   </li>
                 ))}
@@ -159,9 +159,9 @@ function SearchBar() {
               { citySelection || 'São Paulo'} </p>
               <ExpandMoreIcon className='' style={{ transform: dropdownStates.cidade ? 'rotate(180deg)' : 'rotate(0)' }} />
               {dropdownStates.cidade && (
-                <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar mt-[3vh]'>
+                <ul className='absolute bg-white border-[1px] border-gray rounded max-h-[100%] overflow-auto custom-scrollbar mt-[4vh]'>
                   {cityOpts.map((city, index) => (
-                    <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[13vw]' onClick={() => handleChangeCity({ target: { value: city } })}>
+                    <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[7vw]' onClick={() => handleChangeCity({ target: { value: city } })}>
                       {city}
                     </li>
                   ))}
@@ -177,9 +177,9 @@ function SearchBar() {
                 { zonaSelection || 'Zona'} </p>
                 <ExpandMoreIcon className='' style={{ transform: dropdownStates.zona ? 'rotate(180deg)' : 'rotate(0)' }} />
                 {dropdownStates.zona && (
-                  <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar mt-[3vh]'>
+                  <ul className='absolute bg-white border-[1px] border-gray rounded max-h-[100%] overflow-auto custom-scrollbar mt-[4vh]'>
                     {zonaOpts.map((zona, index) => (
-                      <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[10vw]' onClick={() => handleChangeZona({ target: { value: zona } })}>
+                      <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[5vw]' onClick={() => handleChangeZona({ target: { value: zona } })}>
                         {zona}
                       </li>
                     ))}
@@ -194,7 +194,7 @@ function SearchBar() {
                 { 'Seção  ' + secaoSelection || 'Seção'} </p>
                 <ExpandMoreIcon className=' ' style={{ transform: dropdownStates.secao ? 'rotate(180deg)' : 'rotate(0)' }} />
                 {dropdownStates.secao && (
-                  <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar mt-[3vh]'>
+                  <ul className='absolute bg-white border-[1px] border-gray rounded max-h-[100%] overflow-auto custom-scrollbar mt-[4vh]'>
                     {secaoOpts.map((secao, index) => (
                       <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[10vw]' onClick={(e) => handleChangeSecao({ target: { value: secao } })}>
                         {secao}

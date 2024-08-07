@@ -74,13 +74,13 @@ function Navbar() {
       <div className='bg-yellow h-[1vh]'></div>
       <div className='bg-blue-light h-[1vh]'></div>
       <div className='bg-blue h-[5vh]'></div>
-      <div className="flex xl:gap-[35vw] xs:gap-[10vw] md:gap-[15vw] p-2 relative bg-white font-bold items-center">
+      <div className="flex xl:gap-[25vw] xs:gap-[10vw] md:gap-[15vw] p-2 relative bg-white font-bold items-center">
         <div className="xs:min-w-[160px] xs:min-h-[50px] xs:ml-[10vw] mt-[1vh]">
           <Link to="/" onClick={handleLogoClick}>
             <img src={Logs} className="" alt="logo" />
           </Link>
         </div>
-        <ul className='hidden md:flex gap-[1vw] max-h-[10px] items-center justify-center'>
+        <ul className='hidden md:flex gap-[2vw] max-h-[10px] items-center justify-center text-center'>
           <li className='mt-[5px]'>
             <Link to="/" className=''>
               Home
@@ -120,7 +120,7 @@ function Navbar() {
             {isDropdownOpen && (
               <ul className="absolute bg-white border rounded max-h-[300%] overflow-auto custom-scrollbar z-30">
                 {electionOptions.map((option, index) => (
-                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[12vw]' onClick={() => handleElectionClick(option)}>
+                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[12vw] z-30' onClick={() => handleElectionClick(option)}>
                     {convertElectionIdToName(option)}
                   </li>
                 ))}

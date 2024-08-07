@@ -1,24 +1,25 @@
 {
-    "cors_origin_urls": [
-        "http://localhost:3000",
-        "http://localhost:8000",
-        "http://localhost:8080",
-        "http://172.20.11.11:3000",
-        "http://172.20.11.14:3000", 
-        "http://127.0.0.1:3000",
-        "http://ts-logt.larc2.usp:3000", 
-        "http://ts-logt-reais.larc2.usp:3000"
-    ],
-    "tlmanager_config": {
-        "hostname": "http://127.0.0.1",
-        "port": 8000
-    },
-    "mongodb_config": {
-        "hostname": "mongodb://127.0.0.1",
-        "port": 27017,
-        "database": "bu_service"
-    },
-    "application_config": {
-        "port": 8080
-    }
+  "cors_origin_urls": [
+    "*",
+    "http://localhost:3000",
+    "http://172.20.11.11:3000",
+    "http://172.20.11.14:3000",
+    "http://127.0.0.1:3000",
+    "http://ts-logt.larc2.usp:3000",
+    "http://ts-logt-reais.larc2.usp:3000",
+    "http://localhost:5173",
+    "http://localhost:5174"
+  ],
+  "tlmanager_config": {
+    "hostname": "http://127.0.0.1",
+    "port": 8000
+  },
+  "mongodb_config": {
+    "hostname": "mongodb://127.0.0.1",
+    "port": 27017,
+    "database": "bu_service"
+  },
+  "application_config": {
+    "port": 8080
+  }
 }
