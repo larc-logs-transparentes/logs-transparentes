@@ -1,10 +1,5 @@
 const mongoose = require("mongoose");
-
-const merkletree_info = new mongoose.Schema({
-    tree_name: String,
-    index: Number,
-    hash: String,
-});
+const {merkletree_info} = require("./merkletree-info.model");
 
 const schema_bu = new mongoose.Schema({
     eleicoes: [Number],
@@ -19,11 +14,9 @@ const schema_bu = new mongoose.Schema({
 });
 
 schema_bu.index({ UF:1, zona:1, secao:1 });
-
 schema_bu.index({ eleicoes:1 });
 schema_bu.index({ eleicoes:1, UF:1 });
 schema_bu.index({ eleicoes:1, UF:1, municipio:1 });
-
 schema_bu.index({ "merkletree_info.$**": 1 });
 
 module.exports = { schema_bu }

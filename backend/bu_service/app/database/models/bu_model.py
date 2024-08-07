@@ -1,11 +1,8 @@
 from typing import Optional
+
 from pydantic import BaseModel
 
-
-class MerkleTreeInfo(BaseModel):
-    tree_name: str
-    index: int
-    hash: str
+from app.database.models.merkle_tree_info_model import MerkleTreeInfo
 
 
 class BuModel(BaseModel):

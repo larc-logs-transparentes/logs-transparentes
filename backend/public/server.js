@@ -12,6 +12,9 @@ app.use("/bu", bu_controller);
 const tree_controller = require("./src/controllers/tree.controller");
 app.use("/tree", tree_controller);
 
+const election_data_controller = require("./src/controllers/election-data.controller");
+app.use("/election-data", election_data_controller);
+
 const public_key_controller = require("./src/controllers/public_key.controller");
 app.use("/public_key", public_key_controller);
 
