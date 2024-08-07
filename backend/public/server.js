@@ -1,6 +1,5 @@
-
 const { app } = require("./src/init");
-const application_config = require("./src/config.json").application_config
+const application_config = require("./src/config.json").application_config;
 
 app.get("/", (req, res) => {
   res.json({ message: "Backend Executando" });
@@ -8,6 +7,9 @@ app.get("/", (req, res) => {
 
 const bu_controller = require("./src/controllers/bu.controller");
 app.use("/bu", bu_controller);
+
+const sum_result_controller = require("./src/controllers/sum-result.controller");
+app.use("/sum-result", sum_result_controller);
 
 const tree_controller = require("./src/controllers/tree.controller");
 app.use("/tree", tree_controller);
