@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/Homepage/HomePage';
 import SearchBu from './pages/SearchBu/SearchBu.jsx';
 import Inclusion from './pages/Verification/Inclusion.jsx';
+import Dashboard from './pages/Dashboard/Dashboard.jsx';
 import './index.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/:electionId/search/:id" element={<SearchBu />} />
           <Route path="/:electionId/search" element={<SearchBu />} /> 
           <Route path="/inclusion/:id" element={<Inclusion />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </Router>
