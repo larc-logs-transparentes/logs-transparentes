@@ -11,15 +11,15 @@ const Cards = () => {
     useEffect(() => {
         const fetchTreeData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/tree');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch tree data');
+                const treeList = await fetch('http://localhost:8080/tree');
+                if (!treeList.ok) {
+                    throw new Error('Failed to fetch tree list data');
                 }
-                const data = await response.json();
+                const data = await treeList.json();
                 const formattedTrees = formatTreeData(data.trees);
                 setCardInfo(formattedTrees);
             } catch (error) {
-                console.error('Error fetching tree data:', error);
+                console.error('Error fetching tree list data:', error);
             }
         };
 

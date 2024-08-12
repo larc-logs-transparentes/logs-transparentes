@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import modalclosebutton from '../../../assets/modalclosebutton.svg';
 import modalbaixarfolhasbutton from '../../../assets/modalbaixarfolhasbutton.svg';
-import { fetchRootValue, fetchNumberOfElementsOnTree, fetchRootTimestampValue, downloadFile } from '../../../services/modalTreeDashboardServices'; 
+import { fetchRootValue, fetchNumberOfElementsOnTree, fetchRootTimestampValue, downloadFile } from '../../../services/modalTreeDashboardServices';
 
 const Modal = ({ isOpen, onClose, card, isFirst }) => {
   const [rootValue, setRootValue] = useState('');
@@ -21,7 +21,7 @@ const Modal = ({ isOpen, onClose, card, isFirst }) => {
         setNumberOfElementsOnTree(await fetchNumberOfElementsOnTree(card.info, isFirst));
       }
 
-      if (card.downloadAllGlobalRootsUrl) {
+      if (isFirst && card.downloadAllGlobalRootsUrl) {
         setRootTimestampValue(await fetchRootTimestampValue(card.downloadAllGlobalRootsUrl));
       }
     };
@@ -61,9 +61,11 @@ const Modal = ({ isOpen, onClose, card, isFirst }) => {
             <h2 className="text-[#979797] font-inter font-size-15px ml-2 break-words">
               Hash: <span className="font-bold">{rootValue}</span>
             </h2>
-            <h2 className="text-[#979797] font-inter font-size-15px ml-2">
-              Gerado em: <span className="font-bold">{rootTimestampValue}</span>
-            </h2>
+            {isFirst && (
+              <h2 className="text-[#979797] font-inter font-size-15px ml-2">
+                Gerado em: <span className="font-bold">{rootTimestampValue}</span>
+              </h2>
+            )}
           </div>
           <div className="border border-gray rounded-lg p-2 break-words">
             <h1 className="text-[#1094AB] font-inter font-size-14px text-left"><span className="font-semibold">Elementos</span></h1>
