@@ -6,7 +6,7 @@ import { getTrustedRoot } from '../../../endpoints/merkletree.api.js';
 import InclusionCheckCard from './InclusionCheckCard';
 import ErrorBu from './ErrorBu'; 
 
-export default function Selo({ id, bu }) {
+export default function Selo({ bu }) {
   const [isProofTrue, setIsProofTrue] = useState("(loading...)");
   const [isInclusionCheckCardModalOpen, setIsInclusionCheckCardModalOpen] = useState(false);
   const [isErrorBuModalOpen, setIsErrorBuModalOpen] = useState(false); 
@@ -19,12 +19,11 @@ export default function Selo({ id, bu }) {
       const root = await getTrustedRoot();
 
       const proofStatus = await verifySingleData(buInteiro, proof, root);
-      console.log(proofStatus);
       setProof(proof);
       setIsProofTrue(proofStatus);
     };
     run();
-  }, [id]);
+  }, []);
 
   const handleModalToggle = () => {
     if (isProofTrue === 'True') {

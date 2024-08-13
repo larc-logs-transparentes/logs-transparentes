@@ -73,7 +73,7 @@ function Bu({ onSendToMonitor }) {
 
             <button onClick={downloadJson} className="rounded-full bg-yellow px-2 h-[37px] w-[102px] font-bold ml-4">Baixar Bu</button>
 
-            <Selo id={id} bu={bu} />
+            <Selo bu={bu} />
           </div>
         </div>
 
