@@ -14,13 +14,14 @@ export default function Selo({ bu }) {
 
   useEffect(() => {
     const run = async () => {
-      const buInteiro = JSON.stringify(bu["bu"]);
+      const buBinario = bu["bu"];
       const proof = await getDataProofFromBU(bu);
       const root = await getTrustedRoot();
 
-      const proofStatus = await verifySingleData(buInteiro, proof, root);
+      const proofStatus = await verifySingleData(buBinario, proof, root);
       setProof(proof);
       setIsProofTrue(proofStatus);
+      console.log("Resultado da prova de inclusão:", proofStatus)
     };
     run();
   }, []);

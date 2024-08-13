@@ -20,6 +20,7 @@ function SearchBu() {
       if (id) {
         const bu = await getBuById(id);
         if (bu) {
+          // TODO: use parsed bu["bu"], insted of bu_json
           const buInteiroParsed = JSON.parse(bu.bu_json);
           setBuData(buInteiroParsed);
           setBu(bu)

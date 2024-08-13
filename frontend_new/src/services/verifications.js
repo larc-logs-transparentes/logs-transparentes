@@ -5,6 +5,7 @@ export async function verifySingleData(data, proof, root) {
     formatDataProofToPython(proof);
     root = JSON.stringify(root);
     proof = JSON.stringify(proof);
+    data = JSON.stringify(data);
 
     const pyodide = await initPyodide();
     const pythonCode = `
