@@ -46,7 +46,7 @@ export default function Selo({ id, bu }) {
         </p>
       </div>
       {isInclusionCheckCardModalOpen && <InclusionCheckCard bu={bu} proof={proof} closeModal={() => setIsInclusionCheckCardModalOpen(false)} />}
-      {isErrorBuModalOpen && <ErrorBu id={id} closeModal={() => setIsErrorBuModalOpen(false)} />}
+      {isErrorBuModalOpen && <ErrorBu closeModal={() => setIsErrorBuModalOpen(false)} />}
 
     </>
   );

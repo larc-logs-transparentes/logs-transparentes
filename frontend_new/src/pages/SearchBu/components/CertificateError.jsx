@@ -1,7 +1,7 @@
 import React from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-const CertificateError = ({ closeModal , id }) => {
+const CertificateError = ({ closeModal  }) => {
   return (
     <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center backdrop-blur z-30 justify-center items-center'>
       <div className='relative w-[714px] min-h-[320px] border-2 border-black rounded-2xl bg-white p-8'> 
