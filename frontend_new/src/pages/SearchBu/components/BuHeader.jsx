@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { getBuById } from '../../../endpoints/bu.api';
-import { useParams } from 'react-router-dom';
 import Selo from './Selo';
 
-function BuHeader({ onSendToMonitor }) {
+function BuHeader({ bu, buData }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { id } = useParams();
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -14,22 +11,8 @@ function BuHeader({ onSendToMonitor }) {
     setIsModalOpen(false);
   };
 
-  const [buData, setBuData] = useState(null);
-  const [bu, setBu] = useState(null);
-
   useEffect(() => {
-    const fetchBu = async () => {
-      if (id) {
-        const bu = await getBuById(id);
-        // TODO: get bu from BU raw data
-        const buInteiroParsed = JSON.parse(bu.bu_json);
-        setBuData(buInteiroParsed);
-        setBu(bu);
-      }
-    };
-
-    fetchBu();
-  }, [id]);
+  }, []);
 
   
 

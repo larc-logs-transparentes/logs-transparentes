@@ -12,15 +12,17 @@ function SearchBu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWarningVisible, setIsWarningVisible] = useState(false);
   const [buData, setBuData] = useState(null);
+  const [bu, setBu] = useState({ "bu_json": '{}'});
   const { id } = useParams();
 
   useEffect(() => {
     const fetchBu = async () => {
       if (id) {
-        const response = await getBuById(id);
-        if (response) {
-          const buInteiroParsed = JSON.parse(response.bu_json);
+        const bu = await getBuById(id);
+        if (bu) {
+          const buInteiroParsed = JSON.parse(bu.bu_json);
           setBuData(buInteiroParsed);
+          setBu(bu)
         }
       }
     };
@@ -36,8 +38,8 @@ function SearchBu() {
       {id ? (
         <div className='flex place-content-center p-[20px]'>
           <div className='flex-col items-center space-y-[20px]'>     
-            <BuHeader onSendToMonitor={() => setIsWarningVisible(true)} id={id} />
-            <BuResult cargo="presidente" />
+            <BuHeader buData={buData} bu={bu}/>
+            <BuResult buData={buData} cargo="presidente" />
             {/* TODO mostrar outros cargos do BU */}
             {/* <Result cargo="senador" />
             <Result cargo="deputado federal" />
