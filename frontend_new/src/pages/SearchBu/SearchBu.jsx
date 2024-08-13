@@ -5,8 +5,6 @@ import BuHeader from './components/BuHeader';
 import BuResult from './components/BuResult';
 import { getBuById } from '../../endpoints/bu.api';
 import { useParams } from 'react-router-dom';
-import ManualAutomatic from './components/ManualAutomatic';
-import Warning from './components/Warning';
 
 function SearchBu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,8 +32,6 @@ function SearchBu() {
   return (
     <div>
       <SearchBar />
-      {isModalOpen && <ManualAutomatic closeModal={() => setIsModalOpen(false)} />}
-      {isWarningVisible && <Warning />}
       {id ? (
         <div className='flex place-content-center p-[20px]'>
           <div className='flex-col items-center space-y-[20px]'>     

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import ErrorIcon from '../../../assets/ErrorIcon.svg';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useNavigate } from 'react-router-dom'; 
-const InclusionCheckCard = ({ closeModal, bu, proof }) => {
+const InclusionCheckCard = ({ closeModal, bu, proof, isProofTrue }) => {
   const [lastRoot, setLastRoot] = useState({ value: '', timestamp: '' }); 
   const [buHash, setBuHash] = useState('');
   const navigate = useNavigate(); 
@@ -29,7 +30,7 @@ const InclusionCheckCard = ({ closeModal, bu, proof }) => {
   }
 
   function navigateToInclusion() {
-    navigate(`/inclusion/${bu._id}`);
+    navigate(`#`);
   }
 
   return (
@@ -41,13 +42,27 @@ const InclusionCheckCard = ({ closeModal, bu, proof }) => {
 
         <h2 className="text-lg font-bold mb-4 text-gray-800">Verificação de inclusão de BU</h2>
         <div className='flex gap-8'>
-          <div>
-            <div className="font-bold  text-blue-light flex items-center gap-2">
-              <CheckCircleIcon style={{ color: '#66FF99' }} />
-              <h2>Este BU foi verificado corretamente</h2>
-            </div>
-            <div className="text-gray text-sm mb-4">Ele está presente na árvore e não pode ser modificado</div>
-          </div>
+          
+          {isProofTrue === 'True' ? (
+            <div>
+              <div className="font-bold  text-blue-light flex items-center gap-2">
+                <CheckCircleIcon style={{ color: '#66FF99' }} />
+                <h2>Este BU foi verificado corretamente</h2>
+              </div>
+              <div className="text-gray text-sm mb-4">Ele está presente na árvore e não pode ser modificado</div>
+            </div> 
+          ) : (
+            <div>
+              <div className="font-bold  text-red-light flex items-center gap-2">
+                <img src={ErrorIcon}/>
+                <h2>Erro ao Validar o BU</h2>
+              </div>
+              <div className="text-gray text-sm mb-4">O BU não está presente na árvore ou foi alterado</div>
+            </div> 
+            )
+          }
+          
+          
 
           <h2 className='text-center  text-md relative font-sans font-bold text-yellow underline cursor-pointer' onClick={navigateToInclusion}>Saiba Mais</h2>
         </div>
