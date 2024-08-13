@@ -17,12 +17,12 @@ function BuHeader({ bu, buData }) {
   
 
   function downloadJson() {
-    const json = JSON.stringify(buData, null, 2);
-    const blob = new Blob([json], {type: 'application/json'});
+    const buBinary = atob(bu["bu"])
+    const blob = new Blob([buBinary], {type: 'application/data'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'buData.json';
+    a.download = bu.filename;
     a.click();
     URL.revokeObjectURL(url);
   }
