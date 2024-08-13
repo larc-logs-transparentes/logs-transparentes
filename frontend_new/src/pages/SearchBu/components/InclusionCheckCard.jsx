@@ -34,7 +34,7 @@ const InclusionCheckCard = ({ closeModal, bu, proof }) => {
 
   return (
     <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center backdrop-blur z-30 justify-center items-center'>
-      <div className='relative w-[714px] min-h-[320px] border-2 border-black rounded-2xl bg-white p-8'> 
+      <div className='relative w-[800px] min-h-[320px] border-2 border-black rounded-2xl bg-white p-8'> 
         <div className="absolute top-3 right-3">
           <HighlightOffIcon onClick={closeModal} className="text-blue cursor-pointer mr-[16px]" style={{ width: '32px', height: '32px' }}/>
         </div>
@@ -60,10 +60,20 @@ const InclusionCheckCard = ({ closeModal, bu, proof }) => {
           </div>
 
           <div className="mb-3">
-            <strong className='text-blue-light'>Raiz Global:</strong>
-            <div>Hash: {lastRoot.value}</div>
-            <div>Gerado em: {lastRoot.timestamp}</div> 
+            <strong className='text-blue-light'>Árvore Global:</strong>
+            <div>Hash: {proof.global_root.value}</div>
+            <div>Última atualização: {proof.global_root.timestamp}</div> 
+            <div>Assinatura: {proof.global_root.signature}</div> 
           </div>
+
+          <div className="mb-3">
+            <strong className='text-blue-light'>Árvore Local:</strong>
+            <div>Nome: {proof.local_tree.local_root.tree_name}</div>
+            <div>Hash: {proof.local_tree.local_root.value}</div>
+            <div>Última atualização: Em construção </div> 
+            <div>Tamanho: {proof.local_tree.local_root.tree_size}</div> 
+          </div>
+
 
           
         </div>
