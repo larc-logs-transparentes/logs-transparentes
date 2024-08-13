@@ -10,6 +10,7 @@ export default function Selo({ id, bu }) {
   const [isProofTrue, setIsProofTrue] = useState("(loading...)");
   const [isInclusionCheckCardModalOpen, setIsInclusionCheckCardModalOpen] = useState(false);
   const [isErrorBuModalOpen, setIsErrorBuModalOpen] = useState(false); 
+  const [proof, setProof] = useState('');
 
   useEffect(() => {
     const run = async () => {
@@ -19,6 +20,7 @@ export default function Selo({ id, bu }) {
 
       const proofStatus = await verifySingleData(buInteiro, proof, root);
       console.log(proofStatus);
+      setProof(proof);
       setIsProofTrue(proofStatus);
     };
     run();
@@ -43,7 +45,7 @@ export default function Selo({ id, bu }) {
           />
         </p>
       </div>
-      {isInclusionCheckCardModalOpen && <InclusionCheckCard id={id} closeModal={() => setIsInclusionCheckCardModalOpen(false)} />}
+      {isInclusionCheckCardModalOpen && <InclusionCheckCard bu={bu} proof={proof} closeModal={() => setIsInclusionCheckCardModalOpen(false)} />}
       {isErrorBuModalOpen && <ErrorBu id={id} closeModal={() => setIsErrorBuModalOpen(false)} />}
 
     </>

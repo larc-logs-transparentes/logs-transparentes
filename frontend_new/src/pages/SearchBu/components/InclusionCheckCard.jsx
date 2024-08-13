@@ -1,49 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { getBuById } from '../../../endpoints/bu.api';
-import { getAllRoots } from '../../../endpoints/merkletree.api'; 
 import { useNavigate } from 'react-router-dom'; 
-const InclusionCheckCard = ({ closeModal, id }) => {
-  const [buData, setBuData] = useState(null);
+const InclusionCheckCard = ({ closeModal, bu, proof }) => {
   const [lastRoot, setLastRoot] = useState({ value: '', timestamp: '' }); 
   const [buHash, setBuHash] = useState('');
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    const fetchBu = async () => {
-      if (id) {
-        const bu = await getBuById(id);
-        const election = bu.eleicoes[0]
-        setBuHash(bu.merkletree_info[election].hash);
-      }
+    const run = async () => {
+      const election = bu.eleicoes[0];
+      setBuHash(bu.merkletree_info[election].hash)
+      setLastRoot(proof, proof)
     };
 
-    const fetchAllRoots = async () => {
-      const rootsResponse = await getAllRoots();
-      if (rootsResponse.status === 'ok' && rootsResponse.roots.length > 0) {
-        const lastRoot = rootsResponse.roots[rootsResponse.roots.length - 1];
-        setLastRoot({ value: lastRoot.value, timestamp: lastRoot.timestamp });
-      }
-    };
+    run();
+  }, []);
 
-    fetchBu();
-    fetchAllRoots(); 
-  }, [id]);
-
-  function downloadJson() {
-    const json = JSON.stringify(buData, null, 2);
+  function downloadDataProof() {
+    const json = JSON.stringify(proof, null, 2);
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'buData.json';
+    a.download = 'dataProof.json';
     a.click();
     URL.revokeObjectURL(url);
   }
 
   function navigateToInclusion() {
-    navigate(`/inclusion/${id}`);
+    navigate(`/inclusion/${bu._id}`);
   }
 
   return (
@@ -83,7 +69,7 @@ const InclusionCheckCard = ({ closeModal, id }) => {
         </div>
 
         <div className="flex gap-4">
-            <button onClick={downloadJson} className="rounded-full bg-yellow px-2 h-[37px] w-[132px] font-bold">Baixar Provas</button>
+            <button onClick={downloadDataProof} className="rounded-full bg-yellow px-2 h-[37px] w-[132px] font-bold">Baixar Provas</button>
         </div>
       </div>
     </div>
