@@ -53,7 +53,7 @@ function VerifyInclusion({}) {
           
           <div className="font-bold mb-4 text-blue-light flex items-center gap-2">
             <CheckCircleIcon style={{ color: '#66FF99' }} />
-            <h2>O bu foi verificado corretamente</h2>
+            <h2>O BU foi verificado corretamente</h2>
           </div>
         </div>
 

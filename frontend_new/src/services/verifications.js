@@ -1,23 +1,19 @@
 import { getDataProof, getTrustedRoot } from '../endpoints/merkletree.api.js';
 import { getBuById } from '../endpoints/bu.api.js';
-import { initPyodide, formatProofDataToPython } from './pyodide.js';
+import { initPyodide, formatDataProofToPython } from './pyodide.js';
 
 export async function verifySingleData(id) {
 
     let bu = await getBuById(id);
     console.log(bu)
 
-    const merkletreeInfo = bu.merkletree_info[Object.keys(bu.merkletree_info)[0]];
-    const treeName = merkletreeInfo.tree_name;
-    const index = merkletreeInfo.index;
-    const buId = bu._id;
-
-    let proofData = await getDataProof(index, treeName, buId);
+    let dataProof = await getDataProofFromBU(bu)
+    console.log(dataProof)
     let root = await getTrustedRoot();
 
-    formatProofDataToPython(proofData);
+    formatDataProofToPython(dataProof);
     root = JSON.stringify(root);
-    proofData = JSON.stringify(proofData);
+    dataProof = JSON.stringify(dataProof);
     const buInteiro = JSON.stringify(bu["bu"]);
     const pyodide = await initPyodide();
     const pythonCode = `
@@ -28,11 +24,11 @@ export async function verifySingleData(id) {
     def verify_data():
         # Load and parse JSON data
         try:
-            proofData = str(${proofData})
-            proofData = proofData.replace("'", '"')
-            proofData = json.loads(proofData)
+            dataProof = str(${dataProof})
+            dataProof = dataProof.replace("'", '"')
+            dataProof = json.loads(dataProof)
         except (json.JSONDecodeError, TypeError):
-            return "Invalid format for proofData"
+            return "Invalid format for dataProof"
 
         try:
             bu = str(${buInteiro})
@@ -47,10 +43,20 @@ export async function verifySingleData(id) {
         except (json.JSONDecodeError, TypeError):
             return "Invalid format for root"
 
-        verify_result = verify_data_entry(proofData, root["value"], bu)
+        verify_result = verify_data_entry(dataProof, root["value"], bu)
         return str(verify_result['success'])
 
     verify_data()
     `;
     return await pyodide.runPythonAsync(pythonCode);
+}
+
+export async function getDataProofFromBU(bu){
+    const merkletreeInfo = bu.merkletree_info[Object.keys(bu.merkletree_info)[0]];
+    const treeName = merkletreeInfo.tree_name;
+    const index = merkletreeInfo.index;
+    const buId = bu._id;
+
+    const dataProof = await getDataProof(index, treeName, buId);
+    return dataProof;
 }

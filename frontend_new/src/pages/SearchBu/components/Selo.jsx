@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Correto from '../../../assets/Correto.svg';
 import Incorreto from '../../../assets/Incorreto.svg';
 import { verifySingleData } from '../../../services/verifications.js';
-import Certificate from './Certificate';
+import InclusionCheckCard from './InclusionCheckCard';
 import ErrorBu from './ErrorBu'; 
 
 export default function Selo({ id }) {
   const [isProofTrue, setIsProofTrue] = useState("(loading...)");
-  const [isCertificateModalOpen, setIsCertificateModalOpen] = useState(false);
+  const [isInclusionCheckCardModalOpen, setIsInclusionCheckCardModalOpen] = useState(false);
   const [isErrorBuModalOpen, setIsErrorBuModalOpen] = useState(false); 
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function Selo({ id }) {
 
   const handleModalToggle = () => {
     if (isProofTrue === 'True') {
-      setIsCertificateModalOpen(!isCertificateModalOpen);
+      setIsInclusionCheckCardModalOpen(!isInclusionCheckCardModalOpen);
     } else if (isProofTrue === 'False') {
       setIsErrorBuModalOpen(!isErrorBuModalOpen);
     }
@@ -38,7 +38,7 @@ export default function Selo({ id }) {
           />
         </p>
       </div>
-      {isCertificateModalOpen && <Certificate id={id} closeModal={() => setIsCertificateModalOpen(false)} />}
+      {isInclusionCheckCardModalOpen && <InclusionCheckCard id={id} closeModal={() => setIsInclusionCheckCardModalOpen(false)} />}
       {isErrorBuModalOpen && <ErrorBu id={id} closeModal={() => setIsErrorBuModalOpen(false)} />}
 
     </>

@@ -4,7 +4,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { getBuById } from '../../../endpoints/bu.api';
 import { getAllRoots } from '../../../endpoints/merkletree.api'; 
 import { useNavigate } from 'react-router-dom'; 
-const Certificate = ({ closeModal, id }) => {
+const InclusionCheckCard = ({ closeModal, id }) => {
   const [buData, setBuData] = useState(null);
   const [lastRoot, setLastRoot] = useState({ value: '', timestamp: '' }); 
   const [buHash, setBuHash] = useState('');
@@ -14,9 +14,8 @@ const Certificate = ({ closeModal, id }) => {
     const fetchBu = async () => {
       if (id) {
         const bu = await getBuById(id);
-        const buInteiroParsed = JSON.parse(bu.bu_json);
-        setBuData(buInteiroParsed);
-        setBuHash(bu.merkletree_leaf);
+        const election = bu.eleicoes[0]
+        setBuHash(bu.merkletree_info[election].hash);
       }
     };
 
@@ -56,25 +55,31 @@ const Certificate = ({ closeModal, id }) => {
 
         <h2 className="text-lg font-bold mb-4 text-gray-800">Verificação de inclusão de BU</h2>
         <div className='flex gap-8'>
-          
-          <div className="font-bold mb-4 text-blue-light flex items-center gap-2">
-            <CheckCircleIcon style={{ color: '#66FF99' }} />
-            <h2>O bu foi verificado corretamente</h2>
+          <div>
+            <div className="font-bold  text-blue-light flex items-center gap-2">
+              <CheckCircleIcon style={{ color: '#66FF99' }} />
+              <h2>Este BU foi verificado corretamente</h2>
+            </div>
+            <div className="text-gray text-sm mb-4">Ele está presente na árvore e não pode ser modificado</div>
           </div>
+
           <h2 className='text-center  text-md relative font-sans font-bold text-yellow underline cursor-pointer' onClick={navigateToInclusion}>Saiba Mais</h2>
         </div>
 
         <div className="text-sm  font-bold text-gray">
+
+          <div className="mb-3">
+            <strong className='text-blue-light'>BU:</strong>
+            <div>Hash: {buHash}</div>
+          </div>
+
           <div className="mb-3">
             <strong className='text-blue-light'>Raiz Global:</strong>
             <div>Hash: {lastRoot.value}</div>
             <div>Gerado em: {lastRoot.timestamp}</div> 
           </div>
 
-          <div className="mb-3">
-            <strong className='text-blue-light'>BU:</strong>
-            <div>Hash: {buHash}</div>
-          </div>
+          
         </div>
 
         <div className="flex gap-4">
@@ -85,4 +90,4 @@ const Certificate = ({ closeModal, id }) => {
   );
 };
 
-export default Certificate;
+export default InclusionCheckCard;
