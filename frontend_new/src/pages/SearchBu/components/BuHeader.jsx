@@ -3,7 +3,7 @@ import { getBuById } from '../../../endpoints/bu.api';
 import { useParams } from 'react-router-dom';
 import Selo from './Selo';
 
-function Bu({ onSendToMonitor }) {
+function BuHeader({ onSendToMonitor }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id } = useParams();
 
@@ -113,12 +113,8 @@ function Bu({ onSendToMonitor }) {
           </div>
       </div>
 
-      <h1 className='text-black text-base font-bold'>Urna Eletrônica - Correspondência Efetivada</h1>
+      <h1 className='text-black text-base font-bold'>Informações da Urna Eletrônica</h1>
       <div className='grid md2:grid-cols-4 grid-cols-2 gap-x-8 gap-y-4'>
-        <div className='space-y-2 border-[1px] rounded-xl p-2 border-gray'>
-          <h1 className='text-gray  text-base font-bold'>Tipo de Arquivo:</h1>
-          <h1 className='text-blue-light  text-base font-bold'>Urna Eletrônica</h1>
-        </div>
         <div className='space-y-2 border-[1px] rounded-xl p-2 border-gray'>
           <h1 className='text-gray  text-base font-bold'>Código de Identificação UE:</h1>
           <h1 className='text-blue-light  text-base font-bold'>{numeroInternoUrna}</h1>
@@ -131,18 +127,10 @@ function Bu({ onSendToMonitor }) {
           <h1 className='text-gray  text-base font-bold'>Data de Fechamento UE:</h1>
           <h1 className='text-blue-light  text-base font-bold'>{dataHoraEncerramento}</h1>
         </div>
-      </div>
-
-      <div className='sm:grid sm:grid-cols-4 grid-cols-2 gap-x-8 gap-y-4'>
         <div className='sm:col-span-1 space-y-2 border-[1px] rounded-xl p-2 border-gray '>
           <h1 className='text-gray  text-base font-bold'>Código de identificação da carga:</h1>
           <h1 className='text-blue-light  text-base font-bold break-all'>{codigoCarga}</h1>
         </div>
-        <div className='sm:col-span-1 space-y-2 border-[1px] rounded-xl p-2 border-gray'>
-          <h1 className='text-gray  text-base font-bold'>Código de identificação MC:</h1>
-          <h1 className='text-blue-light  text-base font-bold'>não achei</h1>
-        </div>
-
       </div>
     </div>
 
@@ -151,4 +139,4 @@ function Bu({ onSendToMonitor }) {
   );
 }
 
-export default Bu;
+export default BuHeader;
