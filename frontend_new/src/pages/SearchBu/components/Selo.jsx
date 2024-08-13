@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Correto from '../../../assets/Correto.svg';
 import Incorreto from '../../../assets/Incorreto.svg';
-import { verifySingleData } from '../../../services/verifications.js';
+import { verifySingleData, getDataProofFromBU } from '../../../services/verifications.js';
+import { getTrustedRoot } from '../../../endpoints/merkletree.api.js';
 import InclusionCheckCard from './InclusionCheckCard';
 import ErrorBu from './ErrorBu'; 
 
-export default function Selo({ id }) {
+export default function Selo({ id, bu }) {
   const [isProofTrue, setIsProofTrue] = useState("(loading...)");
   const [isInclusionCheckCardModalOpen, setIsInclusionCheckCardModalOpen] = useState(false);
   const [isErrorBuModalOpen, setIsErrorBuModalOpen] = useState(false); 
 
   useEffect(() => {
     const run = async () => {
-      const proofStatus = await verifySingleData(id);
+      const buInteiro = JSON.stringify(bu["bu"]);
+      const proof = await getDataProofFromBU(bu);
+      const root = await getTrustedRoot();
+
+      const proofStatus = await verifySingleData(buInteiro, proof, root);
       console.log(proofStatus);
       setIsProofTrue(proofStatus);
     };

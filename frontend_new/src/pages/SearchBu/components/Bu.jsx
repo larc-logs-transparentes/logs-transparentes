@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Correto from '../../../assets/Correto.svg';
-import SendBu from './SendBu';
-import ManualAutomatic from './ManualAutomatic';
 import { getBuById } from '../../../endpoints/bu.api';
 import { useParams } from 'react-router-dom';
 import Selo from './Selo';
@@ -18,18 +15,23 @@ function Bu({ onSendToMonitor }) {
   };
 
   const [buData, setBuData] = useState(null);
+  const [bu, setBu] = useState(null);
 
   useEffect(() => {
     const fetchBu = async () => {
       if (id) {
         const bu = await getBuById(id);
+        // TODO: get bu from BU raw data
         const buInteiroParsed = JSON.parse(bu.bu_json);
         setBuData(buInteiroParsed);
+        setBu(bu);
       }
     };
 
     fetchBu();
   }, [id]);
+
+  
 
   function downloadJson() {
     const json = JSON.stringify(buData, null, 2);
@@ -71,7 +73,7 @@ function Bu({ onSendToMonitor }) {
 
             <button onClick={downloadJson} className="rounded-full bg-yellow px-2 h-[37px] w-[102px] font-bold ml-4">Baixar Bu</button>
 
-            <Selo id={id} />
+            <Selo id={id} bu={bu} />
           </div>
         </div>
 

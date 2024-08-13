@@ -1,20 +1,11 @@
-import { getDataProof, getTrustedRoot } from '../endpoints/merkletree.api.js';
-import { getBuById } from '../endpoints/bu.api.js';
+import { getDataProof } from '../endpoints/merkletree.api.js';
 import { initPyodide, formatDataProofToPython } from './pyodide.js';
 
-export async function verifySingleData(id) {
-
-    let bu = await getBuById(id);
-    console.log(bu)
-
-    let dataProof = await getDataProofFromBU(bu)
-    console.log(dataProof)
-    let root = await getTrustedRoot();
-
-    formatDataProofToPython(dataProof);
+export async function verifySingleData(data, proof, root) {
+    formatDataProofToPython(proof);
     root = JSON.stringify(root);
-    dataProof = JSON.stringify(dataProof);
-    const buInteiro = JSON.stringify(bu["bu"]);
+    proof = JSON.stringify(proof);
+
     const pyodide = await initPyodide();
     const pythonCode = `
     import json
@@ -24,14 +15,14 @@ export async function verifySingleData(id) {
     def verify_data():
         # Load and parse JSON data
         try:
-            dataProof = str(${dataProof})
+            dataProof = str(${proof})
             dataProof = dataProof.replace("'", '"')
             dataProof = json.loads(dataProof)
         except (json.JSONDecodeError, TypeError):
             return "Invalid format for dataProof"
 
         try:
-            bu = str(${buInteiro})
+            bu = str(${data})
             bu = base64.b64decode(bu)
         except ValueError:
             return "Invalid format for buInteiro"
