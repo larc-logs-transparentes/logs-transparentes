@@ -4,43 +4,15 @@ import { useParams } from 'react-router-dom';
 import Candidato from '../../../assets/Candidato.svg';
 import Votacao from '../../../assets/Votacao.svg';
 
-function Result({ cargo }) { 
-  const { id } = useParams(); 
-  const [buData, setBuData] = useState(null);
-
+function Result({ cargo, buData }) { 
   useEffect(() => {
-    const fetchBu = async () => {
-      if (id) {
-        const bu = await getBuById(id);
-        const buInteiroParsed = JSON.parse(bu.bu_json);
-        setBuData(buInteiroParsed);
-      }
-    };
-
-    fetchBu();
-  }, [id]);
+  }, []);
 
 
   if (!buData) {
     return <div>Loading...</div>;
   }
 
-  // const getCargoIndexes = (cargo) => {
-  //   switch (cargo) {
-  //     case 'presidente':
-  //       return { resultadoVotacaoPorEleicaoIndex: 1, resultadoVotacaoIndex: 0, totaisvotosCargoIndex: 0 };
-  //     case 'governador':
-  //       return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 1,totaisvotosCargoIndex: 1 };
-  //     case 'senador':
-  //       return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 1,totaisvotosCargoIndex: 0 };
-  //     case 'deputado federal':
-  //       return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0,totaisvotosCargoIndex: 0 };
-  //     case 'deputado estadual':
-  //       return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0,totaisvotosCargoIndex: 1 };
-  //     default:
-  //       return { resultadoVotacaoPorEleicaoIndex: 1, resultadoVotacaoIndex: 0, totaisvotosCargoIndex: 0 };
-  //   }
-  // };
   const colorClasses = [
     'bg-blue-light-30',
     'bg-yellow-30',

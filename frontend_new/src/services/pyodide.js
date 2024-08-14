@@ -12,7 +12,7 @@ export async function initPyodide(){
   return pyodide
 }
 
-export async function formatProofDataToPython(proofData){
+export async function formatDataProofToPython(proofData){
   if (proofData.local_tree.inclusion_proof.metadata.security) {
     proofData.local_tree.inclusion_proof.metadata.security = 'True';
   } else {

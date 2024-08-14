@@ -8,7 +8,7 @@
   function Header() {
     const [activeSlide, setActiveSlide] = useState(0);
     const slides = [
-      { src: Imutavel, title: 'Imutável', desc: 'rmazenamos dos dados das eleições em logs imutáveis e transparentes, à prova de manipulações' },
+      { src: Imutavel, title: 'Imutável', desc: 'Armazenamos dos dados das eleições em logs imutáveis e transparentes, à prova de manipulações' },
       { src: Verificacao, title: 'Verificável', desc: 'Confira você mesmo os dados do TSE e calcule o resultado da eleição' },
       { src: Distribuido, title: 'Distribuído', desc: 'Qualquer entidade pode monitorar o nosso trabalho e o do TSE' }
     ];
