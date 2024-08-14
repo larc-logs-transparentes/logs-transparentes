@@ -4,12 +4,12 @@ import { useParams } from 'react-router-dom';
 import Candidato from '../../../assets/Candidato.svg';
 import Votacao from '../../../assets/Votacao.svg';
 
-function Result({ cargo, buData }) { 
+function Result({ buResults, electionId, ableVoters, presentVoters }) { 
   useEffect(() => {
   }, []);
 
 
-  if (!buData) {
+  if (!buResults) {
     return <div>Loading...</div>;
   }
 
@@ -25,42 +25,29 @@ function Result({ cargo, buData }) {
     return colorClasses[index % colorClasses.length]; 
   };
 
-  const getCargoIndexes = (cargo) => {
-    switch (cargo) {
-      case 'presidente':
-        return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0, totaisvotosCargoIndex: 0 };
-      case 'governador':
-        return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0,totaisvotosCargoIndex: 1 };
-      default:
-        return { resultadoVotacaoPorEleicaoIndex: 0, resultadoVotacaoIndex: 0, totaisvotosCargoIndex: 0 };
-    }
-  };
+  const comparecimento = presentVoters;
+  const office= buResults.codigoCargo[1];
+  const id_eleicao=  electionId;
+  const eleitoresAptos=ableVoters;
 
-  const { resultadoVotacaoPorEleicaoIndex, resultadoVotacaoIndex, totaisvotosCargoIndex } = getCargoIndexes(cargo);
-
-  const comparecimento = buData.resultadosVotacaoPorEleicao[resultadoVotacaoPorEleicaoIndex].resultadosVotacao[resultadoVotacaoIndex].qtdComparecimento;
-  const position= buData.resultadosVotacaoPorEleicao[resultadoVotacaoPorEleicaoIndex].resultadosVotacao[resultadoVotacaoIndex].totaisVotosCargo[totaisvotosCargoIndex].codigoCargo[1];
-  const id_eleicao=  buData.resultadosVotacaoPorEleicao[resultadoVotacaoPorEleicaoIndex].idEleicao;
-  const eleitoresAptos=buData.resultadosVotacaoPorEleicao[resultadoVotacaoPorEleicaoIndex].qtdEleitoresAptos;
-
-  const votos = buData.resultadosVotacaoPorEleicao[resultadoVotacaoPorEleicaoIndex].resultadosVotacao[resultadoVotacaoIndex].totaisVotosCargo[totaisvotosCargoIndex].votosVotaveis;
-  const votosNominais = votos.filter(voto => voto.tipoVoto === 'nominal');
+  const votos = buResults.votosVotaveis;
+  const votosNominais = votos.filter(voto => voto.tipoVoto === 'nominal' || voto.tipoVoto === 'legenda'  );
   const votosBrancos = votos.find(voto => voto.tipoVoto === 'branco')?.quantidadeVotos || 0;
   const votosNulos = votos.find(voto => voto.tipoVoto === 'nulo')?.quantidadeVotos || 0;
   const totalVotos = votosNominais.reduce((acc, voto) => acc + voto.quantidadeVotos, 0);
   const totalVotosNominais = votosNominais.reduce((acc, voto) => acc + voto.quantidadeVotos, 0);
   
-  const addSpacesToPosition = (position) => {
-    return position.replace(/([A-Z])/g, ' $1').trim();
+  const addSpacesToOffice = (office) => {
+    return office.replace(/([A-Z])/g, ' $1').trim();
 }
-  const formattedPosition = addSpacesToPosition(position);
+  const formattedOffice = addSpacesToOffice(office);
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center mb-6">
     <div className='w-[90vw] md2:w-[90vw] md2:min-h-[60vh] justify-center border-2 border-blue-light rounded-2xl p-5 space-y-8'> 
 
       <h1 className='text-black text-lg font-medium'>Eleição {id_eleicao}</h1>
-      <h2 className='text-blue text-2xl font-medium mb-4 capitalize'>{formattedPosition}</h2>
+      <h2 className='text-blue text-2xl font-medium mb-4 capitalize'>{formattedOffice}</h2>
 
       <div className='grid md2:grid-cols-2 grid-cols-2  gap-y-12 gap-12'>
 
@@ -83,6 +70,8 @@ function Result({ cargo, buData }) {
         </div>
       ))}
       </div>
+
+      
       <div className='grid md2:grid-cols-3 grid-cols-2 gap-y-8  gap-2 '>
         <div className='space-y-2 border-[1px] rounded-xl p-2 border-gray'>
           <h1 className='text-gray text-xs font-bold'>Votos em branco</h1>

@@ -22,6 +22,7 @@ function SearchBu() {
           const buInteiroParsed = JSON.parse(bu.bu_json);
           setBuData(buInteiroParsed);
           setBu(bu)
+          console.log(buInteiroParsed)
         }
       }
     };
@@ -29,14 +30,36 @@ function SearchBu() {
     fetchBu();
   }, [id]);
 
+  const renderBuResults = () => {
+    return (
+      <div>
+      {buData.resultadosVotacaoPorEleicao.map((election, index) =>
+        election.resultadosVotacao.map((office, index) =>
+          office.totaisVotosCargo.map((result, index) => 
+            <BuResult buResults={result} 
+                      electionId={election.idEleicao} 
+                      ableVoters={election.qtdEleitoresAptos}
+                      presentVoters={office.qtdComparecimento} />
+          )
+        )
+
+          
+      )}
+      </div>
+    )
+  }
+
+
   return (
     <div>
       <SearchBar />
-      {id ? (
+      {buData ? (
         <div className='flex place-content-center p-[20px]'>
           <div className='flex-col items-center space-y-[20px]'>     
             <BuHeader buData={buData} bu={bu}/>
-            <BuResult buData={buData} cargo="presidente" />
+            
+            {renderBuResults()}
+            
             {/* TODO mostrar outros cargos do BU */}
             {/* <Result cargo="senador" />
             <Result cargo="deputado federal" />
