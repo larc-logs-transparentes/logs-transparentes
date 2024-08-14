@@ -20,7 +20,7 @@ function SearchBu() {
           const buInteiroParsed = JSON.parse(bu.bu_json);
           setBuData(buInteiroParsed);
           setBu(bu);
-          console.log(buInteiroParsed);
+          console.log(bu);
         }
       }
     };
