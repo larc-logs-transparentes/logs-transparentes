@@ -29,11 +29,11 @@ const Cards = () => {
     const formatTreeData = (trees) => {
         return trees.map((treeName) => ({
             title: treeName,
-            subtitle: treeName.slice(-3),
+            treeIndex: treeName.slice(-3),
             description: `Raiz da árvore ${treeName.slice(-3)}`,
             downloadLeavesUrl: `http://localhost:8080/bu/find_by_merkletree_index_range?election_id=${treeName}`,
             donwloadTreeRootUrl: `http://localhost:8080/tree/tree-root?tree_name=${treeName}`,
-            info: `http://localhost:8080/tree/?tree_name=${treeName}`,
+            treeInfoUrl: `http://localhost:8080/tree/?tree_name=${treeName}`,
             downloadAllGlobalRootsUrl: 'http://localhost:8080/tree/all-roots-global-tree'
         }));
     };
@@ -67,7 +67,7 @@ const Cards = () => {
                             className="w-12 md:w-16 h-10 md:h-14 mx-auto" 
                         />
                         <h2 className="text-lg md:text-2xl text-black font-inter font-semibold text-center mb-2">
-                            Árvore {card.subtitle}
+                            Árvore {card.treeIndex}
                         </h2>
                     </div>
                 </div>

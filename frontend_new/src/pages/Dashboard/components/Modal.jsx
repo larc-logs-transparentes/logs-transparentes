@@ -17,8 +17,8 @@ const Modal = ({ isOpen, onClose, card, isFirst }) => {
         setRootValue(await fetchRootValue(card.donwloadTreeRootUrl));
       }
 
-      if (card.info || isFirst) {
-        setNumberOfElementsOnTree(await fetchNumberOfElementsOnTree(card.info, isFirst));
+      if (card.treeInfoUrl || isFirst) {
+        setNumberOfElementsOnTree(await fetchNumberOfElementsOnTree(card.treeInfoUrl, isFirst));
       }
 
       if (isFirst && card.downloadAllGlobalRootsUrl) {
