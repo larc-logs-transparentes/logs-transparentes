@@ -1,6 +1,6 @@
 import { getDataProof, getTrustedRoot } from '../endpoints/merkletree.api.js';
 import { getBuById } from '../endpoints/bu.api.js';
-import { initPyodide, formatProofDataToPython } from './pyodide.js';
+import { initPyodide, formatDataProofToPython } from './pyodide.js';
 
 export async function VerificationDragAndDrop(id,bu_teste) {
 
@@ -15,7 +15,7 @@ export async function VerificationDragAndDrop(id,bu_teste) {
     let proofData = await getDataProof(index, treeName, buId);
     let root = await getTrustedRoot();
 
-    formatProofDataToPython(proofData);
+    formatDataProofToPython(proofData);
     root = JSON.stringify(root);
     proofData = JSON.stringify(proofData);
     const buInteiro = JSON.stringify(bu_teste);
