@@ -1,14 +1,14 @@
-import { getDataProof } from '../endpoints/merkletree.api.js';
-import { initPyodide, formatDataProofToPython } from './pyodide.js';
+import { getDataProof } from "../endpoints/merkletree.api.js";
+import { initPyodide, formatDataProofToPython } from "./pyodide.js";
 
 export async function verifySingleData(data, proof, root) {
-    formatDataProofToPython(proof);
-    root = JSON.stringify(root);
-    proof = JSON.stringify(proof);
-    data = JSON.stringify(data);
+  formatDataProofToPython(proof);
+  root = JSON.stringify(root);
+  proof = JSON.stringify(proof);
+  data = JSON.stringify(data);
 
-    const pyodide = await initPyodide();
-    const pythonCode = `
+  const pyodide = await initPyodide();
+  const pythonCode = `
     import json
     import base64
     from tlverifier.merkle_functions.tl_functions import verify_data_entry
@@ -40,15 +40,20 @@ export async function verifySingleData(data, proof, root) {
 
     verify_data()
     `;
-    return await pyodide.runPythonAsync(pythonCode);
+  return await pyodide.runPythonAsync(pythonCode);
 }
 
-export async function getDataProofFromBU(bu){
-    const merkletreeInfo = bu.merkletree_info[Object.keys(bu.merkletree_info)[0]];
-    const treeName = merkletreeInfo.tree_name;
-    const index = merkletreeInfo.index;
-    const buId = bu._id;
+export async function getDataProofsFromBU(bu) {
+  const proofs = await Promise.all(
+    bu.eleicoes.map(async (electionId) => {
+      const merkletreeInfo = bu.merkletree_info[electionId];
+      const treeName = merkletreeInfo.tree_name;
+      const index = merkletreeInfo.index;
+      const buId = bu._id;
 
-    const dataProof = await getDataProof(index, treeName, buId);
-    return dataProof;
+      const dataProof = await getDataProof(index, treeName, buId);
+      return dataProof;
+    })
+  );
+  return proofs;
 }
