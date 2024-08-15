@@ -1,0 +1,1985 @@
+{
+    "dg": "04/06/2024",
+    "hg": "19:23:15",
+    "f": "O",
+    "c": "ele2022",
+    "pl": [
+        {
+            "cd": "406",
+            "cdpr": "395",
+            "dt": "02/10/2022",
+            "dtlim": "02/09/2024",
+            "e": [
+                {
+                    "cd": "546",
+                    "cdt2": "547",
+                    "nm": "Eleição Ordinária Estadual - 2022 1&#186; Turno",
+                    "t": "1",
+                    "tp": "1",
+                    "abr": [
+                        {
+                            "cd": "BR",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                },
+                                {
+                                    "cd": "5",
+                                    "ds": "Senador",
+                                    "tp": "1"
+                                },
+                                {
+                                    "cd": "6",
+                                    "ds": "Deputado Federal",
+                                    "tp": "2"
+                                },
+                                {
+                                    "cd": "7",
+                                    "ds": "Deputado Estadual",
+                                    "tp": "2"
+                                },
+                                {
+                                    "cd": "8",
+                                    "ds": "Deputado Distrital",
+                                    "tp": "2"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "544",
+                    "cdt2": "545",
+                    "nm": "Eleição Ordinária Federal - 2022 1&#186; Turno",
+                    "t": "1",
+                    "tp": "8",
+                    "abr": [
+                        {
+                            "cd": "BR",
+                            "cp": [
+                                {
+                                    "cd": "1",
+                                    "ds": "Presidente",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "548",
+                    "cdt2": "",
+                    "nm": "Eleição Ordinária Municipal - 2022 - 02/10/2022 1&#186; Turno",
+                    "t": "1",
+                    "tp": "3",
+                    "abr": [
+                        {
+                            "cd": "BR",
+                            "cp": [
+                                {
+                                    "cd": "25",
+                                    "ds": "Conselheiro Distrital",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "407",
+            "cdpr": "395",
+            "dt": "30/10/2022",
+            "dtlim": "30/09/2024",
+            "e": [
+                {
+                    "cd": "571",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Vilhena",
+                    "t": "2",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RO",
+                            "mu": [
+                                {
+                                    "cd": "00132",
+                                    "cdi": "1100304"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "563",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Canoinhas",
+                    "t": "2",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "SC",
+                            "mu": [
+                                {
+                                    "cd": "80730",
+                                    "cdi": "4203808"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "574",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Joaquim Nabuco",
+                    "t": "2",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PE",
+                            "mu": [
+                                {
+                                    "cd": "24635",
+                                    "cdi": "2608206"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "562",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Pesqueira",
+                    "t": "2",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PE",
+                            "mu": [
+                                {
+                                    "cd": "25178",
+                                    "cdi": "2610905"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "547",
+                    "cdt2": "",
+                    "nm": "Eleição Ordinária Estadual - 2022 2&#186; Turno",
+                    "t": "2",
+                    "tp": "1",
+                    "abr": [
+                        {
+                            "cd": "AM",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "cd": "PE",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "cd": "RO",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "cd": "MS",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "cd": "SE",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "cd": "ES",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "cd": "RS",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "cd": "SC",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "cd": "AL",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "cd": "BA",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "cd": "PB",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "cd": "SP",
+                            "cp": [
+                                {
+                                    "cd": "3",
+                                    "ds": "Governador",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "565",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Cerro Grande",
+                    "t": "2",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RS",
+                            "mu": [
+                                {
+                                    "cd": "85227",
+                                    "cdi": "4305157"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "566",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Entre Rios Do Sul",
+                    "t": "2",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RS",
+                            "mu": [
+                                {
+                                    "cd": "85928",
+                                    "cdi": "4306957"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "564",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Cachoeirinha",
+                    "t": "2",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RS",
+                            "mu": [
+                                {
+                                    "cd": "85618",
+                                    "cdi": "4303103"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "572",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Pinhalzinho",
+                    "t": "2",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "SP",
+                            "mu": [
+                                {
+                                    "cd": "68675",
+                                    "cdi": "3538204"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "545",
+                    "cdt2": "",
+                    "nm": "Eleição Ordinária Federal - 2022 2&#186; Turno",
+                    "t": "2",
+                    "tp": "8",
+                    "abr": [
+                        {
+                            "cd": "BR",
+                            "cp": [
+                                {
+                                    "cd": "1",
+                                    "ds": "Presidente",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "436",
+            "cdpr": "423",
+            "dt": "07/05/2023",
+            "dtlim": "07/04/2025",
+            "e": [
+                {
+                    "cd": "602",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Boa Ventura",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PB",
+                            "mu": [
+                                {
+                                    "cd": "19437",
+                                    "cdi": "2502102"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "13",
+                                    "ds": "Vereador",
+                                    "tp": "2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "429",
+            "cdpr": "416",
+            "dt": "05/02/2023",
+            "dtlim": "05/01/2025",
+            "e": [
+                {
+                    "cd": "591",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Viseu",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PA",
+                            "mu": [
+                                {
+                                    "cd": "05657",
+                                    "cdi": "1508308"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "456",
+            "cdpr": "442",
+            "dt": "03/03/2024",
+            "dtlim": "03/02/2026",
+            "e": [
+                {
+                    "cd": "623",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Pedro Velho",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RN",
+                            "mu": [
+                                {
+                                    "cd": "17957",
+                                    "cdi": "2409803"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "434",
+            "cdpr": "421",
+            "dt": "05/03/2023",
+            "dtlim": "05/02/2025",
+            "e": [
+                {
+                    "cd": "599",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Redentora",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RS",
+                            "mu": [
+                                {
+                                    "cd": "88110",
+                                    "cdi": "4315404"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "596",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Caseiros",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RS",
+                            "mu": [
+                                {
+                                    "cd": "85880",
+                                    "cdi": "4304952"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "598",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Miraguaí",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RS",
+                            "mu": [
+                                {
+                                    "cd": "87475",
+                                    "cdi": "4312302"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "597",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Capão Do Cipó",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RS",
+                            "mu": [
+                                {
+                                    "cd": "89141",
+                                    "cdi": "4304655"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "451",
+            "cdpr": "438",
+            "dt": "03/03/2024",
+            "dtlim": "03/02/2026",
+            "e": [
+                {
+                    "cd": "618",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Massaranduba",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PB",
+                            "mu": [
+                                {
+                                    "cd": "20850",
+                                    "cdi": "2509206"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "437",
+            "cdpr": "424",
+            "dt": "07/05/2023",
+            "dtlim": "07/04/2025",
+            "e": [
+                {
+                    "cd": "603",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Xavantina",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "SC",
+                            "mu": [
+                                {
+                                    "cd": "83852",
+                                    "cdi": "4219606"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "439",
+            "cdpr": "426",
+            "dt": "02/07/2023",
+            "dtlim": "02/06/2025",
+            "e": [
+                {
+                    "cd": "605",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Divisa Alegre",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "MG",
+                            "mu": [
+                                {
+                                    "cd": "40126",
+                                    "cdi": "3122355"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "457",
+            "cdpr": "443",
+            "dt": "07/04/2024",
+            "dtlim": "07/03/2026",
+            "e": [
+                {
+                    "cd": "624",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Analândia",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "SP",
+                            "mu": [
+                                {
+                                    "cd": "61395",
+                                    "cdi": "3502002"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "426",
+            "cdpr": "413",
+            "dt": "27/11/2022",
+            "dtlim": "27/10/2024",
+            "e": [
+                {
+                    "cd": "587",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Tanabi",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "SP",
+                            "mu": [
+                                {
+                                    "cd": "71692",
+                                    "cdi": "3553401"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "421",
+            "cdpr": "408",
+            "dt": "27/11/2022",
+            "dtlim": "27/10/2024",
+            "e": [
+                {
+                    "cd": "581",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Maraial",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PE",
+                            "mu": [
+                                {
+                                    "cd": "24830",
+                                    "cdi": "2609204"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "446",
+            "cdpr": "433",
+            "dt": "12/11/2023",
+            "dtlim": "12/10/2025",
+            "e": [
+                {
+                    "cd": "612",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Boqueirão",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PB",
+                            "mu": [
+                                {
+                                    "cd": "19518",
+                                    "cdi": "2502508"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "13",
+                                    "ds": "Vereador",
+                                    "tp": "2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "431",
+            "cdpr": "418",
+            "dt": "05/02/2023",
+            "dtlim": "05/01/2025",
+            "e": [
+                {
+                    "cd": "593",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Pacujá",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "CE",
+                            "mu": [
+                                {
+                                    "cd": "14990",
+                                    "cdi": "2309904"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "454",
+            "cdpr": "440",
+            "dt": "03/03/2024",
+            "dtlim": "03/02/2026",
+            "e": [
+                {
+                    "cd": "621",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Gilbués",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PI",
+                            "mu": [
+                                {
+                                    "cd": "10871",
+                                    "cdi": "2204402"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "13",
+                                    "ds": "Vereador",
+                                    "tp": "2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "455",
+            "cdpr": "441",
+            "dt": "03/03/2024",
+            "dtlim": "03/02/2026",
+            "e": [
+                {
+                    "cd": "622",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Dom Expedito Lopes",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PI",
+                            "mu": [
+                                {
+                                    "cd": "10677",
+                                    "cdi": "2203404"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "422",
+            "cdpr": "409",
+            "dt": "27/11/2022",
+            "dtlim": "27/10/2024",
+            "e": [
+                {
+                    "cd": "583",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Canguaretama",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RN",
+                            "mu": [
+                                {
+                                    "cd": "16438",
+                                    "cdi": "2402204"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "582",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Pedro Velho",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RN",
+                            "mu": [
+                                {
+                                    "cd": "17957",
+                                    "cdi": "2409803"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "448",
+            "cdpr": "435",
+            "dt": "03/12/2023",
+            "dtlim": "03/11/2025",
+            "e": [
+                {
+                    "cd": "615",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Itupeva",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "SP",
+                            "mu": [
+                                {
+                                    "cd": "65811",
+                                    "cdi": "3524006"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "614",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Ubarana",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "SP",
+                            "mu": [
+                                {
+                                    "cd": "61468",
+                                    "cdi": "3555356"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "424",
+            "cdpr": "411",
+            "dt": "27/11/2022",
+            "dtlim": "27/10/2024",
+            "e": [
+                {
+                    "cd": "585",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Maiquinique",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "BA",
+                            "mu": [
+                                {
+                                    "cd": "37010",
+                                    "cdi": "2920007"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "420",
+            "cdpr": "407",
+            "dt": "11/12/2022",
+            "dtlim": "11/11/2024",
+            "e": [
+                {
+                    "cd": "580",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Divisa Alegre",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "MG",
+                            "mu": [
+                                {
+                                    "cd": "40126",
+                                    "cdi": "3122355"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "438",
+            "cdpr": "425",
+            "dt": "04/06/2023",
+            "dtlim": "04/05/2025",
+            "e": [
+                {
+                    "cd": "604",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Lamim",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "MG",
+                            "mu": [
+                                {
+                                    "cd": "47570",
+                                    "cdi": "3137908"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "449",
+            "cdpr": "436",
+            "dt": "03/12/2023",
+            "dtlim": "03/11/2025",
+            "e": [
+                {
+                    "cd": "616",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Bom Jardim De Goiás",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "GO",
+                            "mu": [
+                                {
+                                    "cd": "92673",
+                                    "cdi": "5203401"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "423",
+            "cdpr": "410",
+            "dt": "11/12/2022",
+            "dtlim": "11/11/2024",
+            "e": [
+                {
+                    "cd": "584",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Monte Horebe",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PB",
+                            "mu": [
+                                {
+                                    "cd": "20931",
+                                    "cdi": "2509602"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "13",
+                                    "ds": "Vereador",
+                                    "tp": "2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "464",
+            "cdpr": "450",
+            "dt": "09/06/2024",
+            "dtlim": "09/05/2026",
+            "e": [
+                {
+                    "cd": "631",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Monte Alegre",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PA",
+                            "mu": [
+                                {
+                                    "cd": "04952",
+                                    "cdi": "1504802"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "459",
+            "cdpr": "445",
+            "dt": "28/04/2024",
+            "dtlim": "28/03/2026",
+            "e": [
+                {
+                    "cd": "626",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Alto Alegre",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RR",
+                            "mu": [
+                                {
+                                    "cd": "03050",
+                                    "cdi": "1400050"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "425",
+            "cdpr": "412",
+            "dt": "11/12/2022",
+            "dtlim": "11/11/2024",
+            "e": [
+                {
+                    "cd": "586",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Baixio",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "CE",
+                            "mu": [
+                                {
+                                    "cd": "13358",
+                                    "cdi": "2301802"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "433",
+            "cdpr": "420",
+            "dt": "05/03/2023",
+            "dtlim": "05/02/2025",
+            "e": [
+                {
+                    "cd": "595",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Ipanguaçu",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RN",
+                            "mu": [
+                                {
+                                    "cd": "16918",
+                                    "cdi": "2404705"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "447",
+            "cdpr": "434",
+            "dt": "12/11/2023",
+            "dtlim": "12/10/2025",
+            "e": [
+                {
+                    "cd": "613",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Mãe D&apos;Água",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PB",
+                            "mu": [
+                                {
+                                    "cd": "20753",
+                                    "cdi": "2508703"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "13",
+                                    "ds": "Vereador",
+                                    "tp": "2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "460",
+            "cdpr": "446",
+            "dt": "28/04/2024",
+            "dtlim": "28/03/2026",
+            "e": [
+                {
+                    "cd": "627",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Turvelândia",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "GO",
+                            "mu": [
+                                {
+                                    "cd": "92800",
+                                    "cdi": "5221551"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "427",
+            "cdpr": "414",
+            "dt": "27/11/2022",
+            "dtlim": "27/10/2024",
+            "e": [
+                {
+                    "cd": "588",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Ibitirama",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "ES",
+                            "mu": [
+                                {
+                                    "cd": "56502",
+                                    "cdi": "3202553"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "458",
+            "cdpr": "444",
+            "dt": "28/04/2024",
+            "dtlim": "28/03/2026",
+            "e": [
+                {
+                    "cd": "625",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Armação Dos Búzios",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RJ",
+                            "mu": [
+                                {
+                                    "cd": "58408",
+                                    "cdi": "3300233"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "428",
+            "cdpr": "415",
+            "dt": "11/12/2022",
+            "dtlim": "11/11/2024",
+            "e": [
+                {
+                    "cd": "589",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Ribeirão Pires",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "SP",
+                            "mu": [
+                                {
+                                    "cd": "69671",
+                                    "cdi": "3543303"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "cd": "590",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Leme",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "SP",
+                            "mu": [
+                                {
+                                    "cd": "66354",
+                                    "cdi": "3526704"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "445",
+            "cdpr": "432",
+            "dt": "03/09/2023",
+            "dtlim": "03/08/2025",
+            "e": [
+                {
+                    "cd": "611",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - São Simão",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "GO",
+                            "mu": [
+                                {
+                                    "cd": "96059",
+                                    "cdi": "5220405"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "441",
+            "cdpr": "428",
+            "dt": "06/08/2023",
+            "dtlim": "06/07/2025",
+            "e": [
+                {
+                    "cd": "607",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Cachoeira Alta",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "GO",
+                            "mu": [
+                                {
+                                    "cd": "92819",
+                                    "cdi": "5204102"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "435",
+            "cdpr": "422",
+            "dt": "05/03/2023",
+            "dtlim": "05/02/2025",
+            "e": [
+                {
+                    "cd": "601",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Iaciara",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "GO",
+                            "mu": [
+                                {
+                                    "cd": "93939",
+                                    "cdi": "5209903"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "450",
+            "cdpr": "437",
+            "dt": "03/12/2023",
+            "dtlim": "03/11/2025",
+            "e": [
+                {
+                    "cd": "617",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Alto Santo",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "CE",
+                            "mu": [
+                                {
+                                    "cd": "13137",
+                                    "cdi": "2300705"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "13",
+                                    "ds": "Vereador",
+                                    "tp": "2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "461",
+            "cdpr": "447",
+            "dt": "09/06/2024",
+            "dtlim": "09/05/2026",
+            "e": [
+                {
+                    "cd": "628",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Candeias Do Jamari",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RO",
+                            "mu": [
+                                {
+                                    "cd": "00477",
+                                    "cdi": "1100809"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "440",
+            "cdpr": "427",
+            "dt": "06/08/2023",
+            "dtlim": "06/07/2025",
+            "e": [
+                {
+                    "cd": "606",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - São Lourenço Do Piauí",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PI",
+                            "mu": [
+                                {
+                                    "cd": "10561",
+                                    "cdi": "2210359"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "432",
+            "cdpr": "419",
+            "dt": "05/02/2023",
+            "dtlim": "05/01/2025",
+            "e": [
+                {
+                    "cd": "594",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Palhano",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "CE",
+                            "mu": [
+                                {
+                                    "cd": "15016",
+                                    "cdi": "2310001"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "462",
+            "cdpr": "448",
+            "dt": "28/04/2024",
+            "dtlim": "28/03/2026",
+            "e": [
+                {
+                    "cd": "629",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - São Francisco De Assis",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "RS",
+                            "mu": [
+                                {
+                                    "cd": "88650",
+                                    "cdi": "4318101"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "465",
+            "cdpr": "451",
+            "dt": "09/06/2024",
+            "dtlim": "09/05/2026",
+            "e": [
+                {
+                    "cd": "632",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Porto Real Do Colégio",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "AL",
+                            "mu": [
+                                {
+                                    "cd": "28495",
+                                    "cdi": "2707503"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "13",
+                                    "ds": "Vereador",
+                                    "tp": "2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "444",
+            "cdpr": "431",
+            "dt": "03/09/2023",
+            "dtlim": "03/08/2025",
+            "e": [
+                {
+                    "cd": "610",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Brusque",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "SC",
+                            "mu": [
+                                {
+                                    "cd": "80551",
+                                    "cdi": "4202909"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "463",
+            "cdpr": "449",
+            "dt": "09/06/2024",
+            "dtlim": "09/05/2026",
+            "e": [
+                {
+                    "cd": "630",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Bertópolis",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "MG",
+                            "mu": [
+                                {
+                                    "cd": "41319",
+                                    "cdi": "3106606"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "11",
+                                    "ds": "Prefeito",
+                                    "tp": "1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "cd": "443",
+            "cdpr": "430",
+            "dt": "03/09/2023",
+            "dtlim": "03/08/2025",
+            "e": [
+                {
+                    "cd": "609",
+                    "cdt2": "",
+                    "nm": "Eleição Suplementar - Tacaimbó",
+                    "t": "1",
+                    "tp": "4",
+                    "abr": [
+                        {
+                            "cd": "PE",
+                            "mu": [
+                                {
+                                    "cd": "25933",
+                                    "cdi": "2614709"
+                                }
+                            ],
+                            "cp": [
+                                {
+                                    "cd": "13",
+                                    "ds": "Vereador",
+                                    "tp": "2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

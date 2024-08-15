@@ -71,13 +71,13 @@ function Navbar() {
       <div className='bg-yellow h-[1vh]'></div>
       <div className='bg-blue-light h-[1vh]'></div>
       <div className='bg-blue h-[5vh]'></div>
-      <div className="flex xl:gap-[20vw] xs:gap-[10vw] md:gap-[15vw] p-2 relative bg-white font-inter font-medium font-size-16px items-center">
+      <div className="flex xl:gap-[15vw] xs:gap-[10vw] md:gap-[15vw] p-2 relative bg-white font-inter font-medium text-base items-center">
         <div className="xs:min-w-[160px] xs:min-h-[50px] xs:ml-[2vw] mt-[1vh]">
           <Link to="/" onClick={handleLogoClick}>
             <img src={Logs} className="" alt="logo" />
           </Link>
         </div>
-        <ul className='hidden md:flex  gap-[1vw] max-h-[10px] items-center justify-center'>
+        <ul className='hidden md:flex gap-[1vw] max-h-[10px] items-center justify-center'>
           <li className='mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 '>
             <Link to="/" className=''>
               Home
