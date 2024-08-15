@@ -1,4 +1,4 @@
-FROM python:3.12.2-bullseye as build-stage
+FROM python:3.12.2-slim-bullseye as build-stage
 
 WORKDIR /app
 
