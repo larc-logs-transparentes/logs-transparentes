@@ -1,46 +1,73 @@
-import React, { useEffect, useState } from 'react';
-import Correto from '../../../assets/Correto.svg';
-import Incorreto from '../../../assets/Incorreto.svg';
-import { verifySingleData } from '../../../services/verifications.js';
-import Certificate from './Certificate';
-import ErrorBu from './ErrorBu'; 
+import React, { useEffect, useState } from "react";
+import CorrectIcon from "../../../assets/Correto.svg";
+import ErrorIcon from "../../../assets/Incorreto.svg";
+import LoadingIcon from "../../../assets/loading.png";
+import {
+  verifySingleData,
+  getDataProofsFromBU,
+} from "../../../services/verifications.js";
+import { getTrustedRoot } from "../../../endpoints/merkletree.api.js";
+import InclusionCheckCard from "./InclusionCheckCard";
 
-export default function Selo({ id }) {
-  const [isProofTrue, setIsProofTrue] = useState("(loading...)");
-  const [isCertificateModalOpen, setIsCertificateModalOpen] = useState(false);
-  const [isErrorBuModalOpen, setIsErrorBuModalOpen] = useState(false); 
+export default function Selo({ bu }) {
+  const [isProofTrue, setIsProofTrue] = useState("loading");
+  const [isInclusionCheckCardModalOpen, setIsInclusionCheckCardModalOpen] =
+    useState(false);
+  const [proofs, setProofs] = useState("");
 
   useEffect(() => {
     const run = async () => {
-      const proofStatus = await verifySingleData(id);
-      console.log(proofStatus);
-      setIsProofTrue(proofStatus);
+      const buBinario = bu["bu"];
+      const proofs = await getDataProofsFromBU(bu);
+      const root = await getTrustedRoot();
+
+      const results = await Promise.all(
+        proofs.map(
+          async (proof) => await verifySingleData(buBinario, proof, root)
+        )
+      );
+
+      const isAllResultsTrue = results.every((element) => element === "True");
+
+      setProofs(proofs);
+      setIsProofTrue(isAllResultsTrue);
+      console.log("Resultado da prova de inclusão:", isAllResultsTrue);
     };
     run();
-  }, [id]);
+  }, []);
 
   const handleModalToggle = () => {
-    if (isProofTrue === 'True') {
-      setIsCertificateModalOpen(!isCertificateModalOpen);
-    } else if (isProofTrue === 'False') {
-      setIsErrorBuModalOpen(!isErrorBuModalOpen);
+    if (isProofTrue === true) {
+      setIsInclusionCheckCardModalOpen(!isInclusionCheckCardModalOpen);
+    } else {
+      setIsInclusionCheckCardModalOpen(!isInclusionCheckCardModalOpen);
+    }
+  };
+
+  const verificationIconRender = () => {
+    if (isProofTrue === true) {
+      return <img src={CorrectIcon} alt="Verificação Correta" className="" />;
+    }
+    if (isProofTrue === "loading") {
+      return <img src={LoadingIcon} alt="Carregando" className="h-16 w16" />;
+    } else {
+      return <img src={ErrorIcon} alt="Erro na Verificação" className="" />;
     }
   };
 
   return (
     <>
       <div onClick={handleModalToggle} className="cursor-pointer">
-        <p>
-          <img
-            src={isProofTrue === 'True' ? Correto : Incorreto} 
-            alt={isProofTrue === 'True' ? "Verificação Correta" : "Erro na Verificação"}
-            className=""
-          />
-        </p>
+        <p>{verificationIconRender()}</p>
       </div>
-      {isCertificateModalOpen && <Certificate id={id} closeModal={() => setIsCertificateModalOpen(false)} />}
-      {isErrorBuModalOpen && <ErrorBu id={id} closeModal={() => setIsErrorBuModalOpen(false)} />}
-
+      {isInclusionCheckCardModalOpen && (
+        <InclusionCheckCard
+          bu={bu}
+          proofs={proofs}
+          isProofTrue={isProofTrue}
+          closeModal={() => setIsInclusionCheckCardModalOpen(false)}
+        />
+      )}
     </>
   );
 }

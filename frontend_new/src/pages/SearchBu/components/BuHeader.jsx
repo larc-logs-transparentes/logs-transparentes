@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Correto from '../../../assets/Correto.svg';
-import SendBu from './SendBu';
-import ManualAutomatic from './ManualAutomatic';
-import { getBuById } from '../../../endpoints/bu.api';
-import { useParams } from 'react-router-dom';
 import Selo from './Selo';
 
-function Bu({ onSendToMonitor }) {
+function BuHeader({ bu, buData }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { id } = useParams();
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -17,27 +11,18 @@ function Bu({ onSendToMonitor }) {
     setIsModalOpen(false);
   };
 
-  const [buData, setBuData] = useState(null);
-
   useEffect(() => {
-    const fetchBu = async () => {
-      if (id) {
-        const bu = await getBuById(id);
-        const buInteiroParsed = JSON.parse(bu.bu_json);
-        setBuData(buInteiroParsed);
-      }
-    };
+  }, []);
 
-    fetchBu();
-  }, [id]);
+  
 
   function downloadJson() {
-    const json = JSON.stringify(buData, null, 2);
-    const blob = new Blob([json], {type: 'application/json'});
+    const buBinary = atob(bu["bu"])
+    const blob = new Blob([buBinary], {type: 'application/data'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'buData.json';
+    a.download = bu.filename;
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -71,7 +56,7 @@ function Bu({ onSendToMonitor }) {
 
             <button onClick={downloadJson} className="rounded-full bg-yellow px-2 h-[37px] w-[102px] font-bold ml-4">Baixar Bu</button>
 
-            <Selo id={id} />
+            <Selo bu={bu} />
           </div>
         </div>
 
@@ -111,12 +96,8 @@ function Bu({ onSendToMonitor }) {
           </div>
       </div>
 
-      <h1 className='text-black text-base font-bold'>Urna Eletrônica - Correspondência Efetivada</h1>
+      <h1 className='text-black text-base font-bold'>Informações da Urna Eletrônica</h1>
       <div className='grid md2:grid-cols-4 grid-cols-2 gap-x-8 gap-y-4'>
-        <div className='space-y-2 border-[1px] rounded-xl p-2 border-gray'>
-          <h1 className='text-gray  text-base font-bold'>Tipo de Arquivo:</h1>
-          <h1 className='text-blue-light  text-base font-bold'>Urna Eletrônica</h1>
-        </div>
         <div className='space-y-2 border-[1px] rounded-xl p-2 border-gray'>
           <h1 className='text-gray  text-base font-bold'>Código de Identificação UE:</h1>
           <h1 className='text-blue-light  text-base font-bold'>{numeroInternoUrna}</h1>
@@ -129,18 +110,10 @@ function Bu({ onSendToMonitor }) {
           <h1 className='text-gray  text-base font-bold'>Data de Fechamento UE:</h1>
           <h1 className='text-blue-light  text-base font-bold'>{dataHoraEncerramento}</h1>
         </div>
-      </div>
-
-      <div className='sm:grid sm:grid-cols-4 grid-cols-2 gap-x-8 gap-y-4'>
         <div className='sm:col-span-1 space-y-2 border-[1px] rounded-xl p-2 border-gray '>
           <h1 className='text-gray  text-base font-bold'>Código de identificação da carga:</h1>
           <h1 className='text-blue-light  text-base font-bold break-all'>{codigoCarga}</h1>
         </div>
-        <div className='sm:col-span-1 space-y-2 border-[1px] rounded-xl p-2 border-gray'>
-          <h1 className='text-gray  text-base font-bold'>Código de identificação MC:</h1>
-          <h1 className='text-blue-light  text-base font-bold'>não achei</h1>
-        </div>
-
       </div>
     </div>
 
@@ -149,4 +122,4 @@ function Bu({ onSendToMonitor }) {
   );
 }
 
-export default Bu;
+export default BuHeader;
