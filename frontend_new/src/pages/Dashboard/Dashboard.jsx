@@ -5,7 +5,7 @@ import Cards from './components/Cards';
 
 const Dashboard = () => {
   return (
-    <div className="flex-col custom-scrollbar">
+    <div className="flex flex-col custom-scrollbar">
       <div className="flex">
         <Cards />
       </div>
