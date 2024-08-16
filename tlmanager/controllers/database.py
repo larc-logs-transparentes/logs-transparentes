@@ -13,6 +13,9 @@ def db_get_all_global_tree_leaves():
         
     return {'leaves': leaves_array}
 
+def db_get_local_tree_root(tree_name):
+    root = database['global_tree_leaves'].find_one({'value.tree_name': tree_name}, sort=[('root.tree_size', -1)])
+    return root["value"]
 
 def db_get_last_consistency_proof(tree_name):
     consistency_proof = database['consistency_proofs'].find_one({'root.tree_name': tree_name}, sort=[('root.tree_size', -1)])
