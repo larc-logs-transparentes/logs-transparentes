@@ -30,7 +30,7 @@ const Cards = () => {
         return trees.map((treeName) => ({
             title: treeName,
             treeIndex: treeName.slice(-3),
-            description: `Raiz da árvore ${treeName.slice(-3)}`,
+            description: `Raiz da árvore dos boletins de urna da eleição:`,
             downloadLeavesUrl: `http://localhost:8080/bu/find_by_merkletree_index_range?election_id=${treeName}`,
             donwloadTreeRootUrl: `http://localhost:8080/tree/tree-root?tree_name=${treeName}`,
             treeInfoUrl: `http://localhost:8080/tree/?tree_name=${treeName}`,
@@ -67,7 +67,7 @@ const Cards = () => {
                             className="w-12 md:w-16 h-10 md:h-14 mx-auto" 
                         />
                         <h2 className="text-lg md:text-2xl text-black font-inter font-semibold text-center mb-2">
-                            Árvore {card.treeIndex}
+                            Árvore dos BUs {card.treeIndex}
                         </h2>
                     </div>
                 </div>
