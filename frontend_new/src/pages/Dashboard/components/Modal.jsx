@@ -14,12 +14,12 @@ const Modal = ({ isOpen, onClose, card, isFirst }) => {
     const fetchData = async () => {
       if (!card) return;
 
-      if (card.donwloadTreeRootUrl) {
-        setRootValue(await fetchRootValue(card.donwloadTreeRootUrl));
+      if (card.treeInfoUrl) {
+        setRootValue(await fetchRootValue(card.treeInfoUrl));
       }
 
-      if (card.treeInfoUrl || isFirst) {
-        setNumberOfElementsOnTree(await fetchNumberOfElementsOnTree(card.treeInfoUrl, isFirst));
+      if (card.treeInfoUrl) {
+        setNumberOfElementsOnTree(await fetchNumberOfElementsOnTree(card.treeInfoUrl));
       }
 
       if (card.treeInfoUrl) {

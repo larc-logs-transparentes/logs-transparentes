@@ -32,8 +32,7 @@ const Cards = () => {
             treeIndex: treeName.slice(-3),
             description: `Eleição`,
             downloadLeavesUrl: `http://localhost:8080/bu/find_by_merkletree_index_range?election_id=${treeName}`,
-            donwloadTreeRootUrl: `http://localhost:8080/tree/tree-root?tree_name=${treeName}`,
-            treeInfoUrl: `http://localhost:8080/tree/?tree_name=${treeName}`,
+            treeInfoUrl: `http://localhost:8080/tree/tree-root?tree_name=${treeName}`,
             downloadAllGlobalRootsUrl: 'http://localhost:8080/tree/all-roots-global-tree'
         }));
     };
