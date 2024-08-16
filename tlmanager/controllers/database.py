@@ -8,7 +8,6 @@ def db_get_all_global_tree_leaves():
     for leaf in leaves:
         leaves_array.append({
             'index': leaf['index'],
-            'timestamp': leaf['timestamp'],
             'value': leaf['value']
         })
         
@@ -79,7 +78,6 @@ def db_get_all_global_tree_roots(initial_root_value=None):
 def db_insert_global_tree_leaf(index, value,  global_tree_root_object):
     database['global_tree_leaves'].insert_one({
         'index': int(index),
-        'timestamp': datetime.now().isoformat(),
         'value': value
     })
     database['global_tree_roots'].insert_one(global_tree_root_object)
