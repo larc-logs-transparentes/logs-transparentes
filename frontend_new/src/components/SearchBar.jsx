@@ -205,7 +205,7 @@ function SearchBar() {
               </li>
               </div>
             </div>
-          <button className="rounded-full bg-yellow px-[1px] h-[37px] w-[200px] md2:w-[101px] mt-[2vh] md2:mb-[0px] mb-[10px] font-medium" onClick={handleSearchClick}>
+          <button className="rounded-full bg-yellow hover:bg-blue-light px-[1px] h-[37px] w-[200px] md2:w-[101px] mt-[2vh] md2:mb-[0px] mb-[10px] font-medium" onClick={handleSearchClick}>
               Pesquisar
           </button>
         </ul>

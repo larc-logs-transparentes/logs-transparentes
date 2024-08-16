@@ -19,7 +19,7 @@
     };
 
     return (
-      <div className='overflow-x-hidden h-[90vh] md:h-[72vh] md:min-h-[780px]'>
+      <div className='overflow-hidden h-[90vh] md:h-[72vh] md:min-h-[780px]'>
       <div className='relative font-sans'>
         <div className='h-full text-center font-bold flex items-center justify-center relative'>
           <img src={Mascara} className='absolute right-0 h-[105px] w-[909px] top-0 ' alt='Mascara' />
@@ -46,7 +46,7 @@
           ))}
         </div>
         <div className='text-center  text-md p-8 mt-8 relative font-sans font-bold text-black underline'>
-        <button className="rounded-full bg-yellow px-2 h-[40px] w-[130px]">Saiba Mais</button>
+        <button className="rounded-full bg-yellow hover:bg-blue-light px-2 h-[40px] w-[130px]">Saiba Mais</button>
         </div>
         
         <div className='flex justify-center md:hidden'>

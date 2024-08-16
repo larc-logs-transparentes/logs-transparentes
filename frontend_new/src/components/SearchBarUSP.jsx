@@ -142,7 +142,7 @@ function SearchBarUSP() {
               </li>
               </div>
             </div>
-          <button className="rounded-full font-medium bg-yellow px-[1px] h-[37px] w-[200px] md2:w-[101px] md2:mt-[3vh] mb-[10px]" onClick={handleSearchClick}>
+          <button className="rounded-full font-medium bg-yellow hover:bg-blue-light px-[1px] h-[37px] w-[200px] md2:w-[101px] md2:mt-[3vh] mb-[10px]" onClick={handleSearchClick}>
               Pesquisar
           </button>
         </ul>
