@@ -24,7 +24,7 @@ export const fetchRootTimestampValue = async (url) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    const lastTimestamp = data.roots[data.roots.length - 1].timestamp;
+    const lastTimestamp = data.timestamp;
     return new Date(lastTimestamp).toLocaleString('pt-BR', {
       day: '2-digit',
       month: 'long',
