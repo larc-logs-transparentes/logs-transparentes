@@ -100,11 +100,18 @@ def get_tree(tree_name):
     buffer_length = len(tree.entries_buffer)
     return JSONResponse({'status': 'ok'} | metadata | {'commitment size': tree.commitment_size, 'length': tree.length, 'buffer_length': buffer_length}, status_code=200)
 
+
 def get_tree_root(tree_name):
     if tree_name not in trees:
         return JSONResponse({'status': 'error', 'message': 'Tree does not exist'}, status_code=400)
-    tree = trees[tree_name]
-    return {'status': 'ok', 'value': tree.root}
+    if tree_name == 'global_tree':
+        root = db_get_global_tree_root()
+    else:
+        root = db_get_local_tree_root(tree_name)
+    response = root.copy()
+    response.update({'status': 'ok'})
+    return JSONResponse(response, status_code=200)
+
 
 def get_global_tree_all_leaves():
     return JSONResponse({'status': 'ok'} | db_get_all_global_tree_leaves(), status_code=200)
