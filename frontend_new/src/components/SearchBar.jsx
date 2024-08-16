@@ -5,6 +5,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../index.css';
 
+import { useGetStatesByElectionQuery } from '../context/core/api/section/infra/sectionSlice';
 
 function SearchBar() {
 
@@ -28,15 +29,23 @@ function SearchBar() {
   const [secaoSelection, setSecaoSelection] = useState('');
   const [turnoOpts, setTurnoOpts] = useState([]);
   const [ufOpts, setUfOpts] = useState([]);
+  const { data, isFetching } = useGetStatesByElectionQuery(545);
   const [cityOpts, setCityOpts] = useState([]);
   const [zonaOpts, setZonaOpts] = useState([]);
   const [secaoOpts, setSecaoOpts] = useState([]);
   const location = useLocation();
 
+
+  useEffect(() => {
+    if (data) {
+      setUfOpts(data);
+    }
+  }, [data]);
+
   useEffect(() => {
     if (electionId) {
       setTurnoSelection(electionId);
-      fetchUFOptions(electionId);
+      // fetchUFOptions(electionId);
     } else {
       axios.get(`${bu_api_url}/bu/distinct_eleicoes`)
         .then(response => {
@@ -44,7 +53,7 @@ function SearchBar() {
 
             const highestElectionId = response.data.reduce((max, current) => current > max ? current : max, response.data[0]);
             setTurnoSelection(highestElectionId);
-            fetchUFOptions(highestElectionId);
+            // fetchUFOptions(highestElectionId);
           }
         })
         .catch(error => console.error(error));
