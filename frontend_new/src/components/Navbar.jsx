@@ -16,8 +16,6 @@ function Navbar() {
   const location = useLocation();
   const bu_api_url = require('../config.json').bu_api_url;
 
-
-
   useEffect(() => {
     axios.get(`${bu_api_url}/bu/distinct_eleicoes`)
       .then(response => {
@@ -28,7 +26,7 @@ function Navbar() {
         setHighestElectionAsSelected(options, electionIdFromUrl);
       })
       .catch(error => console.error(error));
-  }, [location.pathname]);
+  }, [location.pathname, bu_api_url]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -58,13 +56,14 @@ function Navbar() {
     setSelectedElection(electionName); 
     setIsDropdownOpen(false);
   };
+
   const handleLogoClick = () => {
     setHighestElectionAsSelected(electionOptions);
   };
 
   return (
     <div className='font-sans relative'>
-      <div className='bg-white absolute font-bold text-blue text-center rounded-b-lg  flex place-content-center w-[50%] 
+      <div className='bg-white absolute font-bold text-blue text-center rounded-b-lg flex place-content-center w-[50%] 
        md2:w-[44%] ml-[25%] md2:ml-[28%] xl:w-[30%] xl:ml-[35%] md2:h-[4vh] max-h-[8vh] text-sm md:text-base'>
         ATENÇÃO: ESTE É UM PROTÓTIPO EXPERIMENTAL
       </div>
@@ -72,48 +71,57 @@ function Navbar() {
       <div className='bg-yellow h-[1vh]'></div>
       <div className='bg-blue-light h-[1vh]'></div>
       <div className='bg-blue h-[5vh]'></div>
-      <div className="flex p-2 relative bg-white font-bold items-center justify-between">
-        <div className="xs:min-w-[160px] xs:min-h-[50px] xs:ml-[1vw] mt-[1vh]">
+      <div className="flex xl:gap-[20vw] xs:gap-[10vw] md:gap-[15vw] p-2 relative bg-white font-inter font-medium font-size-16px items-center">
+        <div className="xs:min-w-[160px] xs:min-h-[50px] xs:ml-[2vw] mt-[1vh]">
           <Link to="/" onClick={handleLogoClick}>
             <img src={Logs} className="" alt="logo" />
           </Link>
         </div>
-        <ul className='hidden lg:flex gap-[2vw] max-h-[10px] items-center justify-end text-center'>
-          <li className='mt-[5px]'>
+        <ul className='hidden md:flex  gap-[1vw] max-h-[10px] items-center justify-center'>
+          <li className='mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 '>
             <Link to="/" className=''>
               Home
             </Link>
           </li>
-          <li className='mt-[5px]  overflow-clip '>
+          <li className='mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 overflow-clip  '>
+            <Link to="/dashboard" className=''>
+              Dashboard
+            </Link>
+          </li>
+          <li className='mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 overflow-clip '>
             <a href="#" className=''>
               Dados da Urna
             </a>
           </li>
-          <li className='mt-[5px]  overflow-clip'>
-            <a className=" cursor-pointer " onClick={handleVerifyClick}>
+          <li className='mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 overflow-clip  '>
+            <a href="#" className=" cursor-pointer " onClick={handleVerifyClick}>
               Verificar
             </a>
           </li>
-          <li className='mt-[5px] overflow-clip '>
+          <li className='mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 overflow-clip '>
             <a href="#" className=''>
               Dados por Sessões
             </a>
           </li>
-          <li className='mt-[5px]  overflow-clip '>
+          <li className='mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 overflow-clip '>
             <a href="#" className=''>
               Resultados USP
             </a>
           </li>
-          <li className='mt-[5px] relative'>
 
-          <div onClick={toggleDropdown} className='cursor-pointer flex items-center max-h-[50px]'>
+          <li className='mt-[5px] relative hover:bg-[#00C6D4] rounded-lg p-1.5'>
+            <div onClick={toggleDropdown} className='cursor-pointer flex items-center max-h-[50px]'>
               {selectedElection ? `Eleições - ${selectedElection}` : 'Eleições'}
               <ExpandMoreIcon className='ml-4' style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0)' }}/>
             </div>
             {isDropdownOpen && (
-              <ul className="absolute bg-white border rounded max-h-[300%] overflow-auto custom-scrollbar z-30">
+              <ul className="absolute bg-white border border-gray-300 rounded-lg shadow-lg p-2 justify-center w-[17vw] max-h-[200px] overflow-auto custom-scrollbar z-30">
                 {electionOptions.map((option, index) => (
-                  <li key={index} className='p-2 hover:bg-light-gray cursor-pointer w-[12vw] z-30' onClick={() => handleElectionClick(option)}>
+                  <li 
+                    key={index} 
+                    className='p-2 hover:bg-[#00C6D4] cursor-pointer w-[15vw] z-30 rounded-lg'
+                    onClick={() => handleElectionClick(option)}
+                  >
                     {convertElectionIdToName(option)}
                   </li>
                 ))}
@@ -124,14 +132,14 @@ function Navbar() {
         </ul>
         <div className="md:hidden w-[10vw]">
         </div>
-        <div className="lg:hidden flex items-center">
+        <div className="md:hidden flex items-center">
           <button onClick={toggleDropdown} className="p-2 ml-[10vw]">
             <MenuIcon />
           </button>
         </div>
       </div>
       {isDropdownOpen && (
-        <ul className="lg:hidden grid gap-2 mt-2 bg-white p-2 border border-gray-300 rounded-xl z-40 absolute w-[40%] ml-[55%]">
+        <ul className="md:hidden grid gap-2 mt-2 bg-white p-2 border border-gray-300 rounded-xl shadow-lg z-40 absolute w-[40%] ml-[55%]">
           <li className='mt-[5px]'>
             <Link to="/" className='h-[21px]'>
               Home
@@ -148,13 +156,13 @@ function Navbar() {
             </div>
             {electionOptions.map((option, index) => (
             <ul key={index} className="grid gap-2 mt-2 bg-white p-2 border border-gray-300 rounded-xl">
-              <li className='hover:bg-light-gray cursor-pointer' onClick={() => handleElectionClick(option)}>
+              <li className='hover:bg-[#00C6D4] cursor-pointer rounded-lg' onClick={() => handleElectionClick(option)}>
                 {convertElectionIdToName(option)}
               </li>
             </ul>
           ))}
           </li>
-          <button className="rounded-full bg-yellow hover:bg-blue-light px-2 h-[37px] w-[91px]" onClick={handleVerifyClick}>
+          <button className="rounded-full bg-yellow px-2 h-[37px] w-[91px]" onClick={handleVerifyClick}>
             Verificar
           </button>
         </ul>

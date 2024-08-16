@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
@@ -84,17 +84,17 @@ function SearchBarUSP() {
   };
 
   return (
-    <div className='font-sans relative z-10 bg-white '>
+    <div className='font-sans relative z-10 bg-white p-2 md:p-0'>
       <div className='flex flex-col md2:min-h-[234px] min-h-[500px] h-[13.5vh] place-content-center '>
-        <p className='text-blue mt-[22px] text-center text-2xl font-bold'>Conferir o resultado usando BUs verificados pela USP </p>
-        <p className='text-blue mt-[22px] text-center text-2xl '>Calcule você mesmo o resultado da eleição.</p>
+        <p className='text-blue text-center text-2xl font-bold'>Conferir o resultado usando BUs verificados pela USP </p>
+        <p className='text-blue mt-1 text-center text-xl '>Calcule você mesmo o resultado da eleição.</p>
         <ul className='flex flex-col md2:flex-row md2:gap-4 mt-[16px] gap-4 items-center justify-center text-base'>
         <div>
             <p className='text-blue-light text-sm font-medium'>Estado</p>
-          <li className='bg-white md2:mt-[0px] mt-[5px]  p-[12px] border-blue-light border-2 rounded-xl md2:text-base text-sm w-[14vw] md2:w-[12vw] flex font-medium' onClick={() => toggleDropdown('estado')}>
+          <li className='bg-white p-1 border-blue-light border-2 rounded-xl md2:text-base text-sm text-center h-[35px] w-[128px] flex font-medium' onClick={() => toggleDropdown('estado')}>
             <p className='whitespace-nowrap overflow-hidden w-[90%]'>
             { ufSelection || 'São Paulo'}</p>
-            <ExpandMoreIcon className='' style={{ transform: dropdownStates.estado ? 'rotate(180deg)' : 'rotate(0)' }} />
+            <ArrowDropDownIcon className='' style={{ transform: dropdownStates.estado ? 'rotate(180deg)' : 'rotate(0)' }} />
             {dropdownStates.estado && (
               <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar mt-[3vh]'>
                 {ufOpts.map((uf, index) => (
@@ -108,10 +108,10 @@ function SearchBarUSP() {
           </div>
           <div>
             <p className='text-blue-light text-sm font-medium'>Cidade</p>
-            <li className='bg-white font-medium md2:mt-[0px] mt-[5px] p-[12px] border-blue-light border-2 rounded-xl md2:text-base text-sm w-[15vw] md2:w-[12vw] flex' onClick={() => toggleDropdown('cidade')}>
+            <li className='bg-white p-1 border-blue-light border-2 rounded-xl md2:text-base text-sm text-center h-[35px] w-[128px] flex font-medium' onClick={() => toggleDropdown('cidade')}>
             <p className='whitespace-nowrap overflow-hidden custom-scrollbar w-[90%]'>
               { ''+citySelection || 'São Paulo'} </p>
-              <ExpandMoreIcon className='' style={{ transform: dropdownStates.cidade ? 'rotate(180deg)' : 'rotate(0)' }} />
+              <ArrowDropDownIcon className='' style={{ transform: dropdownStates.cidade ? 'rotate(180deg)' : 'rotate(0)' }} />
               {dropdownStates.cidade && (
                 <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar mt-[3vh]'>
                   {cityOpts.map((city, index) => (
@@ -126,10 +126,10 @@ function SearchBarUSP() {
           <div>
             <p className='text-blue-light text-sm font-medium'>Cargo</p>
             <div className='flex md2:flex-row gap-4 font-medium'>
-              <li className='bg-white rounded-full md2:mt-[0px] mt-[5px] border-blue-light border-2 p-[12px] rounded-xl md2:text-base text-sm w-[22vw] md2:w-[10vw] flex' onClick={() => toggleDropdown('zona')}>
+              <li className='bg-white p-1 border-blue-light border-2 rounded-xl md2:text-base text-sm text-center h-[35px] w-[122px] flex font-medium' onClick={() => toggleDropdown('zona')}>
               <p className='whitespace-nowrap overflow-hidden w-[90%]'>
                 { zonaSelection || 'Vereador'} </p>
-                <ExpandMoreIcon className='' style={{ transform: dropdownStates.zona ? 'rotate(180deg)' : 'rotate(0)' }} />
+                <ArrowDropDownIcon className='' style={{ transform: dropdownStates.zona ? 'rotate(180deg)' : 'rotate(0)' }} />
                 {dropdownStates.zona && (
                   <ul className='absolute bg-white border rounded max-h-[100%] overflow-auto custom-scrollbar mt-[3vh]'>
                     {zonaOpts.map((zona, index) => (
@@ -142,7 +142,7 @@ function SearchBarUSP() {
               </li>
               </div>
             </div>
-          <button className="rounded-full font-medium bg-yellow hover:bg-blue-light px-[1px] h-[37px] w-[200px] md2:w-[101px] md2:mt-[3vh] mb-[10px]" onClick={handleSearchClick}>
+          <button className="rounded-full font-medium bg-yellow hover:bg-blue-light px-[1px] h-[35px] w-[95px] mt-2 md2:mt-[3vh] mb-[10px]" onClick={handleSearchClick}>
               Pesquisar
           </button>
         </ul>
