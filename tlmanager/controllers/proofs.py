@@ -28,8 +28,6 @@ def get_data_proof(tree_name, data=None, index=None):
     if tree_name == 'global_tree':
         return JSONResponse({'status': 'error', 'message': 'Data proof is available only for local trees'}, status_code=400)
     
-    tree = trees[tree_name]
-    
     local_proof = json.loads(get_inclusion_proof(tree_name, data, index).body.decode('utf-8'))
     if local_proof['status'] == 'error':
         return local_proof
