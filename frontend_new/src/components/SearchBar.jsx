@@ -29,18 +29,18 @@ function SearchBar() {
   const [secaoSelection, setSecaoSelection] = useState('');
   const [turnoOpts, setTurnoOpts] = useState([]);
   const [ufOpts, setUfOpts] = useState([]);
-  const { data, isFetching } = useGetStatesByElectionQuery(545);
   const [cityOpts, setCityOpts] = useState([]);
   const [zonaOpts, setZonaOpts] = useState([]);
   const [secaoOpts, setSecaoOpts] = useState([]);
   const location = useLocation();
-
+  
+  const states = useGetStatesByElectionQuery(545);
 
   useEffect(() => {
-    if (data) {
-      setUfOpts(data);
+    if (states.data) {
+      setUfOpts(states.data);
     }
-  }, [data]);
+  }, [states.data]);
 
   useEffect(() => {
     if (electionId) {

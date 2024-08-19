@@ -9,7 +9,7 @@ import { VerificationDragAndDrop } from '../../../services/VerificationDragAndDr
 import { getBuByInfo } from '../../../endpoints/bu.api.js';
 import { PythonTruetoJavascriptTrue } from '../../../services/pyodide.js';
 
-import { useGetStatesByElectionQuery } from '../context/core/api/section/infra/sectionSlice';
+import { useGetStatesByElectionQuery } from '../../../context/core/api/section/infra/sectionSlice';
 
 async function extractDataFromBuFile(event) {
   const content = event.target.result;
