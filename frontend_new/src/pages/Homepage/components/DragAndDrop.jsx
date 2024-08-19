@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import InfoIcon from '../../../assets/\InfoIcon.svg';
 import FileVerify from './FileVerify';
 import { buParser } from '../../../services/buParser.js';
@@ -9,6 +8,19 @@ import { getUFfromMunicipio } from '../../../services/municipioToUF.js';
 import { VerificationDragAndDrop } from '../../../services/VerificationDragAndDrop.js';
 import { getBuByInfo } from '../../../endpoints/bu.api.js';
 import { PythonTruetoJavascriptTrue } from '../../../services/pyodide.js';
+
+import { useGetStatesByElectionQuery } from '../context/core/api/section/infra/sectionSlice';
+
+async function extractDataFromBuFile(event) {
+  const content = event.target.result;
+  const bu_file = await buParser(content);
+  const municipio = bu_file.urna.correspondenciaResultado.identificacao[1].municipioZona.municipio;
+  const uf = await getUFfromMunicipio(municipio);
+  const zona = bu_file.urna.correspondenciaResultado.identificacao[1].municipioZona.zona;
+  const secao = bu_file.urna.correspondenciaResultado.identificacao[1].secao;
+  return { uf, zona, secao, content };
+}
+
 
 const DragAndDrop = () => {
   const [dragActive, setDragActive] = useState(false);
@@ -79,22 +91,11 @@ const DragAndDrop = () => {
     setLoading(true);
     const reader = new FileReader();
     reader.onload = async (event) => {
-      const content = event.target.result;
-      const bu_file = await buParser(content);
-      const municipio = bu_file.urna.correspondenciaResultado.identificacao[1].municipioZona.municipio;
-      const uf = await getUFfromMunicipio(municipio);
-      const zona = bu_file.urna.correspondenciaResultado.identificacao[1].municipioZona.zona;
-      const secao = bu_file.urna.correspondenciaResultado.identificacao[1].secao;
-
+      const { uf, zona, secao, content } = await extractDataFromBuFile(event);
       const bu = await getBuByInfo(uf, zona, secao);
       setBu(await bu);
       const base64BuFile = arrayBufferToBase64(content);
-
-      console.log(base64BuFile);
-
       const verificationResult = await PythonTruetoJavascriptTrue(await VerificationDragAndDrop(bu._id, base64BuFile));
-      console.log(verificationResult);
-
       setIsTrue(verificationResult);
       openModal(); 
       setLoading(false); 
