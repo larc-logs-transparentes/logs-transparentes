@@ -1,9 +1,12 @@
   import React, { useState } from 'react';
+  import { useNavigate } from 'react-router-dom';
   import '../../../index.css';
   import Mascara from '../../../assets/Mascara.svg';
   import Imutavel from '../../../assets/Imutavel.svg';
   import Distribuido from '../../../assets/Distribuido.svg';
   import Verificacao from '../../../assets/Verificacao.svg';
+
+
 
   function Header() {
     const [activeSlide, setActiveSlide] = useState(0);
@@ -17,6 +20,11 @@
       const index = Math.round(e.target.scrollLeft / e.target.clientWidth);
       setActiveSlide(index);
     };
+
+    const navigate = useNavigate();
+      const handleButtonClick = () => {
+        navigate('/about');
+      };
 
     return (
       <div className='overflow-x-hidden h-[90vh] md:h-[72vh] md:min-h-[780px]'>
@@ -46,7 +54,7 @@
           ))}
         </div>
         <div className='text-center  text-md p-8 mt-8 relative font-sans font-bold text-black underline'>
-        <button className="rounded-full bg-yellow px-2 h-[40px] w-[130px]">Saiba Mais</button>
+        <button onClick={handleButtonClick} className="rounded-full bg-yellow px-2 h-[40px] w-[130px]">Saiba Mais</button>
         </div>
         
         <div className='flex justify-center md:hidden'>

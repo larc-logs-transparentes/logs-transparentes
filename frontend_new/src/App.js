@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/Homepage/HomePage";
 import SearchBu from "./pages/SearchBu/SearchBu.jsx";
 import Dashboard from './pages/Dashboard/Dashboard.jsx';
+import About from './pages/About/About.jsx';
 import "./index.css";
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
           <Route path="/:electionId/search/:id" element={<SearchBu />} />
           <Route path="/:electionId/search" element={<SearchBu />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/about" element={<About />} />
+
         </Routes>
       </div>
     </Router>
