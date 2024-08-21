@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
+
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
 import axios from 'axios';
 
 function SearchBarUSP() {

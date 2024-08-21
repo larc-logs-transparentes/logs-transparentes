@@ -1,13 +1,17 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
+
 import CircularProgress from '@mui/material/CircularProgress';
 import InfoIcon from '../../../assets/\InfoIcon.svg';
+
 import FileVerify from './FileVerify';
-import { buParser } from '../../../services/buParser.js';
-import { assinaturaParser } from '../../../services/assinaturaParser.js';
-import { getUFfromMunicipio } from '../../../services/municipioToUF.js';
-import { VerificationDragAndDrop } from '../../../services/VerificationDragAndDrop.js';
+
 import { getBuByInfo } from '../../../endpoints/bu.api.js';
+
+import { assinaturaParser } from '../../../services/assinaturaParser.js';
+import { buParser } from '../../../services/buParser.js';
+import { getUFfromMunicipio } from '../../../services/municipioToUF.js';
 import { PythonTruetoJavascriptTrue } from '../../../services/pyodide.js';
+import { VerificationDragAndDrop } from '../../../services/VerificationDragAndDrop.js';
 
 import { useGetStatesByElectionQuery } from '../../../context/core/api/section/infra/sectionSlice';
 
