@@ -2,18 +2,14 @@ import os
 from dataclasses import dataclass
 from .model.bu_model import BU, resultado_candidato_type
 from .converter.map_county_code_to_state import get_state_from_code
-from typing import Optional
-
 
 @dataclass
 class Soma:
-    soma_por_estado: dict[str, dict[str, dict[str, resultado_candidato_type]]]
-    id_eleicao: Optional[int] = None
+    soma_por_estado: dict[str, dict[int, dict[str, dict[str, resultado_candidato_type]]]]
 
 @dataclass
 class SomaMunicipio:
-    soma_por_estado: dict[str, dict[int, dict[str, dict[str, resultado_candidato_type]]]]
-    id_eleicao: Optional[int] = None
+    soma_por_estado: dict[str, dict[int, dict[int, dict[str, dict[str, resultado_candidato_type]]]]]
 
 
 def soma_votos(bu_file, verbose=True):
@@ -34,28 +30,31 @@ def soma_votos(bu_file, verbose=True):
 
         #  if state not in soma_obj.soma_por_estado:
         # soma_obj.soma_por_estado[state] = {}
-
+      
         if verbose:
             _print_progresso(qtd_bus_somados, qtd_bus_total)
         for eleicao in resultados.eleicoes:
-            soma_obj.id_eleicao = eleicao.id_eleicao
+            id_eleicao = eleicao.id_eleicao
+            
+            if id_eleicao not in soma_obj.soma_por_estado[state]:
+                soma_obj.soma_por_estado[state][id_eleicao] = {}
             # Para cada cargo contido nessa eleição desse BU
             for resultado_cargo in eleicao.resultados.keys():
                 # Se o cargo ainda não foi adicionado, o adiciona no dicionário da soma, sendo a chave o nome do cargo
-                if resultado_cargo not in soma_obj.soma_por_estado[state]:
-                    soma_obj.soma_por_estado[state][resultado_cargo] = {}
+                if resultado_cargo not in soma_obj.soma_por_estado[state][id_eleicao]:
+                    soma_obj.soma_por_estado[state][id_eleicao][resultado_cargo] = {}
 
                 # Para cada candidato desse cargo
                 for codigo_candidato in eleicao.resultados[resultado_cargo]:
                     resultado_candidato = eleicao.resultados[resultado_cargo][codigo_candidato]
-                    if str(codigo_candidato) not in soma_obj.soma_por_estado[state][resultado_cargo]:
+                    if str(codigo_candidato) not in soma_obj.soma_por_estado[state][id_eleicao][resultado_cargo]:
                         # Se o candidato ainda não foi adicionado no campo do cargo correspondente, o adiciona,
                         # sendo a chave o código do candidato
-                        soma_obj.soma_por_estado[state][resultado_cargo][str(codigo_candidato)] = resultado_candidato
+                        soma_obj.soma_por_estado[state][id_eleicao][resultado_cargo][str(codigo_candidato)] = resultado_candidato
                     else:
                         # Se o candidato já foi adicionado, soma os votos do BU atual com os votos anteriores
                         # contidos na chave de seu código, no campo do cargo correspondente
-                        soma_obj.soma_por_estado[state][resultado_cargo][
+                        soma_obj.soma_por_estado[state][id_eleicao][resultado_cargo][
                             str(codigo_candidato)].quantidade_votos += resultado_candidato.quantidade_votos
 
     if verbose:
@@ -90,24 +89,28 @@ def soma_votos_por_municipio(bu_file, verbose=False):
         if verbose:
             _print_progresso(qtd_bus_somados, qtd_bus_total)
         for eleicao in resultados.eleicoes:
-            soma_obj.id_eleicao = eleicao.id_eleicao
+            id_eleicao = eleicao.id_eleicao
+
+            
+            if id_eleicao not in soma_obj.soma_por_estado[state][municipio]:
+                soma_obj.soma_por_estado[state][municipio][id_eleicao] = {}
             # Para cada cargo contido nessa eleição desse BU
             for resultado_cargo in eleicao.resultados.keys():
                 # Se o cargo ainda não foi adicionado, o adiciona no dicionário da soma, sendo a chave o nome do cargo
-                if resultado_cargo not in soma_obj.soma_por_estado[state][municipio]:
-                    soma_obj.soma_por_estado[state][municipio][resultado_cargo] = {}
+                if resultado_cargo not in soma_obj.soma_por_estado[state][municipio][id_eleicao]:
+                    soma_obj.soma_por_estado[state][municipio][id_eleicao][resultado_cargo] = {}
 
                 # Para cada candidato desse cargo
                 for codigo_candidato in eleicao.resultados[resultado_cargo]:
                     resultado_candidato = eleicao.resultados[resultado_cargo][codigo_candidato]
-                    if str(codigo_candidato) not in soma_obj.soma_por_estado[state][municipio][resultado_cargo]:
+                    if str(codigo_candidato) not in soma_obj.soma_por_estado[state][municipio][id_eleicao][resultado_cargo]:
                         # Se o candidato ainda não foi adicionado no campo do cargo correspondente, o adiciona,
                         # sendo a chave o código do candidato
-                        soma_obj.soma_por_estado[state][municipio][resultado_cargo][str(codigo_candidato)] = resultado_candidato
+                        soma_obj.soma_por_estado[state][municipio][id_eleicao][resultado_cargo][str(codigo_candidato)] = resultado_candidato
                     else:
                         # Se o candidato já foi adicionado, soma os votos do BU atual com os votos anteriores
                         # contidos na chave de seu código, no campo do cargo correspondente
-                        soma_obj.soma_por_estado[state][municipio][resultado_cargo][
+                        soma_obj.soma_por_estado[state][municipio][id_eleicao][resultado_cargo][
                             str(codigo_candidato)].quantidade_votos += resultado_candidato.quantidade_votos
 
     if verbose:
