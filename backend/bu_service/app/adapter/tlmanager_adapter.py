@@ -1,10 +1,12 @@
-import requests
 import os
+
 import dotenv
+import requests
 
 dotenv.load_dotenv()
 
 TL_MANAGER_URL = os.getenv('TL_MANAGER_URL')
+
 
 def get_trees():
     return requests.get(f'{TL_MANAGER_URL}/').json()
