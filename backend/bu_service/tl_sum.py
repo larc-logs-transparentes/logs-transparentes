@@ -31,22 +31,20 @@ if __name__ == "__main__":
     else:
         print("O parâmetro bu_path deve ser um arquivo ou diretório")
         exit(1)
-    
-    # exit(1)
-    if(resultado_municipio.id_eleicao):
-        for estado in estados:
-            if estado in resultado_municipio.soma_por_estado:
-                for municipio in resultado_municipio.soma_por_estado[estado]:
 
+    for estado in estados:
+        if estado in resultado_municipio.soma_por_estado:
+            for municipio in resultado_municipio.soma_por_estado[estado]:
+                for id_eleicao in resultado_municipio.soma_por_estado[estado][municipio]:
                     for cargo in cargos:    
-                        if cargo in resultado_municipio.soma_por_estado[estado][municipio]:
+                        if cargo in resultado_municipio.soma_por_estado[estado][municipio][id_eleicao]:
                             municipio_str = get_municipio_from_code(municipio)
+                            
                             try:
-                          
                                 sumResult = SumResultModel(
-                                    result=json_str(resultado_municipio.soma_por_estado[estado][municipio][cargo]),
-                                    identifier="{}:{}:{}:{}".format(resultado_municipio.id_eleicao, cargo, estado, municipio),
-                                    id_eleicao= resultado_municipio.id_eleicao,
+                                    result=json_str(resultado_municipio.soma_por_estado[estado][municipio][id_eleicao][cargo]),
+                                    identifier="{}:{}:{}:{}".format(id_eleicao, cargo, estado, municipio),
+                                    id_eleicao= id_eleicao,
                                     cargo=cargo,
                                     estado=estado,
                                     municipio=municipio_str,
@@ -56,17 +54,18 @@ if __name__ == "__main__":
                                 update_or_insert(sumResult) 
                             except:
                                 print("O registro já existe no banco de dados")
-    if(resultado.id_eleicao):
-        for estado in estados:
-            if estado in resultado.soma_por_estado:
+
+    for estado in estados:
+        if estado in resultado.soma_por_estado:
+            for id_eleicao in resultado.soma_por_estado[estado]:
 
                 for cargo in cargos:
-                    if cargo in resultado.soma_por_estado[estado]:
+                    if cargo in resultado.soma_por_estado[estado][id_eleicao]:
                         try:
                             sumResult = SumResultModel(
-                                result=json_str(resultado.soma_por_estado[estado][cargo]),
-                                identifier="{}:{}:{}".format(resultado.id_eleicao, cargo, estado),
-                                id_eleicao= resultado.id_eleicao,
+                                result=json_str(resultado.soma_por_estado[estado][id_eleicao][cargo]),
+                                identifier="{}:{}:{}".format(id_eleicao, cargo, estado),
+                                id_eleicao= id_eleicao,
                                 cargo=cargo,
                                 estado=estado
                             )

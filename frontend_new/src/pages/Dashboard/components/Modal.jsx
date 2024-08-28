@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import modalclosebutton from '../../../assets/modalclosebutton.svg';
 import modalbaixarfolhasbutton from '../../../assets/modalbaixarfolhasbutton.svg';
 import { fetchRootValue, fetchNumberOfElementsOnTree, fetchRootTimestampValue, downloadFile } from '../../../services/modalTreeDashboardServices';
+import { convertElectionIdToName } from '../../../components/electionIdConverter';
 
 const Modal = ({ isOpen, onClose, card, isFirst }) => {
   const [rootValue, setRootValue] = useState('');
@@ -13,16 +14,16 @@ const Modal = ({ isOpen, onClose, card, isFirst }) => {
     const fetchData = async () => {
       if (!card) return;
 
-      if (card.donwloadTreeRootUrl) {
-        setRootValue(await fetchRootValue(card.donwloadTreeRootUrl));
+      if (card.treeInfoUrl) {
+        setRootValue(await fetchRootValue(card.treeInfoUrl));
       }
 
-      if (card.treeInfoUrl || isFirst) {
-        setNumberOfElementsOnTree(await fetchNumberOfElementsOnTree(card.treeInfoUrl, isFirst));
+      if (card.treeInfoUrl) {
+        setNumberOfElementsOnTree(await fetchNumberOfElementsOnTree(card.treeInfoUrl));
       }
 
-      if (isFirst && card.downloadAllGlobalRootsUrl) {
-        setRootTimestampValue(await fetchRootTimestampValue(card.downloadAllGlobalRootsUrl));
+      if (card.treeInfoUrl) {
+        setRootTimestampValue(await fetchRootTimestampValue(card.treeInfoUrl));
       }
     };
 
@@ -40,35 +41,41 @@ const Modal = ({ isOpen, onClose, card, isFirst }) => {
     }
   };
 
-  const subtitle = isFirst ? 'global' : card.subtitle;
+  const electionName = isFirst ?  '' : convertElectionIdToName(card.treeIndex);
+  const treeIndex = isFirst ? 'Global' : card.treeIndex;
   const description = isFirst ? 'Raiz da árvore global' : card.description;
+  const dataType = isFirst ? 'Raízes' : 'BUs';
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg border border-[#1094AB] shadow-lg w-11/12 max-w-md md:max-w-[900px]">
         <div className="relative mb-4">
           <h2 className="text-2xl font-inter font-size-24px text-[#1094AB] mb-4">
-            Árvore {subtitle}
+            Árvore de BUs - {treeIndex}
             <button className="absolute top-0 right-0" onClick={onClose}>
               <img src={modalclosebutton} alt="Botão de fechar" className="w-6 h-6 rounded" />
             </button>
           </h2>
         </div>
-        <p className="font-inter font-size-16px text-black mb-4 break-words">{description}</p>
+        <p className="font-inter font-size-16px text-black mb-4 break-words">{description} {electionName}</p>
         <div className="rounded-lg flex flex-col gap-4">
           <div className="border border-gray rounded-lg p-2 break-words">
-            <h1 className="text-[#1094AB] font-inter font-size-14px text-left"><span className="font-semibold">Raiz {subtitle}</span></h1>
+            <h1 className="text-[#1094AB] font-inter font-size-14px text-left"><span className="font-semibold">Detalhes da árvore:</span></h1>
             <h2 className="text-[#979797] font-inter font-size-15px ml-2 break-words">
-              Hash: <span className="font-bold">{rootValue}</span>
+              Raiz: <span className="font-bold">{rootValue}</span>
             </h2>
-            {isFirst && (
-              <h2 className="text-[#979797] font-inter font-size-15px ml-2">
-                Gerado em: <span className="font-bold">{rootTimestampValue}</span>
-              </h2>
-            )}
+            <h2 className="text-[#979797] font-inter font-size-15px ml-2 break-words">
+              Nome da árvore: <span className="font-bold">{card.title}</span>
+            </h2>
+            <h2 className="text-[#979797] font-inter font-size-15px ml-2">
+              Última atualização: <span className="font-bold">{rootTimestampValue}</span>
+            </h2>   
           </div>
           <div className="border border-gray rounded-lg p-2 break-words">
-            <h1 className="text-[#1094AB] font-inter font-size-14px text-left"><span className="font-semibold">Elementos</span></h1>
+            <h1 className="text-[#1094AB] font-inter font-size-14px text-left"><span className="font-semibold">Dados:</span></h1>
+            <h2 className="text-[#979797] font-inter font-size-15px ml-2">
+              Tipo de Dados: <span className="font-bold">{dataType}</span>
+            </h2>
             <h2 className="text-[#979797] font-inter font-size-15px ml-2">
               Número: <span className="font-bold">{numberOfElementsOnTree}</span>
             </h2>

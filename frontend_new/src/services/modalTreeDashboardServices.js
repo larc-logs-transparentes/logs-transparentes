@@ -9,11 +9,11 @@ export const fetchRootValue = async (url) => {
   }
 };
 
-export const fetchNumberOfElementsOnTree = async (url, isFirst) => {
+export const fetchNumberOfElementsOnTree = async (url) => {
   try {
-    const response = await fetch(isFirst ? 'http://localhost:8080/tree/all-roots-global-tree' : url);
+    const response = await fetch(url);
     const data = await response.json();
-    return isFirst ? data.roots[data.roots.length - 1].tree_size : data.length;
+    return data.tree_size;
   } catch (error) {
     console.error('Erro ao buscar valor do número:', error);
     return 'Erro ao carregar valor';
@@ -24,7 +24,7 @@ export const fetchRootTimestampValue = async (url) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    const lastTimestamp = data.roots[data.roots.length - 1].timestamp;
+    const lastTimestamp = data.timestamp;
     return new Date(lastTimestamp).toLocaleString('pt-BR', {
       day: '2-digit',
       month: 'long',
