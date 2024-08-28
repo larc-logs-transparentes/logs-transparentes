@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import LogoUSP from '../../../assets/Logo-USP.svg';
 import LogoUFSCAR from '../../../assets/logo-ufscar.svg';
 import LogoIFSC from '../../../assets/IFSC_logo_vertical.svg';
@@ -7,6 +8,7 @@ import VoteIcon from '../../../assets/Votacao.svg';
 import LogIcon from '../../../assets/Iconlogs.svg';
 import Mascara from '../../../assets/Mascara.svg';
 import GitHubIcon from '../../../assets/github-mark.svg';
+import Navbar from '../../../components/Navbar';
 
 const monitors = [
   {
@@ -35,6 +37,11 @@ const AboutTransparentElections = () => {
   const handleScroll = (e) => {
     const index = Math.round(e.target.scrollLeft / e.target.clientWidth);
     setActiveSlide(index);
+  };
+
+  const navigate = useNavigate();
+  const handleButtonClick = () => {
+    navigate('');
   };
 
   return (
@@ -70,10 +77,12 @@ const AboutTransparentElections = () => {
             </p>
           </div>
           <div className="flex px-6 pt-2 pb-2 m-2">
+          <a href='/${electionId}/search'> 
             <button
               className="flex items-center inline-block rounded-xl bg-yellow px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
               Consulte os BUs
             </button>
+          </a> 
           </div>
         </div>
 
@@ -86,11 +95,13 @@ const AboutTransparentElections = () => {
             </p>
           </div>
           <div className="flex px-6 pt-2 pb-2 m-2">
+          <a href='https://github.com/larc-logs-transparentes/logs-transparentes'>
             <button
               className="flex items-center inline-block border border-bg-blue rounded-xl bg-white px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-blue shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
               <img src={GitHubIcon} alt="GitHub" className="w-4 h-4 mr-2" />
               GitHub com instruções
             </button>
+          </a> 
           </div>
         </div>
 
