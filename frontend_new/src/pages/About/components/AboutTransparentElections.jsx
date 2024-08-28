@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LogoUSP from '../../../assets/Logo-USP.svg';
 import LogoUFSCAR from '../../../assets/logo-ufscar.svg';
 import LogoIFSC from '../../../assets/IFSC_logo_vertical.svg';
@@ -29,8 +29,14 @@ const monitors = [
   },
 ];
 
-
 const AboutTransparentElections = () => {
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const handleScroll = (e) => {
+    const index = Math.round(e.target.scrollLeft / e.target.clientWidth);
+    setActiveSlide(index);
+  };
+
   return (
     <div className="w-full flex flex-col mx-auto font-inter">
 
@@ -81,7 +87,7 @@ const AboutTransparentElections = () => {
           </div>
           <div className="flex px-6 pt-2 pb-2 m-2">
             <button
-              className="flex items-center inline-block border border-bg-blue rounded-xl bg-white px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-blue shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+              className="flex items-center inline-block border border-bg-blue rounded-xl bg-white px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-blue shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
               <img src={GitHubIcon} alt="GitHub" className="w-4 h-4 mr-2" />
               GitHub com instruções
             </button>
@@ -110,30 +116,30 @@ const AboutTransparentElections = () => {
         <p className="text-center text-lg mx-2 my-4 mb-8">
           Diversas entidades agem como monitores, analisando os dados, fiscalizando logs transparentes, e verificando a integridade das eleições.
         </p>
-        <div className="flex-row justify-center">
-          <div className="flex flex-row overflow-x-auto md:flex-wrap md:justify-center gap-2 md:gap-2 max-w-8xl whitespace-nowrap">
-            {monitors.map((monitor, index) => (
-              <div key={index} className="w-1/3 flex-shrink-0 md:w-1/3 p-4">
-                <div className="max-w-sm rounded-xl border border-blue overflow-hidden shadow-lg bg-white text-blue flex flex-col justify-between">
-                  <div className="px-6 py-4">
-                    <img src={monitor.logo} alt={monitor.alt} className="mx-auto mb-2 w-24 h-24 object-contain" />
-                    <p className="text-center font-bold">{monitor.name}</p>
-                  </div>
-                  <div className="flex justify-center mt-4 mb-4">
-                    <button
-                      className="flex items-center inline-block rounded-xl bg-[#0c77a8] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600">
-                      {monitor.linkText}
-                    </button>
-                  </div>
-                </div>
+        <div onScroll={handleScroll} className="flex overflow-x-scroll scrollbar-hidden snap-x snap-mandatory md:snap-none md:justify-center gap-2 md:gap-2 max-w-8xl whitespace-nowrap">
+          {monitors.map((monitor, index) => (
+            <div key={index} className="flex-none w-full snap-start md:snap-none md:w-[20%] min-w-[140px] shadow-2xl rounded-xl mb-12 border-bordergray border-[2px] p-6">
+              <div className="flex flex-col items-center w-full ">
+                <img src={monitor.logo} alt={monitor.alt} className="max-h-[160px] min-h-[120px] h-[40vw] md:h-[20vh] md:w-auto" />
+                <p className="text-blue text-center text-blue font-sans font-bold md:text-sm text-lg mt-8">{monitor.name}</p>
+                <button className="flex items-center inline-block rounded-xl bg-[#0c77a8] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 mt-4">
+                  {monitor.linkText}
+                </button>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
+        <div className='flex justify-center md:hidden'>
+          {monitors.map((_, index) => (
+            <div 
+              key={index} 
+              className={`w-4 h-4 bg-${index === activeSlide ? 'blue' : 'white'} border-[0.3px] border-bordergray mx-1 rounded-full`}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
-}
-
+};
 
 export default AboutTransparentElections;
