@@ -1,11 +1,13 @@
 import React from 'react';
+import '../../index.css';
+
+import DragAndDrop from './components/DragAndDrop';
 import Header from './components/Header'; 
+import History from './components/History';
+
+import Footer from '../../components/Footer';
 import SearchBar from '../../components/SearchBar';  
 import SearchBarUSP from '../../components/SearchBarUSP';
-import Footer from '../../components/Footer';
-import '../../index.css';
-import DragAndDrop from './components/DragAndDrop';
-import History from './components/History';
 
 function HomePage() {
 

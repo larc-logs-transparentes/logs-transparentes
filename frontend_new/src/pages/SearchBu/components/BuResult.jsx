@@ -58,15 +58,15 @@ function Result({ buResults, electionId, ableVoters, presentVoters }) {
           {formattedOffice}
         </h2>
 
-        <div className="grid md2:grid-cols-2 grid-cols-2  gap-y-12 gap-12">
+        <div className="grid md:grid-cols-2 grid-cols-1 gap-y-12 gap-12">
           {votosNominais.map((voto, index) => (
             <div
               key={index}
-              className={`flex md:gap-x-40 md:gap-y-4  rounded-xl p-4 border-gray ${getColor(
+              className={`flex md:gap-x-4 lg:gap-x-40 md:gap-y-4  rounded-xl p-4 border-gray ${getColor(
                 index
               )} `}
             >
-              <div className="flex gap-8">
+              <div className="flex gap-3 lg:gap-8">
                 <img src={Candidato} alt="Candidato" className="h-8" />
                 <div>
                   <h1 className="text-gray text-sm font-bold">Candidato</h1>
@@ -75,7 +75,7 @@ function Result({ buResults, electionId, ableVoters, presentVoters }) {
                   </h1>
                 </div>
               </div>
-              <div className="flex gap-8">
+              <div className="flex ml-8 lg:ml-0 gap-3 lg:gap-8">
                 <img src={Votacao} alt="Votacao" className="h-8 " />
                 <div>
                   <h1 className="text-gray text-sm font-bold">
