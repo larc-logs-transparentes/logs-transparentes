@@ -48,7 +48,7 @@ function BuHeader({ bu, buData }) {
 
   return (
     <div className="flex items-center justify-center">
-      <div className='w-[100%] md2:w-[90vw] md2:min-h-[60vh] justify-center border-2 border-blue-light rounded-2xl p-5 space-y-16'> 
+      <div className='w-[100%] md2:w-[90vw] md2:min-h-[50vh] justify-center md:border-2 border-blue-light rounded-2xl p-0 md:p-5 space-y-16'> 
 
         <div className='flex flex-col items-center gap-[20px] md2:flex-row md2:items-center md2:justify-between '>
           <h1 className='text-blue text-2xl font-medium'>Boletim de Urna</h1>
@@ -100,15 +100,15 @@ function BuHeader({ bu, buData }) {
       <div className='grid md2:grid-cols-4 grid-cols-2 gap-x-8 gap-y-4'>
         <div className='space-y-2 border-[1px] rounded-xl p-2 border-gray'>
           <h1 className='text-gray  text-base font-bold'>Código de Identificação UE:</h1>
-          <h1 className='text-blue-light  text-base font-bold'>{numeroInternoUrna}</h1>
+          <h1 className='text-blue-light  text-base font-bold break-all'>{numeroInternoUrna}</h1>
         </div>
         <div className='space-y-2 border-[1px] rounded-xl p-2 border-gray'>
           <h1 className='text-gray  text-base font-bold'>Data da Abertura UE:</h1>
-          <h1 className='text-blue-light  text-base font-bold'>{dataHoraAbertura}</h1>
+          <h1 className='text-blue-light  text-base font-bold break-all'>{dataHoraAbertura}</h1>
         </div>
         <div className='space-y-2 border-[1px] rounded-xl p-2 border-gray'>
           <h1 className='text-gray  text-base font-bold'>Data de Fechamento UE:</h1>
-          <h1 className='text-blue-light  text-base font-bold'>{dataHoraEncerramento}</h1>
+          <h1 className='text-blue-light  text-base font-bold break-all'>{dataHoraEncerramento}</h1>
         </div>
         <div className='sm:col-span-1 space-y-2 border-[1px] rounded-xl p-2 border-gray '>
           <h1 className='text-gray  text-base font-bold'>Código de identificação da carga:</h1>
