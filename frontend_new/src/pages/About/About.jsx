@@ -8,7 +8,6 @@ const About = () => {
     <AboutTransparentElections />
     <Footer />
     </div>
-    
   );
 }
 

@@ -8,9 +8,30 @@ import LogIcon from '../../../assets/Iconlogs.svg';
 import Mascara from '../../../assets/Mascara.svg';
 import GitHubIcon from '../../../assets/github-mark.svg';
 
+const monitors = [
+  {
+    name: "Universidade de São Paulo",
+    logo: LogoUSP,
+    alt: "Logo da USP",
+    linkText: "Página oficial do monitor",
+  },
+  {
+    name: "Universidade Federal de São Carlos",
+    logo: LogoUFSCAR,
+    alt: "Logo da UFSCAR",
+    linkText: "Página oficial do monitor",
+  },
+  {
+    name: "Instituto Federal de Santa Catarina",
+    logo: LogoIFSC,
+    alt: "Logo do IFSC",
+    linkText: "Página oficial do monitor",
+  },
+];
+
+
 const AboutTransparentElections = () => {
   return (
-
     <div className="w-full flex flex-col mx-auto font-inter">
 
       <div className='relative font-sans'>
@@ -27,8 +48,6 @@ const AboutTransparentElections = () => {
         </div>
       </div>
 
-
-      
       <h3 className="text-center mt-2 text-blue-dark italic text-2xl">O poder dos Logs Transparentes</h3>
       
       <p className="text-center text-lg my-4 m-4">
@@ -88,54 +107,33 @@ const AboutTransparentElections = () => {
 
       <div className='w-full bg-[#d2f6ff] pb-4'>
         <h3 className="text-center mt-2 text-blue-dark italic text-2xl">Os Monitores</h3>
-        <p className="text-center text-lg my-4 mb-8">
+        <p className="text-center text-lg mx-2 my-4 mb-8">
           Diversas entidades agem como monitores, analisando os dados, fiscalizando logs transparentes, e verificando a integridade das eleições.
         </p>
-
-          <div className="flex justify-around text-center mb-8">
-          <div className="w-1/3">
-              <div className="p-2">
-              <img src={LogoUSP} alt="Logo da USP" className="mx-auto my-2 w-24 h-24 object-contain" />
-              <p>Universidade de São Paulo</p>
-              <div className="flex justify-center mt-4">
-              <button
-                className="flex items-center inline-block rounded-xl bg-[#0c77a8] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                Acesse o monitor
-              </button>
-          </div>
+        <div className="flex-row justify-center">
+          <div className="flex flex-row overflow-x-auto md:flex-wrap md:justify-center gap-2 md:gap-2 max-w-8xl whitespace-nowrap">
+            {monitors.map((monitor, index) => (
+              <div key={index} className="w-1/3 flex-shrink-0 md:w-1/3 p-4">
+                <div className="max-w-sm rounded-xl border border-blue overflow-hidden shadow-lg bg-white text-blue flex flex-col justify-between">
+                  <div className="px-6 py-4">
+                    <img src={monitor.logo} alt={monitor.alt} className="mx-auto mb-2 w-24 h-24 object-contain" />
+                    <p className="text-center font-bold">{monitor.name}</p>
+                  </div>
+                  <div className="flex justify-center mt-4 mb-4">
+                    <button
+                      className="flex items-center inline-block rounded-xl bg-[#0c77a8] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600">
+                      {monitor.linkText}
+                    </button>
+                  </div>
+                </div>
               </div>
+            ))}
           </div>
-          <div className="w-1/3">
-              <div className="p-2">
-              <img src={LogoUFSCAR} alt="Logo da UFSCAR" className="mx-auto mb-2 w-24 h-24 object-contain" />
-              <p>Universidade Federal de São Carlos</p>
-              <div className="flex justify-center  mt-4">
-              <button
-                className="flex items-center inline-block rounded-xl bg-[#0c77a8] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                Acesse o monitor
-              </button>
-              </div>
-              </div>
-          </div>
-          <div className="w-1/3">
-              <div className="p-2">
-              <img src={LogoIFSC} alt="Logo do IFSC" className="mx-auto mb-2 w-24 h-24 object-contain" />
-              <p>Instituto Federal de Santa Catarina</p>
-              <div className="flex justify-center mt-4">
-              <button
-                className="flex items-center inline-block rounded-xl bg-[#0c77a8] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                Acesse o monitor
-              </button>
-              </div>
-              </div>
-          </div>
-          </div>
-          <p className="text-center text-gray-500">&lt;Acesse a lista completa&gt;</p>
+        </div>
       </div>
-
     </div>
-    
   );
 }
+
 
 export default AboutTransparentElections;
