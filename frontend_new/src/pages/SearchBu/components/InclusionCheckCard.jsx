@@ -34,26 +34,26 @@ const InclusionCheckCard = ({ closeModal, bu, proof, isProofTrue }) => {
   }
 
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center backdrop-blur z-30 justify-center items-center'>
-      <div className='relative w-[800px] min-h-[320px] border-2 border-black rounded-2xl bg-white p-8'> 
+    <div className='fixed inset-0 bg-black bg-opacity-50 flex backdrop-blur z-30 justify-center items-center'>
+      <div className='relative sm:w-full md:w-[700px] lg:w-[800px] min-h-full md:min-h-[320px] border-2 border-blue rounded-2xl bg-white p-8'> 
         <div className="absolute top-3 right-3">
           <HighlightOffIcon onClick={closeModal} className="text-blue cursor-pointer mr-[16px]" style={{ width: '32px', height: '32px' }}/>
         </div>
 
-        <h2 className="text-lg font-bold mb-4 text-gray-800">Verificação de inclusão de BU</h2>
-        <div className='flex gap-8'>
+        <h2 className="text-lg font-medium md:text-[24px] mb-4 text-blue break-all">Verificação de inclusão de BU</h2>
+        <div className='flex flex-col md:flex-row gap-0 md:gap-8'>
           
           {isProofTrue === 'True' ? (
             <div>
-              <div className="font-bold  text-blue-light flex items-center gap-2">
+              <div className="font-bold text-[16px] md:text-[24px] text-blue flex items-center gap-2">
                 <CheckCircleIcon style={{ color: '#66FF99' }} />
-                <h2>Este BU foi verificado corretamente</h2>
+                <h2>O BU foi verificado corretamente!</h2>
               </div>
-              <div className="text-gray text-sm mb-4">Ele está presente na árvore e não pode ser modificado</div>
+              <div className="text-gray text-sm md:mb-4">Ele está presente na árvore e não pode ser modificado</div>
             </div> 
           ) : (
             <div>
-              <div className="font-bold  text-red-light flex items-center gap-2">
+              <div className="font-bold text-red-light flex items-center gap-2">
                 <img src={ErrorIcon}/>
                 <h2>Erro ao Validar o BU</h2>
               </div>
@@ -62,27 +62,26 @@ const InclusionCheckCard = ({ closeModal, bu, proof, isProofTrue }) => {
             )
           }
           
-          
-
-          <h2 className='text-center  text-md relative font-sans font-bold text-yellow underline cursor-pointer' onClick={navigateToInclusion}>Saiba Mais</h2>
+        
+          <h2 className='md:text-center md:mt-2 text-md mb-2 md:mb-0 relative font-sans font-bold text-yellow cursor-pointer' onClick={navigateToInclusion}>Saiba Mais</h2>
         </div>
 
-        <div className="text-sm  font-bold text-gray">
+        <div className="text-sm  font-bold text-gray break-all">
 
           <div className="mb-3">
-            <strong className='text-blue-light'>BU:</strong>
+            <strong className='text-blue'>BU:</strong>
             <div>Hash: {buHash}</div>
           </div>
 
           <div className="mb-3">
-            <strong className='text-blue-light'>Árvore Global:</strong>
+            <strong className='text-blue'>Árvore Global:</strong>
             <div>Hash: {proof.global_root.value}</div>
             <div>Última atualização: {proof.global_root.timestamp}</div> 
             <div>Assinatura: {proof.global_root.signature}</div> 
           </div>
 
           <div className="mb-3">
-            <strong className='text-blue-light'>Árvore Local:</strong>
+            <strong className='text-blue'>Árvore Local:</strong>
             <div>Nome: {proof.local_tree.local_root.tree_name}</div>
             <div>Hash: {proof.local_tree.local_root.value}</div>
             <div>Última atualização: Em construção </div> 
