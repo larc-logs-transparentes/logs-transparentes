@@ -49,7 +49,7 @@ const InclusionCheckCard = ({ closeModal, bu, proofs, isProofTrue }) => {
   function renderLocalTrees() {
     return proofs.map((proof) => (
       <div className="mb-3">
-        <strong className="text-blue-light">
+        <strong className="text-blue">
           Árvore Local: {proof.local_tree.local_root.tree_name}
         </strong>
         <div>Nome: {proof.local_tree.local_root.tree_name}</div>
@@ -63,11 +63,11 @@ const InclusionCheckCard = ({ closeModal, bu, proofs, isProofTrue }) => {
   function renderHeader() {
     return isProofTrue ? (
       <div>
-        <div className="font-bold  text-blue-light flex items-center gap-2">
+        <div className="font-bold  text-blue flex items-center gap-2">
           <CheckCircleIcon style={{ color: "#66FF99" }} />
           <h2>Este BU foi verificado corretamente</h2>
         </div>
-        <div className="text-gray text-sm mb-4">
+        <div className="text-gray text-sm mb-1 md:mb-4">
           Ele está presente na árvore e não pode ser modificado
         </div>
       </div>
@@ -86,7 +86,7 @@ const InclusionCheckCard = ({ closeModal, bu, proofs, isProofTrue }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex backdrop-blur z-30 justify-center items-center">
-      <div className="relative w-[800px] min-h-[320px] border-2 border-blue rounded-2xl bg-white p-8" ref={modalRef}>
+      <div className="relative sm:w-full md:w-[700px] lg:w-[800px] min-h-[320px] max-h-full overflow-y-auto border-2 border-blue rounded-2xl bg-white p-8 break-all" ref={modalRef}>
         <div className="absolute top-3 right-3">
           <HighlightOffIcon
             onClick={closeModal}
@@ -95,14 +95,14 @@ const InclusionCheckCard = ({ closeModal, bu, proofs, isProofTrue }) => {
           />
         </div>
 
-        <h2 className="text-lg font-bold mb-4 text-gray-800">
+        <h2 className="text-lg font-medium md:text-[24px] mb-4 text-blue">
           Verificação de inclusão de BU
         </h2>
-        <div className="flex gap-8">
+        <div className="flex flex-col md:flex-row gap-0 md:gap-8">
           {renderHeader()}
 
           <h2
-            className="text-center  text-md relative font-sans font-bold text-yellow underline cursor-pointer"
+            className="text-md relative font-sans font-bold text-yellow underline cursor-pointer mb-1 md:mb-0"
             onClick={navigateToInclusion}
           >
             Saiba Mais
@@ -111,12 +111,12 @@ const InclusionCheckCard = ({ closeModal, bu, proofs, isProofTrue }) => {
 
         <div className="text-sm  font-bold text-gray">
           <div className="mb-3">
-            <strong className="text-blue-light">BU:</strong>
+            <strong className="text-blue">BU:</strong>
             <div>Hash: {buHash}</div>
           </div>
 
           <div className="mb-3">
-            <strong className="text-blue-light">Árvore Global:</strong>
+            <strong className="text-blue">Árvore Global:</strong>
             <div>Raiz: {proofs[0].global_root.value}</div>
             <div>Última atualização: {proofs[0].global_root.timestamp}</div>
             <div>Assinatura: {proofs[0].global_root.signature}</div>
