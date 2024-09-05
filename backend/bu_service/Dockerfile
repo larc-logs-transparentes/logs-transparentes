@@ -1,7 +1,8 @@
-FROM python:3.12.2-bullseye as build-stage
+FROM python:3.12.2-slim-bullseye AS build-stage
 
 WORKDIR /app
 
+RUN apt update && apt install -y gcc
 COPY app/ /app/app
 COPY main.py /app
 COPY requirements.txt /app

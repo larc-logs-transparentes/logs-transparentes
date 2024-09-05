@@ -32,7 +32,7 @@ function Navbar() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleVerifyClick = () => {
+  const handleSessionDataClick = () => {
     const electionId = electionOptions.find(option => convertElectionIdToName(option) === selectedElection);
     navigate(`/${electionId}/search`);
   };
@@ -71,13 +71,13 @@ function Navbar() {
       <div className='bg-yellow h-[1vh]'></div>
       <div className='bg-blue-light h-[1vh]'></div>
       <div className='bg-blue h-[5vh]'></div>
-      <div className="flex xl:gap-[20vw] xs:gap-[10vw] md:gap-[15vw] p-2 relative bg-white font-inter font-medium font-size-16px items-center">
+      <div className="flex xl:gap-[15vw] xs:gap-[10vw] md:gap-[15vw] p-2 relative bg-white font-inter font-medium text-base items-center">
         <div className="xs:min-w-[160px] xs:min-h-[50px] xs:ml-[2vw] mt-[1vh]">
           <Link to="/" onClick={handleLogoClick}>
             <img src={Logs} className="" alt="logo" />
           </Link>
         </div>
-        <ul className='hidden md:flex  gap-[1vw] max-h-[10px] items-center justify-center'>
+        <ul className='hidden md:flex gap-[1vw] max-h-[10px] items-center justify-center'>
           <li className='mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 '>
             <Link to="/" className=''>
               Home
@@ -89,17 +89,7 @@ function Navbar() {
             </Link>
           </li>
           <li className='mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 overflow-clip '>
-            <a href="#" className=''>
-              Dados da Urna
-            </a>
-          </li>
-          <li className='mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 overflow-clip  '>
-            <a href="#" className=" cursor-pointer " onClick={handleVerifyClick}>
-              Verificar
-            </a>
-          </li>
-          <li className='mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 overflow-clip '>
-            <a href="#" className=''>
+            <a href="#" className=" cursor-pointer " onClick={handleSessionDataClick}>
               Dados por Sessões
             </a>
           </li>
@@ -120,7 +110,7 @@ function Navbar() {
                   <li 
                     key={index} 
                     className='p-2 hover:bg-[#00C6D4] cursor-pointer w-[15vw] z-30 rounded-lg'
-                    onClick={() => handleElectionClick(option)}
+                    onClick={() => handleSessionDataClick(option)}
                   >
                     {convertElectionIdToName(option)}
                   </li>
@@ -146,10 +136,13 @@ function Navbar() {
             </Link>
           </li>
           <li className='mt-[5px]'>
-            <a href="#" className='h-[21px]'>
-              Dados da Urna
-            </a>
+            <Link to="/dashboard" className='h-[21px]'>
+              Dashboard
+            </Link>
           </li>
+          <button className="flex rounded-full h-[21px]" onClick={handleSessionDataClick}>
+            Dados por seção
+          </button>
           <li className='mt-[5px]'>
             <div className='flex items-center h-[21px] mt-[2px]'>
               Eleições
@@ -162,9 +155,7 @@ function Navbar() {
             </ul>
           ))}
           </li>
-          <button className="rounded-full bg-yellow px-2 h-[37px] w-[91px]" onClick={handleVerifyClick}>
-            Verificar
-          </button>
+          
         </ul>
       )}
     </div>

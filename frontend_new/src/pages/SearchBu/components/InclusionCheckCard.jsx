@@ -1,19 +1,18 @@
-import React, { useEffect, useState, useRef } from 'react';
-import ErrorIcon from '../../../assets/ErrorIcon.svg';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { useNavigate } from 'react-router-dom'; 
-const InclusionCheckCard = ({ closeModal, bu, proof, isProofTrue }) => {
-  const [lastRoot, setLastRoot] = useState({ value: '', timestamp: '' }); 
-  const [buHash, setBuHash] = useState('');
-  const navigate = useNavigate(); 
-  const modalRef = useRef();
+import React, { useEffect, useState, useRef } from "react";
+import ErrorIcon from "../../../assets/ErrorIcon.svg";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useNavigate } from "react-router-dom";
+
+const InclusionCheckCard = ({ closeModal, bu, proofs, isProofTrue }) => {
+  const [buHash, setBuHash] = useState("");
+  const navigate = useNavigate();
+  const modalRef = useRef("");
 
   useEffect(() => {
     const run = async () => {
       const election = bu.eleicoes[0];
-      setBuHash(bu.merkletree_info[election].hash)
-      setLastRoot(proof, proof)
+      setBuHash(bu.merkletree_info[election].hash);
     };
 
     run();
@@ -33,12 +32,12 @@ const InclusionCheckCard = ({ closeModal, bu, proof, isProofTrue }) => {
   }, [closeModal]);
 
   function downloadDataProof() {
-    const json = JSON.stringify(proof, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
+    const json = JSON.stringify(proofs, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'dataProof.json';
+    a.download = "dataProof.json";
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -47,64 +46,92 @@ const InclusionCheckCard = ({ closeModal, bu, proof, isProofTrue }) => {
     navigate(`#`);
   }
 
+  function renderLocalTrees() {
+    return proofs.map((proof) => (
+      <div className="mb-3">
+        <strong className="text-blue-light">
+          Árvore Local: {proof.local_tree.local_root.tree_name}
+        </strong>
+        <div>Nome: {proof.local_tree.local_root.tree_name}</div>
+        <div>Raiz: {proof.local_tree.local_root.value}</div>
+        <div>Última atualização: {proof.local_tree.local_root.timestamp} </div>
+        <div>Tamanho: {proof.local_tree.local_root.tree_size}</div>
+      </div>
+    ));
+  }
+
+  function renderHeader() {
+    return isProofTrue ? (
+      <div>
+        <div className="font-bold  text-blue-light flex items-center gap-2">
+          <CheckCircleIcon style={{ color: "#66FF99" }} />
+          <h2>Este BU foi verificado corretamente</h2>
+        </div>
+        <div className="text-gray text-sm mb-4">
+          Ele está presente na árvore e não pode ser modificado
+        </div>
+      </div>
+    ) : (
+      <div>
+        <div className="font-bold  text-red-light flex items-center gap-2">
+          <img src={ErrorIcon} />
+          <h2>Erro ao Validar o BU</h2>
+        </div>
+        <div className="text-gray text-sm mb-4">
+          O BU não está presente na árvore ou foi alterado
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-50 flex backdrop-blur z-30 justify-center items-center'>
-      <div className='relative sm:w-full md:w-[700px] lg:w-[800px] min-h-full md:min-h-[320px] border-2 border-blue rounded-2xl bg-white p-8' ref={modalRef}> 
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex backdrop-blur z-30 justify-center items-center">
+      <div className="relative w-[800px] min-h-[320px] border-2 border-blue rounded-2xl bg-white p-8" ref={modalRef}>
         <div className="absolute top-3 right-3">
-          <HighlightOffIcon onClick={closeModal} className="text-blue cursor-pointer mr-[16px]" style={{ width: '32px', height: '32px' }}/>
+          <HighlightOffIcon
+            onClick={closeModal}
+            className="text-blue cursor-pointer mr-[16px]"
+            style={{ width: "32px", height: "32px" }}
+          />
         </div>
 
-        <h2 className="text-lg font-medium md:text-[24px] mb-4 text-blue break-all">Verificação de inclusão de BU</h2>
-        <div className='flex flex-col md:flex-row gap-0 md:gap-8'>
-          
-          {isProofTrue === 'True' ? (
-            <div>
-              <div className="font-bold text-[16px] md:text-[24px] text-blue flex items-center gap-2">
-                <CheckCircleIcon style={{ color: '#66FF99' }} />
-                <h2>O BU foi verificado corretamente!</h2>
-              </div>
-              <div className="text-gray text-sm md:mb-4">Ele está presente na árvore e não pode ser modificado</div>
-            </div> 
-          ) : (
-            <div>
-              <div className="font-bold text-red-light flex items-center gap-2">
-                <img src={ErrorIcon}/>
-                <h2>Erro ao Validar o BU</h2>
-              </div>
-              <div className="text-gray text-sm mb-4">O BU não está presente na árvore ou foi alterado</div>
-            </div> 
-            )
-          }
-          
-          <h2 className='md:text-center md:mt-2 text-md mb-2 md:mb-0 relative font-sans font-bold text-yellow cursor-pointer' onClick={navigateToInclusion}>Saiba Mais</h2>
+        <h2 className="text-lg font-bold mb-4 text-gray-800">
+          Verificação de inclusão de BU
+        </h2>
+        <div className="flex gap-8">
+          {renderHeader()}
+
+          <h2
+            className="text-center  text-md relative font-sans font-bold text-yellow underline cursor-pointer"
+            onClick={navigateToInclusion}
+          >
+            Saiba Mais
+          </h2>
         </div>
 
-        <div className="text-sm  font-bold text-gray break-all">
-
+        <div className="text-sm  font-bold text-gray">
           <div className="mb-3">
-            <strong className='text-blue'>BU:</strong>
+            <strong className="text-blue-light">BU:</strong>
             <div>Hash: {buHash}</div>
           </div>
 
           <div className="mb-3">
-            <strong className='text-blue'>Árvore Global:</strong>
-            <div>Hash: {proof.global_root.value}</div>
-            <div>Última atualização: {proof.global_root.timestamp}</div> 
-            <div>Assinatura: {proof.global_root.signature}</div> 
+            <strong className="text-blue-light">Árvore Global:</strong>
+            <div>Raiz: {proofs[0].global_root.value}</div>
+            <div>Última atualização: {proofs[0].global_root.timestamp}</div>
+            <div>Assinatura: {proofs[0].global_root.signature}</div>
           </div>
 
-          <div className="mb-3">
-            <strong className='text-blue'>Árvore Local:</strong>
-            <div>Nome: {proof.local_tree.local_root.tree_name}</div>
-            <div>Hash: {proof.local_tree.local_root.value}</div>
-            <div>Última atualização: Em construção </div> 
-            <div>Tamanho: {proof.local_tree.local_root.tree_size}</div> 
-          </div>
-
+          {renderLocalTrees()}
         </div>
 
         <div className="flex gap-4">
-            <button onClick={downloadDataProof} className="rounded-full bg-yellow px-2 h-[37px] w-[132px] font-bold">Baixar Provas</button>
+          <button
+            onClick={downloadDataProof}
+            className="rounded-full bg-yellow px-2 h-[37px] w-[132px] font-bold"
+          >
+            Baixar Provas
+          </button>
         </div>
       </div>
     </div>

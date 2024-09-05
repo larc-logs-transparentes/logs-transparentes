@@ -7,3 +7,4 @@ pymongo==4.6.2
 asn1tools==0.166.0
 python-dotenv==1.0.1
 python-multipart==0.0.9
+ijson==3.2.3
