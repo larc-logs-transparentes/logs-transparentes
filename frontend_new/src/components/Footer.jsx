@@ -57,8 +57,8 @@ function Footer() {
       </ul>
       
       <ul className=''>
-        <li className='mt-[15px] relative'>
-          <div onClick={toggleDropdown} className='cursor-pointer flex' ref={dropdownRef}>
+        <li className='mt-[15px] relative' ref={dropdownRef}>
+          <div onClick={toggleDropdown} className='cursor-pointer flex'>
             Eleições
             <ExpandMoreIcon className='ml-2' style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0)' }}/>
           </div>
