@@ -1,43 +1,38 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuIcon from "@mui/icons-material/Menu";
-import axios from "axios";
 import Logs from "../assets/LogoPTBR.svg";
 import "../index.css";
 import { convertElectionIdToName } from "./electionIdConverter";
+import { useGetElectionsQuery } from '../context/core/api/section/infra/electionSlice.js';
+import { setSelectedElection, setElectionOptions } from '../context/core/api/section/infra/electionSlice.js';
 
 function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [electionOptions, setElectionOptions] = useState([]);
-  const [selectedElection, setSelectedElection] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownRef = useRef("");
-  const bu_api_url = require("../config.json").bu_api_url;
+  const dispatch = useDispatch();
+  const { selectedElection, electionOptions } = useSelector(state => state.election);
+  const { data: options = [], error } = useGetElectionsQuery();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${bu_api_url}/bu/distinct_eleicoes`);
-        const options = response.data;
-        setElectionOptions(options);
-        const pathSegments = location.pathname.split("/");
-        const electionIdFromUrl = pathSegments[1];
-        const savedElectionId = localStorage.getItem("selectedElection");
+    if (options.length > 0) {
+      dispatch(setElectionOptions(options));
+      const pathSegments = location.pathname.split("/");
+      const electionIdFromUrl = pathSegments[1];
+      const savedElectionId = localStorage.getItem("selectedElection");
 
-        if (savedElectionId) {
-          const selectedElectionName = convertElectionIdToName(savedElectionId);
-          setSelectedElection(selectedElectionName);
-        } else {
-          setHighestElectionAsSelected(options, electionIdFromUrl);
-        }
-      } catch (error) {
-        console.error(error);
+      if (savedElectionId) {
+        const selectedElectionName = convertElectionIdToName(savedElectionId);
+        dispatch(setSelectedElection(selectedElectionName));
+      } else {
+        setHighestElectionAsSelected(options, electionIdFromUrl);
       }
-    };
-    fetchData();
-  }, [location.pathname, bu_api_url]);
+    }
+  }, [options, location.pathname, dispatch]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -72,14 +67,14 @@ function Navbar() {
         selectedID = options[options.length - 1];
       }
       const selectedElectionName = convertElectionIdToName(selectedID);
-      setSelectedElection(selectedElectionName);
+      dispatch(setSelectedElection(selectedElectionName));
     }
   };
 
   const handleElectionClick = (electionId) => {
     const electionName = convertElectionIdToName(electionId);
     navigate(`/${electionId}/search`);
-    setSelectedElection(electionName);
+    dispatch(setSelectedElection(electionName));
     setIsDropdownOpen(false);
     localStorage.setItem("selectedElection", electionId);
   };
