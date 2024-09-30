@@ -1,17 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
-
-
-
 const ResultsButton = () => {
 
   const navigate = useNavigate();
   const handleButtonClick = () => {
     navigate('/resultadosUSP'); 
   };
-  
+
   return (
     <div className="flex flex-col justify-center items-center h-[25vh]">
       <p className="text-blue-dark text-center text-3xl">
