@@ -13,7 +13,7 @@ const ResultsButton = () => {
       <p className="text-blue-dark text-center text-3xl">
           Resultados USP
       </p>
-      <p className="mb-4 text-blue-dark text-center text-lg font-semibold">
+      <p className="mx-4 my-4 text-blue-dark text-center text-xl">
         Confira os resultados usando BUs verificados pela USP
       </p>
       <button 

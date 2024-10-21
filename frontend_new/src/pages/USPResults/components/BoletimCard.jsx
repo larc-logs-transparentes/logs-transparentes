@@ -1,33 +1,35 @@
 export default function BoletimCard({ candidate }) {
-    return (<div className="flex h-20 items-center rounded-lg bg-yellow-200">
-      <div className="flex flex-1 items-center px-4">
+  return (
+    <div className="flex flex-col sm:flex-row sm:h-20 justify-center rounded-lg bg-yellow-200 p-2 sm:p-0">
+      <div className="flex flex-1 items-center px-2 sm:px-4 mb-2 sm:mb-0">
         <svg width="18" height="25" viewBox="0 0 18 25" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fillRule="evenodd" clipRule="evenodd" d="M0 4.13141C0 2.04851 1.64162 0.359985 3.66667 0.359985H14.3333C16.3584 0.359985 18 2.04851 18 4.13141V20.5886C18 22.6715 16.3584 24.36 14.3333 24.36H3.66667C1.64162 24.36 0 22.6715 0 20.5886V4.13141ZM3.66667 2.41713C2.74619 2.41713 2 3.18464 2 4.13141V20.5886C2 21.5353 2.74619 22.3028 3.66667 22.3028H14.3333C15.2538 22.3028 16 21.5353 16 20.5886V4.13141C16 3.18464 15.2538 2.41713 14.3333 2.41713H3.66667Z" fill="#1094AB"/>
           <path fillRule="evenodd" clipRule="evenodd" d="M12.6667 5.15999C12.6667 5.72805 12.219 6.18856 11.6667 6.18856H6.33333C5.78105 6.18856 5.33333 5.72805 5.33333 5.15999C5.33333 4.59192 5.78105 4.13141 6.33333 4.13141H11.6667C12.219 4.13141 12.6667 4.59192 12.6667 5.15999Z" fill="#1094AB"/>
           <path fillRule="evenodd" clipRule="evenodd" d="M9 11.6743C9.36819 11.6743 9.66667 11.3673 9.66667 10.9886C9.66667 10.6098 9.36819 10.3028 9 10.3028C8.63181 10.3028 8.33333 10.6098 8.33333 10.9886C8.33333 11.3673 8.63181 11.6743 9 11.6743ZM9 13.7314C10.4728 13.7314 11.6667 12.5034 11.6667 10.9886C11.6667 9.47372 10.4728 8.2457 9 8.2457C7.52724 8.2457 6.33333 9.47372 6.33333 10.9886C6.33333 12.5034 7.52724 13.7314 9 13.7314Z" fill="#1094AB"/>
           <path fillRule="evenodd" clipRule="evenodd" d="M9 17.5028C6.81164 17.5028 6.0299 18.6526 5.92848 18.9134C5.72336 19.4409 5.14139 19.6974 4.62861 19.4864C4.11583 19.2754 3.86641 18.6768 4.07153 18.1494C4.50344 17.0388 6.06837 15.4457 9 15.4457C11.9316 15.4457 13.4966 17.0388 13.9285 18.1494C14.1336 18.6768 13.8842 19.2754 13.3714 19.4864C12.8586 19.6974 12.2766 19.4409 12.0715 18.9134C11.9701 18.6526 11.1884 17.5028 9 17.5028Z" fill="#1094AB"/>
         </svg>
-        <div className="pl-6">
-          <h3 className="mb-1 font-medium leading-tight text-default-gray-600">
+        <div className="pl-4 sm:pl-6">
+          <h3 className="mb-1 text-sm sm:text-base font-medium leading-tight text-default-gray-600">
             Candidato
           </h3>
-          <h4 className="text-lg font-bold leading-none text-default-cyan-400">
+          <h4 className="text-base sm:text-lg font-bold leading-none text-default-cyan-400">
             {candidate.identificacao_votavel.codigo}
           </h4>
         </div>
       </div>
-      <div className="flex flex-1 items-center px-4">
-        <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div className="flex flex-1 items-center px-2 sm:px-4 mb-2 sm:mb-0">
+      <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M18.498 13.86H1.5V18.86H18.498V13.86ZM19.9445 12.8319L19.9661 12.8936L19.9892 12.9945L19.9981 13.0931V19.61C19.9981 19.9897 19.7159 20.3035 19.3499 20.3532L19.2481 20.36H0.75C0.3703 20.36 0.05651 20.0778 0.00685 19.7118L0 19.61V13.1106L0.00184011 13.0577L0.0127101 12.9722C0.0228501 12.9184 0.0384099 12.8672 0.0589399 12.8187L2.81824 6.80002C2.92517 6.56679 3.14245 6.40681 3.39153 6.37046L3.5 6.36259L6.03982 6.36182L5.25089 7.73205L5.18282 7.86182L3.981 7.86199L1.918 12.3598H18.07L16.0428 8.01382L16.9052 6.51652C16.9718 6.56738 17.0301 6.62956 17.0771 6.70109L17.1297 6.79552L19.9445 12.8319ZM11.3652 0.415648L11.4566 0.460618L16.6447 3.46375C16.9729 3.65371 17.1033 4.05521 16.9636 4.39728L16.9187 4.4889L14.112 9.36099L15.25 9.36159C15.6642 9.36159 16 9.69739 16 10.1116C16 10.4913 15.7178 10.8051 15.3518 10.8548L15.25 10.8616L13.248 10.861L13.2471 10.864H9.16909L9.16599 10.861L4.75 10.8616C4.33579 10.8616 4 10.5258 4 10.1116C4 9.73189 4.28215 9.41809 4.64823 9.36849L4.75 9.36159L6.573 9.36099L6.39145 9.25629C6.06327 9.06629 5.93285 8.66479 6.0726 8.32271L6.11747 8.23109L10.4341 0.735358C10.6235 0.406328 11.024 0.275568 11.3652 0.415648ZM11.3559 2.13529L7.78781 8.33118L9.56599 9.36099H12.383L15.248 4.38818L11.3559 2.13529Z" fill="#1094AB"/>
         </svg>
-        <div className="pl-6">
-          <h3 className="mb-1 font-medium leading-tight text-default-gray-600">
+        <div className="pl-4 sm:pl-6">
+          <h3 className="mb-1 text-sm sm:text-base font-medium leading-tight text-default-gray-600">
             Votação
           </h3>
-          <h4 className="text-lg font-bold leading-none text-default-cyan-400">
+          <h4 className="text-base sm:text-lg font-bold leading-none text-default-cyan-400">
             {new Intl.NumberFormat("pt-BR", {}).format(candidate.quantidade_votos)}
           </h4>
         </div>
       </div>
-    </div>);
+    </div>
+  );
 }

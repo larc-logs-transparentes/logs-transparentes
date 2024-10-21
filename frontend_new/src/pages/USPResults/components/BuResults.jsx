@@ -105,12 +105,12 @@ export default function BuResults() {
         </div>
       </Transition>
       <div className="bg-blue py-8">
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto flex-col px-6">
           <h1 className="mb-8 text-center text-2xl font-medium font-inter text-white">
             Conferir resultado usando BUs verificados pela USP
           </h1>
           <form>
-            <div className="-mx-5 flex items-end justify-center">
+            <div className="-mx-5 flex flex-col sm:flex-row sm:items-end items-center justify-center">
               <div className="px-5">
                 <Controller control={control} name="election" render={({ field: { value, onChange, name } }) => (<Select onChange={onChange} name={name} value={value} label="Eleição*" options={electionsOptions} placeholder="Escolher Eleição"/>)}/>
               </div>
@@ -123,7 +123,7 @@ export default function BuResults() {
               <div className="px-5">
                 <Controller control={control} name="role" render={({ field: { value, onChange, name } }) => (<Select onChange={onChange} name={name} value={value} label="Cargo*" options={cargo} placeholder="Escolher Cargo"/>)}/>
               </div>
-              <div className="px-5">
+              <div className="px-5 mt-5">
                 <button onClick={handleSubmit(onSubmit, onError)} type="button" className="rounded-full bg-yellow px-4 py-2 font-medium tracking-wide text-black">
                   Calcular
                 </button>
@@ -133,7 +133,7 @@ export default function BuResults() {
         </div>
       </div>
 
-      <section className="mx-auto max-w-7xl p-6">
+      <section className="mx-auto h-[60vh] sm:h-[45vh] max-w-7xl  p-6">
         <div className="rounded-2xl border-2 border-blue-light p-6">
           <h2 className="mb-6 text-2xl font-medium text-blue-light">
             Resultados
