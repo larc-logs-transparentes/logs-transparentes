@@ -1,5 +1,8 @@
 ModuloRegistroDigitalVoto DEFINITIONS IMPLICIT TAGS ::= BEGIN
 
+-- Esse arquivo foi criado para aglutinar, de forma didática, informações contidas em outros arquivos a fim de facilitar a compreensão do público externo.
+-- Arquivos envolvidos: tiposeleitorais.asn1, tiposecourna.asn1, tiposresultadosecourna.asn1, registrodigitalvoto.asn1
+
 EXPORTS ALL;
 
 -- TIPOS
@@ -77,9 +80,9 @@ MotivoApuracaoMistaComMR ::= ENUMERATED {
 
 -- Origem dos votos inseridos no SA.
 OrigemVotosSA ::= ENUMERATED {
-    cedula(1),
-    rdv(2),
-    bu(3)
+    cedula                  (1),
+    rdv                     (2),
+    bu                      (3)
 }
 
 TipoApuracao ::= ENUMERATED {
@@ -101,8 +104,8 @@ TipoArquivo ::= ENUMERATED {
 
 -- Tipo do sistema eleitoral.
 TipoCedulaSA ::= ENUMERATED {
-    majoritario(1),
-    proporcional(2)
+    majoritario     (1),
+    proporcional    (2)
 }
 
 -- Tipos de urna eletrônica.
@@ -115,15 +118,15 @@ TipoUrna ::= ENUMERATED {
 
 -- Tipos de voto.
 TipoVoto ::= ENUMERATED {
-    legenda(1),
-    nominal(2),
-    branco(3),
-    nulo(4),
-    brancoAposSuspensao(5),
-    nuloAposSuspensao(6),
-    nuloPorRepeticao(7),
-    nuloCargoSemCandidato(8),
-    nuloAposSuspensaoCargoSemCandidato(9)
+    legenda                             (1),
+    nominal                             (2),
+    branco                              (3),
+    nulo                                (4),
+    brancoAposSuspensao                 (5),
+    nuloAposSuspensao                   (6),
+    nuloPorRepeticao                    (7),
+    nuloCargoSemCandidato               (8),
+    nuloAposSuspensaoCargoSemCandidato  (9)
 }
 
 -- SEQUENCES e CHOICES
@@ -136,10 +139,11 @@ EntidadeResultadoRDV ::= SEQUENCE {
 
 -- Entidade usada para o armazenamento do RDV nas mídias interna e externa da urna.
 EntidadeRegistroDigitalVoto ::= SEQUENCE {
-    pleito          IDPleito,                       -- Identificador do pleito corrente.
-    fase            Fase,                           -- Fase em que foi gerado o arquivo.
-    identificacao   IdentificacaoSecaoEleitoral,    -- Identificação da seção eleitoral.
-    eleicoes        Eleicoes                        -- Grupo de votos de todas as eleições.
+    pleito                  IDPleito,                       -- Identificador do pleito corrente.
+    fase                    Fase,                           -- Fase em que foi gerado o arquivo.
+    identificacao           IdentificacaoSecaoEleitoral,    -- Identificação da seção eleitoral.
+    historicoCodigosCarga   SEQUENCE OF GeneralString,      -- Lista com informações de histórico dos códigos de carga das urnas.
+    eleicoes                Eleicoes                        -- Grupo de votos de todas as eleições.
 }
 
 ApuracaoEletronica ::= SEQUENCE {
@@ -170,21 +174,29 @@ CabecalhoEntidade ::= SEQUENCE {
 
 -- Identificador com informações da carga da urna eletrônica.
 Carga ::= SEQUENCE {
-    numeroInternoUrna   NumeroInternoUrna,  -- Número interno da urna eletrônica.
-    numeroSerieFC       NumeroSerieFlash,   -- Número de série da unidade de Flash Card.
-    dataHoraCarga       DataHoraJE,         -- Data e hora da carga no formato utilizado pela Justiça Eleitoral (YYYYMMDDThhmmss).
-    codigoCarga         GeneralString       -- Código da carga da urna eletrônica.
+    numeroInternoUrna           NumeroInternoUrna,          -- Número interno da urna eletrônica.
+    numeroSerieFC               NumeroSerieFlash,           -- Número de série da mídia de carga.
+    identificadorGeradorMidia   IdentificadorGeradorMidia,  -- Identificação da máquina que gerou a mídia de carga.
+    dataHoraCarga               DataHoraJE,                 -- Data e hora da carga no formato utilizado pela Justiça Eleitoral (YYYYMMDDThhmmss).
+    codigoCarga                 GeneralString               -- Código da carga da urna eletrônica.
+}
+
+-- Identificador único de uma instalação do gerador de mídias em uma máquina específica.
+IdentificadorGeradorMidia ::= SEQUENCE {
+    nome                    GeneralString,  -- Nome da máquina.
+    serialCertificadoTPM    GeneralString,  -- Número de série do certificado EK do TPM da máquina.
+    serialInstalacao        GeneralString   -- Número de identificação da instalação do gerador de mídias (instalação nova ou reinicialização).
 }
 
 -- Identificador para escolha de Número de cargo constitucional ou Número cargo/consulta livre.
 CodigoCargoConsulta ::= CHOICE {
     cargoConstitucional         [1] CargoConstitucional,        -- Cargos constitucionais (São dos cargos previstos na constituição).
-    numeroCargoConsultaLivre    [2] NumeroCargoConsultaLivre    -- Código das consultas definido durante o cadastramento da Eleção.
+    numeroCargoConsultaLivre    [2] NumeroCargoConsultaLivre    -- Código das consultas definido durante o cadastramento da Eleição.
 }
 
 -- Identificador com informações da urna e da carga.
 CorrespondenciaResultado ::= SEQUENCE {
-    identificacao   IdentificacaoUrna,  -- Identificação se  tem carga de seção ou de mesa receptora de justificativa.
+    identificacao   IdentificacaoUrna,  -- Identificação se urna tem carga de seção ou de contingência.
     carga           Carga               -- Informações da carga da urna eletrônica.
 }
 
@@ -203,8 +215,8 @@ EleicaoSA ::= SEQUENCE {
 }
 
 Eleicoes ::= CHOICE {
-    eleicoesVota    [0] SEQUENCE OF EleicaoVota,    -- Grupo de votos de todas as eleições do Vota.
-    eleicoesSA      [1] SEQUENCE OF EleicaoSA       -- Grupo de votos de todas as eleições do SA.
+    eleicoesVota    [1] SEQUENCE OF EleicaoVota,    -- Grupo de votos de todas as eleições do Vota.
+    eleicoesSA      [2] SEQUENCE OF EleicaoSA       -- Grupo de votos de todas as eleições do SA.
 }
 
 -- Tipos de identificadores eleitorais (Se o pacote é gerado por (<glossario id='processo'>processo</glossario>, <glossario id='pleito'>pleito</glossario> ou <glossario id='eleicao'>eleição</glossario>).
@@ -226,7 +238,7 @@ IdentificacaoSecaoEleitoral ::= SEQUENCE {
     secao           NumeroSecao     -- Número identificador da <glossario id='secao-eleitoral'>seção eleitoral</glossario>.
 }
 
--- Identificação da Urna (Se é de seção eleitoral ou de Mesa Receptora de Justificativa).
+-- Identificação da Urna (Se é de seção eleitoral ou de contingência).
 IdentificacaoUrna ::= CHOICE {
     identificacaoSecaoEleitoral    [0] IdentificacaoSecaoEleitoral,     -- Urna de seção eleitoral.
     identificacaoContingencia      [1] IdentificacaoContingencia        -- Urna de contingência.

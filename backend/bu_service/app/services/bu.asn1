@@ -1,5 +1,8 @@
 ModuloBU DEFINITIONS IMPLICIT TAGS ::= BEGIN
 
+-- Esse arquivo foi criado para aglutinar, de forma didática, informações contidas em outros arquivos a fim de facilitar a compreensão do público externo.
+-- Arquivos envolvidos: tiposeleitorais.asn1, tiposecourna.asn1, tiposresultadosecourna.asn1, envelopegenerico.asn1, boletimurna.asn1
+
 EXPORTS ALL;
 
 -- TIPOS
@@ -11,11 +14,9 @@ IDProcessoEleitoral ::= INTEGER (0..99999)      -- Código numérico identificad
 NumeroCargoConsultaLivre ::= INTEGER (25..99)   -- Número livre de cargo ou consulta definido no cadastramento da <glossario id='eleicao'>eleição</glossario>.
 NumeroInternoUrna ::= INTEGER (0..99999999)     -- Número interno da urna eletrônica.
 NumeroLocal ::= INTEGER (1..9999)               -- Número do local de votação da <glossario id='secao-eleitoral'>seção eleitoral</glossario> de acordo com o cadastro da Justiça Eleitoral.
-NumeroMesa ::=  INTEGER (1..999)                -- Número da mesa de justificativa de acordo com o cadastro da Justiça Eleitoral (Informação referente ao Número da mesa utilizada para justificativa dos eleitores que não irão votar no seu domicílio eleitoral).
-NumeroPartido ::= INTEGER (0..99)               -- Número do <glossario id='partido'>partido</glossario> fornecido pelo Sistema de Candidaturas da Justiça Eleitoral (Número do partido que compõe a <glossario id='coligacao'>coligação</glossario> ou do partido isolado).
+NumeroPartido ::= INTEGER (0..99)               -- Número do <glossario id='partido'>partido</glossario> fornecido pelo Sistema de Candidaturas da Justiça Eleitoral (Número do partido que compõe a <glossario id='coligacao'>coligação</glossario> ou o partido isolado).
 NumeroSecao ::= INTEGER (1..9999)               -- Número da <glossario id='secao-eleitoral'>seçõe eleitoral</glossario> de acordo com o cadastro da Justiça Eleitoral.
 NumeroSerieFlash ::= OCTET STRING (SIZE(4))     -- Número de série da Flash (Representa um número de 4 bytes (0..2^32-1)).
-NumeroUrna ::= INTEGER (1..3)                   -- Número da urna utilizada na mesa de justificativa de acordo com o cadastro da Justiça Eleitoral.
 NumeroVotavel ::= INTEGER (0..99999)            -- Número do <glossario id='votavel'>votável</glossario> fornecido pelo Sistema de Candidaturas da Justiça Eleitoral.
 NumeroZona ::= INTEGER (1..9999)                -- Número da <glossario id='zona-eleitoral'>zona eleitoral</glossario> fornecido pelo cadastro da Justiça Eleitoral.
 QtdEleitores ::= INTEGER (0..9999)              -- Quantidade de <glossario id='eleitor'>eleitores</glossario> aptos de acordo com o cadastro da Justiça Eleitoral.
@@ -134,7 +135,7 @@ EntidadeEnvelopeGenerico ::= SEQUENCE {
     cabecalho     CabecalhoEntidade,    -- Informações do cabeçalho da entidade.
     fase          Fase,                 -- Fase em que foi gerado o arquivo.
     urna          Urna OPTIONAL,        -- Informações da urna eletrônica (Deve existir para RDV e ser omitido no BU).
-    identificacao IdentificacaoUrna,    -- Identificação se é urna de seção eleitoral ou de Mesa Receptora de Justificativa.
+    identificacao IdentificacaoUrna,    -- Identificação se é urna de seção eleitoral ou contingência.
     tipoEnvelope  TipoEnvelope,         -- Tipo de envelope que será criado.
     seguranca     Seguranca OPTIONAL,   -- Informações de segurança solicitados pela biblioteca do CEPESC (Existindo, o conteúdo estará cifrado).
     conteudo      OCTET STRING          -- Conteúdo do envelope gerado.
@@ -157,12 +158,11 @@ EntidadeBoletimUrna ::= SEQUENCE {
     identificacaoSecao          IdentificacaoSecaoEleitoral,                        -- Informações da <glossario id='secao-eleitoral'>seção eleitoral</glossario> que está instalada a urna eletrônica.
     dataHoraEmissao             DataHoraJE,                                         -- Data e hora da emissão do boletim de urna.
     dadosSecaoSA                DadosSecaoSA,                                       -- Identificação para resultado de urna de seção ou <glossario id='sistema-de-apuracao'>de Sistema de Apuração</glossario>.
-    qtdEleitoresLibCodigo       [1] QtdEleitores OPTIONAL,                          -- Quantidade de eleitores que compareceram que foram habilitados manualmente.
-    qtdEleitoresCompBiometrico  [2] QtdEleitores OPTIONAL,                          -- Quantidade de eleitores que compareceram que utilizaram <glossario id='identificacao-biometrica'>biometria</glossario>.
-    resultadosVotacaoPorEleicao [3] SEQUENCE OF ResultadoVotacaoPorEleicao,         -- Lista com os resultados da votação para cada eleição.
-    historicoCorrespondencias   [4] SEQUENCE OF CorrespondenciaResultado OPTIONAL,  -- Lista com informações de histórico das <glossario id='correspondencia'>correspondências</glossario> (Pode ser opcional porque quando o BU é da urna original não existe esse histórico).
-    historicoVotoImpresso       [5] SEQUENCE OF HistoricoVotoImpresso OPTIONAL,     -- Lista com informações de histórico de voto impresso.
-    chaveAssinaturaVotosVotavel OCTET STRING                                        -- Chave de assinatura pública das tuplas dos votáveis.
+    qtdEleitoresCompareceram    QtdEleitores,                                       -- Quantidade de eleitores que compareceram e votaram.
+    detalhamentoComparecimento  [1] DetalhamentoComparecimento OPTIONAL,            -- Detalhamento dos quantitativos de eleitores que compareceram, em relação à forma de habilitação.
+    resultadosVotacaoPorEleicao SEQUENCE OF ResultadoVotacaoPorEleicao,             -- Lista com os resultados da votação para cada eleição.
+    historicoCodigosCarga       SEQUENCE OF GeneralString,                          -- Lista com informações de histórico dos códigos de carga das urnas.
+    historicoVotoImpresso       SEQUENCE OF HistoricoVotoImpresso OPTIONAL          -- Lista com informações de histórico de voto impresso.
 }
 
 -- DEMAIS SEQUENCES E CHOICES (ordem alfabética)
@@ -194,21 +194,29 @@ CabecalhoEntidade ::= SEQUENCE {
 
 -- Identificador com informações da carga da urna eletrônica.
 Carga ::= SEQUENCE {
-    numeroInternoUrna   NumeroInternoUrna,  -- Número interno da urna eletrônica.
-    numeroSerieFC       NumeroSerieFlash,   -- Número de série da unidade de Flash Card.
-    dataHoraCarga       DataHoraJE,         -- Data e hora da carga no formato utilizado pela Justiça Eleitoral (YYYYMMDDThhmmss).
-    codigoCarga         GeneralString       -- Código da carga da urna eletrônica.
+    numeroInternoUrna          NumeroInternoUrna,          -- Número interno da urna eletrônica.
+    numeroSerieFC              NumeroSerieFlash,           -- Número de série da mídia de carga.
+    identificadorGeradorMidia  IdentificadorGeradorMidia,  -- Identificação da máquina que gerou a mídia de carga.
+    dataHoraCarga              DataHoraJE,                 -- Data e hora da carga no formato utilizado pela Justiça Eleitoral (YYYYMMDDThhmmss).
+    codigoCarga                GeneralString               -- Código da carga da urna eletrônica.
+}
+
+-- Identificador único de uma instalação do gerador de mídias em uma máquina específica.
+IdentificadorGeradorMidia ::= SEQUENCE {
+    nome                  GeneralString,  -- Nome da máquina.
+    serialCertificadoTPM  GeneralString,  -- Número de série do certificado EK do TPM da máquina.
+    serialInstalacao      GeneralString   -- Número de identificação da instalação do gerador de mídias (instalação nova ou reinicialização).
 }
 
 -- Identificador para escolha de Número de cargo constitucional ou Número cargo/consulta livre.
 CodigoCargoConsulta ::= CHOICE {
     cargoConstitucional         [1] CargoConstitucional,        -- Cargos constitucionais (São dos cargos previstos na constituição).
-    numeroCargoConsultaLivre    [2] NumeroCargoConsultaLivre    -- Código das consultas definido durante o cadastramento da Eleção.
+    numeroCargoConsultaLivre    [2] NumeroCargoConsultaLivre    -- Código das consultas definido durante o cadastramento da Eleição.
 }
 
 -- Identificador com informações da urna e da carga.
 CorrespondenciaResultado ::= SEQUENCE {
-    identificacao   IdentificacaoUrna,  -- Identificação se  tem carga de seção ou de mesa receptora de justificativa.
+    identificacao   IdentificacaoUrna,  -- Identificação se urna tem carga de seção ou de contingência.
     carga           Carga               -- Informações da carga da urna eletrônica.
 }
 
@@ -232,6 +240,13 @@ DadosSecaoSA ::= CHOICE {
     dadosSA     [1] DadosSA     -- BU de SA.
 }
 
+-- Detalhamento do comparecimento de eleitores levando em consideração a forma de habilitação.
+DetalhamentoComparecimento ::= SEQUENCE {
+    qtdEleitoresCompareceramSemBiometria    QtdEleitores, -- Quantidade de eleitores que compareceram e que não tinham biometria cadastrada.
+    qtdEleitoresHabilitadosPorBiometria     QtdEleitores, -- Quantidade de eleitores que foram habilitados com reconhecimento biométrico.
+    qtdEleitoresHabilitadosPorBiografia     QtdEleitores  -- Quantidade de eleitores que compareceram, que tinham biometria cadastrada e que foram habilitados por ano de nascimento.
+}
+
 -- Identificador com informações de histórico de voto impresso
 HistoricoVotoImpresso ::= SEQUENCE {
     idImpressoraVotos   INTEGER (0..99999999),  -- Número interno da impressora de votos
@@ -251,13 +266,6 @@ IdentificacaoContingencia ::= SEQUENCE {
     municipioZona MunicipioZona -- Número do município e Número da <glossario id='zona-eleitoral'>zona eleitoral</glossario> a qual pertence a urna.
 }
 
--- Identificador com informações da mesa receptora de justificativa.
-IdentificacaoMesaJustificativa ::= SEQUENCE {
-    municipioZona   MunicipioZona,  -- Número do município e Número da <glossario id='zona-eleitoral'>zona eleitoral</glossario>.
-    mesa            NumeroMesa,     -- Número da mesa de justificativa.
-    urna            NumeroUrna      -- Número da urna de justificativa.
-}
-
 -- Identificador com informações da <glossario id='secao-eleitoral'>seção eleitoral</glossario>.
 IdentificacaoSecaoEleitoral ::= SEQUENCE {
     municipioZona   MunicipioZona,  -- Número do município e Número da <glossario id='zona-eleitoral'>zona eleitoral</glossario> a qual pertence a <glossario id='secao-eleitoral'>seção eleitoral</glossario>.
@@ -265,7 +273,7 @@ IdentificacaoSecaoEleitoral ::= SEQUENCE {
     secao           NumeroSecao     -- Número identificador da <glossario id='secao-eleitoral'>seção eleitoral</glossario>.
 }
 
--- Identificação da Urna (Se é de seção eleitoral ou de Mesa Receptora de Justificativa).
+-- Identificação da Urna (Se é de seção eleitoral ou contingência).
 IdentificacaoUrna ::= CHOICE {
     identificacaoSecaoEleitoral    [0] IdentificacaoSecaoEleitoral,     -- Urna de seção eleitoral.
     identificacaoContingencia      [1] IdentificacaoContingencia        -- Urna de contingência.
@@ -292,9 +300,13 @@ ResultadoVotacao ::= SEQUENCE {
 
 -- Estrutura com os resultados da votação de uma eleição.
 ResultadoVotacaoPorEleicao ::= SEQUENCE {
-    idEleicao           IDEleicao,                      -- Identificador numérico da <glossario id='eleicao'>eleição</glossario>.
-    qtdEleitoresAptos   QtdEleitores,                   -- Quantidade de <glossario id='eleitor'>eleitores</glossario> aptos a votar na urna eletrônica da seção.
-    resultadosVotacao   SEQUENCE OF ResultadoVotacao    -- Lista com informações do resultado da votação na urna eletrônica.
+    idEleicao                          IDEleicao,                      -- Identificador numérico da <glossario id='eleicao'>eleição</glossario>.
+    qtdEleitoresAptos                  QtdEleitores,                   -- Quantidade de <glossario id='eleitor'>eleitores</glossario> aptos a votar na urna eletrônica da seção (= qtdEleitoresAptosSecao + qtdEleitoresAptosTTE).
+    qtdEleitoresAptosSecao             QtdEleitores,                   -- Quantidade de eleitores em qtdEleitoresAptos que são originais da seção.
+    qtdEleitoresAptosTTE               QtdEleitores,                   -- Quantidade de eleitores em qtdEleitoresAptos que são temporários na seção.
+    resultadosVotacao                  SEQUENCE OF ResultadoVotacao,   -- Lista com informações do resultado da votação na urna eletrônica.
+    ultimoHashVotosVotavel             OCTET STRING,                   -- Último hash em cadeia gerado a partir das tuplas dos votáveis, seguindo a ordenação do atributo de sua estrutura.
+    assinaturaUltimoHashVotosVotavel   OCTET STRING                    -- Assinatura do último hash em cadeia gerado a partir das tuplas dos votáveis.
 }
 
 TipoApuracaoSA ::= CHOICE {
@@ -316,7 +328,16 @@ TotalVotosVotavel ::= SEQUENCE {
     tipoVoto                [1] TipoVoto,                       -- Tipo do voto.
     quantidadeVotos         [2] QtdEleitores,                   -- Quantidade de votos por tipo e número do votável.
     identificacaoVotavel    [3] IdentificacaoVotavel OPTIONAL,  -- Identificação do votável (Para tipo de voto "Branco" ou "Nulo", esse campo deverá ser omitido).
-    assinatura              OCTET STRING                        -- Assinatura dos dados compostos de votos do votável. Os seguintes campos são assinados: TotalVotosCargo::codigoCargo, TotalVotosVotavel::tipoVoto, TotalVotosVotavel::quantidadeVotos, identificacaoVotavel::codigo, identificacaoVotavel::partido, Carga::codigoCarga
+    ordemGeracaoHash        QtdEleitores,                       -- Ordem utilizada para geração dos hashes em cadeia.
+    hash                    OCTET STRING                        -- Cálculo hash concatenando com hashes gerados a partir do cabecalho e de blocos na ordem específicada pelos campos:
+                                                                -- TotalVotosCargo.ordemImpressao e TotalVotosVotavel.ordemGeracaoHash, nessa ordem, sendo o primeiro hash do cabeçalho.
+                                                                -- > A saber:
+                                                                -- >   cabecalho:  idPleito (5 dígitos com zeros à esquerda) | idEleicao (5 dígitos com zeros à esquerda) | municipio (5 dígitos com zeros à esquerda) | zona (4 dígitos com zeros à esquerda) | secao (4 dígitos com zeros à esquerda) | codigoCarga (24 dígitos com zeros à esquerda)
+                                                                -- >       Ex.:     00304|00426|01392|0001|0574|012345358007733835527735
+                                                                -- >   bloco:     [sha512 - hash anterior representado em string com hexadecimais maiúsculos] | ordemGeracaoHash | codigoCargo | tipoVoto | quantidadeVotos | identificacaoVotavel->codigo * | identificacaoVotavel->partido *
+                                                                -- >       Ex.:   [C04...61B]|12|1|50|66|66
+                                                                -- >       * serão suprimidos caso nulos
+                                                                -- >       Ex.:   [C04...61B]|12|5|50
 }
 
 -- Identificador com informações da urna eletrônica.
@@ -327,7 +348,7 @@ Urna ::= SEQUENCE {
     tipoArquivo              TipoArquivo,                   -- Tipo do arquivo gerado pela urna eletrônica.
     numeroSerieFV            NumeroSerieFlash,              -- Número de série da Flash de Votação.
     motivoUtilizacaoSA       TipoApuracaoSA OPTIONAL        -- Identificador numérico para o motivo de utilização do <glossario id='sistema-de-apuracao'>Sistema de Apuração</glossario> para a urna eletrônica.
-                                                           -- (UE: não utilizado(0); SA: código de justificativa de uso).
+                                                            -- (UE: não utilizado(0); SA: código de justificativa de uso).
 }
 
 END
