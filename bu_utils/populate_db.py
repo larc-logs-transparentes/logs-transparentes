@@ -24,9 +24,9 @@ def read_bu_or_busa_files():
                 for root, dirs, files in os.walk("./assets/bus")
                 for name in files if name.endswith(("-bu.dat", "-busa.dat"))]
     
-    if not files:
-        files = os.listdir("./assets/mocked_bus")
-        files = [f"./assets/mocked_bus/{file}" for file in files]
+    #if not files:
+     #   files = os.listdir("./assets/mocked_bus")
+      #  files = [f"./assets/mocked_bus/{file}" for file in files]
 
     return files
 
