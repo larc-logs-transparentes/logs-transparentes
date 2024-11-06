@@ -48,8 +48,8 @@ def get_list_files_with_extension_in_directory(extension, path):
 
 # Get all BUs from directory (in JSON form)
 def get_list_all_bus_json_from_path(path):
-    files_list = get_list_files_with_extension_in_directory("dat", path)
-    #files_list.extend(get_list_files_with_extension_in_directory("dat", path))
+    files_list = get_list_files_with_extension_in_directory("bu", path)
+    files_list.extend(get_list_files_with_extension_in_directory("busa", path))
     bu_list = []
 
     for file in files_list:
