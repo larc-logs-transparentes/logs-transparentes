@@ -1,8 +1,9 @@
-assets/bus/*
-assets/bus_1/*
+assets/**
 results*
 .idea/*
 __pycache__
 **/__pycache/**
 
 !results/example_bus_consolidated.json
+!assets/mocked_bus/*
+!assets/specification_files/*
