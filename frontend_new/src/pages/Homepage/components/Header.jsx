@@ -53,7 +53,7 @@ function Header() {
           ))}
         </div>
         <div className='text-center  text-md relative font-sans font-bold text-black underline mt-[20px] md:mt-0'>
-          <button onClick={handleButtonClick} className="rounded-full bg-yellow px-2 h-[40px] w-[130px]">Saiba Mais</button>
+          <button onClick={handleButtonClick} className="rounded-full bg-yellow hover:bg-blue-light px-2 h-[40px] w-[130px]">Saiba Mais</button>
         </div>
 
         <div className='flex justify-center md:hidden p-3 mt-2'>

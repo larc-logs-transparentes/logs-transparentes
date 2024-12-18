@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { getBuById } from "../../../endpoints/bu.api";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
 import Candidato from "../../../assets/Candidato.svg";
 import Votacao from "../../../assets/Votacao.svg";
 
@@ -10,18 +8,6 @@ function Result({ buResults, electionId, ableVoters, presentVoters }) {
   if (!buResults) {
     return <div>Loading...</div>;
   }
-
-  const colorClasses = [
-    "bg-blue-light-30",
-    "bg-yellow-30",
-    "bg-black-30",
-    "bg-red-30",
-    "bg-neon-green-30",
-  ];
-
-  const getColor = (index) => {
-    return colorClasses[index % colorClasses.length];
-  };
 
   const comparecimento = presentVoters;
   const office = buResults.codigoCargo[1];
@@ -62,9 +48,7 @@ function Result({ buResults, electionId, ableVoters, presentVoters }) {
           {votosNominais.map((voto, index) => (
             <div
               key={index}
-              className={`flex md:gap-x-4 lg:gap-x-40 md:gap-y-4  rounded-xl p-4 border-gray ${getColor(
-                index
-              )} `}
+              className={"flex md:gap-x-4 lg:gap-x-40 md:gap-y-4  rounded-xl p-4 border-gray bg-blue-light-30"}
             >
               <div className="flex gap-3 lg:gap-8">
                 <img src={Candidato} alt="Candidato" className="h-8" />
