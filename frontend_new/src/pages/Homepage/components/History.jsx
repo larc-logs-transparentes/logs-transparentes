@@ -13,8 +13,6 @@ function History() {
   
   return (
     <div className='relative'>
-      {/* Overlay div */}
-      <div className='absolute inset-0 bg-black-30 md:bg-black md:bg-opacity-0 hover:bg-black-30 z-20 cursor-not-allowed'></div>
       <div className='flex flex-wrap lg:flex-nowrap font-sans bg-blue gap-[1%] items-center p-8 justify-center'>
         <div className='flex m-1 gap-8 flex-row items-center border-white text-white border-2 p-2 px-8 rounded-lg shadow-md'>
           <img src={iconbus} alt="Verified BUs" className='h-6 mb-2' />
