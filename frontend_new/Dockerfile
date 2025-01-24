@@ -1,4 +1,4 @@
-FROM node:18.19.1-bullseye-slim as build-stage
+FROM --platform=$BUILDPLATFORM node:23.6.1-bullseye-slim AS build-stage
 
 WORKDIR /app
 
