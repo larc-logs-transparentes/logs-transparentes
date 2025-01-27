@@ -121,8 +121,8 @@ function Navbar() {
               Dados por Sessões
             </a>
           </li>
-          <li className="mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 overflow-clip ">
-            <a href="#" className="">
+          <li className='mt-[5px] hover:bg-[#00C6D4] rounded-lg p-1.5 overflow-clip '>
+            <a href="/resultadosUSP" className=''>
               Resultados USP
             </a>
           </li>
