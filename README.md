@@ -29,4 +29,3 @@ Verify the signature and the inclusion of a given electoral data.
 
 ![image](https://github.com/larc-logs-transparentes/logs-transparentes/assets/28439483/4bdf7df8-90e7-41c0-bf85-272e3ca29a49)
 
-
