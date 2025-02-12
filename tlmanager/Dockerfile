@@ -1,8 +1,7 @@
-FROM python:3.12.2-slim-bullseye AS build-stage
+FROM python:3.12.2-bullseye AS build-stage
 
 WORKDIR /app
 
-RUN apt update && apt install -y openssh-client
 RUN mkdir -p /app/keys && cd /app/keys && \
     ssh-keygen -t ed25519 -m PKCS8 -f private_key.pem && \
     mv private_key.pem.pub public_key.pem
