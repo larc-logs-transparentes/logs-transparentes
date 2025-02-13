@@ -7,7 +7,7 @@ import History from './components/History';
 import ResultsButton from './components/ResultsButton';
 
 import Footer from '../../components/Footer';
-import SearchBar from '../../components/SearchBar';  
+import SearchButton from './components/SearchButton';  
 
 function HomePage() {
 
@@ -16,7 +16,7 @@ function HomePage() {
       <Header />
       <History/>
       <DragAndDrop/>
-      <SearchBar/>
+      <SearchButton/>
       <ResultsButton/>
       <Footer/>
     </div>

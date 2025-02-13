@@ -31,7 +31,7 @@ function SearchBar() {
   const [secaoOpts, setSecaoOpts] = useState([]);
   const location = useLocation();
 
-  const states = useGetStatesByElectionQuery(545);
+  const states = useGetStatesByElectionQuery(electionId);
 
   useEffect(() => {
     const fetchData = async () => {
