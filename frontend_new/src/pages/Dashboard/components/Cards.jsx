@@ -59,15 +59,15 @@ const Cards = () => {
                     className="w-full sm:w-1/2 md:w-1/3 flex justify-center p-2" 
                     onClick={() => handleCardClick(card)}
                 >
-                    <div className="w-full max-w-[90vw] sm:max-w-[48vw] md:max-w-[33vw] h-[100px] md:h-[127px] bg-[#00C6D4] rounded-lg p-4 shadow-sm cursor-pointer">
+                    <div className="md:flex-col w-full max-w-[90vw] sm:max-w-[48vw] md:max-w-[33vw] h-[100px] md:h-[127px] bg-[#00C6D4] rounded-lg p-4 shadow-sm cursor-pointer">
                         <img 
                             src={dashboardBUtree} 
                             alt="Ícone das Árvore de BUS" 
                             className="w-12 md:w-16 h-10 md:h-14 mx-auto" 
                         />
-                        <h2 className="text-lg md:text-2xl text-black font-inter font-semibold text-center mb-2">
+                        <div className=" truncate text-lg md:text-xl text-black font-inter font-semibold text-center mb-2">
                             Árvore de BUs - {card.treeIndex}
-                        </h2>
+                        </div>
                     </div>
                 </div>
             );
@@ -82,7 +82,7 @@ const Cards = () => {
                 </h1>
                 <div className="flex flex-col justify-center flex-grow gap-4 p-4">
                     {cardInfo.length > 0 && renderCard(cardInfo[0], 0)}
-                    <div className="flex flex-col sm:flex-row justify-center gap-4">
+                    <div className="flex-wrap flex flex-col sm:flex-row justify-center">
                         {cardInfo.slice(1).map((card, index) => renderCard(card, index + 1))}
                     </div>
                 </div>
