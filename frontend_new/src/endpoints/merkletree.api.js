@@ -1,6 +1,5 @@
 import axios from 'axios';
-const bu_api_url = 'http://localhost:8080';
-
+const bu_api_url = process.env.REACT_APP_API_URL;
 
 export function getDataProof(merkletree_leaf_index, tree_name) {
     return new Promise(function (resolve, reject) {

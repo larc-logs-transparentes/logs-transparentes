@@ -1,5 +1,5 @@
 import axios from 'axios';
-const bu_api_url = 'http://localhost:8080';
+const bu_api_url = process.env.REACT_APP_API_URL;
 
 export function getBuById(bu_id) {
   return axios.get(`${bu_api_url}/bu/find_by_id?id=${bu_id}`)

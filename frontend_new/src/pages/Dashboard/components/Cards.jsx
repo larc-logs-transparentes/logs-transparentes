@@ -3,6 +3,8 @@ import dashboardglobaltree from '../../../assets/dashboardglobaltree.svg';
 import dashboardBUtree from '../../../assets/dashboardBU.svg';
 import Modal from './Modal';
 
+const bu_api_url = process.env.REACT_APP_API_URL;
+
 const Cards = () => {
     const [cardInfo, setCardInfo] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,7 +13,7 @@ const Cards = () => {
     useEffect(() => {
         const fetchTreeData = async () => {
             try {
-                const treeList = await fetch('http://localhost:8080/tree');
+                const treeList = await fetch(`${bu_api_url}/tree`);
                 if (!treeList.ok) {
                     throw new Error('Failed to fetch tree list data');
                 }
@@ -31,9 +33,9 @@ const Cards = () => {
             title: treeName,
             treeIndex: treeName.slice(-3),
             description: `Eleição`,
-            downloadLeavesUrl: `http://localhost:8080/bu/find_by_merkletree_index_range?election_id=${treeName.slice(-3)}&initial_index=0&final_index=100000000`,
-            treeInfoUrl: `http://localhost:8080/tree/tree-root?tree_name=${treeName}`,
-            downloadAllGlobalRootsUrl: 'http://localhost:8080/tree/all-roots-global-tree'
+            downloadLeavesUrl: `${bu_api_url}/bu/find_by_merkletree_index_range?election_id=${treeName.slice(-3)}&initial_index=0&final_index=100000000`,
+            treeInfoUrl: `${bu_api_url}/tree/tree-root?tree_name=${treeName}`,
+            downloadAllGlobalRootsUrl: `${bu_api_url}/tree/all-roots-global-tree`
         }));
     };
 
