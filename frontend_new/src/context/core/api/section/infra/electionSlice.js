@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiSlice } from '../../apiSlice';
 
-const endpointUrl = process.env.REACT_APP_API_URL;
+const endpointUrl = '/bu/';
 
 function getElections() {
-  return `${endpointUrl}/distinct_eleicoes`;
+  return `${endpointUrl}distinct_eleicoes`;
 }
 
 function getElectionById(electionId) {
-  return `${endpointUrl}/election?id=${electionId}`;
+  return `${endpointUrl}election?id=${electionId}`;
 }
 
 const initialState = {
