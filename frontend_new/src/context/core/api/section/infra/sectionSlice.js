@@ -1,13 +1,13 @@
 import { apiSlice } from '../../apiSlice';
 
-const endpointUrl = process.env.REACT_APP_API_URL;
+const endpointUrl = '/bu/';
 
 function getStatesByElection(electionId) {
-  return `${endpointUrl}/distinct_uf?id_eleicao=${electionId}`;
+  return `${endpointUrl}distinct_uf?id_eleicao=${electionId}`;
 }
 
 function getBuByInfo(estado, zona, secao) {
-  return `${endpointUrl}/find_by_info?UF=${estado}&zona=${zona}&secao=${secao}`;
+  return `${endpointUrl}find_by_info?UF=${estado}&zona=${zona}&secao=${secao}`;
 }
 
 export const sectionApiSlice = apiSlice.injectEndpoints({
