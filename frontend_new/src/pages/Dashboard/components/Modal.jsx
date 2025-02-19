@@ -5,6 +5,8 @@ import modalbaixarfolhasbutton from '../../../assets/modalbaixarfolhasbutton.svg
 import { fetchRootValue, fetchNumberOfElementsOnTree, fetchRootTimestampValue, downloadFile } from '../../../services/modalTreeDashboardServices';
 import { convertElectionIdToName } from '../../../components/electionIdConverter';
 
+const bu_api_url = process.env.REACT_APP_API_URL;
+
 const Modal = ({ isOpen, onClose, card, isFirst }) => {
   const [rootValue, setRootValue] = useState('');
   const [numberOfElementsOnTree, setNumberOfElementsOnTree] = useState('');
@@ -33,7 +35,7 @@ const Modal = ({ isOpen, onClose, card, isFirst }) => {
   if (!isOpen || !card) return null;
 
   const handleDownloadLeaves = async () => {
-    const downloadLeavesUrl = isFirst ? 'http://localhost:8080/tree/all-leaf-data-global-tree' : card.downloadLeavesUrl;
+    const downloadLeavesUrl = isFirst ? `${bu_api_url}/tree/all-leaf-data-global-tree` : card.downloadLeavesUrl;
     if (downloadLeavesUrl) {
       await downloadFile(downloadLeavesUrl, `Folhas_da_${card.title}.json`);
     } else {

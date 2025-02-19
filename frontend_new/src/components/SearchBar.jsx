@@ -6,6 +6,7 @@ import axios from "axios";
 import "../index.css";
 
 import { useGetStatesByElectionQuery } from "../context/core/api/section/infra/sectionSlice";
+const bu_api_url = process.env.REACT_APP_API_URL;
 
 function SearchBar() {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function SearchBar() {
       if (electionId) setTurnoSelection(electionId);
       else {
         const { data } = await axios.get(
-          `http://localhost:8080/bu/distinct_eleicoes`
+          `${bu_api_url}/bu/distinct_eleicoes`
         );
 
         if (data.length > 0) {
@@ -71,7 +72,7 @@ function SearchBar() {
     setUfSelection(e.target.value);
 
     const { data } = await axios.get(
-      `http://localhost:8080/bu/distinct_municipio?id_eleicao=${turnoSelection}&UF=${e.target.value}`
+      `${bu_api_url}/bu/distinct_municipio?id_eleicao=${turnoSelection}&UF=${e.target.value}`
     );
     setCityOpts(data);
     setDropdownStates((prev) => ({ ...prev, cidade: true }));
@@ -81,7 +82,7 @@ function SearchBar() {
     setCitySelection(e.target.value);
 
     const { data } = await axios.get(
-      `http://localhost:8080/bu/distinct_zona?id_eleicao=${turnoSelection}&UF=${ufSelection}&municipio=${e.target.value}`
+      `${bu_api_url}/bu/distinct_zona?id_eleicao=${turnoSelection}&UF=${ufSelection}&municipio=${e.target.value}`
     );
     setZonaOpts(data);
     setDropdownStates((prev) => ({ ...prev, zona: true }));
@@ -91,7 +92,7 @@ function SearchBar() {
     setZonaSelection(e.target.value);
 
     const { data } = await axios.get(
-      `http://localhost:8080/bu/distinct_secao?id_eleicao=${turnoSelection}&UF=${ufSelection}&municipio=${citySelection}&zona=${e.target.value}`
+      `${bu_api_url}/bu/distinct_secao?id_eleicao=${turnoSelection}&UF=${ufSelection}&municipio=${citySelection}&zona=${e.target.value}`
     );
     setSecaoOpts(data);
     setDropdownStates((prev) => ({ ...prev, secao: true }));
@@ -110,7 +111,7 @@ function SearchBar() {
     const effectiveElectionId = electionId || turnoSelection;
 
     const { data } = await axios.get(
-      `http://localhost:8080/bu/find_by_info?id_eleicao=${effectiveElectionId}&UF=${ufSelection}&municipio=${citySelection}&zona=${zonaSelection}&secao=${secaoSelection}`
+      `${bu_api_url}/bu/find_by_info?id_eleicao=${effectiveElectionId}&UF=${ufSelection}&municipio=${citySelection}&zona=${zonaSelection}&secao=${secaoSelection}`
     );
     navigate(`/${effectiveElectionId}/search/${data._id}`, {
       state: {
