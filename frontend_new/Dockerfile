@@ -9,6 +9,7 @@ COPY tailwind.config.js /app/
 
 RUN npm install -g npm
 RUN npm install
+ENV REACT_APP_API_URL=process.env.REACT_APP_API_URL
 RUN npm run build
 
 
