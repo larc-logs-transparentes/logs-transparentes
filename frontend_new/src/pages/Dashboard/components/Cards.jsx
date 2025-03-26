@@ -3,7 +3,8 @@ import dashboardglobaltree from '../../../assets/dashboardglobaltree.svg';
 import dashboardBUtree from '../../../assets/dashboardBU.svg';
 import Modal from './Modal';
 
-const bu_api_url = process.env.REACT_APP_API_URL;
+// const bu_api_url = process.env.REACT_APP_API_URL;
+import bu_api_url from '../../../lib/server_config';
 
 const Cards = () => {
     const [cardInfo, setCardInfo] = useState([]);

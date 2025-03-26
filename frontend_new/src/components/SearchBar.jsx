@@ -6,7 +6,8 @@ import axios from "axios";
 import "../index.css";
 
 import { useGetStatesByElectionQuery } from "../context/core/api/section/infra/sectionSlice";
-const bu_api_url = process.env.REACT_APP_API_URL;
+// const bu_api_url = process.env.REACT_APP_API_URL;
+import bu_api_url from "../lib/server_config";
 
 function SearchBar() {
   const navigate = useNavigate();

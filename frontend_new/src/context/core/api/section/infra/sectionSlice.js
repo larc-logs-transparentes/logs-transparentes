@@ -1,6 +1,8 @@
 import { apiSlice } from '../../apiSlice';
 
-const endpointUrl = '/bu/';
+import bu_api_url from '../../../../../lib/server_config';
+
+const endpointUrl = `${bu_api_url}/bu/`;
 
 function getStatesByElection(electionId) {
   return `${endpointUrl}distinct_uf?id_eleicao=${electionId}`;

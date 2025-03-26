@@ -5,7 +5,8 @@ import modalbaixarfolhasbutton from '../../../assets/modalbaixarfolhasbutton.svg
 import { fetchRootValue, fetchNumberOfElementsOnTree, fetchRootTimestampValue, downloadFile } from '../../../services/modalTreeDashboardServices';
 import { convertElectionIdToName } from '../../../components/electionIdConverter';
 
-const bu_api_url = process.env.REACT_APP_API_URL;
+// const bu_api_url = process.env.REACT_APP_API_URL;
+import bu_api_url from '../../../lib/server_config';
 
 const Modal = ({ isOpen, onClose, card, isFirst }) => {
   const [rootValue, setRootValue] = useState('');

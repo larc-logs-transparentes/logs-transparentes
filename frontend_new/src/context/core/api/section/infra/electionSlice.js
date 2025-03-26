@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiSlice } from '../../apiSlice';
+import bu_api_url from '../../../../../lib/server_config';
 
-const endpointUrl = '/bu/';
+const endpointUrl = `${bu_api_url}/bu/`;
 
 function getElections() {
   return `${endpointUrl}distinct_eleicoes`;
