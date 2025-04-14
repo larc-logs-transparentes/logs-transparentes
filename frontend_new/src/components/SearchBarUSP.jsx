@@ -6,7 +6,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import axios from 'axios';
 
 function SearchBarUSP() {
-  const bu_api_url = require('../config.json').bu_api_url;
+  const bu_api_url = process.env.REACT_APP_API_URL;  
   const [dropdownStates, setDropdownStates] = useState({
     estado: false,
     cidade: false,
