@@ -48,7 +48,6 @@ jobs:
       run: |
         cd logs-transparentes/frontend_new
         docker buildx build --tag ghcr.io/larc-logs-transparentes/frontend:${{env.IMAGE_TAG}} \
-        -- docker build \
         --build-arg REACT_APP_API_URL=${{ secrets.URLBACKEND }} \
         --output "type=docker" \
         --platform linux/amd64 .
