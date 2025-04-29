@@ -68,3 +68,22 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Environment Variables
+
+To run this app locally, create an `.env` file with:
+```
+REACT_APP_API_URL=http://LOGSERVER_URL
+```
+
+If the log server is running locally, use:
+```
+REACT_APP_API_URL=http://localhost:8080
+```
+
+For automated GitHub Docker image builds, this variable is passed as an argument through a GitHub Secret:
+```
+--build-arg REACT_APP_API_URL=${{ secrets.URLBACKEND }} \
+```
+
+To configure secrets settings, you should contact a repository owner.
